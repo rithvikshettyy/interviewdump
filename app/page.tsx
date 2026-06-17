@@ -97,15 +97,22 @@ export default function LandingPage() {
             <span className="w-1.5 h-1.5 rounded-full bg-indigo ml-1.5 animate-pulse" />
           </Link>
 
-          {/* Right Links */}
           <div className="flex items-center gap-6">
             <a
-              href="https://github.com"
+              href="https://github.com/rithvikshettyy/interviewdump"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-text-muted hover:text-text transition-colors"
             >
               GitHub ↗
+            </a>
+            <a
+              href="https://x.com/RithvikShetty04"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-text-muted hover:text-text transition-colors"
+            >
+              Twitter ↗
             </a>
             <Link
               href="/login"
@@ -299,15 +306,22 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right Side */}
           <div className="flex gap-6 text-xs text-text-muted">
             <a
-              href="https://github.com"
+              href="https://github.com/rithvikshettyy/interviewdump"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-text transition-colors"
             >
               GitHub ↗
+            </a>
+            <a
+              href="https://x.com/RithvikShetty04"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-text transition-colors"
+            >
+              Twitter ↗
             </a>
             <span>Open Source</span>
             <span>Free Forever</span>

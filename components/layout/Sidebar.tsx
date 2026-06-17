@@ -126,18 +126,31 @@ export default function Sidebar() {
           </span>
         </div>
 
-        {/* GitHub Button */}
-        <a
-          href="https://github.com/your-username/interviewdump"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full border border-border text-text-muted text-sm rounded-lg py-2 hover:border-border-hover hover:text-text transition flex items-center justify-center gap-2 font-medium"
-        >
-          <span>⭐</span> Star on GitHub
-        </a>
+        {/* Action Buttons */}
+        <div className="flex flex-col gap-2">
+          {/* GitHub Button */}
+          <a
+            href="https://github.com/rithvikshettyy/interviewdump"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full border border-border text-text-muted text-sm rounded-lg py-2 hover:border-border-hover hover:text-text transition flex items-center justify-center gap-2 font-medium"
+          >
+            <span>⭐</span> Star on GitHub
+          </a>
+
+          {/* Twitter Button */}
+          <a
+            href="https://x.com/RithvikShetty04"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full border border-border text-text-muted text-sm rounded-lg py-2 hover:border-border-hover hover:text-text transition flex items-center justify-center gap-2 font-medium"
+          >
+            <span className="font-sans font-bold">𝕏</span> Follow @RithvikShetty04
+          </a>
+        </div>
 
         {/* MIT License */}
-        <div className="text-center text-[10px] text-text-dim font-mono mt-2 uppercase tracking-wide">
+        <div className="text-center text-[10px] text-text-dim font-mono mt-3 uppercase tracking-wide">
           100% FREE • MIT LICENSE
         </div>
       </div>
