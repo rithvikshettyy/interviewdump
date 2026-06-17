@@ -1,0 +1,266 @@
+[
+  {
+    "id": "oops-1",
+    "emoji": "🏗️",
+    "title": "Classes & Objects",
+    "difficulty": "Easy",
+    "teaser": "The basic building blueprints of object-oriented programming.",
+    "readTime": "4 mins",
+    "explanation": "A Class is a user-defined blueprint or template from which objects are created. An Object is an active instance of a class that holds actual data values in memory. In OOP, classes bundle attributes (data) and behaviors (functions/methods) together to structure code modularly.",
+    "realWorldAnalogy": "Think of a class as the architectural blueprint for a house, and the objects as the actual houses built from that blueprint. The blueprint dictates how many windows and doors the house has, but each physical house can have different wall paint colors or custom furniture.",
+    "codeExamples": [
+      {
+        "language": "javascript",
+        "code": "class House {\n  constructor(color) {\n    this.color = color; // Attribute\n  }\n  describe() {\n    return `A ${this.color} house.`; // Method\n  }\n}\nconst myHouse = new House('red');\nconsole.log(myHouse.describe());"
+      },
+      {
+        "language": "python",
+        "code": "class House:\n    def __init__(self, color):\n        self.color = color  # Attribute\n    def describe(self):\n        return f'A {self.color} house.'  # Method\n\nmy_house = House('red')\nprint(my_house.describe())"
+      },
+      {
+        "language": "java",
+        "code": "class House {\n    private String color; // Attribute\n    public House(String color) {\n        this.color = color;\n    }\n    public String describe() {\n        return \"A \" + this.color + \" house.\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        House house = new House(\"red\");\n        System.out.println(house.describe());\n    }\n}"
+      }
+    ],
+    "interviewQuestion": "What is the difference between a class and an object?",
+    "strongAnswerPoints": [
+      "Define Class as a logical blueprint that doesn't consume memory.",
+      "Define Object as a physical instance that is created at runtime and allocated memory.",
+      "Explain the relation between instance methods and properties."
+    ],
+    "commonMistake": "Confusing the class definition itself with the object instance, or attempting to write state variables on the class instead of the constructor.",
+    "miniTask": "Write a 'Car' class containing 'make' and 'model' properties, instantiate two separate car objects, and log their details.",
+    "ytQuery": "Classes and Objects Explained OOP"
+  },
+  {
+    "id": "oops-2",
+    "emoji": "💊",
+    "title": "Encapsulation",
+    "difficulty": "Medium",
+    "teaser": "Hiding internal details and keeping variables safe from external tampering.",
+    "readTime": "5 mins",
+    "explanation": "Encapsulation is the practice of keeping an object's properties (state) private and restricting direct access to them from outside. Instead, we expose public getter and setter methods to read and write to the state. This creates a secure shell around the object, preventing variables from being changed to invalid values.",
+    "realWorldAnalogy": "Think of it like a medical capsule: the active medicine is locked inside the plastic shell. You cannot access the raw chemicals directly; you consume the whole capsule, and it dissolves safely in your body through a controlled interface.",
+    "codeExamples": [
+      {
+        "language": "javascript",
+        "code": "class BankAccount {\n  #balance = 0; // Private field (ES2020)\n  deposit(amount) {\n    if (amount > 0) this.#balance += amount;\n  }\n  getBalance() {\n    return this.#balance;\n  }\n}\nconst acc = new BankAccount();\nacc.deposit(100);\nconsole.log(acc.getBalance());"
+      },
+      {
+        "language": "python",
+        "code": "class BankAccount:\n    def __init__(self):\n        self.__balance = 0  # Private attribute (name mangling)\n    def deposit(self, amount):\n        if amount > 0:\n            self.__balance += amount\n    def get_balance(self):\n        return self.__balance\n\nacc = BankAccount()\nacc.deposit(100)\nprint(acc.get_balance())"
+      },
+      {
+        "language": "java",
+        "code": "class BankAccount {\n    private double balance = 0.0; // Private variable\n    public void deposit(double amount) {\n        if (amount > 0) {\n            balance += amount;\n        }\n    }\n    public double getBalance() {\n        return balance;\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        BankAccount acc = new BankAccount();\n        acc.deposit(100.0);\n        System.out.println(acc.getBalance());\n    }\n}"
+      }
+    ],
+    "interviewQuestion": "Why is encapsulation important, and how do you achieve it?",
+    "strongAnswerPoints": [
+      "State that encapsulation prevents unauthorized direct modifications of properties.",
+      "Explain using private variables and public methods (Getters/Setters).",
+      "Mention that it allows input validation within setters."
+    ],
+    "commonMistake": "Exposing all private fields through simple getters and setters by default, which can bypass encapsulation principles if no validations or structures are applied.",
+    "miniTask": "Create a 'Temperature' class with a private 'celsius' property, and add a setter that throws an error if a temperature below absolute zero (-273.15) is entered.",
+    "ytQuery": "Encapsulation OOP explained clearly"
+  },
+  {
+    "id": "oops-3",
+    "emoji": "🧬",
+    "title": "Inheritance",
+    "difficulty": "Easy",
+    "teaser": "Passing properties and methods from a parent class to a child class.",
+    "readTime": "4 mins",
+    "explanation": "Inheritance allows a new class (child/subclass) to inherit the properties and methods of an existing class (parent/superclass). This promotes code reuse, letting you define base behaviors in one place and share them across specialized variations without duplicating code.",
+    "realWorldAnalogy": "Think of it like genetic inheritance: a child inherits physical traits (like eye color) from their parents. Similarly, a specialized class 'Dog' inherits base behaviors (like breathing and eating) from a parent 'Animal' class, but adds its own specialized traits (barking).",
+    "codeExamples": [
+      {
+        "language": "javascript",
+        "code": "class Animal {\n  eat() { return 'eating...'; }\n}\nclass Dog extends Animal {\n  bark() { return 'woof!'; }\n}\nconst dog = new Dog();\nconsole.log(dog.eat()); // inherited\nconsole.log(dog.bark()); // custom"
+      },
+      {
+        "language": "python",
+        "code": "class Animal:\n    def eat(self):\n        return 'eating...'\nclass Dog(Animal):\n    def bark(self):\n        return 'woof!'\n\ndog = Dog()\nprint(dog.eat())\nprint(dog.bark())"
+      },
+      {
+        "language": "java",
+        "code": "class Animal {\n    public String eat() { return \"eating...\"; }\n}\nclass Dog extends Animal {\n    public String bark() { return \"woof!\"; }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Dog dog = new Dog();\n        System.out.println(dog.eat());\n        System.out.println(dog.bark());\n    }\n}"
+      }
+    ],
+    "interviewQuestion": "What is Inheritance, and how does it promote code reuse?",
+    "strongAnswerPoints": [
+      "Explain the 'IS-A' relationship (e.g. Dog IS-A Animal).",
+      "Mention method overriding where a child changes a parent method.",
+      "Explain the danger of tight coupling where parent class changes break child classes."
+    ],
+    "commonMistake": "Overusing inheritance when composition is better (using inheritance for a 'HAS-A' relationship, like making a Car inherit from Engine instead of containing an Engine).",
+    "miniTask": "Write a parent class 'User' with a 'login()' method, and a child class 'Admin' that overrides 'login()' to add a customized access log print statement.",
+    "ytQuery": "OOP Inheritance Explained"
+  },
+  {
+    "id": "oops-4",
+    "emoji": "🎭",
+    "title": "Polymorphism",
+    "difficulty": "Medium",
+    "teaser": "Performing a single action in different ways based on the object's type.",
+    "readTime": "5 mins",
+    "explanation": "Polymorphism means 'many shapes'. In programming, it lets you write code that calls a method on a generic object, and at runtime, the program executes the specific version of that method designed for the object's actual type. It splits into Compile-time (Method Overloading) and Runtime (Method Overriding) polymorphism.",
+    "realWorldAnalogy": "Think of the button on your smartphone: pressing it behaves differently depending on context. If you are playing music, it pauses. If you are on a phone call, it hangs up. The single action (pressing button) adapts its behavior based on context.",
+    "codeExamples": [
+      {
+        "language": "javascript",
+        "code": "class Shape {\n  render() { return 'drawing shape...'; }\n}\nclass Circle extends Shape {\n  render() { return 'drawing circle...'; } // Overriding\n}\nconst shapes = [new Shape(), new Circle()];\nshapes.forEach(s => console.log(s.render()));"
+      },
+      {
+        "language": "python",
+        "code": "class Shape:\n    def render(self):\n        return 'drawing shape...'\nclass Circle(Shape):\n    def render(self):\n        return 'drawing circle...'  # Overriding\n\nshapes = [Shape(), Circle()]\nfor s in shapes:\n    print(s.render())"
+      },
+      {
+        "language": "java",
+        "code": "class Shape {\n    public void render() { System.out.println(\"drawing shape...\"); }\n}\nclass Circle extends Shape {\n    @Override\n    public void render() { System.out.println(\"drawing circle...\"); }\n}\npublic class Main {\n    public static void main(String[] args) {\n        Shape[] shapes = { new Shape(), new Circle() };\n        for (Shape s : shapes) {\n            s.render(); // Executes Circle version for Circle object!\n        }\n    }\n}"
+      }
+    ],
+    "interviewQuestion": "Explain the difference between runtime and compile-time polymorphism.",
+    "strongAnswerPoints": [
+      "Explain Compile-time (Overloading): multiple methods with same name but different parameters in the same class.",
+      "Explain Runtime (Overriding): child class redefining a parent class method.",
+      "Explain dynamic method binding at execution time."
+    ],
+    "commonMistake": "Assuming JavaScript supports method overloading natively by writing two functions with different arguments (JS simply overrides the first function with the second; you must check arguments length manually).",
+    "miniTask": "Create a parent class 'Bird' with a 'makeSound()' method, and override it in child classes 'Parrot' and 'Penguin' to return different strings.",
+    "ytQuery": "Polymorphism OOP Explained"
+  },
+  {
+    "id": "oops-5",
+    "emoji": "🎨",
+    "title": "Abstraction",
+    "difficulty": "Medium",
+    "teaser": "Hiding complex internal logic and exposing a simple dashboard interface.",
+    "readTime": "5 mins",
+    "explanation": "Abstraction is the practice of hiding the complex background implementation details of a feature and showing only the essential details to the user. This reduces complexity and shields the caller from changes in the internal system mechanism.",
+    "realWorldAnalogy": "Think of driving a car: you accelerate by pressing a pedal. You don't need to know how fuel injection, cylinder spark plugs, or gear ratios work. The complex mechanical process is abstracted away behind a simple pedal interface.",
+    "codeExamples": [
+      {
+        "language": "javascript",
+        "code": "class CoffeeMachine {\n  #heatWater() { return 'heating...'; } // complex logic\n  #brew() { return 'brewing...'; }\n  makeCoffee() {\n    // Expose only this simple interface method\n    return `${this.#heatWater()} and ${this.#brew()} done!`;\n  }\n}\nconst machine = new CoffeeMachine();\nconsole.log(machine.makeCoffee());"
+      },
+      {
+        "language": "python",
+        "code": "class CoffeeMachine:\n    def __heat_water(self):\n        return 'heating...'\n    def __brew(self):\n        return 'brewing...'\n    def make_coffee(self):\n        # Expose only this interface\n        return f'{self.__heat_water()} and {self.__brew()} done!'\n\nmachine = CoffeeMachine()\nprint(machine.make_coffee())"
+      },
+      {
+        "language": "java",
+        "code": "class CoffeeMachine {\n    private String heatWater() { return \"heating...\"; }\n    private String brew() { return \"brewing...\"; }\n    public String makeCoffee() {\n        return heatWater() + \" and \" + brew() + \" done!\";\n    }\n}\npublic class Main {\n    public static void main(String[] args) {\n        CoffeeMachine machine = new CoffeeMachine();\n        System.out.println(machine.makeCoffee());\n    }\n}"
+      }
+    ],
+    "interviewQuestion": "How does Abstraction differ from Encapsulation?",
+    "strongAnswerPoints": [
+      "Abstraction is design-level (focuses on WHAT an object does, hiding complexity).",
+      "Encapsulation is implementation-level (focuses on HOW to secure data, hiding state variables).",
+      "Explain using abstract classes or interface contracts to set boundaries."
+    ],
+    "commonMistake": "Confusing abstraction with encapsulation, as both deal with hiding, but abstraction hides complexity, while encapsulation hides data access.",
+    "miniTask": "Write a class 'RemoteControl' containing a public 'pressPowerButton()' method that internally triggers private methods for sending IR signals and validating power connections.",
+    "ytQuery": "Abstraction vs Encapsulation OOP"
+  },
+  {
+    "id": "oops-6",
+    "emoji": "📜",
+    "title": "Interfaces & Abstract Classes",
+    "difficulty": "Medium",
+    "teaser": "Defining strict template contracts for class structures to implement.",
+    "readTime": "6 mins",
+    "explanation": "An Interface is a completely abstract blueprint containing only method signatures without any execution body. An Abstract Class can contain a mix of both abstract methods (no body) and concrete methods (with body). Classes implement interfaces or extend abstract classes to guarantee they support specific method configurations.",
+    "realWorldAnalogy": "An interface is like a standard USB socket specification: it dictates the physical shape and pins, but not what the connected device actually does. Any device (mouse, keyboard, flash drive) that conforms to the USB shape contract will connect and work successfully.",
+    "codeExamples": [
+      {
+        "language": "javascript",
+        "code": "// JS does not have interfaces; we mock contracts using errors\nclass DbConnection {\n  connect() {\n    throw new Error('Must implement connect()');\n  }\n}\nclass MongoDb extends DbConnection {\n  connect() { return 'Mongo connected!'; }\n}"
+      },
+      {
+        "language": "python",
+        "code": "from abc import ABC, abstractmethod\n\nclass DbConnection(ABC):\n    @abstractmethod\n    def connect(self):\n        pass\n\nclass MongoDb(DbConnection):\n    def connect(self):\n        return 'Mongo connected!'"
+      },
+      {
+        "language": "java",
+        "code": "interface DbConnection {\n    void connect(); // abstract contract signature\n}\nclass MongoDb implements DbConnection {\n    public void connect() {\n        System.out.println(\"Mongo connected!\");\n    }\n}"
+      }
+    ],
+    "interviewQuestion": "When would you choose an Abstract Class over an Interface?",
+    "strongAnswerPoints": [
+      "Choose Abstract Class for closely related classes that share common base code.",
+      "Choose Interface to define a contract for unrelated classes to support specific behaviors.",
+      "Explain multiple interface implementation constraints (Java allows multiple interfaces but only single inheritance)."
+    ],
+    "commonMistake": "Instantiating an abstract class or interface directly, which is blocked by the compiler since they are incomplete templates.",
+    "miniTask": "Create an interface 'Printable' containing a 'print()' signature, and implement it in two separate classes: 'Document' and 'Image'.",
+    "ytQuery": "Interface vs Abstract Class OOP"
+  },
+  {
+    "id": "oops-7",
+    "emoji": "🧱",
+    "title": "SOLID Principles",
+    "difficulty": "Hard",
+    "teaser": "The five structural pillars of writing highly maintainable, clean code.",
+    "readTime": "8 mins",
+    "explanation": "SOLID is an acronym for five design principles: Single Responsibility (one class should have one reason to change), Open-Closed (classes open for extension, closed for modification), Liskov Substitution (child classes must replace parent classes cleanly), Interface Segregation (prefer multiple small interfaces over one bloated one), and Dependency Inversion (depend on abstractions, not concrete classes).",
+    "realWorldAnalogy": "Think of a Swiss Army Knife: each tool (knife, scissors, opener) has a Single Responsibility. If you want a new corkscrew tool, you extend the knife frame instead of modifying the existing blade (Open-Closed). The attachments connect via standard sockets, representing abstractions (Dependency Inversion).",
+    "codeExamples": [
+      {
+        "language": "javascript",
+        "code": "// Single Responsibility Principle\nclass Report {\n  getContent() { return 'sales data'; }\n}\n// Separated responsibility for saving file\nclass ReportSaver {\n  saveToFile(report) { /* saves report to disk */ }\n}"
+      },
+      {
+        "language": "python",
+        "code": "# Dependency Inversion Principle\nfrom abc import ABC, abstractmethod\nclass Switchable(ABC):\n    @abstractmethod\n    def turn_on(self):\n        pass\nclass LightBulb(Switchable):\n    def turn_on(self): print('Light is on')\nclass ElectricPowerSwitch:\n    def __init__(self, client: Switchable):\n        self.client = client # depends on abstraction!"
+      },
+      {
+        "language": "java",
+        "code": "// Interface Segregation Principle: split interfaces\ninterface Printer { void print(); }\ninterface Scanner { void scan(); }\nclass SimplePrinter implements Printer {\n    public void print() { System.out.println(\"Printing...\"); }\n}"
+      }
+    ],
+    "interviewQuestion": "Explain Liskov Substitution Principle with a code example.",
+    "strongAnswerPoints": [
+      "Define SOLID acronyms.",
+      "Explain Liskov: subclass methods must not break parent contracts (e.g. Ostrich inheriting from Bird but throws error on fly()).",
+      "Show how violating Open-Closed creates rigid, fragile codebases."
+    ],
+    "commonMistake": "Creating massive, bloated interfaces that force implementing classes to write empty/dummy implementations for methods they don't support.",
+    "miniTask": "Refactor a bloated 'Worker' interface containing 'code()' and 'manage()' into two separate segregated interfaces so that simple coders are not forced to write management functions.",
+    "ytQuery": "SOLID Principles Explained Simply"
+  },
+  {
+    "id": "oops-8",
+    "emoji": "🧩",
+    "title": "Design Patterns",
+    "difficulty": "Hard",
+    "teaser": "Standard reusable solutions to common software architecture design problems.",
+    "readTime": "8 mins",
+    "explanation": "Design patterns are established templates to solve repeating coding problems. A Factory Pattern delegates object creation logic to a helper class. A Singleton Pattern guarantees that a class has only one active instance globally (like a DB pool). An Observer Pattern creates a subscription model to notify multiple classes when an event occurs.",
+    "realWorldAnalogy": "Factory is like a restaurant kitchen: you order a dish, and the kitchen creates it without you knowing how it was prepared. Singleton is like the presidency of a country: there is only ever one active president at a time. Observer is like subscribing to a YouTube channel: when a video drops, all subscribers are notified.",
+    "codeExamples": [
+      {
+        "language": "javascript",
+        "code": "// Singleton Pattern in JS\nclass DatabaseConnection {\n  constructor() {\n    if (DatabaseConnection.instance) return DatabaseConnection.instance;\n    DatabaseConnection.instance = this;\n  }\n}\nconst db1 = new DatabaseConnection();\nconst db2 = new DatabaseConnection();\nconsole.log(db1 === db2); // true"
+      },
+      {
+        "language": "python",
+        "code": "# Factory Pattern in Python\nclass Pet:\n    def speak(self): pass\nclass Dog(Pet):\n    def speak(self): return 'Woof!'\nclass Cat(Pet):\n    def speak(self): return 'Meow!'\nclass PetFactory:\n    @staticmethod\n    def get_pet(pet_type):\n        return Dog() if pet_type == 'dog' else Cat()"
+      },
+      {
+        "language": "java",
+        "code": "// Observer Pattern: Subject notifies observers\nimport java.util.*;\ninterface Observer { void update(String msg); }\nclass NewsAgency {\n    private List<Observer> observers = new ArrayList<>();\n    public void addObserver(Observer o) { observers.add(o); }\n    public void notifyAll(String news) {\n        for (Observer o : observers) o.update(news);\n    }\n}"
+      }
+    ],
+    "interviewQuestion": "How do you implement a thread-safe Singleton in Java?",
+    "strongAnswerPoints": [
+      "Define Factory, Singleton, and Observer patterns.",
+      "Explain Singleton implementation using a private constructor and a static instance method.",
+      "Discuss the double-checked locking mechanism for thread safety in multi-threaded contexts."
+    ],
+    "commonMistake": "Overusing Singleton pattern for standard utility classes, which makes writing tests difficult due to globally shared states.",
+    "miniTask": "Write a Factory class 'PaymentGatewayFactory' that returns either a 'StripeProcessor' or a 'PayPalProcessor' based on a payment provider string argument.",
+    "ytQuery": "Singleton Factory Observer Design Patterns"
+  }
+]

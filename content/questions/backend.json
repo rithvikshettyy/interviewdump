@@ -1,0 +1,418 @@
+[
+  {
+    "id": "be-1",
+    "number": 1,
+    "question": "How do you design an idempotent API endpoint, and why is it important?",
+    "summary": "Explains how to guarantee that making multiple identical API requests has the same effect as making a single request.",
+    "difficulty": "Medium",
+    "companies": ["Razorpay", "Juspay", "Swiggy"],
+    "roles": ["Backend", "Fullstack"],
+    "type": "interview",
+    "topic": "REST API Design",
+    "whatTheyTest": "Knowledge of API reliability, payment processing safety, and transactional systems.",
+    "explanation": "Idempotency means that if you perform the exact same operation multiple times, the final state of the system is as if you only ran it once. Imagine hitting a payment submit button twice due to a slow internet connection; a well-designed backend will only charge you once. To implement this, the client generates a unique token (like a UUID) and sends it in the header. The server checks a cache (like Redis) for this token: if it exists, it returns the cached response; if not, it processes the request and stores the result.",
+    "codeExample": "app.post('/payments', async (req, res) => {\n  const idempotencyKey = req.headers['x-idempotency-key'];\n  if (!idempotencyKey) return res.status(400).send('Key missing');\n\n  const cachedResult = await redis.get(idempotencyKey);\n  if (cachedResult) return res.json(JSON.parse(cachedResult));\n\n  const payment = await db.createPayment(req.body);\n  await redis.set(idempotencyKey, JSON.stringify(payment), 'EX', 86400);\n  res.status(201).json(payment);\n});",
+    "codeLanguage": "javascript",
+    "strongAnswerPoints": [
+      "Explain the HTTP methods that are naturally idempotent (GET, PUT, DELETE) vs POST.",
+      "Explain the use of unique idempotency keys stored in Redis or database.",
+      "Mention handling concurrent duplicate requests using distributed locks."
+    ],
+    "whatToAvoid": "Do not confuse idempotency with safety (e.g., GET is safe and idempotent, while PUT is idempotent but not safe).",
+    "ytQuery": "API Idempotency System Design"
+  },
+  {
+    "id": "be-2",
+    "number": 2,
+    "question": "How does API Rate Limiting work, and how would you implement it using Redis?",
+    "summary": "Focuses on controlling the rate of incoming requests to protect backend services from abuse or server overloading.",
+    "difficulty": "Medium",
+    "companies": ["Zomato", "Zepto", "CRED"],
+    "roles": ["Backend", "Fullstack"],
+    "type": "interview",
+    "topic": "REST API Design",
+    "whatTheyTest": "Understanding of system protection, denial of service mitigation, and Redis caching.",
+    "explanation": "Rate limiting is like a security guard standing at a nightclub door, only allowing a certain number of guests inside per minute to prevent overcrowding. In web development, it restricts the number of requests a user can make to your server in a specific timeframe. A common way to implement this is using Redis with a sliding window log or token bucket algorithm. For a simple fixed-window, you increment an API key's counter in Redis with an expiry time equal to the window size, blocking any request that exceeds the limit.",
+    "codeExample": "async function isRateLimited(userId) {\n  const key = `rate:${userId}`;\n  const requests = await redis.incr(key);\n  if (requests === 1) {\n    await redis.expire(key, 60);\n  }\n  return requests > 100; // Limit to 100 requests per minute\n}",
+    "codeLanguage": "javascript",
+    "strongAnswerPoints": [
+      "Discuss algorithms like Token Bucket, Leaky Bucket, and Sliding Window Log.",
+      "Explain using Redis commands like INCR and EXPIRE or Lua scripts for atomic operations.",
+      "Mention returning HTTP headers like X-RateLimit-Limit and X-RateLimit-Remaining."
+    ],
+    "whatToAvoid": "Avoid neglecting race conditions when checking and updating rate limit counters.",
+    "ytQuery": "API Rate Limiting Redis System Design"
+  },
+  {
+    "id": "be-3",
+    "number": 3,
+    "question": "What is the difference between Offset-based and Cursor-based pagination? When should you use which?",
+    "summary": "Compares paging strategies for database queries to optimize performance and prevent duplicate items on dynamic feeds.",
+    "difficulty": "Hard",
+    "companies": ["Flipkart", "Paytm", "Google"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "REST API Design",
+    "whatTheyTest": "Knowledge of query performance optimization and designing APIs for high-volume dynamic feeds.",
+    "explanation": "Offset pagination is like skipping pages in a book (e.g., skip 50 items and take 10); however, if a new item is added while paging, it pushes everything down, showing duplicates. Under the hood, the database must scan all previous records before discarding them, making it slow for deep pages. Cursor pagination, on the other hand, acts like a bookmark: you query for records starting immediately after the last seen item ID. This makes queries constant-time O(1) regardless of depth and immune to duplicates caused by additions.",
+    "codeExample": "-- Offset-based (Slow for large offsets)\nSELECT * FROM posts ORDER BY created_at DESC LIMIT 10 OFFSET 50000;\n\n-- Cursor-based (Fast and stable)\nSELECT * FROM posts WHERE id < 'last_seen_id' ORDER BY id DESC LIMIT 10;",
+    "codeLanguage": "sql",
+    "strongAnswerPoints": [
+      "Highlight performance degradation of OFFSET for large datasets (DB scans preceding rows).",
+      "Explain how cursor pagination works by selecting based on specific filters (e.g., WHERE id < cursor).",
+      "Mention that Cursor pagination is ideal for infinite scroll feeds, while offset pagination is suited for static pages."
+    ],
+    "whatToAvoid": "Do not suggest Offset pagination for huge datasets or infinite scrolls.",
+    "ytQuery": "Offset vs Cursor Pagination System Design"
+  },
+  {
+    "id": "be-4",
+    "number": 4,
+    "question": "How do database indexes (B-Trees) work, and how can they slow down writes?",
+    "summary": "Deals with RDBMS search index mechanisms and the trade-offs of using indexing on write-heavy tables.",
+    "difficulty": "Hard",
+    "companies": ["PhonePe", "Groww", "Amazon"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Database Optimization",
+    "whatTheyTest": "Deep understanding of database internals, search tree data structures, and optimization trade-offs.",
+    "explanation": "Think of a database index like the index at the back of a textbook: instead of scanning every page to find a topic, you look it up in the alphabetical index and jump straight to the page. RDBMS databases typically use B-Trees (Balanced Trees) to keep keys sorted, allowing fast binary-like searches. However, every time you insert, update, or delete a record, the database must write to the index as well and rebalance the tree. Consequently, having too many indexes will speed up SELECT queries but significantly slow down write operations.",
+    "strongAnswerPoints": [
+      "Explain the node splitting and balancing mechanism of B-Trees.",
+      "Discuss the concept of Index Scan vs Sequential Scan.",
+      "Explain the cost of maintaining indexes during write transactions (INSERT, UPDATE, DELETE)."
+    ],
+    "whatToAvoid": "Do not say indexes are always good or that they speed up writes.",
+    "ytQuery": "How Database Indexes Work B-Trees"
+  },
+  {
+    "id": "be-5",
+    "number": 5,
+    "question": "Explain ACID properties in relational databases and how they are guaranteed.",
+    "summary": "Covers Atomicity, Consistency, Isolation, and Durability, and how databases implement them under the hood.",
+    "difficulty": "Medium",
+    "companies": ["Microsoft", "Oracle", "Paytm"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Database Optimization",
+    "whatTheyTest": "Knowledge of data integrity, concurrency controls, and write-ahead logs.",
+    "explanation": "ACID properties ensure transaction safety. Atomicity ensures 'all or nothing' (like sending money where debit and credit must both succeed, or both fail). Consistency guarantees transitioning from one valid state to another. Isolation ensures concurrent transactions don't mess with each other. Durability guarantees that once committed, data survives even a power failure. Under the hood, databases use Write-Ahead Logging (WAL) for durability and atomicity, and locks/MVCC (Multi-Version Concurrency Control) for isolation.",
+    "strongAnswerPoints": [
+      "Define Atomicity, Consistency, Isolation, and Durability.",
+      "Discuss WAL (Write-Ahead Logging) and two-phase commits.",
+      "Explain isolation levels: Read Uncommitted, Read Committed, Repeatable Read, and Serializable."
+    ],
+    "whatToAvoid": "Avoid generic definitions without mentioning concrete implementation techniques like WAL or MVCC.",
+    "ytQuery": "ACID Properties Database Internals"
+  },
+  {
+    "id": "be-6",
+    "number": 6,
+    "question": "SQL vs NoSQL: When would you choose MongoDB/Cassandra over PostgreSQL?",
+    "summary": "Explains architectural differences between relational and non-relational databases for different scale requirements.",
+    "difficulty": "Medium",
+    "companies": ["Navi", "Zomato", "Meta"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Database Optimization",
+    "whatTheyTest": "Ability to evaluate technical trade-offs, schemas, horizontal scaling, and query patterns.",
+    "explanation": "Relational databases (SQL) are like structured spreadsheets with strict links (foreign keys) between them; they are perfect for transactions where accuracy is critical, such as banking. NoSQL databases (like MongoDB) store data in flexible documents, whereas Cassandra is wide-column oriented. MongoDB is great for rapidly changing schemas or catalogs, while Cassandra excels at high-throughput writes (like logging IoT sensor data) because it scales horizontally. Choose NoSQL when you need high-volume, unstructured data and horizontal scaling; choose SQL for structured, highly transactional operations.",
+    "strongAnswerPoints": [
+      "Differentiate between Schema-on-Write (SQL) and Schema-on-Read (NoSQL).",
+      "Mention vertical scaling (SQL) vs horizontal partitioning/sharding (NoSQL).",
+      "Discuss CAP Theorem (Consistency, Availability, Partition Tolerance)."
+    ],
+    "whatToAvoid": "Do not say 'NoSQL is faster' or 'SQL is outdated'—it is entirely about query patterns and consistency trade-offs.",
+    "ytQuery": "SQL vs NoSQL System Design"
+  },
+  {
+    "id": "be-7",
+    "number": 7,
+    "question": "JWT Authentication vs Session-based Authentication: Pros and Cons?",
+    "summary": "Contrasts stateless token authentication with stateful session store verification.",
+    "difficulty": "Medium",
+    "companies": ["CRED", "Meesho", "Flipkart"],
+    "roles": ["Backend", "Fullstack"],
+    "type": "interview",
+    "topic": "Authentication & Security",
+    "whatTheyTest": "Knowledge of user session security, scalability, and token invalidation problems.",
+    "explanation": "Session authentication is stateful: the server gives the client a Session ID and stores details in memory or Redis. Each request requires checking the session store. JWT is stateless: the server signs user details using a secret key and sends it to the client. The server doesn't store anything; it just verifies the signature on incoming requests. Sessions are easy to revoke instantly but don't scale well horizontally. JWTs scale perfectly but are hard to revoke before they expire without creating a blacklist database (which makes them stateful again).",
+    "codeExample": "// JWT Verification (Stateless)\nconst jwt = require('jsonwebtoken');\nconst user = jwt.verify(token, process.env.JWT_SECRET);\n// No database lookup required to verify signature!",
+    "codeLanguage": "javascript",
+    "strongAnswerPoints": [
+      "Explain stateful (session cookies) vs stateless (JWT tokens).",
+      "Detail the JWT structure (Header, Payload, Signature).",
+      "Highlight the difficulty of JWT revocation and how Refresh Tokens solve it."
+    ],
+    "whatToAvoid": "Do not store sensitive data (like passwords) in the JWT payload since it is only encoded, not encrypted.",
+    "ytQuery": "JWT vs Session Authentication Security"
+  },
+  {
+    "id": "be-8",
+    "number": 8,
+    "question": "How does SQL Injection work, and how do parameterized queries prevent it?",
+    "summary": "Explains web vulnerabilities involving unauthorized query manipulation and parameterization security mechanisms.",
+    "difficulty": "Easy",
+    "companies": ["TCS Digital", "Infosys SP", "Adobe"],
+    "roles": ["Backend", "Fullstack"],
+    "type": "interview",
+    "topic": "Authentication & Security",
+    "whatTheyTest": "Basic security hygiene and understanding of SQL compilation vs evaluation.",
+    "explanation": "SQL Injection occurs when user inputs are concatenated directly into SQL command strings, allowing attackers to inject raw commands (like adding `' OR 1=1; --`). Parameterized queries prevent this by separating the SQL query structure from the user data. The database compiles the query structure first with placeholders, and then inserts the parameters strictly as variables. This ensures the database engine treats input strictly as literal values, never as executable SQL commands.",
+    "codeExample": "-- Vulnerable (Concatenation)\nconst query = `SELECT * FROM users WHERE email = '${req.body.email}'`;\n\n-- Secure (Parameterized)\nconst query = 'SELECT * FROM users WHERE email = ?';\nconst [rows] = await db.execute(query, [req.body.email]);",
+    "codeLanguage": "javascript",
+    "strongAnswerPoints": [
+      "Explain input concatenation vulnerability.",
+      "Detail the compilation separation step in Parameterized Queries (Precompiled statements).",
+      "Mention ORM use cases which parameterize by default."
+    ],
+    "whatToAvoid": "Do not think escaping strings manually is a replacement for parameterized queries.",
+    "ytQuery": "SQL Injection Parameterized Queries"
+  },
+  {
+    "id": "be-9",
+    "number": 9,
+    "question": "How do Cache Eviction Policies work? Explain LRU Cache.",
+    "summary": "Describes how memory stores handle capacity limits and the mechanics of Least Recently Used algorithms.",
+    "difficulty": "Medium",
+    "companies": ["Groww", "Juspay", "Amazon"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Caching & Redis",
+    "whatTheyTest": "Knowledge of data structures (Doubly Linked Lists + HashMaps) and memory management.",
+    "explanation": "Caches have limited memory. When they run out of space, they must choose which item to discard (evict). Least Recently Used (LRU) is a policy that discards the item that has not been accessed for the longest time, assuming that items used recently will be used again soon. Think of a bookshelf: when it is full, you throw away the book you haven't opened in years. To implement LRU in constant O(1) time, you use a combination of a Doubly Linked List (to track access order) and a Hash Map (for fast search lookups).",
+    "strongAnswerPoints": [
+      "Define LRU, LFU, and FIFO eviction strategies.",
+      "Explain the data structure combination of HashMap (for O(1) lookups) and Doubly Linked List (for O(1) additions/deletions).",
+      "Mention Redis configurations for LRU eviction (maxmemory-policy volatile-lru)."
+    ],
+    "whatToAvoid": "Avoid stating that LRU is implemented with an array, as shifting elements in an array takes O(N) time.",
+    "ytQuery": "LRU Cache Data Structure System Design"
+  },
+  {
+    "id": "be-10",
+    "number": 10,
+    "question": "What is Cache Stampede (Thundering Herd) and Cache Penetration? How do you prevent them?",
+    "summary": "Examines failures in caching layers under heavy traffic spikes and solutions like locking and bloom filters.",
+    "difficulty": "Hard",
+    "companies": ["Flipkart", "PhonePe", "Meta"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Caching & Redis",
+    "whatTheyTest": "Advanced caching strategies, concurrency control, and system resilience under load.",
+    "explanation": "Cache stampede occurs when a highly popular cached key expires, and thousands of concurrent requests find a cache miss and run the expensive database query simultaneously, crashing the database. We prevent this using mutual exclusion locks (single flight / mutex) so only one request queries the database while others wait. Cache penetration is when requests query keys that do not exist in the database (often malicious), bypassing the cache entirely. This is solved by caching empty/null values or using a Bloom Filter to quickly verify key existence before hitting the database.",
+    "strongAnswerPoints": [
+      "Explain Cache Stampede (concurrent DB queries on expired hot keys) and prevention using locking or background key regeneration.",
+      "Explain Cache Penetration (queries for non-existent keys) and prevention using Bloom Filters.",
+      "Explain Cache Avalanche (multiple keys expiring at once) and resolution via randomized TTL jitter."
+    ],
+    "whatToAvoid": "Do not offer 'increasing cache size' as a solution for cache stampede or penetration.",
+    "ytQuery": "Cache Stampede Thundering Herd Bloom Filters"
+  },
+  {
+    "id": "be-11",
+    "number": 11,
+    "question": "Horizontal Scaling vs Vertical Scaling: In-depth comparison?",
+    "summary": "Contrasts adding more servers (horizontal) with adding hardware resources to a single server (vertical).",
+    "difficulty": "Easy",
+    "companies": ["Zepto", "TCS Digital", "Microsoft"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "System Design Basics",
+    "whatTheyTest": "Core understanding of distributed systems architecture and system growth limits.",
+    "explanation": "Vertical scaling (scaling up) is like modifying your car's engine to make it faster—it has hardware limits and introduces a single point of failure. Horizontal scaling (scaling out) is like buying more cars to transport more goods—you load-balance requests across multiple servers. While vertical scaling requires no architectural changes, horizontal scaling requires load balancers, database replication/sharding, and stateless application servers, but offers near-infinite growth and high availability.",
+    "strongAnswerPoints": [
+      "Horizontal: stateless servers, load balancers, database sharding.",
+      "Vertical: limited by hardware ceilings, single point of failure.",
+      "Explain the cost and architectural complexity trade-offs."
+    ],
+    "whatToAvoid": "Do not imply that database scaling is as easy to scale horizontally as application servers.",
+    "ytQuery": "Horizontal vs Vertical Scaling System Design"
+  },
+  {
+    "id": "be-12",
+    "number": 12,
+    "question": "How do Load Balancing algorithms work? Explain Round Robin vs Least Connections.",
+    "summary": "Details how traffic distribution nodes route requests across server fleets.",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Google", "Atlassian"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "System Design Basics",
+    "whatTheyTest": "Traffic routing logic and failure detection strategies in backend clusters.",
+    "explanation": "A load balancer distributes incoming traffic across a pool of servers. Round Robin is the simplest algorithm, routing requests sequentially (e.g., Server A, then B, then C, then A again)—it works well if servers have identical specs and request times are uniform. Least Connections routing tracks active connections and sends new traffic to the server with the lowest current workload, which is much better for long-running transactions (like file downloads). Consistent Hashing is another algorithm used when requests need session affinity.",
+    "strongAnswerPoints": [
+      "Explain Round Robin (simple cycle, assumes equal resources).",
+      "Explain Least Connections (sends traffic to the least busy server).",
+      "Mention IP Hash / Consistent Hashing for session persistence."
+    ],
+    "whatToAvoid": "Do not forget to mention that load balancers perform health checks to avoid routing traffic to crashed servers.",
+    "ytQuery": "Load Balancing Algorithms Round Robin System Design"
+  },
+  {
+    "id": "be-13",
+    "number": 13,
+    "question": "What is a Content Delivery Network (CDN) and how does it speed up media loading?",
+    "summary": "Covers caching static assets at geographically distributed edge locations.",
+    "difficulty": "Easy",
+    "companies": ["Swiggy", "Zomato", "Adobe"],
+    "roles": ["Backend", "Fullstack"],
+    "type": "interview",
+    "topic": "System Design Basics",
+    "whatTheyTest": "Asset delivery pipelines, network latency, and caching strategies.",
+    "explanation": "Imagine buying a book: instead of ordering it from a publisher across the globe (which takes days), you pick it up at your local neighborhood library. A CDN is a network of servers located globally that cache static files (like images, CSS, JS, and videos) close to users. When a user requests a file, it is served from the nearest CDN 'Edge' server, saving valuable time by reducing the round-trip distance. This reduces server load and bandwidth costs on your main origin server.",
+    "strongAnswerPoints": [
+      "Explain CDN Edge servers (Points of Presence - PoPs).",
+      "Differentiate between Push and Pull CDNs.",
+      "Explain Cache Invalidation strategies (e.g., using hashes in filenames)."
+    ],
+    "whatToAvoid": "Do not store dynamic, user-specific data (like profile details) in a public CDN cache.",
+    "ytQuery": "How CDN works System Design"
+  },
+  {
+    "id": "be-14",
+    "number": 14,
+    "question": "How does the Node.js Event Loop work, and what is the difference between setImmediate and process.nextTick?",
+    "summary": "Analyzes the asynchronous execution architecture of Node.js engine phases.",
+    "difficulty": "Hard",
+    "companies": ["Juspay", "Paytm", "Zoho"],
+    "roles": ["Backend", "Fullstack"],
+    "type": "interview",
+    "topic": "Node.js Concepts",
+    "whatTheyTest": "Deep knowledge of asynchronous JavaScript runtime internals, thread pool usage, and execution ordering.",
+    "explanation": "Node.js is single-threaded but handles concurrency using an Event Loop, which offloads operations (like file reads or DB queries) to the OS kernel or thread pool. The loop runs in phases: timers, pending callbacks, poll (I/O), check, and close callbacks. `process.nextTick` is not technically part of the loop; it fires immediately after the current operation finishes, bypassing the queue. `setImmediate` fires during the 'check' phase of the next loop tick. This means nextTick callbacks always execute before setImmediate callbacks.",
+    "codeExample": "setTimeout(() => console.log('Timeout'), 0);\nsetImmediate(() => console.log('Immediate'));\nprocess.nextTick(() => console.log('Next Tick'));\n// Output order: Next Tick -> Timeout (or Immediate depending on loop start) -> Immediate",
+    "codeLanguage": "javascript",
+    "strongAnswerPoints": [
+      "Explain that Node.js runs I/O asynchronously by offloading to libuv.",
+      "Detail the phases of the Event Loop (Timers, Poll, Check, etc.).",
+      "Explain that nextTick executes before the next event loop phase, while setImmediate runs in the check phase."
+    ],
+    "whatToAvoid": "Do not say that Node.js is completely single-threaded (libuv uses a thread pool for heavy tasks like crypto and fs).",
+    "ytQuery": "NodeJS Event Loop process nextTick setImmediate"
+  },
+  {
+    "id": "be-15",
+    "number": 15,
+    "question": "What are Streams and Buffers in Node.js, and how do they prevent memory leaks?",
+    "summary": "Describes chunked data processing compared to loading entire files in memory.",
+    "difficulty": "Medium",
+    "companies": ["Zepto", "Atlassian", "CRED"],
+    "roles": ["Backend", "Fullstack"],
+    "type": "interview",
+    "topic": "Node.js Concepts",
+    "whatTheyTest": "Understanding of memory efficiency, backpressure, and handling large data files.",
+    "explanation": "Imagine drinking water: you don't swallow a whole bucket of water at once; you sip it from a glass. In Node.js, a buffer is a temporary chunk of memory used to store raw binary data. A stream is a mechanism to read or write data in small, continuous chunks, rather than loading an entire large file into RAM at once. Using streams, you can process a 10GB file on a server with only 512MB RAM, since you only hold a tiny chunk of data in memory at any given time.",
+    "codeExample": "const fs = require('fs');\n// Memory efficient: Reads and pipes chunk by chunk\nconst readStream = fs.createReadStream('huge_video.mp4');\nconst writeStream = fs.createWriteStream('copy_video.mp4');\nreadStream.pipe(writeStream);",
+    "codeLanguage": "javascript",
+    "strongAnswerPoints": [
+      "Explain memory limitations of loading complete files (Buffer limits).",
+      "Differentiate between Readable, Writable, Duplex, and Transform streams.",
+      "Explain Backpressure (slow down reading if write speed is slower)."
+    ],
+    "whatToAvoid": "Do not suggest using `fs.readFileSync` for large file transfers on production servers.",
+    "ytQuery": "NodeJS Streams and Buffers Memory Management"
+  },
+  {
+    "id": "be-16",
+    "number": 16,
+    "question": "How do you handle unhandled exceptions and promise rejections in a Node.js application?",
+    "summary": "Explains mechanisms to catch fatal errors and perform graceful shutdowns.",
+    "difficulty": "Easy",
+    "companies": ["TCS Digital", "Infosys SP", "Meesho"],
+    "roles": ["Backend", "Fullstack"],
+    "type": "interview",
+    "topic": "Node.js Concepts",
+    "whatTheyTest": "Operational stability, exception handling, and application crash mitigation.",
+    "explanation": "If a Node.js app runs into an error that is not caught in a try-catch block, the entire process crashes immediately, dropping active requests. To prevent this, we listen to process events like `uncaughtException` (for synchronous errors) and `unhandledRejection` (for failed promises). When these occur, we should log the error details, close all active database connections, let active requests finish processing (graceful shutdown), and exit the process. An external tool (like PM2 or Kubernetes) should then auto-restart the application container.",
+    "codeExample": "process.on('unhandledRejection', (reason, promise) => {\n  console.error('Unhandled Rejection at:', promise, 'reason:', reason);\n  // Gracefully close server, then exit\n  server.close(() => process.exit(1));\n});",
+    "codeLanguage": "javascript",
+    "strongAnswerPoints": [
+      "Explain the risk of keeping a process running after an uncaughtException (unstable memory state).",
+      "Show how to catch unhandled promise rejections.",
+      "Discuss graceful shutdown procedures (closing server sockets and DB pools)."
+    ],
+    "whatToAvoid": "Do not simply log the error inside uncaughtException and keep the process running—always exit and let a process manager restart it.",
+    "ytQuery": "Graceful Shutdown NodeJS Process Handling"
+  },
+  {
+    "id": "be-17",
+    "number": 17,
+    "question": "What is the role of an API Gateway in a microservices architecture?",
+    "summary": "Covers entry routing, request validation, authentication, and load balancing across internal microservices.",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Flipkart", "Swiggy"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Microservices",
+    "whatTheyTest": "Knowledge of distributed system communication and separation of cross-cutting concerns.",
+    "explanation": "An API Gateway is like the receptionist at a corporate headquarters: instead of clients walking around looking for different departments, they talk to the receptionist, who routes them to the correct office. In microservices, the API Gateway is a single entry point for all client requests. It handles tasks like routing traffic to specific services, authentication, rate limiting, logging, and SSL termination. This prevents each individual microservice from having to implement security and monitoring from scratch.",
+    "strongAnswerPoints": [
+      "Centralized entry point routing.",
+      "Offloads cross-cutting concerns (Auth, Rate Limiting, CORS).",
+      "Mention service discovery integration (e.g. Consul or Eureka)."
+    ],
+    "whatToAvoid": "Do not design the API Gateway to contain heavy business logic, as it should remain a lightweight router.",
+    "ytQuery": "API Gateway Microservices System Design"
+  },
+  {
+    "id": "be-18",
+    "number": 18,
+    "question": "How do you manage distributed transactions across microservices? Explain the Saga Pattern.",
+    "summary": "Analyzes how to maintain data consistency across decoupled service databases using saga workflows.",
+    "difficulty": "Hard",
+    "companies": ["Google", "PhonePe", "Razorpay"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Microservices",
+    "whatTheyTest": "Handling of complex transactional workflows, eventual consistency, and compensation logic.",
+    "explanation": "In microservices, each service has its own database. Classic SQL transactions (ACID) cannot span multiple databases easily. The Saga Pattern solves this by breaking a transaction into a series of local service transactions. Each service updates its database and publishes an event. If a step fails (e.g., payment fails after booking a flight), the Saga runs compensating transactions in reverse order (e.g., canceling the flight reservation). This ensures eventual consistency instead of immediate, strong consistency.",
+    "strongAnswerPoints": [
+      "Explain why 2PC (Two-Phase Commit) doesn't scale well in microservices.",
+      "Detail Saga Pattern: Choreography-based (event-driven) vs Orchestration-based (central coordinator).",
+      "Explain Compensating Transactions (rollback logic)."
+    ],
+    "whatToAvoid": "Do not propose distributed locks or 2PC as a highly scalable solution.",
+    "ytQuery": "Saga Pattern Distributed Transactions Microservices"
+  },
+  {
+    "id": "be-19",
+    "number": 19,
+    "question": "Why would you use a Message Queue (like RabbitMQ or Kafka) instead of HTTP for inter-service communication?",
+    "summary": "Compares asynchronous message-driven communication with synchronous HTTP requests.",
+    "difficulty": "Medium",
+    "companies": ["Zomato", "Zepto", "Swiggy"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Performance & Scaling",
+    "whatTheyTest": "Knowledge of asynchronous architecture, system decoupling, and message durability.",
+    "explanation": "HTTP is synchronous, like a telephone call: both sides must be present at the same time to communicate. If the receiving service is down, the call fails. Message Queues are asynchronous, like sending an email: you send the message, and the receiver reads it whenever they are online. This decouples services, absorbs traffic spikes (buffer), and ensures that even if a processing service crashes, the message remains safely in the queue until the service recovers and processes it.",
+    "strongAnswerPoints": [
+      "Synchronous (HTTP blocking) vs Asynchronous (Queue non-blocking).",
+      "Decoupling of services and handling of traffic surges (load leveling).",
+      "Message durability, retries, and dead letter queues."
+    ],
+    "whatToAvoid": "Avoid suggesting Message Queues for operations that require an immediate, synchronous response (like verifying a password).",
+    "ytQuery": "HTTP vs Message Queues Kafka System Design"
+  },
+  {
+    "id": "be-20",
+    "number": 20,
+    "question": "What is Database Connection Pooling, and why is it crucial for high-concurrency applications?",
+    "summary": "Explains recycling database connection sockets to reduce handshake latency.",
+    "difficulty": "Medium",
+    "companies": ["Paytm", "Groww", "Microsoft"],
+    "roles": ["Backend"],
+    "type": "interview",
+    "topic": "Performance & Scaling",
+    "whatTheyTest": "Database resource optimization and preventing connection exhaustion errors.",
+    "explanation": "Opening a new database connection for every incoming API request is extremely expensive because it requires a network handshake, authentication, and memory allocation. If you get 10,000 requests at once, the database will run out of memory trying to open 10,000 connections. Connection Pooling creates a fixed pool of connections (e.g., 20) on startup and keeps them open. When a request comes in, it rents a connection from the pool, runs the query, and returns the connection to the pool. This dramatically cuts query latency and saves server resources.",
+    "strongAnswerPoints": [
+      "Cost of database TCP handshakes and connection overhead.",
+      "Recycling open connections instead of opening/closing on every query.",
+      "Configuring pool sizes (e.g. pg-pool, HikariCP) and handling pool exhaustion."
+    ],
+    "whatToAvoid": "Do not recommend setting connection pool sizes to match the number of active API requests (larger pools actually slow down databases due to context switching).",
+    "ytQuery": "Database Connection Pooling Explained"
+  }
+]

@@ -1,0 +1,152 @@
+[
+  {
+    "id": "js-quiz-1",
+    "concept": "Closures",
+    "difficulty": "Medium",
+    "question": "What will be the output of the following code?\n\nfunction createCounter() {\n  let count = 0;\n  return () => ++count;\n}\nconst c1 = createCounter();\nconst c2 = createCounter();\nc1();\nconsole.log(c1(), c2());",
+    "options": ["1 1", "2 0", "2 1", "1 0"],
+    "correctIndex": 1,
+    "explanation": "Every time createCounter() is invoked, it creates a fresh lexical scope instance with a new, independent 'count' variable initialized to 0. c1 and c2 hold different closure references. Invoking c1() twice increments its local count to 2, while c2 remains uninvoked (holding 0).",
+    "trick": "Remember that distinct factory invocations generate completely separate closure environments."
+  },
+  {
+    "id": "js-quiz-2",
+    "concept": "Promises",
+    "difficulty": "Medium",
+    "question": "What is printed to the console?\n\nconst p = new Promise((resolve) => {\n  console.log('1');\n  resolve('2');\n});\nconsole.log('3');\np.then(console.log);",
+    "options": ["1 3 2", "3 1 2", "1 2 3", "2 1 3"],
+    "correctIndex": 0,
+    "explanation": "The executor function of a Promise runs immediately and synchronously when the Promise is constructed, logging '1'. The statement logging '3' runs next synchronously. The .then() callback is registered in the microtask queue and runs asynchronously after the main stack is empty, printing '2'.",
+    "trick": "The Promise executor runs synchronously; only the .then() and .catch() handlers run asynchronously."
+  },
+  {
+    "id": "js-quiz-3",
+    "concept": "Event Loop",
+    "difficulty": "Hard",
+    "question": "What is the output order?\n\nsetTimeout(() => console.log('A'), 0);\nPromise.resolve().then(() => console.log('B'));\nsetImmediate(() => console.log('C'));\nconsole.log('D');",
+    "options": ["D B A C", "D A B C", "B D A C", "D B C A"],
+    "correctIndex": 0,
+    "explanation": "First, synchronous code 'D' is printed. Next, microtasks are processed, so the resolved Promise logs 'B'. Then, the event loop enters the check phase (or next ticks) where 'A' (setTimeout) and 'C' (setImmediate) run. Microtasks always execute before macrotasks.",
+    "trick": "Microtasks (Promises) always preempt Macrotasks (setTimeout)."
+  },
+  {
+    "id": "js-quiz-4",
+    "concept": "this Keyword",
+    "difficulty": "Medium",
+    "question": "What will be logged?\n\nconst obj = {\n  name: 'Alice',\n  sayName: () => {\n    console.log(this.name);\n  }\n};\nobj.sayName.call({ name: 'Bob' });",
+    "options": ["Bob", "Alice", "undefined", "TypeError"],
+    "correctIndex": 2,
+    "explanation": "Arrow functions do not have their own 'this' context; they inherit it lexically from their enclosing scope (which is the window object or global environment here, not the object literal). Using call() has no effect on arrow functions' context binding, so it logs undefined.",
+    "trick": "You cannot bind or change the 'this' context of an arrow function; it is static."
+  },
+  {
+    "id": "js-quiz-5",
+    "concept": "Hoisting",
+    "difficulty": "Easy",
+    "question": "What is the output?\n\nconsole.log(foo);\nvar foo = 'bar';\nconsole.log(foo);",
+    "options": ["undefined, bar", "ReferenceError, bar", "bar, bar", "undefined, undefined"],
+    "correctIndex": 0,
+    "explanation": "Variables declared with 'var' are hoisted and initialized to 'undefined'. The first console.log prints 'undefined'. Then, during the execution phase, 'foo' is assigned 'bar', so the second print displays 'bar'.",
+    "trick": "Only declarations are hoisted, not initializations."
+  },
+  {
+    "id": "js-quiz-6",
+    "concept": "Hoisting",
+    "difficulty": "Medium",
+    "question": "What is the result of executing this code?\n\nconsole.log(a);\nlet a = 10;",
+    "options": ["undefined", "10", "ReferenceError", "Null"],
+    "correctIndex": 2,
+    "explanation": "Variables declared with let and const are hoisted but not initialized. They remain in the 'Temporal Dead Zone' (TDZ) from the start of the block until the declaration line is run. Accessing them in the TDZ throws a ReferenceError.",
+    "trick": "Let and const declarations throw ReferenceError if accessed before their declaration line."
+  },
+  {
+    "id": "js-quiz-7",
+    "concept": "Prototypal Inheritance",
+    "difficulty": "Hard",
+    "question": "If you define:\n\nfunction Person() {}\nPerson.prototype.walk = () => 'walking';\nconst p = new Person();\n\nWhere does the property 'walk' exist?",
+    "options": ["On the object 'p'", "On 'Person.prototype'", "On 'Person'", "On 'Object.prototype'"],
+    "correctIndex": 1,
+    "explanation": "Methods attached to Person.prototype are shared globally. The instance object 'p' does not hold a local copy of 'walk'; it accesses it through its prototype link (__proto__) pointing to Person.prototype.",
+    "trick": "Prototype sharing avoids duplicating method allocations in memory for individual instances."
+  },
+  {
+    "id": "js-quiz-8",
+    "concept": "Scope",
+    "difficulty": "Easy",
+    "question": "What is printed?\n\n{\n  var x = 5;\n  let y = 10;\n}\nconsole.log(x);\nconsole.log(y);",
+    "options": ["5, ReferenceError", "ReferenceError, 10", "5, 10", "ReferenceError, ReferenceError"],
+    "correctIndex": 0,
+    "explanation": "Variables declared with let and const are block-scoped and exist only inside the curly braces. var declarations are function-scoped, ignoring curly blocks. Thus, x is accessible globally, but y throws a ReferenceError.",
+    "trick": "Block scope limits let/const to their containing curly brackets."
+  },
+  {
+    "id": "js-quiz-9",
+    "concept": "Higher Order Functions",
+    "difficulty": "Easy",
+    "question": "What will this print?\n\nconst nums = [1, 2, 3];\nconst res = nums.map(x => {\n  x * 2;\n});\nconsole.log(res);",
+    "options": ["[2, 4, 6]", "[1, 2, 3]", "[undefined, undefined, undefined]", "TypeError"],
+    "correctIndex": 2,
+    "explanation": "The callback function uses curly braces `{ x * 2; }` but does not include a return statement. In JavaScript, block callbacks without an explicit return statement yield 'undefined', so the map creates an array of undefineds.",
+    "trick": "If you open curly braces in arrow functions, you MUST write an explicit return statement."
+  },
+  {
+    "id": "js-quiz-10",
+    "concept": "ES6+ Features",
+    "difficulty": "Easy",
+    "question": "What is the value of result?\n\nconst val = 0;\nconst result = val ?? 10;\nconsole.log(result);",
+    "options": ["10", "0", "undefined", "NaN"],
+    "correctIndex": 1,
+    "explanation": "The nullish coalescing operator (??) only falls back to the right-side value if the left side is null or undefined. Since 0 is a valid number (though falsy in logical OR '||' checks), it is respected and returned.",
+    "trick": "?? strictly checks for null and undefined, protecting valid falsy values like 0 and empty strings."
+  },
+  {
+    "id": "js-quiz-11",
+    "concept": "Event Delegation",
+    "difficulty": "Medium",
+    "question": "Which phase of DOM event propagation is utilized by event delegation to capture events on a parent wrapper?",
+    "options": ["Capturing phase", "Target phase", "Bubbling phase", "None of these"],
+    "correctIndex": 2,
+    "explanation": "Event delegation listens on a parent element for events bubbling up from child nodes. When a click occurs, it bubbles up the DOM tree, allowing the parent listener to intercept and inspect target elements.",
+    "trick": "Bubbling goes UP the DOM tree, capturing goes DOWN."
+  },
+  {
+    "id": "js-quiz-12",
+    "concept": "Module System",
+    "difficulty": "Medium",
+    "question": "Which optimization is natively supported by ES Modules (using static imports) but not by CommonJS require?",
+    "options": ["Code Minification", "Tree Shaking", "Code Obfuscation", "Memory Caching"],
+    "correctIndex": 1,
+    "explanation": "Because ES Modules use static 'import' and 'export' statements, the structure can be analyzed before code execution. This allows bundlers to perform 'tree shaking'—removing unused export bindings to shrink bundle sizes.",
+    "trick": "Static analysis enables compiler-level optimizations like Tree Shaking."
+  },
+  {
+    "id": "js-quiz-13",
+    "concept": "Closures",
+    "difficulty": "Hard",
+    "question": "What is printed?\n\nfor (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 1);\n}",
+    "options": ["0 1 2", "3 3 3", "2 2 2", "0 0 0"],
+    "correctIndex": 1,
+    "explanation": "Because 'i' is declared with 'var', it is function-scoped (or global here). The loop finishes executing synchronously, updating 'i' to 3. The setTimeout callbacks run later asynchronously, capturing the same shared variable 'i' (which is now 3).",
+    "trick": "Use 'let' instead of 'var' to bind a new, block-scoped value of 'i' to each iteration's closure."
+  },
+  {
+    "id": "js-quiz-14",
+    "concept": "this Keyword",
+    "difficulty": "Medium",
+    "question": "What will be the output of this code?\n\nconst user = {\n  name: 'Bob',\n  greet() {\n    function inner() {\n      console.log(this.name);\n    }\n    inner();\n  }\n};\nuser.greet();",
+    "options": ["Bob", "undefined", "TypeError", "GlobalName"],
+    "correctIndex": 1,
+    "explanation": "Although greet() is called on the 'user' object (binding 'this' to user), the inner() function is defined inside it and called as a standard function (inner()). Standard function calls bind 'this' to the global object (window/global) or undefined in strict mode, losing the user context.",
+    "trick": "A nested standard function call resets 'this' to the global object or undefined."
+  },
+  {
+    "id": "js-quiz-15",
+    "concept": "Promises",
+    "difficulty": "Hard",
+    "question": "What is printed?\n\nPromise.resolve('A')\n  .then(res => {\n    console.log(res);\n    return 'B';\n  })\n  .then(res => {\n    console.log(res);\n    throw new Error('C');\n  })\n  .catch(err => {\n    console.log(err.message);\n    return 'D';\n  })\n  .then(res => {\n    console.log(res);\n  });",
+    "options": ["A B C D", "A B C", "A B Error D", "A B"],
+    "correctIndex": 0,
+    "explanation": "The promise chain resolves 'A' and prints it. The first then returns 'B', passing it to the second then which prints 'B' and throws 'C'. The catch block intercepts this error and prints 'C', then returns 'D'. The final then receives the recovered return value and prints 'D'.",
+    "trick": "A .catch() block returns a resolved Promise with its returned value, allowing the chain to continue."
+  }
+]

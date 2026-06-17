@@ -1,0 +1,152 @@
+[
+  {
+    "id": "quant-1",
+    "category": "Quantitative",
+    "question": "A train 150 meters long passes a telegraph post in 12 seconds. Find the speed of the train in km/hr.",
+    "options": ["45 km/hr", "50 km/hr", "36 km/hr", "54 km/hr"],
+    "correctIndex": 0,
+    "explanation": "Step 1: Calculate the speed in meters per second (m/s).\nSpeed = Distance / Time. Here, distance is the length of the train (150 m) and time is 12 seconds.\nSpeed = 150 / 12 = 12.5 m/s.\nStep 2: Convert speed from m/s to km/hr.\nTo convert m/s to km/hr, multiply by 18/5.\nSpeed = 12.5 * (18 / 5) = 2.5 * 18 = 45 km/hr.",
+    "trick": "Direct formula: Speed in km/hr = (Length / Time) * (18 / 5). Plug in: (150 / 12) * (18 / 5) = 45.",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "quant-2",
+    "category": "Quantitative",
+    "question": "Two trains of lengths 120 m and 80 m are running in opposite directions on parallel tracks at speeds of 42 km/hr and 30 km/hr respectively. In what time will they cross each other?",
+    "options": ["10 seconds", "12 seconds", "8 seconds", "15 seconds"],
+    "correctIndex": 0,
+    "explanation": "Step 1: Find the total distance to be covered, which is the sum of the lengths of both trains.\nDistance = 120 + 80 = 200 meters.\nStep 2: Calculate relative speed. Since they are running in opposite directions, their speeds add up.\nRelative Speed = 42 + 30 = 72 km/hr.\nStep 3: Convert speed from km/hr to m/s.\nSpeed = 72 * (5 / 18) = 4 * 5 = 20 m/s.\nStep 4: Find the time taken to cross.\nTime = Distance / Relative Speed = 200 / 20 = 10 seconds.",
+    "trick": "Relative speed in opposite directions adds up. Time = (L1 + L2) / (S1 + S2). Remember to convert speeds to m/s by multiplying by 5/18.",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "quant-3",
+    "category": "Quantitative",
+    "question": "A man travels from point A to B at a speed of 40 km/hr and returns back to A at a speed of 60 km/hr. What is his average speed for the entire journey?",
+    "options": ["50 km/hr", "48 km/hr", "45 km/hr", "52 km/hr"],
+    "correctIndex": 1,
+    "explanation": "Step 1: Understand that average speed is not the simple arithmetic mean (which would be 50). Since the distance traveled each way is identical, we must use the harmonic mean.\nStep 2: Formula for average speed when distances are equal is:\nAverage Speed = 2xy / (x + y), where x is the forward speed (40) and y is the return speed (60).\nAverage Speed = (2 * 40 * 60) / (40 + 60) = 4800 / 100 = 48 km/hr.",
+    "trick": "Always use 2xy/(x+y) when the distance for both speeds is the same. 2 * 40 * 60 / 100 = 48.",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "quant-4",
+    "category": "Quantitative",
+    "question": "A can complete a work in 12 days and B can do the same work in 18 days. If they work together, in how many days will the work be completed?",
+    "options": ["6.2 days", "7.5 days", "7.2 days", "8 days"],
+    "correctIndex": 2,
+    "explanation": "Step 1: Calculate the work done by A and B in 1 day.\nA's 1-day work = 1/12, B's 1-day work = 1/18.\nStep 2: Add their 1-day work together.\nCombined 1-day work = 1/12 + 1/18 = (3 + 2) / 36 = 5/36.\nStep 3: Find the total days required by taking the reciprocal of their combined 1-day work.\nTotal Days = 36 / 5 = 7.2 days.",
+    "trick": "Shortcut formula: (A * B) / (A + B). Plug in: (12 * 18) / (12 + 18) = 216 / 30 = 7.2.",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "quant-5",
+    "category": "Quantitative",
+    "question": "Pipe A can fill a tank in 6 hours, while Pipe B can empty the full tank in 8 hours. If both pipes are opened together when the tank is empty, how long will it take to fill the tank?",
+    "options": ["24 hours", "14 hours", "12 hours", "18 hours"],
+    "correctIndex": 0,
+    "explanation": "Step 1: Calculate the filling and emptying rates per hour.\nFilling rate of Pipe A = 1/6 of the tank per hour.\nEmptying rate of Pipe B = -1/8 of the tank per hour.\nStep 2: Calculate the net rate when both are open.\nNet rate = 1/6 - 1/8 = (4 - 3) / 24 = 1/24 of the tank per hour.\nStep 3: Take the reciprocal of the net rate to find the total time.\nTotal time = 24 hours.",
+    "trick": "Shortcut formula: (A * B) / (B - A) for one filling and one emptying source. (6 * 8) / (8 - 6) = 48 / 2 = 24 hours.",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "quant-6",
+    "category": "Quantitative",
+    "question": "A's salary is 25% more than B's salary. By what percentage is B's salary less than A's salary?",
+    "options": ["25%", "20%", "15%", "30%"],
+    "correctIndex": 1,
+    "explanation": "Step 1: Set B's salary to a simple baseline, say 100.\nB's salary = 100.\nStep 2: Calculate A's salary based on B's.\nSince A's salary is 25% more than B's, A's salary = 100 + 25 = 125.\nStep 3: Calculate by how much B's salary is less than A's.\nDifference = 125 - 100 = 25.\nStep 4: Find the percentage difference relative to A's salary.\nPercentage less = (Difference / A's salary) * 100 = (25 / 125) * 100 = 20%.",
+    "trick": "Formula: [R / (100 + R)] * 100, where R is the percentage increase. [25 / (100 + 25)] * 100 = (25/125)*100 = 20%.",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "quant-7",
+    "category": "Quantitative",
+    "question": "The population of a town increases by 10% annually. If the present population is 20,000, what will be the population after 2 years?",
+    "options": ["22,000", "24,000", "24,200", "22,200"],
+    "correctIndex": 2,
+    "explanation": "Step 1: Calculate the population after the first year.\nPopulation increase = 10% of 20,000 = 2,000.\nPopulation after Year 1 = 20,000 + 2,000 = 22,000.\nStep 2: Calculate the population after the second year.\nPopulation increase = 10% of 22,000 = 2,200.\nPopulation after Year 2 = 22,000 + 2,200 = 24,200.",
+    "trick": "Use compound interest formula: A = P * (1 + R/100)^N. A = 20000 * (1.1)^2 = 20000 * 1.21 = 24,200.",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "quant-8",
+    "category": "Quantitative",
+    "question": "An article is marked 40% above the cost price, and a discount of 20% is given on the marked price. Find the net profit percentage.",
+    "options": ["20%", "12%", "16%", "10%"],
+    "correctIndex": 1,
+    "explanation": "Step 1: Assume a cost price (CP) of 100.\nCP = 100.\nStep 2: Calculate the marked price (MP) which is 40% above CP.\nMP = 100 * 1.40 = 140.\nStep 3: Calculate the selling price (SP) after a 20% discount on MP.\nDiscount = 20% of 140 = 28.\nSP = 140 - 28 = 112.\nStep 4: Calculate the profit percentage.\nProfit = SP - CP = 112 - 100 = 12.\nProfit Percentage = (12 / 100) * 100 = 12%.",
+    "trick": "Apply successive percentage change formula: a + b + (ab/100), where markup a = +40 and discount b = -20.\n40 - 20 + [(40 * -20) / 100] = 20 - 8 = 12%.",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "quant-9",
+    "category": "Quantitative",
+    "question": "A dishonest dealer claims to sell his goods at cost price, but uses a false weight of 900 grams for a kilogram. Find his profit percentage.",
+    "options": ["10%", "11.11%", "9.09%", "12.5%"],
+    "correctIndex": 1,
+    "explanation": "Step 1: Understand that the dealer only gives 900g of goods instead of 1000g, while charging for 1000g.\nStep 2: Let the cost of 1g of goods be 1 unit.\nCP of goods sold to customer = CP of 900g = 900 units.\nSP charged to customer = CP of 1000g = 1000 units.\nStep 3: Calculate profit.\nProfit = SP - CP = 1000 - 900 = 100 units.\nStep 4: Calculate profit percentage.\nProfit % = (Profit / CP) * 100 = (100 / 900) * 100 = 100/9 = 11.11%.",
+    "trick": "Formula: [Error / (True Value - Error)] * 100. Error = 100g. [100 / (1000 - 100)] * 100 = (100/900)*100 = 11.11%.",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "quant-10",
+    "category": "Quantitative",
+    "question": "The average age of 10 students in a class is 15 years. When a new student joins, the average age becomes 16 years. What is the age of the new student?",
+    "options": ["26 years", "25 years", "28 years", "30 years"],
+    "correctIndex": 0,
+    "explanation": "Step 1: Calculate the total sum of ages of the original 10 students.\nTotal Age (10 students) = 10 * 15 = 150 years.\nStep 2: Calculate the total sum of ages after the new student joins (making it 11 students).\nTotal Age (11 students) = 11 * 16 = 176 years.\nStep 3: Find the age of the new student by taking the difference.\nAge of new student = 176 - 150 = 26 years.",
+    "trick": "New value = New Average + (Number of original items * change in average) = 16 + (10 * 1) = 26.",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "quant-11",
+    "category": "Quantitative",
+    "question": "The average of 5 consecutive odd numbers is 23. Find the value of the largest number.",
+    "options": ["25", "29", "27", "31"],
+    "correctIndex": 2,
+    "explanation": "Step 1: Understand that for an odd number of consecutive terms in an arithmetic progression, the average is exactly the middle term.\nStep 2: The middle term (3rd term) is 23.\nStep 3: Since they are consecutive odd numbers, they increase by 2.\n4th term = 23 + 2 = 25.\n5th term (largest) = 25 + 2 = 27.",
+    "trick": "For consecutive AP terms, Average = Middle term. For 5 numbers, middle is 3rd. Largest = Avg + (N - 1) = 23 + (5 - 1) = 27.",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "quant-12",
+    "category": "Quantitative",
+    "question": "A, B and C invest in a business in the ratio of 3 : 4 : 5. If the total profit at the end of the year is Rs 24,000, find C's share of the profit.",
+    "options": ["Rs 8,000", "Rs 10,000", "Rs 12,000", "Rs 6,000"],
+    "correctIndex": 1,
+    "explanation": "Step 1: Find the sum of the ratio parts.\nTotal parts = 3 + 4 + 5 = 12.\nStep 2: Calculate the value of 1 ratio part.\nValue per part = Total profit / Total parts = 24,000 / 12 = Rs 2,000.\nStep 3: Calculate C's share (which corresponds to 5 parts).\nC's share = 5 * 2,000 = Rs 10,000.",
+    "trick": "Direct calculation: Share = (Ratio of C / Sum of Ratios) * Total Profit = (5 / 12) * 24000 = 5 * 2000 = 10,000.",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "quant-13",
+    "category": "Quantitative",
+    "question": "A mixture of 40 liters of milk and water contains 10% water. How much water must be added to make it 20% water in the new mixture?",
+    "options": ["5 liters", "4 liters", "6 liters", "8 liters"],
+    "correctIndex": 0,
+    "explanation": "Step 1: Calculate the initial volumes of milk and water.\nWater = 10% of 40 = 4 liters.\nMilk = 40 - 4 = 36 liters.\nStep 2: Since we only add water, the volume of milk remains constant at 36 liters.\nIn the new mixture, water is 20%, which means milk must represent 80% of the total volume.\nStep 3: Find the total volume of the new mixture.\n80% of New Mixture = 36 liters => New Mixture = 36 / 0.8 = 45 liters.\nStep 4: Find the volume of water to be added.\nWater added = New Mixture volume - Old Mixture volume = 45 - 40 = 5 liters.",
+    "trick": "Formula: Water to add = [Total * (New% - Old%)] / (100 - New%) = [40 * (20 - 10)] / (100 - 20) = (40 * 10) / 80 = 400/80 = 5.",
+    "difficulty": "Medium"
+  },
+  {
+    "id": "quant-14",
+    "category": "Quantitative",
+    "question": "The difference between simple interest and compound interest on a sum of money for 2 years at 10% per annum is Rs 50. Find the principal sum.",
+    "options": ["Rs 5,000", "Rs 6,000", "Rs 4,000", "Rs 8,000"],
+    "correctIndex": 0,
+    "explanation": "Step 1: Use the standard formula for the difference between CI and SI for 2 years:\nDifference (D) = P * (R / 100)^2, where P is the principal and R is the rate of interest (10%).\nStep 2: Substitute the known values into the equation.\n50 = P * (10 / 100)^2\n50 = P * (1 / 10)^2\n50 = P * (1 / 100)\nStep 3: Solve for P.\nP = 50 * 100 = Rs 5,000.",
+    "trick": "Direct formula for 2-year difference: D = P(R/100)^2. So, P = D * 10000 / R^2. Here: 50 * 10000 / 100 = 5,000.",
+    "difficulty": "Easy"
+  },
+  {
+    "id": "quant-15",
+    "category": "Quantitative",
+    "question": "A sum of money doubles itself in 5 years under compound interest. In how many years will it become 8 times itself?",
+    "options": ["15 years", "10 years", "20 years", "25 years"],
+    "correctIndex": 0,
+    "explanation": "Step 1: Understand that compound interest grows exponentially.\nIf the sum starts at 1, it becomes 2 in 5 years.\nStep 2: In the next 5 years, it will double again (become 4 times the principal).\nTime elapsed = 10 years, Value = 4.\nStep 3: In the next 5 years, it will double again (become 8 times the principal).\nTime elapsed = 15 years, Value = 8.",
+    "trick": "If a sum becomes 2^k times in N years, then it becomes 2^(k*m) times in N*m years. Here, 8 times is 2^3. Time taken = 5 * 3 = 15 years.",
+    "difficulty": "Medium"
+  }
+]

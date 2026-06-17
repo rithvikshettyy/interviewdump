@@ -1,0 +1,402 @@
+[
+  {
+    "id": "scenario-1",
+    "number": 1,
+    "question": "How would you handle a sudden 100% database CPU utilization spike in production?",
+    "summary": "During a high-traffic sale event, your PostgreSQL database CPU utilization suddenly jumps to 100%, causing massive API latency and timeouts. You need to quickly identify the bottleneck and restore systems without causing data loss.",
+    "difficulty": "Hard",
+    "companies": ["Swiggy", "Zomato", "PhonePe"],
+    "roles": ["Backend", "Software Engineer"],
+    "type": "scenario",
+    "topic": "Production Issues",
+    "whatTheyTest": "Triage priority, logging literacy, and using safe degradation strategies over dangerous restarts.",
+    "explanation": "First, I would look at active query logs using pg_stat_activity to find slow, unindexed, or locking queries. Second, I would gracefully terminate the worst blocking queries using pg_terminate_backend. Third, if traffic is organic, I would route read queries to read replicas or apply rate limiting to secondary APIs (like catalog filters) to protect connection pools. Finally, I would add missing indexes or scale up the database instance once stabilized.",
+    "whatToAvoid": "Bad Answer: 'I would restart the database server immediately to clear the load.' (Restarting during heavy writes can corrupt data, empty connection cache, and the spike will resume immediately once back online).",
+    "strongAnswerPoints": [
+      "Use pg_stat_activity to inspect queries.",
+      "Kill blocking tasks selectively.",
+      "Offload reads to replicas."
+    ],
+    "ytQuery": "Database CPU Spike Troubleshooting Postgres"
+  },
+  {
+    "id": "scenario-2",
+    "number": 2,
+    "question": "How would you design a notification service that scales to millions of users daily?",
+    "summary": "You are asked to build a system that delivers email, SMS, and push notifications. The system must support delivery priority (e.g. OTPs vs newsletters) and avoid getting blocked by external vendor failures.",
+    "difficulty": "Hard",
+    "companies": ["Flipkart", "Amazon", "Razorpay"],
+    "roles": ["Backend", "Software Engineer"],
+    "type": "scenario",
+    "topic": "Architecture Decisions",
+    "whatTheyTest": "Decoupled architecture design, queue management, and fault tolerance strategies.",
+    "explanation": "I would design this using an asynchronous event-driven model. The client sends a request to an API Gateway, which pushes it to a Message Queue (like Kafka or RabbitMQ). I would create separate queues for different priorities: a high-priority queue for OTPs/receipts and a low-priority queue for marketing messages. Worker instances consume these queues and call external providers. If a provider fails, the worker retries using exponential backoff with jitter and eventually redirects to a secondary provider or moves the message to a Dead Letter Queue (DLQ).",
+    "whatToAvoid": "Bad Answer: 'I would make synchronous HTTP calls to notification vendors in the main request cycle.' (This blocks connection pools, slows APIs, and causes message loss if a vendor is temporarily down).",
+    "strongAnswerPoints": [
+      "Decouple with Message Queues.",
+      "Separate queues by priority level (OTP vs Marketing).",
+      "Implement provider failover and DLQ."
+    ],
+    "ytQuery": "Notification Service System Design"
+  },
+  {
+    "id": "scenario-3",
+    "number": 3,
+    "question": "How do you handle a code review conflict where another developer disagrees with your design?",
+    "summary": "You submit a PR for a new service using functional programming patterns. A senior reviewer comments that it should be refactored into object-oriented classes to match the rest of the codebase, which would delay your release by a week.",
+    "difficulty": "Medium",
+    "companies": ["Atlassian", "CRED", "Groww"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Code Review Conflicts",
+    "whatTheyTest": "Communication maturity, balancing consistency with innovation, and resolving conflicts objectively.",
+    "explanation": "I would set up a quick face-to-face or video call to discuss the review, rather than arguing in PR comments. I would listen to the senior developer's reasoning, which is likely focused on team maintainability and codebase consistency. I would explain my rationale (e.g. better testability or concurrency safety with functional programming). If the team standard dictates OOP, I would conform to the codebase style rather than force a personal preference, but if functional programming offers a massive technical benefit, I would propose a compromise or discuss introducing it as a team standard in a separate meeting.",
+    "whatToAvoid": "Bad Answer: 'I would ignore the comments, merge the PR, or get defensive about my code quality.' (This harms team dynamics and leads to fragmented, unmaintainable codebases).",
+    "strongAnswerPoints": [
+      "Resolve conflicts through active discussion rather than comment threads.",
+      "Prioritize overall codebase consistency over personal coding style.",
+      "Focus on objective trade-offs: maintainability, performance, and timelines."
+    ],
+    "ytQuery": "Dealing with Code Review Conflict Developer"
+  },
+  {
+    "id": "scenario-4",
+    "number": 4,
+    "question": "How would you debug a memory leak causing container crashes every 4 hours?",
+    "summary": "Your Node.js backend container crashes periodically due to Out-Of-Memory (OOM) errors. The crashes occur under consistent load, and standard application logs do not show any database timeouts or syntax exceptions.",
+    "difficulty": "Hard",
+    "companies": ["Zepto", "Swiggy", "Google"],
+    "roles": ["Backend", "Software Engineer"],
+    "type": "scenario",
+    "topic": "Performance Bugs",
+    "whatTheyTest": "Memory profiling skills, garbage collection understanding, and structured troubleshooting.",
+    "explanation": "First, I would replicate the leak in a staging environment by generating synthetic traffic. Second, I would run the Node.js process with memory profiling tools (like Chrome DevTools or ndb) to take heap snapshots at regular intervals. By comparing snapshots, I would identify which objects are increasing in size and not being garbage collected. Common culprits are active global event listeners that are never removed, or growing in-memory caches. Finally, I would write a regression test to ensure memory remains stable after fixing the leak.",
+    "whatToAvoid": "Bad Answer: 'I would increase the container's RAM or schedule a cron job to restart the server every 3 hours.' (This does not solve the root bug and only masks the issue, which will fail again under higher traffic).",
+    "strongAnswerPoints": [
+      "Replicate the leak in staging and take heap snapshots.",
+      "Compare snapshots to locate objects escaping garbage collection.",
+      "Check for lingering event listeners or growing global arrays."
+    ],
+    "ytQuery": "Debugging NodeJS Memory Leaks Heap Snapshot"
+  },
+  {
+    "id": "scenario-5",
+    "number": 5,
+    "question": "What would you do if a security vulnerability is discovered in an NPM dependency in production?",
+    "summary": "A high-severity remote code execution vulnerability (RCE) is announced in a parser library used by your profile upload service. The library is deeply integrated into your application.",
+    "difficulty": "Medium",
+    "companies": ["Adobe", "Salesforce", "Razorpay"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Security Incidents",
+    "whatTheyTest": "Risk assessment, patching security holes, and container isolation techniques.",
+    "explanation": "First, I would verify if our application exposes the specific vulnerable code path of the library. If it is exposed, I would immediately check for an updated version of the package containing a security patch and deploy it to staging. If no patch exists, I would temporarily disable the profile upload endpoint or block input with custom validation filters at the API gateway level. Once a secure patch is verified in staging, I would roll it out to production immediately.",
+    "whatToAvoid": "Bad Answer: 'I would wait for the next scheduled sprint release to update all dependencies.' (Security issues must be assessed and hotfixed immediately to prevent potential exploits).",
+    "strongAnswerPoints": [
+      "Assess exposure risk and vulnerability reach.",
+      "Upgrade libraries immediately to patched versions.",
+      "Implement temporary blocks if no patches are available."
+    ],
+    "ytQuery": "Patching NPM Vulnerabilities Security"
+  },
+  {
+    "id": "scenario-6",
+    "number": 6,
+    "question": "How do you decide when to pay down tech debt vs building new product features?",
+    "summary": "Your team's velocity is dropping because of a poorly designed legacy system. Product managers are pushing for a major new dashboard feature, but developers want to spend two weeks refactoring the legacy modules first.",
+    "difficulty": "Medium",
+    "companies": ["Meesho", "Groww", "Atlassian"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Tech Debt",
+    "whatTheyTest": "Balancing business priorities with engineering health and demonstrating business empathy.",
+    "explanation": "I would avoid treating this as a binary choice. I would analyze the legacy code and see if refactoring is required to build the new dashboard feature safely. If it is, I would combine them, estimating the dashboard task to include refactoring of the dependencies. Otherwise, I would present a data-driven case to the product manager, explaining how spending 20% of our capacity on cleaning legacy code now will increase team velocity by 50% for future features. This aligns engineering health with business goals.",
+    "whatToAvoid": "Bad Answer: 'I would refuse to write new features until we are allowed to refactor the entire system.' (Refusing to deliver product features harms the business; tech debt must be explained in terms of business impact).",
+    "strongAnswerPoints": [
+      "Translate technical issues into business impacts (velocity, downtime).",
+      "Propose incremental refactoring rather than complete rewrites.",
+      "Reserve a percentage of sprint capacity for tech debt tasks."
+    ],
+    "ytQuery": "Managing Tech Debt vs Product Features"
+  },
+  {
+    "id": "scenario-7",
+    "number": 7,
+    "question": "How do you handle scaling a database when simple scaling-up (vertical) is no longer options?",
+    "summary": "Your database server is at maximum capacity. You have upgraded to the largest cloud instance available, but queries are still choking during peak traffic spikes.",
+    "difficulty": "Hard",
+    "companies": ["Google", "Amazon", "Zepto"],
+    "roles": ["Backend", "Software Engineer"],
+    "type": "scenario",
+    "topic": "Scaling Problems",
+    "whatTheyTest": "Knowledge of advanced database scaling techniques: caching, replication, and sharding.",
+    "explanation": "When vertical scaling is exhausted, I would follow a structured plan. First, I would introduce a caching layer (like Redis) for read-heavy queries. Second, I would set up read replicas and separate read/write traffic in the application layer. Third, if the write volume is the bottleneck, I would partition tables by ranges or implement Database Sharding, splitting the data across multiple database instances based on a shard key (like customer_id). This allows database operations to scale horizontally.",
+    "whatToAvoid": "Bad Answer: 'I would rewrite the application in a faster language to reduce database connections.' (Language performance is rarely the database bottleneck; database architectural changes are required).",
+    "strongAnswerPoints": [
+      "Offload reads using Redis caches and read replicas.",
+      "Implement partition tables to reduce table scan overhead.",
+      "Sharding data horizontally by a shard key."
+    ],
+    "ytQuery": "Database Sharding Scaling Postgres MySQL"
+  },
+  {
+    "id": "scenario-8",
+    "number": 8,
+    "question": "What do you do if a buggy deployment passes CI/CD and breaks checkout in production?",
+    "summary": "You deploy a change that passes all tests, but minutes after release, error rates spike and checkout requests begin failing, blocking customer transactions.",
+    "difficulty": "Medium",
+    "companies": ["Juspay", "Swiggy", "Zomato"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Bad Deployment",
+    "whatTheyTest": "Emergency triage priority, rollback speed, and blameless post-mortem execution.",
+    "explanation": "First, my absolute priority is to stop the damage: I would trigger an immediate rollback to the last stable release. I would not try to debug the code in production while checkout is broken. Second, once the production site is healthy again, I would replicate the bug in a staging environment using the deployment logs. Third, I would fix the bug, add a regression test to prevent it from happening again, and run a blameless post-mortem to identify why our automated tests failed to catch the issue.",
+    "whatToAvoid": "Bad Answer: 'I would try to deploy a quick code hotfix immediately to fix the bug in production.' (Hotfixing under pressure is prone to introducing more bugs; rolling back to a known stable build is always safer).",
+    "strongAnswerPoints": [
+      "Rollback immediately to limit business damage.",
+      "Debug in staging/local environments, never in live production.",
+      "Write regression tests to prevent the bug from returning."
+    ],
+    "ytQuery": "Production Incident Management rollback"
+  },
+  {
+    "id": "scenario-9",
+    "number": 9,
+    "question": "Tell me about a time you made a significant mistake and how you resolved it.",
+    "summary": "A behavioral interview question evaluating your self-awareness, accountability, and ability to learn from failures.",
+    "difficulty": "Easy",
+    "companies": ["TCS Digital", "Infosys SP", "Microsoft"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Behavioral: Failure",
+    "whatTheyTest": "Accountability, handling pressure, and personal development.",
+    "explanation": "I would structure this using the STAR method. I would describe a real mistake (e.g. accidentally deleting a test database due to config confusion). I would explain how I took immediate ownership, notified my manager, and helped restore the database from backups within an hour. Finally, I would explain the prevention measures I introduced, such as updating the deploy scripts to check the environment flag and block manual deletes on test database servers.",
+    "whatToAvoid": "Bad Answer: 'I have never made any major mistakes at work.' (This sounds dishonest or indicates lack of self-awareness; everyone makes mistakes).",
+    "strongAnswerPoints": [
+      "Take immediate ownership and communicate clearly.",
+      "Resolve the immediate issue with a focus on details.",
+      "Introduce automation or process updates to prevent recurrence."
+    ],
+    "ytQuery": "Tell me about a time you failed interview answer"
+  },
+  {
+    "id": "scenario-10",
+    "number": 10,
+    "question": "How do you handle conflict with a team member who is not delivering their tasks?",
+    "summary": "You are pair-programming or collaborating on a feature with another engineer. They are missing their deadlines, which is delaying your deployment and risking your team's sprint goal.",
+    "difficulty": "Easy",
+    "companies": ["Zoho", "CRED", "Wipro Elite"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Behavioral: Conflict",
+    "whatTheyTest": "Empathy, communication maturity, and constructive conflict resolution.",
+    "explanation": "I would start by talking to the team member privately and asking how they are doing, rather than accusing them. I would explain the impact (e.g. 'I noticed the user service tasks are delayed, and I am worried we will miss our release next week'). I would ask if they are blocked by technical issues or need help. If they are struggling, I would pair program with them to unblock them. If the behavior continues and they refuse to collaborate, I would discuss the issue with our manager to adjust sprint commitments.",
+    "whatToAvoid": "Bad Answer: 'I would complain to the manager immediately or complete their work myself without telling anyone.' (This creates resentment and fails to solve the root collaboration problem).",
+    "strongAnswerPoints": [
+      "Address conflicts directly and privately with empathy.",
+      "Focus on the work impact, not personal attacks.",
+      "Offer help and pair programming to unblock them."
+    ],
+    "ytQuery": "Handling conflict with team member interview questions"
+  },
+  {
+    "id": "scenario-11",
+    "number": 11,
+    "question": "How do you manage deadline pressure when you realize you cannot deliver on time?",
+    "summary": "Two days before a major release, you find a bug that requires refactoring your module, making it impossible to finish your task by the committed deadline.",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Paytm", "Meesho"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Behavioral: Deadline Pressure",
+    "whatTheyTest": "Communication proactivity, scope management, and professional integrity.",
+    "explanation": "I would communicate the delay immediately to my manager and stakeholders, rather than waiting until the last minute. I would present a clear explanation of the bug and the technical options. I would offer a solution, such as delivering a simplified version of the feature that works safely (reducing scope), or pushing the release back by two days to deliver the full refactored version. This allows managers to adjust marketing plans or allocate temporary help.",
+    "whatToAvoid": "Bad Answer: 'I would work 18 hours a day to rush it, or release it with the bug and fix it later in production.' (Rushing leads to bad code quality and releasing known bugs damages user trust).",
+    "strongAnswerPoints": [
+      "Communicate delays proactively with clear details.",
+      "Propose alternatives (reduce scope vs push release).",
+      "Focus on code quality and system stability over rushed deadlines."
+    ],
+    "ytQuery": "How to handle missed deadlines software engineer"
+  },
+  {
+    "id": "scenario-12",
+    "number": 12,
+    "question": "What do you do when you are assigned a task with ambiguous requirements?",
+    "summary": "You are asked to 'integrate a payment system' for a new international market, but there are no details on which currencies to support or what the local compliance rules are.",
+    "difficulty": "Medium",
+    "companies": ["Atlassian", "Flipkart", "Razorpay"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Behavioral: Ambiguous Requirements",
+    "whatTheyTest": "Proactivity, business alignment, and structured requirements gathering.",
+    "explanation": "I would not make assumptions. I would start by gathering information. I would write down a list of specific questions (e.g. 'Which currencies are priority? Do we need local wallets like Pix or UPI?'). I would schedule a meeting with the Product Manager to clarify these points. I would also research the documentation of target payment gateways (like Stripe or Adyen). Finally, I would draft a brief technical design document outlining my plan and get approval before writing any code.",
+    "whatToAvoid": "Bad Answer: 'I would guess what is needed, write the code, and fix it later if the product manager objects.' (This leads to wasted engineering time and major refactoring cycles).",
+    "strongAnswerPoints": [
+      "Clarify requirements early by asking targeted questions.",
+      "Collaborate with Product Managers and research gateway docs.",
+      "Write design documents to align on details before coding."
+    ],
+    "ytQuery": "Dealing with ambiguity software engineering interview"
+  },
+  {
+    "id": "scenario-13",
+    "number": 13,
+    "question": "How do you handle critical feedback about your work from a manager?",
+    "summary": "During a performance review, your manager tells you that while your technical code is excellent, your communication style is too aggressive in meetings and is making team members uncomfortable.",
+    "difficulty": "Easy",
+    "companies": ["Microsoft", "Google", "Adobe"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Behavioral: Feedback",
+    "whatTheyTest": "Emotional maturity, willingness to grow, and self-reflection.",
+    "explanation": "I would receive the feedback calmly and avoid getting defensive. I would ask for specific examples of my behavior so I can understand the context (e.g. 'Can you share a meeting where I sounded aggressive?'). I would thank the manager for their honesty. I would explain that my intention is to push for high technical standards, but I realize my tone needs to be more collaborative. I would propose actions, such as asking questions instead of making statements, and check in with my manager in a month for feedback.",
+    "whatToAvoid": "Bad Answer: 'I would explain that the team is too sensitive and that I shouldn't be criticized for being passionate.' (This shows lack of self-awareness and resistance to personal growth).",
+    "strongAnswerPoints": [
+      "Listen to feedback objectively without being defensive.",
+      "Ask for specific examples to understand the behavior.",
+      "Create an action plan to improve and check progress."
+    ],
+    "ytQuery": "How to handle feedback at work interview questions"
+  },
+  {
+    "id": "scenario-14",
+    "number": 14,
+    "question": "How do you handle onboarding a new team member when the team is busy?",
+    "summary": "A junior developer joins your team during a high-pressure sprint. The team does not have time to mentor them, and they are struggling to set up their local environment.",
+    "difficulty": "Easy",
+    "companies": ["Zoho", "Groww", "TCS Digital"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Behavioral: Team Dynamics",
+    "whatTheyTest": "Mentorship qualities, leadership, and team collaboration.",
+    "explanation": "I would volunteer to be their onboarding buddy. I would schedule a 30-minute meeting to help them set up their environment and explain our architecture. To manage my own sprint tasks, I would ask them to document any outdated setup steps they encounter, which updates our onboarding guides. I would assign them small, low-risk bug fixes first to build their confidence, and set up daily check-ins to unblock them.",
+    "whatToAvoid": "Bad Answer: 'I would tell them to read the documentation and avoid bothering the team until the sprint is finished.' (This isolates new hires, delays their integration, and harms team morale).",
+    "strongAnswerPoints": [
+      "Actively support and mentor new team members.",
+      "Unblock environment setup issues to accelerate onboarding.",
+      "Use onboarding feedback to improve team setup guides."
+    ],
+    "ytQuery": "Mentoring junior developers onboarding best practices"
+  },
+  {
+    "id": "scenario-15",
+    "number": 15,
+    "question": "Tell me about a time you took ownership of a project outside your scope.",
+    "summary": "You notice that your application's API documentation is outdated and causing integration delays for the frontend team, even though documenting APIs is not your official task.",
+    "difficulty": "Medium",
+    "companies": ["CRED", "Amazon", "Swiggy"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Behavioral: Ownership",
+    "whatTheyTest": "Proactivity, leadership potential, and focus on team success.",
+    "explanation": "I would explain that I noticed the frontend team was constantly asking questions about API endpoints. Instead of ignoring it, I spent a few hours setting up Swagger/OpenAPI docs for our service. I automated the doc generation from our code annotations. This eliminated integration questions, reduced frontend blocker times, and made it easy for other backend developers to keep docs up to date as they code.",
+    "whatToAvoid": "Bad Answer: 'I only focus on tasks assigned to me in Jira; other tasks are not my responsibility.' (This indicates a lack of proactivity and limit career growth).",
+    "strongAnswerPoints": [
+      "Identify systemic bottlenecks and take action to fix them.",
+      "Automate solutions to prevent future tech debt.",
+      "Help other teams succeed by reducing integration friction."
+    ],
+    "ytQuery": "Taking ownership software engineering interview"
+  },
+  {
+    "id": "scenario-16",
+    "number": 16,
+    "question": "How do you coordinate dependencies with another team on a shared project?",
+    "summary": "Your feature depends on a new API from the security team, but their team has different sprint goals and has scheduled your API delivery for three weeks after your deadline.",
+    "difficulty": "Medium",
+    "companies": ["Meta", "Atlassian", "Salesforce"],
+    "roles": ["Software Engineer", "Backend"],
+    "type": "scenario",
+    "topic": "Behavioral: Collaboration",
+    "whatTheyTest": "Negotiation skills, dependency management, and design mock setups.",
+    "explanation": "I would coordinate with the other team early. I would propose defining the API request/response schema together first. Once we agree on the interface contract, I would mock the API responses in my local code. This allows my team to develop and test our feature independently. In parallel, I would align with both engineering managers to schedule integration testing once their API is delivered. This prevents development blocks.",
+    "whatToAvoid": "Bad Answer: 'I would stop working on my feature and tell my manager that we are blocked by the other team.' (Waiting passively delays projects; you must find ways to work around dependencies).",
+    "strongAnswerPoints": [
+      "Define API schema contracts early to unblock parallel work.",
+      "Mock dependencies to test code flows independently.",
+      "Coordinate integration timelines with both team leads."
+    ],
+    "ytQuery": "Managing dependencies across software teams"
+  },
+  {
+    "id": "scenario-17",
+    "number": 17,
+    "question": "Why do you want to join our company specifically?",
+    "summary": "A culture fit question evaluating if you have researched the company's tech stack, values, and business model, or if you are just applying randomly.",
+    "difficulty": "Easy",
+    "companies": ["Google", "Amazon", "Zomato", "Razorpay"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Culture Fit: Why Us",
+    "whatTheyTest": "Company interest, business alignment, and personal motivation.",
+    "explanation": "I would connect my technical interests with the company's business model. For example, if interviewing at Zomato: 'I am excited by the engineering challenges of managing real-time logistics and food delivery at your scale. I read about how you handle spikes in traffic during major cricket matches using dynamic load balancing, which aligns with my interest in scaling distributed systems. I want to apply my backend experience to solve real-world efficiency challenges.'",
+    "whatToAvoid": "Bad Answer: 'I want to join because you have great benefits, free food, and offer a good salary.' (While true, this doesn't show any interest in the company's business or engineering challenges).",
+    "strongAnswerPoints": [
+      "Research the company's engineering blog or recent tech scaling stories.",
+      "Align your personal career goals with the company's current challenges.",
+      "Focus on what value you can add, not just what benefits you get."
+    ],
+    "ytQuery": "Why do you want to work here software engineer"
+  },
+  {
+    "id": "scenario-18",
+    "number": 18,
+    "question": "Where do you see yourself in 5 years? Career goals?",
+    "summary": "Evaluates your career ambition, stability, and whether your growth expectations match what the company can offer.",
+    "difficulty": "Easy",
+    "companies": ["TCS Digital", "Infosys SP", "Wipro Elite"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Culture Fit: Career Goals",
+    "whatTheyTest": "Ambition, career focus, and matching growth expectations.",
+    "explanation": "I would explain that over the next 2-3 years, my goal is to master backend architecture, take ownership of core services, and mentor junior engineers. In 5 years, I see myself growing into a Tech Lead role, where I can design large systems, align technical decisions with business goals, and help guide team standards. I want to remain hands-on with code while contributing to architecture design.",
+    "whatToAvoid": "Bad Answer: 'In 5 years, I want to be a product manager, start my own startup, or leave software engineering.' (This indicates you are not committed to growing as an engineer within the team).",
+    "strongAnswerPoints": [
+      "Demonstrate a desire to master technical skills first.",
+      "Show interest in leadership growth (Tech Lead/Architect).",
+      "Keep goals realistic and aligned with engineering career paths."
+    ],
+    "ytQuery": "Where do you see yourself in 5 years developer"
+  },
+  {
+    "id": "scenario-19",
+    "number": 19,
+    "question": "How do you manage communication and productivity in a remote work environment?",
+    "summary": "Evaluates your self-discipline, async communication skills, and how you keep team members updated.",
+    "difficulty": "Easy",
+    "companies": ["Atlassian", "CRED", "Salesforce"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Culture Fit: Remote Work",
+    "whatTheyTest": "Self-discipline, asynchronous communication skills, and remote coordination.",
+    "explanation": "I manage this by prioritizing clear, asynchronous communication. I write detailed updates in Slack and document my code designs in shared docs. I write clear commits and PR descriptions so team members can review them without needing a live meeting. I block out focused time for coding, but set up regular check-ins to stay aligned on goals. Finally, if I am blocked, I reach out early and clearly state what I need to move forward.",
+    "whatToAvoid": "Bad Answer: 'I work whenever I feel like it and rarely check Slack; I prefer to work in isolation.' (Remote work requires high availability and proactive updates to build team trust).",
+    "strongAnswerPoints": [
+      "Use asynchronous documentation to keep everyone updated.",
+      "Write clean commits, PR descriptions, and notes.",
+      "Proactively flag blockers early to stay on track."
+    ],
+    "ytQuery": "How to answer remote work interview questions"
+  },
+  {
+    "id": "scenario-20",
+    "number": 20,
+    "question": "How do you handle a fast-paced environment with changing priorities?",
+    "summary": "Evaluates your mental flexibility, adaptability, and how you handle shifting sprint goals.",
+    "difficulty": "Easy",
+    "companies": ["Zepto", "Swiggy", "Zomato"],
+    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "type": "scenario",
+    "topic": "Culture Fit: Adaptability",
+    "whatTheyTest": "Adaptability, resilience, and managing changing priorities.",
+    "explanation": "I see changing priorities as a natural part of a fast-growing startup responding to market feedback. When priorities shift, I stop and align with my manager on what needs to be paused or dropped. I focus on delivering clean, modular code that is easy to extend or refactor later when requirements change. I don't get frustrated; I prioritize my tasks to deliver the highest value first.",
+    "whatToAvoid": "Bad Answer: 'I get stressed when plans change, and I think requirements should never change once a sprint starts.' (This indicates a lack of flexibility, which is a blocker in startup environments).",
+    "strongAnswerPoints": [
+      "Accept shifting priorities as a natural response to customer feedback.",
+      "Clarify what tasks should be paused or dropped with your lead.",
+      "Write modular code that is easy to refactor when requirements change."
+    ],
+    "ytQuery": "Handling fast paced environment interview question"
+  }
+]
