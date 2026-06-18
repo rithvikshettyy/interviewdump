@@ -327,7 +327,7 @@ export default function ResumePage() {
 
       <div className="px-6 py-6 max-w-3xl mx-auto w-full flex flex-col gap-4">
         {/* Quick stats bar */}
-        <div className="grid grid-cols-3 gap-3 mb-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-2">
           {[
             ['6 sec', 'Average recruiter scan time'],
             ['75%', 'Resumes rejected by ATS'],

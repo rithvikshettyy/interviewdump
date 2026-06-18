@@ -237,7 +237,7 @@ export default function OopsConceptsPage() {
           />
 
           {/* Panel */}
-          <aside className="fixed right-0 top-0 h-full w-[520px] bg-surface border-l border-border z-50 animate-slideInRight overflow-y-auto flex flex-col justify-between shadow-2xl">
+          <aside className="fixed right-0 top-0 h-full w-full md:w-[520px] bg-surface border-l border-border z-50 animate-slideInRight overflow-y-auto flex flex-col justify-between shadow-2xl">
             <div className="flex-1">
               {/* Header */}
               <div className="sticky top-0 bg-surface border-b border-border p-5 z-10">

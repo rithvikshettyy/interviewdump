@@ -97,12 +97,12 @@ export default function LandingPage() {
             <span className="w-1.5 h-1.5 rounded-full bg-indigo ml-1.5 animate-pulse" />
           </Link>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
             <a
               href="https://github.com/rithvikshettyy/interviewdump"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-text-muted hover:text-text transition-colors"
+              className="hidden sm:block text-sm text-text-muted hover:text-text transition-colors"
             >
               GitHub ↗
             </a>
@@ -110,7 +110,7 @@ export default function LandingPage() {
               href="https://x.com/RithvikShetty04"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-text-muted hover:text-text transition-colors"
+              className="hidden sm:block text-sm text-text-muted hover:text-text transition-colors"
             >
               Twitter ↗
             </a>
@@ -144,7 +144,7 @@ export default function LandingPage() {
         </p>
 
         {/* CTA Buttons */}
-        <div className="mt-10 flex flex-row gap-4 justify-center items-center">
+        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
             href="/login"
             className="bg-indigo text-white px-6 py-3.5 rounded-xl text-base font-semibold hover:bg-indigo-light transition-all shadow-[0_0_24px_rgba(99,102,241,0.3)] flex items-center gap-2"
@@ -260,7 +260,7 @@ export default function LandingPage() {
           Three steps to interview-ready.
         </h2>
 
-        <div className="flex flex-col md:flex-row justify-center gap-16">
+        <div className="flex flex-col md:flex-row justify-center gap-8 md:gap-16">
           {steps.map((step, idx) => (
             <div key={idx} className="flex-1 flex flex-col items-center">
               <span className="text-6xl font-mono text-indigo/20 font-bold select-none">

@@ -89,7 +89,7 @@ export default function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-bg flex items-center justify-center p-6 text-text">
-      <div className="w-full max-w-lg bg-surface border border-border rounded-2xl p-8 relative overflow-hidden shadow-xl">
+      <div className="w-full max-w-lg bg-surface border border-border rounded-2xl p-4 sm:p-8 relative overflow-hidden shadow-xl">
         {/* Step Progress */}
         {renderProgressBar()}
 
