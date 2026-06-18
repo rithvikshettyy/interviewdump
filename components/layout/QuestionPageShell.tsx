@@ -203,7 +203,7 @@ export default function QuestionPageShell({
       />
 
       {/* 2. Progress Cards */}
-      <div className="px-6 pt-6">
+      <div className={`px-6 ${title ? 'pt-6' : 'pt-2'}`}>
         <ProgressCard {...progressData} />
       </div>
 

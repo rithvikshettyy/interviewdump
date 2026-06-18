@@ -259,7 +259,7 @@ export default function RoleWisePage() {
       </div>
 
       {/* 3. Section Header info */}
-      <div className="mt-4 mb-2 px-6">
+      <div className="mt-4 mb-0.5 px-6">
         <h2 className="text-sm font-semibold text-text-muted">
           {selectedRole} — {questionTypes.find((t) => t.value === activeQuestionType)?.label}
         </h2>
