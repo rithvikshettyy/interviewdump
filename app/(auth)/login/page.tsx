@@ -7,8 +7,7 @@ import { Logo } from '@/components/shared/Logo'
 
 export default function LoginPage() {
   const getRedirectUrl = () =>
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (typeof window !== 'undefined' ? window.location.origin : '')
+    typeof window !== 'undefined' ? window.location.origin : ''
 
   const handleGoogleLogin = async () => {
     const supabase = createClient()
