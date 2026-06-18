@@ -2,8 +2,14 @@ import Link from 'next/link'
 import { Logo } from '@/components/shared/Logo'
 
 export const metadata = {
-  title: 'Terms of Service — InterviewDump',
-  description: 'Terms of Service for InterviewDump.',
+  title: 'Terms of Service',
+  description: 'Read the Terms of Service for InterviewDump — the free tech interview prep platform.',
+  alternates: { canonical: 'https://interviewdump.dev/terms' },
+  openGraph: {
+    title: 'Terms of Service | InterviewDump',
+    description: 'Read the Terms of Service for InterviewDump — the free tech interview prep platform.',
+    url: 'https://interviewdump.dev/terms',
+  },
 }
 
 export default function TermsPage() {

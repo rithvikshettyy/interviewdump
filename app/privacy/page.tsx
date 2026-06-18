@@ -2,8 +2,14 @@ import Link from 'next/link'
 import { Logo } from '@/components/shared/Logo'
 
 export const metadata = {
-  title: 'Privacy Policy — InterviewDump',
-  description: 'Privacy Policy for InterviewDump.',
+  title: 'Privacy Policy',
+  description: 'Read the Privacy Policy for InterviewDump — what data we collect, how we use it, and your rights.',
+  alternates: { canonical: 'https://interviewdump.dev/privacy' },
+  openGraph: {
+    title: 'Privacy Policy | InterviewDump',
+    description: 'Read the Privacy Policy for InterviewDump — what data we collect, how we use it, and your rights.',
+    url: 'https://interviewdump.dev/privacy',
+  },
 }
 
 export default function PrivacyPage() {
