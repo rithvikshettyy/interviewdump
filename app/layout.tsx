@@ -5,6 +5,9 @@ import './globals.css'
 export const metadata: Metadata = {
   title: BRAND_DOCUMENT_TITLE,
   description: 'Free interview prep. No BS. No paywall.',
+  verification: {
+    google: 'dlBaHc6d9AT1OtAmRJHJSU2WTweIjUp8thlmWEKFYXQ',
+  },
   icons: {
     icon: [
       { url: '/favicon.png', sizes: '512x512', type: 'image/png' },
