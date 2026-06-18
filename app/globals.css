@@ -89,6 +89,12 @@
 }
 .animate-fadeIn { animation: fadeIn 0.25s ease forwards; }
 
+@keyframes fadeInScale {
+  from { opacity: 0; transform: translateY(8px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-fadeIn-fast { animation: fadeInScale 0.15s ease forwards; }
+
 @keyframes slideInRight {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
@@ -106,4 +112,3 @@
   outline: 2px solid var(--indigo) !important;
   outline-offset: 2px !important;
 }
-

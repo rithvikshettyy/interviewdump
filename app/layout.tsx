@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
+import { BRAND_DOCUMENT_TITLE } from '@/components/shared/Logo'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'InterviewDump',
+  title: BRAND_DOCUMENT_TITLE,
   description: 'Free interview prep. No BS. No paywall.',
 }
 

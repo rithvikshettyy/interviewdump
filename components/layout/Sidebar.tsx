@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import Logo from '@/components/shared/Logo'
+import { Logo } from '@/components/shared/Logo'
 import { createClient } from '@/lib/supabase/client'
 import SettingsDrawer from '@/components/shared/SettingsDrawer'
 import {
@@ -382,7 +382,7 @@ export default function Sidebar() {
         )}
       </div>
 
-      {user && (
+      {user && isSettingsOpen && (
         <SettingsDrawer
           isOpen={isSettingsOpen}
           onClose={() => setIsSettingsOpen(false)}

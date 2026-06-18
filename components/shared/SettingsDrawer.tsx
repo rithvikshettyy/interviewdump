@@ -1,105 +1,227 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import {
-  X,
-  Loader,
-  LogOut,
-  Trash2,
-  User,
-  Target,
-  Code2,
   BarChart2,
   Briefcase,
-  Layers,
   Building2,
+  Check,
+  Code2,
+  Layers,
+  Loader,
+  Target,
+  Trash2,
+  User,
+  X,
+  type LucideIcon,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import FilterDropdown from '@/components/shared/FilterDropdown'
+
+type SettingsUser = {
+  id: string
+  email?: string | null
+  user_metadata?: {
+    avatar_url?: string | null
+    full_name?: string | null
+  } | null
+}
+
+type SettingsProfile = {
+  name?: string | null
+  role?: string | null
+  goal?: string | null
+} | null
 
 interface SettingsDrawerProps {
   isOpen: boolean
   onClose: () => void
-  user: any
-  profile: any
-  onProfileUpdate: (updatedProfile: any) => void
+  user: SettingsUser
+  profile: SettingsProfile
+  onProfileUpdate: (updatedProfile: {
+    name?: string | null
+    role?: string | null
+    goal?: string | null
+  }) => void
 }
 
-// ─── Section Header component ────────────────────────────────────────────────
-function SectionHeader({ icon: Icon, label }: { icon: any; label: string }) {
+interface SettingsSnapshot {
+  name: string
+  selectedRoles: string[]
+  goal: string
+  defaultLanguage: string
+  experienceLevel: string
+  targetCompanyType: string
+  dailyGoal: string
+  focusAreas: string[]
+  interviewTimeline: string
+}
+
+const roleOptions = [
+  'Frontend Developer',
+  'Backend Developer',
+  'Full Stack Developer',
+  'ML / AI Engineer',
+  'DevOps / Cloud',
+  'Mobile Developer',
+  'Data Analyst',
+  'QA / SDET',
+]
+
+const focusAreaOptions = [
+  'Interview Questions',
+  'DSA',
+  'Core CS Subjects',
+  'Scenario Based',
+  'Aptitude',
+  'SQL',
+  'OOPs Concepts',
+  'Company Questions',
+]
+
+const experienceLevels = ['Beginner', 'Intermediate', 'Expert']
+const companyTypes = ['Any', 'FAANG', 'Unicorn / Product', 'MNC', 'Startup', 'Service / IT']
+const dailyGoalOptions = ['5', '10', '20', '30']
+const timelineOptions = ['ASAP', '< 1 Month', '1-3 Months', '3-6 Months', 'Just Exploring']
+const prepGoalOptions = [
+  'Job Interview',
+  'Learning & Upskilling',
+  'College Placements',
+  'Career Switch',
+]
+const languageOptions = ['JavaScript', 'Python', 'Java', 'C++']
+
+const modalTheme = {
+  '--bg': '#0D1117',
+  '--surface': '#161B22',
+  '--surface-hover': '#1C2333',
+  '--border': '#30363D',
+  '--border-hover': '#3A4554',
+  '--indigo': '#6366F1',
+  '--indigo-light': '#A5B4FC',
+  '--indigo-dim': 'rgba(99, 102, 241, 0.16)',
+  '--text': '#E6EDF3',
+  '--text-muted': '#8B9CB1',
+  '--text-dim': '#9FB0C4',
+  '--red': '#F87171',
+  '--red-dim': 'rgba(248, 113, 113, 0.14)',
+} as CSSProperties
+
+function SectionHeader({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
   return (
-    <div>
-      <div className="flex items-center gap-2 mb-2">
-        <Icon size={12} className="text-text-dim" />
-        <span className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
-          {label}
-        </span>
-      </div>
-      <div className="border-b border-border mb-4" />
+    <div className="flex items-center gap-2 mb-3">
+      <Icon size={16} className="text-indigo-light" />
+      <span className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+        {label}
+      </span>
     </div>
   )
 }
 
-// ─── Chip select component ────────────────────────────────────────────────────
-function ChipGroup({
-  options,
-  selected,
-  onToggle,
-  multi = false,
-}: {
-  options: string[]
-  selected: string | string[]
-  onToggle: (val: string) => void
-  multi?: boolean
-}) {
-  const isSelected = (val: string) =>
-    multi ? (selected as string[]).includes(val) : selected === val
-
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((opt) => (
-        <button
-          key={opt}
-          type="button"
-          onClick={() => onToggle(opt)}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer select-none focus:outline-none ${
-            isSelected(opt)
-              ? 'border-indigo bg-indigo-dim text-indigo-light'
-              : 'border-border bg-bg/25 text-text-muted hover:border-border-hover hover:text-text'
-          }`}
-        >
-          {opt}
-        </button>
-      ))}
-    </div>
-  )
-}
-
-// ─── Inline select wrapper ────────────────────────────────────────────────────
 function SettingsSelect({
+  label,
   value,
   onChange,
   options,
 }: {
+  label: string
   value: string
-  onChange: (v: string) => void
-  options: { value: string; label: string }[]
+  onChange: (value: string) => void
+  options: string[]
 }) {
   return (
-    <select
+    <FilterDropdown
+      label={label}
       value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="w-full bg-bg border border-border rounded-xl px-3 py-2.5 text-text text-sm focus:border-indigo focus:outline-none cursor-pointer"
-    >
-      {options.map((o) => (
-        <option key={o.value} value={o.value}>
-          {o.label}
-        </option>
-      ))}
-    </select>
+      onChange={onChange}
+      options={options}
+      includeResetOption={false}
+      className="min-w-0 w-full"
+      triggerClassName="!bg-bg"
+      panelClassName="bg-surface"
+    />
   )
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+function SelectionPill({
+  label,
+  isSelected,
+  onClick,
+  showCheck = false,
+  className = '',
+}: {
+  label: string
+  isSelected: boolean
+  onClick: () => void
+  showCheck?: boolean
+  className?: string
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={isSelected}
+      className={`flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium text-center transition-all duration-150 cursor-pointer focus:outline-none ${
+        isSelected
+          ? 'bg-indigo-dim border-indigo text-text font-semibold'
+          : 'bg-bg border-border text-text-muted hover:border-border-hover hover:bg-surface-hover hover:text-text'
+      } ${className}`}
+    >
+      {showCheck && isSelected && <Check size={14} className="text-indigo-light flex-shrink-0" />}
+      <span>{label}</span>
+    </button>
+  )
+}
+
+function readStoredValue(key: string, fallback: string) {
+  if (typeof window === 'undefined') return fallback
+  return localStorage.getItem(key) || fallback
+}
+
+function readStoredList(key: string) {
+  if (typeof window === 'undefined') return [] as string[]
+
+  try {
+    const value = localStorage.getItem(key)
+    if (!value) return []
+    const parsed = JSON.parse(value)
+    return Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === 'string') : []
+  } catch {
+    return []
+  }
+}
+
+function parseRoles(role: string | null | undefined) {
+  return role
+    ? role
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean)
+    : []
+}
+
+function buildInitialSettings(profile: SettingsProfile): SettingsSnapshot {
+  return {
+    name: profile?.name || '',
+    selectedRoles: parseRoles(profile?.role),
+    goal: profile?.goal || prepGoalOptions[0],
+    defaultLanguage: readStoredValue('id_default_language', 'JavaScript'),
+    experienceLevel: readStoredValue('id_experience_level', 'Intermediate'),
+    targetCompanyType: readStoredValue('id_target_company_type', 'Any'),
+    dailyGoal: readStoredValue('id_daily_goal', '10'),
+    focusAreas: readStoredList('id_focus_areas'),
+    interviewTimeline: readStoredValue('id_interview_timeline', '1-3 Months'),
+  }
+}
+
+function normalizeList(items: string[]) {
+  return [...items].sort().join('|')
+}
+
+function getErrorMessage(error: unknown, fallback: string) {
+  return error instanceof Error ? error.message : fallback
+}
+
 export default function SettingsDrawer({
   isOpen,
   onClose,
@@ -107,132 +229,123 @@ export default function SettingsDrawer({
   profile,
   onProfileUpdate,
 }: SettingsDrawerProps) {
-  const drawerRef = useRef<HTMLElement>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const [initialSettings, setInitialSettings] = useState<SettingsSnapshot>(() => buildInitialSettings(profile))
 
-  // ── Focus trap and Escape key listener ────────────────────────────────────
-  useEffect(() => {
-    if (!isOpen) return
-
-    const previousActiveElement = document.activeElement as HTMLElement
-
-    // Focus the drawer on open
-    if (drawerRef.current) {
-      drawerRef.current.focus()
-    }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onClose()
-        return
-      }
-
-      if (e.key === 'Tab') {
-        if (!drawerRef.current) return
-        const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        const focusableElements = Array.from(
-          drawerRef.current.querySelectorAll(focusableSelectors)
-        ) as HTMLElement[]
-
-        if (focusableElements.length === 0) return
-
-        const firstElement = focusableElements[0]
-        const lastElement = focusableElements[focusableElements.length - 1]
-
-        if (e.shiftKey) {
-          if (document.activeElement === firstElement) {
-            lastElement.focus()
-            e.preventDefault()
-          }
-        } else {
-          if (document.activeElement === lastElement) {
-            firstElement.focus()
-            e.preventDefault()
-          }
-        }
-      }
-    }
-
-    document.addEventListener('keydown', handleKeyDown)
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      if (previousActiveElement) {
-        previousActiveElement.focus()
-      }
-    }
-  }, [isOpen, onClose])
-
-  // ── DB-backed fields ─────────────────────────────────────────────────────
-  const [name, setName] = useState('')
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([])
-  const [goal, setGoal] = useState('')
-
-  // ── localStorage fields ──────────────────────────────────────────────────
-  const [defaultLanguage, setDefaultLanguage] = useState('JavaScript')
-  const [experienceLevel, setExperienceLevel] = useState('Intermediate')
-  const [targetCompanyType, setTargetCompanyType] = useState('Any')
-  const [dailyGoal, setDailyGoal] = useState('10')
-  const [focusAreas, setFocusAreas] = useState<string[]>([])
-  const [interviewTimeline, setInterviewTimeline] = useState('1-3 Months')
-
-  // ── Status ───────────────────────────────────────────────────────────────
+  const [name, setName] = useState(initialSettings.name)
+  const [selectedRoles, setSelectedRoles] = useState(initialSettings.selectedRoles)
+  const [goal, setGoal] = useState(initialSettings.goal)
+  const [defaultLanguage, setDefaultLanguage] = useState(initialSettings.defaultLanguage)
+  const [experienceLevel, setExperienceLevel] = useState(initialSettings.experienceLevel)
+  const [targetCompanyType, setTargetCompanyType] = useState(initialSettings.targetCompanyType)
+  const [dailyGoal, setDailyGoal] = useState(initialSettings.dailyGoal)
+  const [focusAreas, setFocusAreas] = useState(initialSettings.focusAreas)
+  const [interviewTimeline, setInterviewTimeline] = useState(initialSettings.interviewTimeline)
   const [saving, setSaving] = useState(false)
   const [resetting, setResetting] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
-  // ── Load settings on open ────────────────────────────────────────────────
   useEffect(() => {
-    if (profile) {
-      setName(profile.name || '')
-      setGoal(profile.goal || '')
-      const rolesArray = profile.role
-        ? profile.role.split(',').map((r: string) => r.trim()).filter(Boolean)
-        : []
-      setSelectedRoles(rolesArray)
+    if (!isOpen) return
+
+    const previousActiveElement = document.activeElement as HTMLElement | null
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    modalRef.current?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (event.key !== 'Tab' || !modalRef.current) return
+
+      const focusableSelectors = 'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'
+      const focusableElements = Array.from(
+        modalRef.current.querySelectorAll(focusableSelectors)
+      ) as HTMLElement[]
+
+      if (focusableElements.length === 0) return
+
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        lastElement.focus()
+        event.preventDefault()
+      }
+
+      if (!event.shiftKey && document.activeElement === lastElement) {
+        firstElement.focus()
+        event.preventDefault()
+      }
     }
 
-    // localStorage
-    setDefaultLanguage(localStorage.getItem('id_default_language') || 'JavaScript')
-    setExperienceLevel(localStorage.getItem('id_experience_level') || 'Intermediate')
-    setTargetCompanyType(localStorage.getItem('id_target_company_type') || 'Any')
-    setDailyGoal(localStorage.getItem('id_daily_goal') || '10')
-    setInterviewTimeline(localStorage.getItem('id_interview_timeline') || '1-3 Months')
+    document.addEventListener('keydown', handleKeyDown)
 
-    const savedFocus = localStorage.getItem('id_focus_areas')
-    setFocusAreas(savedFocus ? JSON.parse(savedFocus) : [])
-  }, [profile, isOpen])
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = previousOverflow
+      previousActiveElement?.focus()
+    }
+  }, [isOpen, onClose])
 
   if (!isOpen) return null
 
-  // ── Handlers ─────────────────────────────────────────────────────────────
+  const currentSettings: SettingsSnapshot = {
+    name,
+    selectedRoles,
+    goal,
+    defaultLanguage,
+    experienceLevel,
+    targetCompanyType,
+    dailyGoal,
+    focusAreas,
+    interviewTimeline,
+  }
+
+  const hasChanges =
+    name !== initialSettings.name ||
+    goal !== initialSettings.goal ||
+    defaultLanguage !== initialSettings.defaultLanguage ||
+    experienceLevel !== initialSettings.experienceLevel ||
+    targetCompanyType !== initialSettings.targetCompanyType ||
+    dailyGoal !== initialSettings.dailyGoal ||
+    interviewTimeline !== initialSettings.interviewTimeline ||
+    normalizeList(selectedRoles) !== normalizeList(initialSettings.selectedRoles) ||
+    normalizeList(focusAreas) !== normalizeList(initialSettings.focusAreas)
+
   const handleToggleRole = (roleName: string) => {
     setSelectedRoles((prev) =>
-      prev.includes(roleName) ? prev.filter((r) => r !== roleName) : [...prev, roleName]
+      prev.includes(roleName) ? prev.filter((role) => role !== roleName) : [...prev, roleName]
     )
   }
 
   const handleToggleFocus = (area: string) => {
     setFocusAreas((prev) =>
-      prev.includes(area) ? prev.filter((a) => a !== area) : [...prev, area]
+      prev.includes(area) ? prev.filter((item) => item !== area) : [...prev, area]
     )
   }
 
   const handleSaveSettings = async () => {
     setSaving(true)
     setMessage(null)
+
     try {
       const supabase = createClient()
+      const updatedRole = selectedRoles.join(', ')
 
       const { error } = await supabase.from('profiles').upsert({
         id: user.id,
         name,
         email: user.email,
-        role: selectedRoles.join(', '),
+        role: updatedRole,
         goal,
       })
 
       if (error) throw error
 
-      // Persist localStorage settings
       localStorage.setItem('id_default_language', defaultLanguage)
       localStorage.setItem('id_experience_level', experienceLevel)
       localStorage.setItem('id_target_company_type', targetCompanyType)
@@ -240,17 +353,20 @@ export default function SettingsDrawer({
       localStorage.setItem('id_interview_timeline', interviewTimeline)
       localStorage.setItem('id_focus_areas', JSON.stringify(focusAreas))
 
+      const nextInitialSettings = { ...currentSettings }
+      setInitialSettings(nextInitialSettings)
+
       onProfileUpdate({
         ...profile,
         name,
-        role: selectedRoles.join(', '),
+        role: updatedRole,
         goal,
       })
 
-      setMessage({ type: 'success', text: 'Preferences saved successfully!' })
+      setMessage({ type: 'success', text: 'Changes saved.' })
       setTimeout(() => setMessage(null), 3000)
-    } catch (err: any) {
-      setMessage({ type: 'error', text: err.message || 'Failed to save settings.' })
+    } catch (error) {
+      setMessage({ type: 'error', text: getErrorMessage(error, 'Failed to save settings.') })
     } finally {
       setSaving(false)
     }
@@ -261,10 +377,13 @@ export default function SettingsDrawer({
       !window.confirm(
         'Are you absolutely sure you want to reset all your progress? This will delete all solved status and revision records.'
       )
-    ) return
+    ) {
+      return
+    }
 
     setResetting(true)
     setMessage(null)
+
     try {
       const supabase = createClient()
       const { error } = await supabase
@@ -275,10 +394,12 @@ export default function SettingsDrawer({
       if (error) throw error
 
       localStorage.removeItem('id_favourites')
-      setMessage({ type: 'success', text: 'All progress reset. Please refresh.' })
-      setTimeout(() => { window.location.reload() }, 1500)
-    } catch (err: any) {
-      setMessage({ type: 'error', text: err.message || 'Failed to reset progress.' })
+      setMessage({ type: 'success', text: 'Progress reset. Refreshing now.' })
+      setTimeout(() => {
+        window.location.reload()
+      }, 1200)
+    } catch (error) {
+      setMessage({ type: 'error', text: getErrorMessage(error, 'Failed to reset progress.') })
     } finally {
       setResetting(false)
     }
@@ -289,336 +410,254 @@ export default function SettingsDrawer({
       const supabase = createClient()
       await supabase.auth.signOut()
       window.location.href = '/login'
-    } catch (err) {
-      console.error('Logout error', err)
+    } catch (error) {
+      setMessage({ type: 'error', text: getErrorMessage(error, 'Failed to sign out.') })
     }
   }
 
-  // ── Data ─────────────────────────────────────────────────────────────────
-  const roleOptions = [
-    'Frontend Developer',
-    'Backend Developer',
-    'Full Stack Developer',
-    'ML / AI Engineer',
-    'DevOps / Cloud',
-    'Mobile Developer',
-    'Data Analyst',
-    'QA / SDET',
-  ]
-
-  const focusAreaOptions = [
-    'Interview Questions',
-    'DSA',
-    'Core CS Subjects',
-    'Scenario Based',
-    'Aptitude',
-    'SQL',
-    'OOPs Concepts',
-    'Company Questions',
-  ]
-
-  const experienceLevels = ['Beginner', 'Intermediate', 'Expert']
-  const companyTypes = ['Any', 'FAANG', 'Unicorn / Product', 'MNC', 'Startup', 'Service / IT']
-  const dailyGoalOptions = ['5', '10', '20', '30']
-  const timelineOptions = ['ASAP', '< 1 Month', '1-3 Months', '3-6 Months', 'Just Exploring']
+  const profileName = profile?.name || user.user_metadata?.full_name || 'Developer'
+  const initials = (profile?.name || user.user_metadata?.full_name || 'User')
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
 
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-bg/60 z-50 backdrop-blur-sm transition-opacity duration-300"
-        onClick={onClose}
-      />
+    <div className="fixed inset-0 z-[90] flex items-center justify-center p-4 sm:p-6" style={modalTheme}>
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Drawer */}
-      <aside 
-        ref={drawerRef}
+      <div
+        ref={modalRef}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
-        aria-label="Account and Settings Preferences"
-        className="fixed inset-0 h-full w-full bg-surface z-55 animate-slideInRight overflow-y-auto flex flex-col justify-between shadow-2xl text-text outline-none"
+        aria-label="Account and Settings"
+        className="relative z-10 w-full max-w-lg rounded-2xl border border-border bg-surface shadow-2xl shadow-black/60 text-text outline-none"
       >
-        {/* Upper Scrollable Container */}
-        <div className="flex-1">
-
-          {/* Header */}
-          <div className="sticky top-0 bg-surface border-b border-border p-5 z-10">
-            <div className="max-w-2xl mx-auto w-full flex justify-between items-center">
-              <h2 className="text-lg font-bold text-text">Account &amp; Settings</h2>
-              <button
-                onClick={onClose}
-                aria-label="Close settings"
-                className="text-text-muted hover:text-text p-1 hover:bg-surface-hover rounded-lg transition-colors cursor-pointer focus:outline-none"
-              >
-                <X size={20} />
-              </button>
-            </div>
+        <div className="flex max-h-[85vh] flex-col overflow-hidden rounded-2xl">
+          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-surface px-6 py-5">
+            <h2 className="text-xl font-bold text-text">Account &amp; Settings</h2>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close settings"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-text-muted transition-colors duration-150 hover:bg-surface-hover hover:text-text focus:outline-none"
+            >
+              <X size={18} />
+            </button>
           </div>
 
-          {/* Form Content */}
-          <div className="max-w-2xl mx-auto w-full p-5 flex flex-col gap-8">
-
-            {/* Status message */}
+          <div className="flex flex-col gap-8 overflow-y-auto px-6 py-6">
             {message && (
               <div
-                className={`border text-xs rounded-xl p-3.5 font-mono ${
+                className={`rounded-xl border px-4 py-3 text-sm ${
                   message.type === 'success'
-                    ? 'bg-green-dim border-green/20 text-green'
-                    : 'bg-red-dim border-red/20 text-red'
+                    ? 'border-indigo/40 bg-indigo-dim text-text'
+                    : 'border-red/40 bg-red-dim text-red'
                 }`}
               >
-                {message.type === 'success' ? '✓' : '⚠️'} {message.text}
+                {message.text}
               </div>
             )}
 
-            {/* ── 1. Account Profile ───────────────────────────────────────── */}
-            <div>
+            <section>
               <SectionHeader icon={User} label="Account Profile" />
-              <div className="flex items-center gap-4 bg-bg/40 border border-border p-4 rounded-2xl">
-                {user?.user_metadata?.avatar_url ? (
+              <div className="flex items-center gap-3 rounded-xl border border-border bg-bg p-4">
+                {user.user_metadata?.avatar_url ? (
                   <img
                     src={user.user_metadata.avatar_url}
                     alt="Avatar"
-                    className="w-12 h-12 rounded-full border border-border"
+                    className="h-12 w-12 rounded-full border-2 border-border object-cover"
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-full bg-indigo-dim text-indigo-light flex items-center justify-center text-sm font-mono font-bold border border-indigo/20 select-none">
-                    {profile?.name ? profile.name.slice(0, 2).toUpperCase() : 'US'}
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-border bg-indigo-dim text-sm font-semibold text-indigo-light">
+                    {initials}
                   </div>
                 )}
                 <div className="min-w-0 flex-1">
-                  <div className="text-sm font-semibold text-text truncate">
-                    {profile?.name || user?.user_metadata?.full_name || 'Developer'}
-                  </div>
-                  <div className="text-xs text-text-muted truncate mt-0.5">{user?.email}</div>
+                  <div className="truncate text-base font-semibold text-text">{profileName}</div>
+                  <div className="mt-0.5 truncate text-sm text-text-muted">{user.email}</div>
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* ── 2. Display Name ──────────────────────────────────────────── */}
-            <div>
-              <label className="text-[11px] font-mono text-text-dim uppercase tracking-widest block mb-2">
-                Display Name
-              </label>
-              <div className="border-b border-border mb-4" />
+            <section>
+              <label className="mb-2 block text-xs font-medium text-text-muted">Display Name</label>
               <input
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Name..."
-                className="w-full bg-bg border border-border rounded-xl px-4 py-2.5 text-text text-sm focus:border-indigo focus:outline-none transition-colors"
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Name"
+                className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text transition-all duration-150 focus:border-indigo focus:ring-2 focus:ring-indigo/10 focus:outline-none"
               />
-            </div>
+            </section>
 
-            {/* ── 3. Target Roles ──────────────────────────────────────────── */}
-            <div>
+            <section>
               <SectionHeader icon={Target} label="Target Roles" />
-              <div className="grid grid-cols-2 gap-2">
-                {roleOptions.map((roleName) => {
-                  const isSelected = selectedRoles.includes(roleName)
-                  return (
-                    <button
-                      key={roleName}
-                      type="button"
-                      onClick={() => handleToggleRole(roleName)}
-                      aria-pressed={isSelected}
-                      className={`border rounded-lg p-2.5 cursor-pointer text-xs font-semibold text-center select-none transition-all focus:outline-none ${
-                        isSelected
-                          ? 'border-indigo bg-indigo-dim text-indigo-light'
-                          : 'border-border bg-bg/25 text-text-muted hover:border-border-hover hover:text-text'
-                      }`}
-                    >
-                      {roleName}
-                    </button>
-                  )
-                })}
+              <div className="grid grid-cols-2 gap-2.5">
+                {roleOptions.map((roleName) => (
+                  <SelectionPill
+                    key={roleName}
+                    label={roleName}
+                    isSelected={selectedRoles.includes(roleName)}
+                    onClick={() => handleToggleRole(roleName)}
+                    showCheck
+                  />
+                ))}
               </div>
-              <p className="text-[10px] text-text-dim mt-2 font-mono">Select all that apply</p>
-            </div>
+            </section>
 
-            {/* ── 4. Experience & Timeline ─────────────────────────────────── */}
-            <div>
-              <SectionHeader icon={BarChart2} label="Experience &amp; Timeline" />
-              <div className="grid grid-cols-2 gap-4">
+            <section>
+              <SectionHeader icon={BarChart2} label="Experience & Timeline" />
+              <div className="grid gap-3 sm:grid-cols-2">
                 <div>
-                  <label className="text-[11px] font-mono text-text-dim block mb-2">Experience Level</label>
-                  <ChipGroup
+                  <label className="mb-2 block text-xs font-medium text-text-muted">Experience Level</label>
+                  <SettingsSelect
+                    label="Experience Level"
+                    value={experienceLevel}
+                    onChange={setExperienceLevel}
                     options={experienceLevels}
-                    selected={experienceLevel}
-                    onToggle={setExperienceLevel}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-mono text-text-dim block mb-2">Interview Timeline</label>
+                  <label className="mb-2 block text-xs font-medium text-text-muted">Interview Timeline</label>
                   <SettingsSelect
+                    label="Interview Timeline"
                     value={interviewTimeline}
                     onChange={setInterviewTimeline}
-                    options={timelineOptions.map((t) => ({ value: t, label: t }))}
+                    options={timelineOptions}
                   />
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* ── 5. Prep Goal & Company Target ───────────────────────────── */}
-            <div>
-              <SectionHeader icon={Briefcase} label="Prep Goal &amp; Company Target" />
-              <div className="grid grid-cols-2 gap-4">
+            <section>
+              <SectionHeader icon={Briefcase} label="Prep Goal & Company Target" />
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="text-[11px] font-mono text-text-dim block mb-2">Prep Goal</label>
+                  <label className="mb-2 block text-xs font-medium text-text-muted">Prep Goal</label>
                   <SettingsSelect
+                    label="Prep Goal"
                     value={goal}
                     onChange={setGoal}
-                    options={[
-                      { value: 'Job Interview', label: 'Job Interview' },
-                      { value: 'Learning & Upskilling', label: 'Learning & Upskilling' },
-                      { value: 'College Placements', label: 'College Placements' },
-                      { value: 'Career Switch', label: 'Career Switch' },
-                    ]}
+                    options={prepGoalOptions}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-mono text-text-dim block mb-2">Target Company Type</label>
+                  <label className="mb-2 block text-xs font-medium text-text-muted">Target Company Type</label>
                   <SettingsSelect
+                    label="Target Company Type"
                     value={targetCompanyType}
                     onChange={setTargetCompanyType}
-                    options={companyTypes.map((c) => ({ value: c, label: c }))}
+                    options={companyTypes}
                   />
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* ── 6. Focus Areas ───────────────────────────────────────────── */}
-            <div>
+            <section>
               <SectionHeader icon={Layers} label="Focus Areas" />
-              <div className="grid grid-cols-2 gap-2">
-                {focusAreaOptions.map((area) => {
-                  const isSelected = focusAreas.includes(area)
-                  return (
-                    <button
-                      key={area}
-                      type="button"
-                      onClick={() => handleToggleFocus(area)}
-                      aria-pressed={isSelected}
-                      className={`border rounded-lg p-2.5 cursor-pointer text-xs font-semibold text-center select-none transition-all focus:outline-none ${
-                        isSelected
-                          ? 'border-indigo bg-indigo-dim text-indigo-light'
-                          : 'border-border bg-bg/25 text-text-muted hover:border-border-hover hover:text-text'
-                      }`}
-                    >
-                      {area}
-                    </button>
-                  )
-                })}
+              <div className="grid grid-cols-2 gap-2.5">
+                {focusAreaOptions.map((area) => (
+                  <SelectionPill
+                    key={area}
+                    label={area}
+                    isSelected={focusAreas.includes(area)}
+                    onClick={() => handleToggleFocus(area)}
+                  />
+                ))}
               </div>
-              <p className="text-[10px] text-text-dim mt-2 font-mono">Choose which sections to prioritize</p>
-            </div>
+            </section>
 
-            {/* ── 7. Coding Preferences ────────────────────────────────────── */}
-            <div>
+            <section>
               <SectionHeader icon={Code2} label="Coding Preferences" />
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="text-[11px] font-mono text-text-dim block mb-2">Default Language</label>
+                  <label className="mb-2 block text-xs font-medium text-text-muted">Default Language</label>
                   <SettingsSelect
+                    label="Default Language"
                     value={defaultLanguage}
                     onChange={setDefaultLanguage}
-                    options={[
-                      { value: 'JavaScript', label: 'JavaScript' },
-                      { value: 'Python', label: 'Python' },
-                      { value: 'Java', label: 'Java' },
-                      { value: 'C++', label: 'C++' },
-                    ]}
+                    options={languageOptions}
                   />
                 </div>
                 <div>
-                  <label className="text-[11px] font-mono text-text-dim block mb-2">Daily Question Goal</label>
-                  <div className="flex gap-2">
-                    {dailyGoalOptions.map((opt) => (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => setDailyGoal(opt)}
-                        className={`flex-1 py-2.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer focus:outline-none ${
-                          dailyGoal === opt
-                            ? 'border-indigo bg-indigo-dim text-indigo-light'
-                            : 'border-border bg-bg/25 text-text-muted hover:border-border-hover'
-                        }`}
-                      >
-                        {opt}
-                      </button>
+                  <label className="mb-2 block text-xs font-medium text-text-muted">Daily Question Goal</label>
+                  <div className="grid grid-cols-4 gap-2">
+                    {dailyGoalOptions.map((option) => (
+                      <SelectionPill
+                        key={option}
+                        label={option}
+                        isSelected={dailyGoal === option}
+                        onClick={() => setDailyGoal(option)}
+                      />
                     ))}
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* ── 8. Target Company Type (display) ─────────────────────────── */}
-            <div>
+            <section>
               <SectionHeader icon={Building2} label="Target Company Focus" />
-              <ChipGroup
-                options={companyTypes}
-                selected={targetCompanyType}
-                onToggle={setTargetCompanyType}
-              />
-              <p className="text-[10px] text-text-dim mt-2 font-mono">
-                Filter company questions by company tier in Company Questions
-              </p>
-            </div>
-
-            {/* ── 9. Danger Zone ───────────────────────────────────────────── */}
-            <div>
-              <div className="text-[11px] font-mono text-red uppercase tracking-widest mb-2">
-                Danger Zone
+              <div className="grid grid-cols-2 gap-2.5">
+                {companyTypes.map((companyType) => (
+                  <SelectionPill
+                    key={companyType}
+                    label={companyType}
+                    isSelected={targetCompanyType === companyType}
+                    onClick={() => setTargetCompanyType(companyType)}
+                  />
+                ))}
               </div>
-              <div className="border-b border-red/20 mb-4" />
+            </section>
+
+            <section>
+              <div className="mb-3 flex items-center gap-2">
+                <Trash2 size={16} className="text-red" />
+                <span className="text-[11px] font-mono uppercase tracking-widest text-red">
+                  Danger Zone
+                </span>
+              </div>
               <button
+                type="button"
                 onClick={handleResetProgress}
                 disabled={resetting}
-                className="w-full border border-red/40 text-red hover:bg-red/10 rounded-xl py-2.5 text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition-colors focus:outline-none"
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-red/40 bg-bg px-4 py-3 text-sm font-semibold text-red transition-colors duration-150 hover:bg-red/10 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none"
               >
                 {resetting ? (
                   <>
-                    <Loader size={14} className="animate-spin" /> Resetting...
+                    <Loader size={16} className="animate-spin" />
+                    Resetting...
                   </>
                 ) : (
-                  <>
-                    <Trash2 size={14} /> Reset All Prep Progress
-                  </>
+                  'Reset All Prep Progress'
                 )}
               </button>
-            </div>
+            </section>
           </div>
-        </div>
 
-        {/* Action Controls Footer */}
-        <div className="sticky bottom-0 bg-surface border-t border-border p-4 z-10 shadow-[0_-4px_12px_rgba(0,0,0,0.15)]">
-          <div className="max-w-2xl mx-auto w-full flex gap-3">
+          <div className="sticky bottom-0 z-10 flex items-center justify-between gap-3 border-t border-border bg-surface px-6 py-4">
             <button
-              onClick={handleSaveSettings}
-              disabled={saving || resetting}
-              className="flex-1 bg-indigo hover:bg-indigo-light text-white rounded-xl py-2.5 text-sm font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 focus:outline-none"
-            >
-              {saving ? (
-                <>
-                  <Loader size={16} className="animate-spin" /> Saving Changes...
-                </>
-              ) : (
-                'Save Changes'
-              )}
-            </button>
-
-            <button
+              type="button"
               onClick={handleLogout}
               disabled={saving}
-              className="border border-border text-text-muted hover:border-red hover:text-red rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 focus:outline-none"
-              title="Log Out"
+              className="px-3 py-2 text-sm text-text-muted transition-colors hover:text-red disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none"
             >
-              <LogOut size={16} />
+              Sign out
+            </button>
+
+            <button
+              type="button"
+              onClick={handleSaveSettings}
+              disabled={!hasChanges || saving || resetting}
+              className="rounded-xl bg-[var(--indigo)] px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[var(--indigo-light)] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none"
+            >
+              {saving ? 'Saving Changes...' : 'Save Changes'}
             </button>
           </div>
         </div>
-      </aside>
-    </>
+      </div>
+    </div>
   )
 }

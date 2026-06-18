@@ -1,21 +1,21 @@
-import React from 'react'
+export const BRAND_WORDMARK = {
+  first: 'Interview',
+  second: 'Dump',
+} as const
 
-interface LogoProps {
-  size?: 'sm' | 'md' | 'lg'
-}
+export const BRAND_DOCUMENT_TITLE = `${BRAND_WORDMARK.first} ${BRAND_WORDMARK.second}`
 
-export default function Logo({ size = 'md' }: LogoProps) {
+export function Logo({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const sizeClasses = {
-    sm: 'text-sm',
-    md: 'text-base',
-    lg: 'text-xl',
+    sm: 'text-base',
+    md: 'text-xl',
+    lg: 'text-3xl'
   }
 
-  const sizeClass = sizeClasses[size] || sizeClasses.md
-
   return (
-    <span className={`font-mono font-semibold tracking-tight select-none text-white ${sizeClass}`}>
-      interview<span className="text-text-muted">.</span>dump
+    <span className={`font-mono ${sizeClasses[size]} text-text tracking-tight`}>
+      <span className="font-normal">{BRAND_WORDMARK.first}</span>
+      <span className="font-extrabold">{BRAND_WORDMARK.second}</span>
     </span>
   )
 }

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { createClient } from '@/lib/supabase/client'
-import Logo from '@/components/shared/Logo'
+import { Logo } from '@/components/shared/Logo'
 
 export default function LoginPage() {
   const handleGoogleLogin = async () => {
