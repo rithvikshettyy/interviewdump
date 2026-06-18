@@ -6,17 +6,16 @@ interface LogoProps {
 
 export default function Logo({ size = 'md' }: LogoProps) {
   const sizeClasses = {
-    sm: 'text-base',
-    md: 'text-xl',
-    lg: 'text-3xl',
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-xl',
   }
 
   const sizeClass = sizeClasses[size] || sizeClasses.md
 
   return (
-    <span className={`font-mono font-bold tracking-tight select-none ${sizeClass}`}>
-      <span className="text-white">Interview</span>
-      <span className="text-indigo">Dump</span>
+    <span className={`font-mono font-semibold tracking-tight select-none text-white ${sizeClass}`}>
+      interview<span className="text-text-muted">.</span>dump
     </span>
   )
 }

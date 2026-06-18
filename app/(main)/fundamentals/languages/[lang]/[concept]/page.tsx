@@ -7,6 +7,36 @@ import { Copy, Check, ArrowRight, ArrowLeft } from 'lucide-react'
 import jsConcepts from '@/content/languages/javascript/concepts.json'
 import { getProgressIds, toggleProgress } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
+import {
+  Lock,
+  Hourglass,
+  RefreshCw,
+  Target,
+  ArrowUpCircle,
+  GitFork,
+  Eye,
+  Wrench,
+  Gauge,
+  Sparkles,
+  MousePointerClick,
+  Box,
+  BookOpen,
+} from 'lucide-react'
+
+const conceptIconMap: Record<string, React.ComponentType<any>> = {
+  'js-closures': Lock,
+  'js-promises': Hourglass,
+  'js-event-loop': RefreshCw,
+  'js-this': Target,
+  'js-hoisting': ArrowUpCircle,
+  'js-prototypes': GitFork,
+  'js-scope': Eye,
+  'js-hof': Wrench,
+  'js-debounce-throttle': Gauge,
+  'js-es6': Sparkles,
+  'js-event-delegation': MousePointerClick,
+  'js-modules': Box,
+}
 
 interface PageProps {
   params: Promise<{
@@ -161,7 +191,14 @@ export default function ConceptDetailPage({ params }: PageProps) {
           {/* Concept Header */}
           <header className="mb-8">
             <div className="flex items-center gap-3">
-              <span className="text-4xl">{concept.emoji}</span>
+              {(() => {
+                const IconComponent = conceptIconMap[concept.id] || BookOpen
+                return (
+                  <div className="w-12 h-12 rounded-xl bg-surface/50 border border-border flex items-center justify-center text-text-muted flex-shrink-0">
+                    <IconComponent className="w-6 h-6" />
+                  </div>
+                )
+              })()}
               <h1 className="text-3xl font-bold text-text leading-tight">{concept.title}</h1>
             </div>
 

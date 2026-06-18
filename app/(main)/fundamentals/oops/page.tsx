@@ -1,11 +1,35 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { X, Copy, Check, Star } from 'lucide-react'
+import {
+  X,
+  Copy,
+  Check,
+  LayoutGrid,
+  Shield,
+  GitFork,
+  Shuffle,
+  EyeOff,
+  FileText,
+  Workflow,
+  Component,
+  BookOpen,
+} from 'lucide-react'
 import oopsConcepts from '@/content/oops/concepts.json'
 import { getProgressIds, toggleProgress } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
 import PageHeader from '@/components/layout/PageHeader'
+
+const oopsIconMap: Record<string, React.ComponentType<any>> = {
+  'oops-1': LayoutGrid,
+  'oops-2': Shield,
+  'oops-3': GitFork,
+  'oops-4': Shuffle,
+  'oops-5': EyeOff,
+  'oops-6': FileText,
+  'oops-7': Workflow,
+  'oops-8': Component,
+}
 
 interface CodeExample {
   language: string
@@ -155,7 +179,14 @@ export default function OopsConceptsPage() {
                 <div>
                   {/* Top row */}
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl">{concept.emoji}</span>
+                    {(() => {
+                      const IconComponent = oopsIconMap[concept.id] || BookOpen
+                      return (
+                        <div className="w-8 h-8 rounded-lg bg-surface/50 border border-border flex items-center justify-center text-text-muted">
+                          <IconComponent className="w-4 h-4" />
+                        </div>
+                      )
+                    })()}
                     <Badge
                       label={concept.difficulty}
                       variant={concept.difficulty.toLowerCase() as any}
@@ -230,7 +261,14 @@ export default function OopsConceptsPage() {
                   </button>
                 </div>
                 <h2 className="mt-3 text-lg font-semibold text-text leading-snug flex items-center gap-2">
-                  <span className="text-2xl">{selectedConcept.emoji}</span>
+                  {(() => {
+                    const IconComponent = oopsIconMap[selectedConcept.id] || BookOpen
+                    return (
+                      <div className="w-8 h-8 rounded-lg bg-surface/50 border border-border flex items-center justify-center text-text-muted flex-shrink-0">
+                        <IconComponent className="w-4 h-4" />
+                      </div>
+                    )
+                  })()}
                   {selectedConcept.title}
                 </h2>
               </div>

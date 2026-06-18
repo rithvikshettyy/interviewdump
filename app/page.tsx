@@ -302,7 +302,7 @@ export default function LandingPage() {
               <Logo size="sm" />
             </Link>
             <div className="text-xs text-text-dim mt-1">
-              &copy; 2025 • MIT License
+              &copy; 2025
             </div>
           </div>
 

@@ -152,8 +152,17 @@ export default function CompanyQuestionsPage() {
               return (
                 <div
                   key={company.slug}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => router.push(`/library/company-questions/${company.slug}`)}
-                  className="bg-surface border border-border rounded-2xl p-5 cursor-pointer hover:border-border-hover hover:bg-surface-hover transition-all duration-200 flex flex-col justify-between"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      router.push(`/library/company-questions/${company.slug}`)
+                    }
+                  }}
+                  aria-label={`Company: ${company.name}. ${company.questionCount} questions. Click to explore.`}
+                  className="bg-surface border border-border rounded-2xl p-5 cursor-pointer hover:border-border-hover hover:bg-surface-hover transition-all duration-200 flex flex-col justify-between focus:outline-none"
                 >
                   <div>
                     {/* Top Row: Avatar + Favourite */}
@@ -165,9 +174,11 @@ export default function CompanyQuestionsPage() {
                       </div>
                       <button
                         onClick={(e) => toggleFavourite(company.slug, e)}
-                        className="focus:outline-none p-1 hover:bg-surface-hover rounded-lg transition-colors"
+                        aria-label={isFav ? `Remove ${company.name} from favourites` : `Add ${company.name} to favourites`}
+                        className="focus:outline-none p-1 hover:bg-surface-hover rounded-lg transition-colors cursor-pointer"
                       >
                         <Star
+                          aria-hidden="true"
                           className={`w-5 h-5 transition-colors ${
                             isFav ? 'text-amber fill-amber' : 'text-text-dim hover:text-amber'
                           }`}

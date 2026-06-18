@@ -6,6 +6,36 @@ import Link from 'next/link'
 import jsConcepts from '@/content/languages/javascript/concepts.json'
 import { getProgressIds } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
+import {
+  Lock,
+  Hourglass,
+  RefreshCw,
+  Target,
+  ArrowUpCircle,
+  GitFork,
+  Eye,
+  Wrench,
+  Gauge,
+  Sparkles,
+  MousePointerClick,
+  Box,
+  BookOpen,
+} from 'lucide-react'
+
+const conceptIconMap: Record<string, React.ComponentType<any>> = {
+  'js-closures': Lock,
+  'js-promises': Hourglass,
+  'js-event-loop': RefreshCw,
+  'js-this': Target,
+  'js-hoisting': ArrowUpCircle,
+  'js-prototypes': GitFork,
+  'js-scope': Eye,
+  'js-hof': Wrench,
+  'js-debounce-throttle': Gauge,
+  'js-es6': Sparkles,
+  'js-event-delegation': MousePointerClick,
+  'js-modules': Box,
+}
 
 interface Concept {
   id: string
@@ -128,7 +158,14 @@ export default function LanguageConceptsPage({ params }: PageProps) {
                   <div>
                     {/* Top Row */}
                     <div className="flex justify-between items-center">
-                      <span className="text-2xl">{concept.emoji}</span>
+                      {(() => {
+                        const IconComponent = conceptIconMap[concept.id] || BookOpen
+                        return (
+                          <div className="w-8 h-8 rounded-lg bg-surface/50 border border-border flex items-center justify-center text-text-muted">
+                            <IconComponent className="w-4 h-4" />
+                          </div>
+                        )
+                      })()}
                       <Badge
                         label={concept.difficulty}
                         variant={concept.difficulty.toLowerCase() as any}
@@ -169,7 +206,7 @@ export default function LanguageConceptsPage({ params }: PageProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center p-12 text-center text-text-muted bg-surface border border-border rounded-2xl">
-            <span className="text-4xl mb-2">📚</span>
+            <BookOpen className="w-8 h-8 text-text-dim mb-3" />
             <p className="text-base font-semibold">No concepts available yet</p>
             <p className="text-sm mt-1">We are actively preparing curated concepts for {langName}. Stay tuned!</p>
           </div>

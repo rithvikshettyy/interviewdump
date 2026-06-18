@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowRight, Lock } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import PageHeader from '@/components/layout/PageHeader'
 import Badge from '@/components/shared/Badge'
 
@@ -101,12 +101,21 @@ export default function LanguagesPage() {
           {languages.map((lang) => (
             <div
               key={lang.slug}
+              role="button"
+              tabIndex={lang.available ? 0 : -1}
               onClick={() => {
                 if (lang.available) {
                   router.push(`/fundamentals/languages/${lang.slug}`)
                 }
               }}
-              className={`bg-surface border border-border rounded-2xl p-6 transition-all duration-200 flex flex-col justify-between ${
+              onKeyDown={(e) => {
+                if (lang.available && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault()
+                  router.push(`/fundamentals/languages/${lang.slug}`)
+                }
+              }}
+              aria-label={`Language: ${lang.name}. ${lang.available ? `${lang.conceptCount} concepts available.` : 'Coming soon.'}`}
+              className={`bg-surface border border-border rounded-2xl p-6 transition-all duration-200 flex flex-col justify-between focus:outline-none ${
                 lang.available
                   ? 'cursor-pointer hover:border-border-hover hover:bg-surface-hover'
                   : 'opacity-60 cursor-not-allowed'

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import { Question } from '@/types'
 import Badge from './Badge'
@@ -26,6 +26,59 @@ export default function QuestionDrawer({
 }: QuestionDrawerProps) {
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedYt, setCopiedYt] = useState(false)
+  const drawerRef = useRef<HTMLElement>(null)
+
+  // ── Focus trap and Escape key listener ────────────────────────────────────
+  useEffect(() => {
+    if (!isOpen || !question) return
+
+    const previousActiveElement = document.activeElement as HTMLElement
+
+    // Focus the drawer on open
+    if (drawerRef.current) {
+      drawerRef.current.focus()
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (e.key === 'Tab') {
+        if (!drawerRef.current) return
+        const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        const focusableElements = Array.from(
+          drawerRef.current.querySelectorAll(focusableSelectors)
+        ) as HTMLElement[]
+
+        if (focusableElements.length === 0) return
+
+        const firstElement = focusableElements[0]
+        const lastElement = focusableElements[focusableElements.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus()
+            e.preventDefault()
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus()
+            e.preventDefault()
+          }
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      if (previousActiveElement) {
+        previousActiveElement.focus()
+      }
+    }
+  }, [isOpen, question, onClose])
 
   if (!isOpen || !question) return null
 
@@ -54,7 +107,14 @@ export default function QuestionDrawer({
       />
 
       {/* Drawer Panel */}
-      <aside className="fixed right-0 top-0 h-full w-[520px] bg-surface border-l border-border z-50 animate-slideInRight overflow-y-auto flex flex-col justify-between shadow-2xl">
+      <aside 
+        ref={drawerRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="question-drawer-title"
+        className="fixed right-0 top-0 h-full w-[520px] bg-surface border-l border-border z-50 animate-slideInRight overflow-y-auto flex flex-col justify-between shadow-2xl outline-none"
+      >
         {/* Scrollable Content */}
         <div className="flex-1">
           {/* Header */}
@@ -77,12 +137,13 @@ export default function QuestionDrawer({
               </div>
               <button
                 onClick={onClose}
-                className="text-text-muted hover:text-text p-1 hover:bg-surface-hover rounded-lg transition-colors"
+                aria-label="Close question details"
+                className="text-text-muted hover:text-text p-1 hover:bg-surface-hover rounded-lg transition-colors focus:outline-none"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
-            <h2 className="mt-3 text-lg font-semibold text-text leading-snug">
+            <h2 id="question-drawer-title" className="mt-3 text-lg font-semibold text-text leading-snug">
               {question.question}
             </h2>
           </div>
@@ -92,7 +153,7 @@ export default function QuestionDrawer({
             {/* 1. What they're testing */}
             <div>
               <div className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">
-                What They're Testing
+                What They&apos;re Testing
               </div>
               <div className="border-b border-border mb-4" />
               <div className="bg-indigo-dim border border-indigo/20 rounded-xl p-4 text-sm text-text-muted leading-relaxed">
@@ -125,12 +186,13 @@ export default function QuestionDrawer({
                     </span>
                     <button
                       onClick={handleCopyCode}
-                      className="text-text-dim hover:text-text transition-colors p-1"
+                      aria-label="Copy code example to clipboard"
+                      className="text-text-dim hover:text-text transition-colors p-1 focus:outline-none"
                     >
                       {copiedCode ? (
-                        <Check className="w-3.5 h-3.5 text-green" />
+                        <Check aria-hidden="true" className="w-3.5 h-3.5 text-green" />
                       ) : (
-                        <Copy className="w-3.5 h-3.5" />
+                        <Copy aria-hidden="true" className="w-3.5 h-3.5" />
                       )}
                     </button>
                   </div>
@@ -199,19 +261,20 @@ export default function QuestionDrawer({
                 <div className="border-b border-border mb-4" />
                 <div className="bg-red-dim border border-red/20 rounded-xl p-3 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2 text-sm text-text min-w-0">
-                    <svg className="w-5 h-5 text-red flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                    <svg aria-hidden="true" className="w-5 h-5 text-red flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                     </svg>
                     <span className="truncate font-mono text-xs">{question.ytQuery}</span>
                   </div>
                   <button
                     onClick={handleCopyYt}
-                    className="text-text-dim hover:text-text transition-colors p-1 flex-shrink-0"
+                    aria-label="Copy YouTube search query"
+                    className="text-text-dim hover:text-text transition-colors p-1 flex-shrink-0 focus:outline-none"
                   >
                     {copiedYt ? (
-                      <Check className="w-3.5 h-3.5 text-green" />
+                      <Check aria-hidden="true" className="w-3.5 h-3.5 text-green" />
                     ) : (
-                      <Copy className="w-3.5 h-3.5" />
+                      <Copy aria-hidden="true" className="w-3.5 h-3.5" />
                     )}
                   </button>
                 </div>
@@ -225,6 +288,7 @@ export default function QuestionDrawer({
           <div className="grid grid-cols-2 gap-3">
             <button
               onClick={onToggleSolved}
+              aria-label={isSolved ? "Mark question as unsolved" : "Mark question as solved"}
               className={`rounded-xl py-2.5 text-sm font-semibold transition-all w-full focus:outline-none ${
                 isSolved
                   ? 'bg-green text-white border-transparent hover:bg-green/90'
@@ -235,6 +299,7 @@ export default function QuestionDrawer({
             </button>
             <button
               onClick={onToggleRevision}
+              aria-label={isRevision ? "Remove from revision list" : "Add to revision list"}
               className={`rounded-xl py-2.5 text-sm font-semibold transition-all w-full focus:outline-none ${
                 isRevision
                   ? 'bg-amber text-white border-transparent hover:bg-amber/90'

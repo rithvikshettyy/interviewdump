@@ -72,6 +72,27 @@ export default function QuestionPageShell({
     loadProgress()
   }, [itemType])
 
+  // Automatically open question if ID is in URL query params
+  useEffect(() => {
+    const checkQuery = () => {
+      const params = new URLSearchParams(window.location.search)
+      const qId = params.get('questionId')
+      if (qId && questions.length > 0) {
+        const found = questions.find((q) => q.id === qId)
+        if (found) {
+          setSelectedQuestion(found)
+          setIsDrawerOpen(true)
+        }
+      }
+    }
+
+    checkQuery()
+
+    // Listen to query changes by polling window.location.search periodically
+    const interval = setInterval(checkQuery, 500)
+    return () => clearInterval(interval)
+  }, [questions])
+
   // Count totals by difficulty
   const easyQuestions = questions.filter((q) => q.difficulty === 'Easy')
   const mediumQuestions = questions.filter((q) => q.difficulty === 'Medium')
@@ -246,10 +267,16 @@ export default function QuestionPageShell({
       </div>
 
       {/* 4. Secondary Filter Tabs */}
-      <div className="flex gap-4 px-6 border-b border-border text-sm bg-bg">
+      <div 
+        role="tablist"
+        aria-label="Filter questions by progress"
+        className="flex gap-4 px-6 border-b border-border text-sm bg-bg"
+      >
         <button
           onClick={() => setSecondaryFilter('all')}
-          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none ${
+          role="tab"
+          aria-selected={secondaryFilter === 'all'}
+          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer ${
             secondaryFilter === 'all'
               ? 'border-indigo text-indigo'
               : 'border-transparent text-text-muted hover:text-text'
@@ -259,7 +286,9 @@ export default function QuestionPageShell({
         </button>
         <button
           onClick={() => setSecondaryFilter('solved')}
-          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none ${
+          role="tab"
+          aria-selected={secondaryFilter === 'solved'}
+          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer ${
             secondaryFilter === 'solved'
               ? 'border-indigo text-indigo'
               : 'border-transparent text-text-muted hover:text-text'
@@ -269,7 +298,9 @@ export default function QuestionPageShell({
         </button>
         <button
           onClick={() => setSecondaryFilter('revision')}
-          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none ${
+          role="tab"
+          aria-selected={secondaryFilter === 'revision'}
+          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer ${
             secondaryFilter === 'revision'
               ? 'border-indigo text-indigo'
               : 'border-transparent text-text-muted hover:text-text'

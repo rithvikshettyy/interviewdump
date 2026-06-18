@@ -60,16 +60,26 @@ export default function QuestionTable({
               <tr
                 key={q.id}
                 onClick={() => onQuestionClick(q)}
-                className="border-b border-border last:border-none cursor-pointer hover:bg-surface-hover transition-colors duration-150"
+                tabIndex={0}
+                role="button"
+                aria-haspopup="dialog"
+                aria-label={`Question ${q.number !== undefined ? `#${q.number}` : ''}: ${q.question}. ${q.difficulty} difficulty. Click or press enter to view details.`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    onQuestionClick(q)
+                  }
+                }}
+                className="border-b border-border last:border-none cursor-pointer hover:bg-surface-hover transition-colors duration-150 focus:outline-none"
               >
                 {/* Number cell with Left Indicator */}
-                <td className="px-4 py-4 relative font-mono text-[11px] text-text-dim w-16">
+                <td className="px-4 py-[15px] relative font-mono text-[11px] text-text-dim w-16">
                   <div className={`absolute left-0 top-0 bottom-0 w-1 ${indicatorColor}`} />
                   {q.number !== undefined ? `#${q.number}` : '-'}
                 </td>
 
                 {/* Question Info Cell */}
-                <td className="px-4 py-4">
+                <td className="px-4 py-[15px]">
                   <div className="text-sm text-text font-medium leading-snug">{q.question}</div>
                   <div className="text-xs text-text-muted mt-0.5 line-clamp-1">{q.summary}</div>
                   {q.companies && q.companies.length > 0 && (
@@ -88,20 +98,20 @@ export default function QuestionTable({
 
                 {/* Optional Role Column */}
                 {showRoleColumn && (
-                  <td className="px-4 py-4 text-xs text-text-muted w-32">
+                  <td className="px-4 py-[15px] text-xs text-text-muted w-32">
                     {q.roles && q.roles.length > 0 ? q.roles.join(', ') : '-'}
                   </td>
                 )}
 
                 {/* Optional Topic Column */}
                 {showTopicColumn && (
-                  <td className="px-4 py-4 text-xs text-text-muted w-28">
+                  <td className="px-4 py-[15px] text-xs text-text-muted w-28">
                     {q.topic || '-'}
                   </td>
                 )}
 
                 {/* Difficulty Column */}
-                <td className="px-4 py-4 w-24">
+                <td className="px-4 py-[15px] w-24">
                   <Badge
                     label={q.difficulty}
                     variant={q.difficulty.toLowerCase() as any}
@@ -109,30 +119,34 @@ export default function QuestionTable({
                 </td>
 
                 {/* Solved Action Column */}
-                <td className="px-4 py-4 w-16 text-center">
+                <td className="px-4 py-[15px] w-16 text-center">
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       onToggleSolved(q.id)
                     }}
-                    className="focus:outline-none hover:scale-110 transition transform active:scale-95 inline-block"
+                    aria-label={isSolved ? "Mark as unsolved" : "Mark as solved"}
+                    className="focus:outline-none hover:scale-110 transition transform active:scale-95 inline-block cursor-pointer"
                   >
                     <CheckCircle
+                      aria-hidden="true"
                       className={`w-5 h-5 ${isSolved ? 'text-green' : 'text-text-dim'}`}
                     />
                   </button>
                 </td>
 
                 {/* Revision Action Column */}
-                <td className="px-4 py-4 w-16 text-center">
+                <td className="px-4 py-[15px] w-16 text-center">
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       onToggleRevision(q.id)
                     }}
-                    className="focus:outline-none hover:scale-110 transition transform active:scale-95 inline-block"
+                    aria-label={isRevision ? "Remove from revision list" : "Add to revision list"}
+                    className="focus:outline-none hover:scale-110 transition transform active:scale-95 inline-block cursor-pointer"
                   >
                     <Bookmark
+                      aria-hidden="true"
                       className={`w-5 h-5 ${isRevision ? 'text-amber' : 'text-text-dim'}`}
                     />
                   </button>

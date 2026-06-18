@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo, useRef } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { getStats } from '@/lib/progress'
+import { usePathname, useRouter } from 'next/navigation'
 import Logo from '@/components/shared/Logo'
+import { createClient } from '@/lib/supabase/client'
+import SettingsDrawer from '@/components/shared/SettingsDrawer'
 import {
   Building2,
   MessageSquare,
@@ -16,14 +17,217 @@ import {
   BookOpen,
   Boxes,
   Zap,
+  Settings,
+  Search,
 } from 'lucide-react'
+
+// Import question databases statically for global client search
+import backendQuestions from '@/content/questions/backend.json'
+import frontendQuestions from '@/content/questions/frontend.json'
+import dsaQuestions from '@/content/dsa/questions.json'
+import scenarioQuestions from '@/content/scenario/questions.json'
+import logicalQuestions from '@/content/aptitude/logical.json'
+import quantitativeQuestions from '@/content/aptitude/quantitative.json'
+import companies from '@/content/companies/index.json'
 
 export default function Sidebar() {
   const pathname = usePathname()
-  const [stats, setStats] = useState({ solved: 0, revision: 0, done: 0 })
+  const router = useRouter()
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const [profile, setProfile] = useState<any>(null)
+  const [loadingProfile, setLoadingProfile] = useState(true)
+
+  // ── Search State ─────────────────────────────────────────────────────────
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const searchModalRef = useRef<HTMLDivElement>(null)
+
+  // ── Build Search Index ───────────────────────────────────────────────────
+  const searchItems = useMemo(() => {
+    const items: Array<{
+      id: string
+      title: string
+      subtitle: string
+      type: 'question' | 'company'
+      href: string
+    }> = []
+
+    backendQuestions.forEach((q) => {
+      items.push({
+        id: q.id,
+        title: q.question,
+        subtitle: `Backend Question • ${q.topic}`,
+        type: 'question',
+        href: `/library/interview-questions?questionId=${q.id}`,
+      })
+    })
+
+    frontendQuestions.forEach((q) => {
+      items.push({
+        id: q.id,
+        title: q.question,
+        subtitle: `Frontend Question • ${q.topic}`,
+        type: 'question',
+        href: `/library/interview-questions?questionId=${q.id}`,
+      })
+    })
+
+    dsaQuestions.forEach((q) => {
+      items.push({
+        id: q.id,
+        title: q.question,
+        subtitle: `DSA • ${q.topic}`,
+        type: 'question',
+        href: `/library/dsa?questionId=${q.id}`,
+      })
+    })
+
+    scenarioQuestions.forEach((q) => {
+      items.push({
+        id: q.id,
+        title: q.question,
+        subtitle: `Scenario • ${q.topic}`,
+        type: 'question',
+        href: `/library/scenario?questionId=${q.id}`,
+      })
+    })
+
+    logicalQuestions.forEach((q) => {
+      items.push({
+        id: q.id,
+        title: q.question,
+        subtitle: `Aptitude (Logical) • ${q.category}`,
+        type: 'question',
+        href: `/library/aptitude?questionId=${q.id}`,
+      })
+    })
+
+    quantitativeQuestions.forEach((q) => {
+      items.push({
+        id: q.id,
+        title: q.question,
+        subtitle: `Aptitude (Quantitative) • ${q.category}`,
+        type: 'question',
+        href: `/library/aptitude?questionId=${q.id}`,
+      })
+    })
+
+    companies.forEach((c) => {
+      items.push({
+        id: c.slug,
+        title: c.name,
+        subtitle: `Company Question Bank • ${c.sector}`,
+        type: 'company',
+        href: `/library/company-questions/${c.slug}`,
+      })
+    })
+
+    return items
+  }, [])
+
+  // ── Filter Search Items ──────────────────────────────────────────────────
+  const filteredItems = useMemo(() => {
+    if (!searchQuery.trim()) return []
+    const query = searchQuery.toLowerCase()
+    return searchItems.filter(
+      (item) =>
+        item.title.toLowerCase().includes(query) ||
+        item.subtitle.toLowerCase().includes(query)
+    ).slice(0, 15)
+  }, [searchQuery, searchItems])
+
+  // ── Keyboard Shortcuts (Cmd+K / Ctrl+K) ──────────────────────────────────
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setIsSearchOpen((prev) => !prev)
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  // ── Search Focus Trap & Escape Handler ───────────────────────────────────
+  useEffect(() => {
+    if (!isSearchOpen) return
+
+    const previousActiveElement = document.activeElement as HTMLElement
+
+    // Focus the input within search modal on open
+    setTimeout(() => {
+      const inputEl = searchModalRef.current?.querySelector('input')
+      if (inputEl) {
+        inputEl.focus()
+      }
+    }, 50)
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsSearchOpen(false)
+        return
+      }
+
+      if (e.key === 'Tab') {
+        if (!searchModalRef.current) return
+        const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        const focusableElements = Array.from(
+          searchModalRef.current.querySelectorAll(focusableSelectors)
+        ) as HTMLElement[]
+
+        if (focusableElements.length === 0) return
+
+        const firstElement = focusableElements[0]
+        const lastElement = focusableElements[focusableElements.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus()
+            e.preventDefault()
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus()
+            e.preventDefault()
+          }
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      if (previousActiveElement) {
+        previousActiveElement.focus()
+      }
+    }
+  }, [isSearchOpen])
 
   useEffect(() => {
-    getStats().then(setStats)
+    const fetchUserAndProfile = async () => {
+      try {
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+          setUser(user)
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .single()
+          if (profile) {
+            setProfile(profile)
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching user profile:', err)
+      } finally {
+        setLoadingProfile(false)
+      }
+    }
+
+    fetchUserAndProfile()
   }, [])
 
   const groups = [
@@ -50,29 +254,34 @@ export default function Sidebar() {
   ]
 
   return (
-    <aside className="w-[240px] h-screen fixed left-0 top-0 bg-surface border-r border-border z-50 flex flex-col justify-between">
+    <aside className="fixed left-0 top-0 h-screen w-[240px] z-50 bg-surface border-r border-border flex flex-col justify-between">
       {/* Scrollable upper area */}
       <div className="flex-1 overflow-y-auto scrollbar-hide">
         {/* Logo Section */}
         <div className="p-5 border-b border-border">
           <Logo size="md" />
-          <div className="text-[10px] text-text-dim font-mono mt-1 uppercase tracking-wider">
-            Free. Open Source. No Paywall.
+          <div className="text-[9px] text-text-dim font-mono mt-1 uppercase tracking-wide whitespace-nowrap">
+            Prep for tech interviews.
           </div>
         </div>
 
-        {/* Search Bar */}
+        {/* Search Bar Button Trigger */}
         <div className="px-3 py-3 border-b border-border">
-          <div className="relative w-full">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="bg-bg border border-border rounded-lg text-sm text-text px-3 py-2 pr-10 w-full focus:border-indigo focus:outline-none"
-            />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-text-dim font-mono pointer-events-none">
-              ⌘K
+          <button
+            type="button"
+            onClick={() => setIsSearchOpen(true)}
+            aria-haspopup="dialog"
+            aria-label="Open search command palette"
+            className="flex items-center justify-between bg-bg border border-border hover:border-border-hover rounded-lg text-sm text-text-muted hover:text-text px-3 py-2 w-full transition-colors duration-150 cursor-pointer focus:outline-none"
+          >
+            <div className="flex items-center gap-2">
+              <Search aria-hidden="true" className="w-4 h-4 text-text-dim" />
+              <span>Search...</span>
             </div>
-          </div>
+            <span aria-hidden="true" className="text-xs text-text-dim font-mono">
+              ⌘K
+            </span>
+          </button>
         </div>
 
         {/* Navigation */}
@@ -83,7 +292,31 @@ export default function Sidebar() {
                 {group.label}
               </div>
               <div className="space-y-0.5">
-                {group.items.map((item) => {
+                {groups[0].label === group.label ? group.items.map((item) => {
+                  const Icon = item.icon
+                  const isActive = pathname.startsWith(item.href)
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={`group flex items-center gap-3 px-3 py-2.5 mx-2 rounded-lg transition-all duration-150 ${
+                        isActive
+                          ? 'bg-indigo-dim text-text font-semibold'
+                          : 'bg-transparent text-text-muted hover:bg-surface-hover hover:text-text'
+                      }`}
+                    >
+                      <Icon
+                        className={`w-4 h-4 transition-colors ${
+                          isActive
+                            ? 'text-indigo'
+                            : 'text-text-dim group-hover:text-text-muted'
+                        }`}
+                      />
+                      <span className="text-sm">{item.label}</span>
+                    </Link>
+                  )
+                }) : group.items.map((item) => {
                   const Icon = item.icon
                   const isActive = pathname.startsWith(item.href)
 
@@ -115,45 +348,120 @@ export default function Sidebar() {
       </div>
 
       {/* Bottom Section */}
-      <div className="border-t border-border p-4 bg-surface">
-        {/* Stats Row */}
-        <div className="flex gap-3 mb-3">
-          <span className="text-xs font-mono bg-green-dim text-green px-2.5 py-1 rounded-full">
-            ✓ {stats.solved} solved
-          </span>
-          <span className="text-xs font-mono bg-amber-dim text-amber px-2.5 py-1 rounded-full">
-            🔖 {stats.revision} saved
-          </span>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col gap-2">
-          {/* GitHub Button */}
-          <a
-            href="https://github.com/rithvikshettyy/interviewdump"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full border border-border text-text-muted text-sm rounded-lg py-2 hover:border-border-hover hover:text-text transition flex items-center justify-center gap-2 font-medium"
+      <div className="border-t border-border p-2 bg-surface">
+        {/* Profile Card */}
+        {user && (
+          <button
+            type="button"
+            onClick={() => setIsSettingsOpen(true)}
+            aria-haspopup="dialog"
+            aria-label="Open settings and profile"
+            className="flex items-center gap-2 bg-bg/40 hover:bg-surface-hover border border-border/80 hover:border-border px-2.5 py-2 rounded-xl transition-all duration-200 cursor-pointer mb-1.5 group text-left w-full focus:outline-none"
           >
-            <span>⭐</span> Star on GitHub
-          </a>
-
-          {/* Twitter Button */}
-          <a
-            href="https://x.com/RithvikShetty04"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full border border-border text-text-muted text-sm rounded-lg py-2 hover:border-border-hover hover:text-text transition flex items-center justify-center gap-2 font-medium"
-          >
-            <span className="font-sans font-bold">𝕏</span> Follow @RithvikShetty04
-          </a>
-        </div>
-
-        {/* MIT License */}
-        <div className="text-center text-[10px] text-text-dim font-mono mt-3 uppercase tracking-wide">
-          100% FREE • MIT LICENSE
-        </div>
+            {user.user_metadata?.avatar_url ? (
+              <img
+                src={user.user_metadata.avatar_url}
+                alt="Avatar"
+                className="w-8 h-8 rounded-full border border-border flex-shrink-0"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-indigo-dim text-indigo-light flex items-center justify-center text-xs font-mono font-bold border border-indigo/20 select-none flex-shrink-0">
+                {profile?.name ? profile.name.slice(0, 2).toUpperCase() : 'US'}
+              </div>
+            )}
+            <div className="min-w-0 flex-1">
+              <div className="text-xs font-semibold text-text truncate">
+                {profile?.name || user.user_metadata?.full_name || 'Developer'}
+              </div>
+              <div className="text-[10px] text-text-muted truncate mt-0.5">
+                {profile?.role || 'Preferences'}
+              </div>
+            </div>
+            <Settings className="w-4 h-4 text-text-dim group-hover:text-text-muted transition-colors flex-shrink-0" />
+          </button>
+        )}
       </div>
+
+      {user && (
+        <SettingsDrawer
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          user={user}
+          profile={profile}
+          onProfileUpdate={(updatedProfile) => {
+            setProfile(updatedProfile)
+          }}
+        />
+      )}
+
+      {isSearchOpen && (
+        <div 
+          className="fixed inset-0 bg-bg/75 backdrop-blur-md z-[100] flex items-start justify-center pt-[10vh] px-4"
+          onClick={() => setIsSearchOpen(false)}
+        >
+          <div
+            ref={searchModalRef}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-surface border border-border w-full max-w-2xl rounded-2xl flex flex-col shadow-2xl overflow-hidden animate-fadeIn"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Global Search"
+          >
+            {/* Input Header */}
+            <div className="flex items-center gap-3 px-4 py-3.5 border-b border-border bg-surface-hover">
+              <Search aria-hidden="true" className="w-5 h-5 text-text-dim flex-shrink-0" />
+              <input
+                type="text"
+                placeholder="Search questions or companies..."
+                aria-label="Search field"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-transparent text-text placeholder-text-dim text-base outline-none flex-1 font-sans"
+              />
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(false)}
+                className="text-text-muted hover:text-text px-2 py-1 text-xs border border-border rounded-lg bg-bg font-mono cursor-pointer focus:outline-none"
+              >
+                ESC
+              </button>
+            </div>
+
+            {/* Results */}
+            <div className="max-h-[350px] overflow-y-auto p-2 flex flex-col gap-1">
+              {searchQuery.trim() === '' ? (
+                <div className="text-center py-8 text-text-dim text-sm font-sans">
+                  Type to search questions or companies...
+                </div>
+              ) : filteredItems.length > 0 ? (
+                filteredItems.map((item, idx) => (
+                  <button
+                    key={`${item.type}-${item.id}-${idx}`}
+                    type="button"
+                    onClick={() => {
+                      setIsSearchOpen(false)
+                      setSearchQuery('')
+                      router.push(item.href)
+                    }}
+                    className="w-full text-left p-3 rounded-xl hover:bg-surface-hover border border-transparent hover:border-border transition-all flex flex-col justify-center cursor-pointer group focus:outline-none"
+                  >
+                    <span className="text-sm font-semibold text-text group-hover:text-indigo-light">
+                      {item.title}
+                    </span>
+                    <span className="text-[10px] font-mono text-text-dim mt-1 uppercase tracking-wide">
+                      {item.subtitle}
+                    </span>
+                  </button>
+                ))
+              ) : (
+                <div className="text-center py-8 text-text-dim text-sm font-sans">
+                  No matches found for &quot;{searchQuery}&quot;
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </aside>
   )
 }

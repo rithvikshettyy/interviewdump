@@ -9,64 +9,63 @@
 @source "components";
 
 @theme {
-  --color-bg: #0D1117;
-  --color-surface: #161B22;
-  --color-surface-hover: #1C2333;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
   
-  --color-border: #30363D;
-  --color-border-hover: #484F58;
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
   
-  --color-indigo: #6366F1;
-  --color-indigo-light: #818CF8;
-  --color-indigo-dim: rgba(99,102,241,0.12);
+  --color-indigo: var(--indigo);
+  --color-indigo-light: var(--indigo-light);
+  --color-indigo-dim: var(--indigo-dim);
   
-  --color-amber: #F59E0B;
-  --color-amber-dim: rgba(245,158,11,0.12);
+  --color-amber: var(--amber);
+  --color-amber-dim: var(--amber-dim);
   
-  --color-green: #22C55E;
-  --color-green-dim: rgba(34,197,94,0.12);
+  --color-green: var(--green);
+  --color-green-dim: var(--green-dim);
   
-  --color-red: #EF4444;
-  --color-red-dim: rgba(239,68,68,0.12);
+  --color-red: var(--red);
+  --color-red-dim: var(--red-dim);
   
-  --color-text: #E6EDF3;
-  --color-text-muted: #8B9CB1;
-  --color-text-dim: #484F58;
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-dim: var(--text-dim);
 
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
 :root {
-  --bg: #0D1117;
-  --surface: #161B22;
-  --surface-hover: #1C2333;
-  --border: #30363D;
-  --border-hover: #484F58;
-  --indigo: #6366F1;
-  --indigo-light: #818CF8;
-  --indigo-dim: rgba(99,102,241,0.12);
+  --bg: #000000;
+  --surface: #0A0A0A;
+  --surface-hover: #151515;
+  --border: #1E1E1E;
+  --border-hover: #2E2E2E;
+  --indigo: #FAFAFA;
+  --indigo-light: #FFFFFF;
+  --indigo-dim: rgba(255, 255, 255, 0.08);
   --amber: #F59E0B;
-  --amber-dim: rgba(245,158,11,0.12);
+  --amber-dim: rgba(245,158,11,0.08);
   --green: #22C55E;
-  --green-dim: rgba(34,197,94,0.12);
+  --green-dim: rgba(34,197,94,0.08);
   --red: #EF4444;
-  --red-dim: rgba(239,68,68,0.12);
-  --text: #E6EDF3;
-  --text-muted: #8B9CB1;
-  --text-dim: #484F58;
+  --red-dim: rgba(239,68,68,0.08);
+  --text: #FAFAFA;
+  --text-muted: #A1A1AA;
+  --text-dim: #94A3B8;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
+/* Force dark contrast text inside white bg-indigo buttons */
+.bg-indigo {
+  background-color: var(--indigo) !important;
+  color: var(--bg) !important;
 }
+.bg-indigo *, .bg-indigo svg {
+  color: var(--bg) !important;
+}
+
 
 .font-mono { font-family: 'JetBrains Mono', monospace; }
 
@@ -101,3 +100,10 @@ body {
   50% { opacity: 0; }
 }
 .animate-blink { animation: blink 1s step-end infinite; }
+
+/* Custom accessible focus-visible styles */
+*:focus-visible {
+  outline: 2px solid var(--indigo) !important;
+  outline-offset: 2px !important;
+}
+
