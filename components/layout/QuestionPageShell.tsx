@@ -198,6 +198,9 @@ export default function QuestionPageShell({
   })
 
   if (layoutVariant === 'role-wise') {
+    const solvedCount = questions.filter((q) => solvedIds.includes(q.id)).length
+    const revisionCount = questions.filter((q) => revisionIds.includes(q.id)).length
+
     return (
       <div className="flex flex-col min-h-screen bg-bg">
         <div className="p-6">
@@ -234,7 +237,7 @@ export default function QuestionPageShell({
             )}
 
             {/* Filters Row */}
-            <div className="flex items-center gap-3 flex-wrap pt-2">
+            <div className="flex items-center gap-3 flex-wrap">
               <SearchBar
                 placeholder="Search questions..."
                 value={searchQuery}
@@ -249,6 +252,66 @@ export default function QuestionPageShell({
                   onChange={setDifficultyFilter}
                 />
               )}
+
+              {filterOptions.roles && filterOptions.roleOptions && (
+                <FilterDropdown
+                  label="All Roles"
+                  options={filterOptions.roleOptions}
+                  value={roleFilter}
+                  onChange={setRoleFilter}
+                />
+              )}
+
+              {filterOptions.topics && filterOptions.topicOptions && (
+                <FilterDropdown
+                  label="All Topics"
+                  options={filterOptions.topicOptions}
+                  value={topicFilter}
+                  onChange={setTopicFilter}
+                />
+              )}
+
+              {filterOptions.categories && filterOptions.categoryOptions && (
+                <FilterDropdown
+                  label="All Categories"
+                  options={filterOptions.categoryOptions}
+                  value={categoryFilter}
+                  onChange={setCategoryFilter}
+                />
+              )}
+
+              {filterOptions.languages && filterOptions.languageOptions && (
+                <FilterDropdown
+                  label="All Languages"
+                  options={filterOptions.languageOptions}
+                  value={languageFilter}
+                  onChange={setLanguageFilter}
+                />
+              )}
+            </div>
+
+            {/* Secondary filter pills — All / Solved / Revision */}
+            <div className="flex gap-2">
+              {(
+                [
+                  { label: `All (${questions.length})`, value: 'all' },
+                  { label: `Solved (${solvedCount})`, value: 'solved' },
+                  { label: `Revision (${revisionCount})`, value: 'revision' },
+                ] as const
+              ).map((f) => (
+                <button
+                  key={f.value}
+                  type="button"
+                  onClick={() => setSecondaryFilter(f.value)}
+                  className={`text-xs font-mono px-3 py-1.5 rounded-lg border transition-colors focus:outline-none cursor-pointer ${
+                    secondaryFilter === f.value
+                      ? 'bg-indigo-dim border-indigo text-indigo-light font-semibold'
+                      : 'border-border text-text-muted hover:border-border-hover hover:text-text'
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
             </div>
 
             {/* Table wrapper */}

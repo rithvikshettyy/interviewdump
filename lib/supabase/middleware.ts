@@ -28,12 +28,12 @@ export async function updateSession(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
 
   // Protect all (main) routes — redirect to login if not authed
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth') &&
-    request.nextUrl.pathname !== '/'
-  ) {
+  const publicPaths = ['/', '/login', '/terms', '/privacy']
+  const isPublic =
+    publicPaths.includes(request.nextUrl.pathname) ||
+    request.nextUrl.pathname.startsWith('/auth')
+
+  if (!user && !isPublic) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)

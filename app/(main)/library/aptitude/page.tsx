@@ -1,19 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import quantQuestions from '@/content/aptitude/quantitative.json'
 import logicalQuestions from '@/content/aptitude/logical.json'
 import QuestionPageShell from '@/components/layout/QuestionPageShell'
 
 export default function AptitudeQuestionsPage() {
-  const [activeTab, setActiveTab] = useState('all')
-
-  // Combine both sources
   const allRaw = [...quantQuestions, ...logicalQuestions]
 
-  // Map AptitudeQuestion schema to the unified Question schema for listing shell compatibility
   const displayQuestions = allRaw.map((q, idx) => {
-    // Determine the letter for the correct answer
     const correctLetter = String.fromCharCode(65 + q.correctIndex)
     const correctAnswerText = q.options[q.correctIndex]
 
@@ -25,9 +20,9 @@ export default function AptitudeQuestionsPage() {
       difficulty: q.difficulty,
       companies: [],
       roles: [],
-      type: activeTab, // compatibility helper for shell main tab filter
-      topic: q.category, // Map category to topic
-      category: q.category, // Preserve category for Category Filter
+      type: 'aptitude',
+      topic: q.category,
+      category: q.category,
       whatTheyTest: `Evaluates logical ability, quick calculations, and numerical pattern recognition under time constraints.`,
       explanation: `Correct Answer: Option ${correctLetter} (${correctAnswerText})\n\n${q.explanation}`,
       strongAnswerPoints: q.options.map((opt, i) => `${String.fromCharCode(65 + i)}) ${opt} ${i === q.correctIndex ? '✓ (Correct Option)' : ''}`),
@@ -49,13 +44,7 @@ export default function AptitudeQuestionsPage() {
         categories: true,
         categoryOptions: ['Quantitative', 'Logical Reasoning', 'Verbal', 'Technical MCQ'],
       }}
-      tabs={[
-        { label: 'All questions', value: 'all' },
-        { label: 'Solved', value: 'solved' },
-        { label: 'Revision', value: 'revision' },
-      ]}
-      activeTab={activeTab}
-      onTabChange={setActiveTab}
+      layoutVariant="role-wise"
     />
   )
 }

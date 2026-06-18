@@ -306,7 +306,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="flex gap-6 text-xs text-text-muted">
+          <div className="flex gap-6 text-xs text-text-muted flex-wrap justify-center md:justify-end">
             <a
               href="https://github.com/rithvikshettyy/interviewdump"
               target="_blank"
@@ -323,8 +323,8 @@ export default function LandingPage() {
             >
               Twitter ↗
             </a>
-            <span>Open Source</span>
-            <span>Free Forever</span>
+            <Link href="/terms" className="hover:text-text transition-colors">Terms</Link>
+            <Link href="/privacy" className="hover:text-text transition-colors">Privacy</Link>
           </div>
         </div>
       </footer>

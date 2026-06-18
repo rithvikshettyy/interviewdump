@@ -8,6 +8,7 @@ import pythonConcepts from '@/content/languages/python/concepts.json'
 import javaConcepts from '@/content/languages/java/concepts.json'
 import { getProgressIds } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
+import { CheckCircle2 } from 'lucide-react'
 import {
   Lock,
   Hourglass,
@@ -195,7 +196,7 @@ export default function LanguageConceptsPage({ params }: PageProps) {
                   <div className="flex justify-between items-center mt-4 pt-3 border-t border-border">
                     <div>
                       {isDone ? (
-                        <span className="text-xs font-mono text-green font-semibold">✓ Done</span>
+                        <span className="flex items-center gap-1 text-xs font-mono text-green font-semibold"><CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />Done</span>
                       ) : (
                         <span className="text-xs font-mono text-text-dim">Not started</span>
                       )}

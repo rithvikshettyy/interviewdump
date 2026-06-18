@@ -2,7 +2,7 @@
 
 import { use, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, CheckCircle2, Circle, ExternalLink } from 'lucide-react'
+import { ArrowLeft, CheckCircle2, Circle, ExternalLink, Zap, Wrench, Rocket, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import { toggleProgress, getProgressIds } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
@@ -10,6 +10,12 @@ import Badge from '@/components/shared/Badge'
 import frontendPlan from '@/content/plans/frontend-30.json'
 import backendPlan from '@/content/plans/backend-30.json'
 import faangPlan from '@/content/plans/faang-60.json'
+
+const PLAN_ICONS: Record<string, LucideIcon> = {
+  'frontend-30': Zap,
+  'backend-30': Wrench,
+  'faang-60': Rocket,
+}
 
 const PLANS: Record<string, typeof frontendPlan> = {
   'frontend-30': frontendPlan,
@@ -89,7 +95,7 @@ export default function PlanDetailPage({ params }: { params: Promise<{ planId: s
           </button>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <span className="text-xl">{plan.emoji}</span>
+              {(() => { const Icon = PLAN_ICONS[planId]; return Icon ? <Icon className="w-5 h-5 text-indigo-light flex-shrink-0" /> : null })()}
               <h1 className="text-lg font-bold text-text truncate">{plan.title}</h1>
             </div>
             <p className="text-xs text-text-muted mt-0.5">{plan.duration} · {plan.role}</p>
@@ -176,7 +182,7 @@ export default function PlanDetailPage({ params }: { params: Promise<{ planId: s
         {/* Completion banner */}
         {!loading && completedCount === totalCount && totalCount > 0 && (
           <div className="bg-green/10 border border-green/30 rounded-2xl p-6 text-center mt-2">
-            <div className="text-2xl mb-2">🎉</div>
+            <CheckCircle2 className="w-8 h-8 text-green mx-auto mb-2" />
             <p className="text-sm font-semibold text-green">Plan Complete!</p>
             <p className="text-xs text-text-muted mt-1">
               You&apos;ve finished all {totalCount} steps. Time to apply!

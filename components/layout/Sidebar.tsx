@@ -24,6 +24,8 @@ import {
   FileText,
   Bookmark,
   Map,
+  Menu,
+  X,
 } from 'lucide-react'
 
 // Import question databases statically for global client search
@@ -39,6 +41,7 @@ import companies from '@/content/companies/index.json'
 export default function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState<any>(null)
@@ -274,8 +277,33 @@ export default function Sidebar() {
     },
   ]
 
+  const closeMobile = () => setIsMobileOpen(false)
+
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[240px] z-50 bg-surface border-r border-border flex flex-col justify-between">
+    <>
+      {/* Mobile Top Bar */}
+      <div className="md:hidden fixed top-0 left-0 right-0 h-14 z-40 bg-surface border-b border-border flex items-center justify-between px-4">
+        <Logo size="md" />
+        <button
+          type="button"
+          onClick={() => setIsMobileOpen((v) => !v)}
+          aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
+          className="p-2 rounded-lg text-text-muted hover:text-text hover:bg-surface-hover transition-colors focus:outline-none"
+        >
+          {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
+      {/* Mobile Backdrop */}
+      {isMobileOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={closeMobile}
+          aria-hidden="true"
+        />
+      )}
+
+    <aside className={`fixed left-0 top-0 h-screen w-[240px] z-50 bg-surface border-r border-border flex flex-col justify-between transition-transform duration-300 ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
       {/* Scrollable upper area */}
       <div className="flex-1 overflow-y-auto scrollbar-hide">
         {/* Logo Section */}
@@ -313,7 +341,7 @@ export default function Sidebar() {
                 {group.label}
               </div>
               <div className="space-y-0.5">
-                {groups[0].label === group.label ? group.items.map((item) => {
+                {group.items.map((item) => {
                   const Icon = item.icon
                   const isActive = pathname.startsWith(item.href)
 
@@ -321,30 +349,7 @@ export default function Sidebar() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`group flex items-center gap-3 px-3 py-2.5 mx-2 rounded-lg transition-all duration-150 ${
-                        isActive
-                          ? 'bg-indigo-dim text-text font-semibold'
-                          : 'bg-transparent text-text-muted hover:bg-surface-hover hover:text-text'
-                      }`}
-                    >
-                      <Icon
-                        className={`w-4 h-4 transition-colors ${
-                          isActive
-                            ? 'text-indigo'
-                            : 'text-text-dim group-hover:text-text-muted'
-                        }`}
-                      />
-                      <span className="text-sm">{item.label}</span>
-                    </Link>
-                  )
-                }) : group.items.map((item) => {
-                  const Icon = item.icon
-                  const isActive = pathname.startsWith(item.href)
-
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
+                      onClick={closeMobile}
                       className={`group flex items-center gap-3 px-3 py-2.5 mx-2 rounded-lg transition-all duration-150 ${
                         isActive
                           ? 'bg-indigo-dim text-text font-semibold'
@@ -403,6 +408,8 @@ export default function Sidebar() {
         )}
       </div>
 
+    </aside>
+
       {user && isSettingsOpen && (
         <SettingsDrawer
           isOpen={isSettingsOpen}
@@ -416,7 +423,7 @@ export default function Sidebar() {
       )}
 
       {isSearchOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-bg/75 backdrop-blur-md z-[100] flex items-start justify-center pt-[10vh] px-4"
           onClick={() => setIsSearchOpen(false)}
         >
@@ -483,6 +490,6 @@ export default function Sidebar() {
           </div>
         </div>
       )}
-    </aside>
+    </>
   )
 }

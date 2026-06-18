@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { Monitor, Server, Layers, Brain, Cloud, Smartphone, BarChart2, TestTube2, Target, BookOpen, GraduationCap, ArrowLeftRight, type LucideIcon } from 'lucide-react'
 
 export default function OnboardingPage() {
   const router = useRouter()
@@ -135,17 +136,18 @@ export default function OnboardingPage() {
             <p className="text-sm text-text-muted mb-8">We'll customize your question feed.</p>
 
             <div className="grid grid-cols-2 gap-3">
-              {[
-                { emoji: '🖥️', name: 'Frontend Developer' },
-                { emoji: '⚙️', name: 'Backend Developer' },
-                { emoji: '🔥', name: 'Full Stack Developer' },
-                { emoji: '🤖', name: 'ML / AI Engineer' },
-                { emoji: '☁️', name: 'DevOps / Cloud' },
-                { emoji: '📱', name: 'Mobile Developer' },
-                { emoji: '📊', name: 'Data Analyst' },
-                { emoji: '🔍', name: 'QA / SDET' },
-              ].map((r) => {
+              {([
+                { icon: Monitor, name: 'Frontend Developer' },
+                { icon: Server, name: 'Backend Developer' },
+                { icon: Layers, name: 'Full Stack Developer' },
+                { icon: Brain, name: 'ML / AI Engineer' },
+                { icon: Cloud, name: 'DevOps / Cloud' },
+                { icon: Smartphone, name: 'Mobile Developer' },
+                { icon: BarChart2, name: 'Data Analyst' },
+                { icon: TestTube2, name: 'QA / SDET' },
+              ] as { icon: LucideIcon; name: string }[]).map((r) => {
                 const isSelected = roles.includes(r.name)
+                const Icon = r.icon
                 return (
                   <div
                     key={r.name}
@@ -160,7 +162,7 @@ export default function OnboardingPage() {
                       isSelected ? 'border-indigo bg-indigo-dim' : 'border-border'
                     }`}
                   >
-                    <span className="text-2xl block">{r.emoji}</span>
+                    <Icon className="w-6 h-6 text-text-dim mb-1" />
                     <span className="text-sm font-semibold text-text mt-2 block">{r.name}</span>
                   </div>
                 )
@@ -192,13 +194,14 @@ export default function OnboardingPage() {
             <p className="text-sm text-text-muted mb-8">Help us understand your timeline and goals.</p>
 
             <div className="flex flex-col gap-3">
-              {[
-                { emoji: '🎯', title: 'Job Interview', desc: 'Actively interviewing for a new role' },
-                { emoji: '📚', title: 'Learning & Upskilling', desc: 'Building knowledge for long-term growth' },
-                { emoji: '🎓', title: 'College Placements', desc: 'Preparing for campus recruitment' },
-                { emoji: '🔄', title: 'Career Switch', desc: 'Transitioning to a new tech role' },
-              ].map((g) => {
+              {([
+                { icon: Target, title: 'Job Interview', desc: 'Actively interviewing for a new role' },
+                { icon: BookOpen, title: 'Learning & Upskilling', desc: 'Building knowledge for long-term growth' },
+                { icon: GraduationCap, title: 'College Placements', desc: 'Preparing for campus recruitment' },
+                { icon: ArrowLeftRight, title: 'Career Switch', desc: 'Transitioning to a new tech role' },
+              ] as { icon: LucideIcon; title: string; desc: string }[]).map((g) => {
                 const isSelected = goal === g.title
+                const Icon = g.icon
                 return (
                   <div
                     key={g.title}
@@ -207,7 +210,7 @@ export default function OnboardingPage() {
                       isSelected ? 'border-indigo bg-indigo-dim' : 'border-border'
                     }`}
                   >
-                    <span className="text-2xl flex-shrink-0">{g.emoji}</span>
+                    <Icon className="w-6 h-6 text-text-dim flex-shrink-0" />
                     <div className="text-left min-w-0">
                       <span className="text-sm font-semibold text-text block">{g.title}</span>
                       <span className="text-xs text-text-muted block mt-0.5">{g.desc}</span>

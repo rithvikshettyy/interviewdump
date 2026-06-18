@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react'
 import { getStatsByType } from '@/lib/progress'
 import PageHeader from '@/components/layout/PageHeader'
 import Link from 'next/link'
+import { Code2, MessageSquare, Monitor, Database, Hash, Zap, type LucideIcon } from 'lucide-react'
 
 // Total question counts per category (static)
-const TOTALS: Record<string, { label: string; total: number; href: string; emoji: string }> = {
-  dsa:       { label: 'DSA',                href: '/library/dsa',                emoji: '🧮', total: 50 },
-  interview: { label: 'Interview Questions', href: '/library/interview-questions', emoji: '💬', total: 40 },
-  corecs:    { label: 'Core CS Subjects',   href: '/library/core-cs',             emoji: '🖥️', total: 25 },
-  sql:       { label: 'SQL Questions',      href: '/library/sql',                 emoji: '🗄️', total: 20 },
-  aptitude:  { label: 'Aptitude',           href: '/library/aptitude',            emoji: '🧠', total: 60 },
-  scenario:  { label: 'Scenario Based',     href: '/library/scenario',            emoji: '⚡', total: 15 },
+const TOTALS: Record<string, { label: string; total: number; href: string; icon: LucideIcon }> = {
+  dsa:       { label: 'DSA',                href: '/library/dsa',                icon: Code2,         total: 50 },
+  interview: { label: 'Interview Questions', href: '/library/interview-questions', icon: MessageSquare, total: 40 },
+  corecs:    { label: 'Core CS Subjects',   href: '/library/core-cs',             icon: Monitor,       total: 25 },
+  sql:       { label: 'SQL Questions',      href: '/library/sql',                 icon: Database,      total: 20 },
+  aptitude:  { label: 'Aptitude',           href: '/library/aptitude',            icon: Hash,          total: 60 },
+  scenario:  { label: 'Scenario Based',     href: '/library/scenario',            icon: Zap,           total: 15 },
 }
 
 function ProgressBar({ value, max }: { value: number; max: number }) {
@@ -32,10 +33,12 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getStatsByType().then((data) => {
-      setStats(data)
-      setLoading(false)
-    })
+    getStatsByType()
+      .then((data) => {
+        setStats(data)
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const totalSolved = Object.values(stats).reduce((sum, s) => sum + s.solved, 0)
@@ -99,7 +102,7 @@ export default function DashboardPage() {
                     href={info.href}
                     className="flex items-center gap-4 px-5 py-4 hover:bg-surface-hover transition-colors group"
                   >
-                    <span className="text-xl w-7 flex-shrink-0">{info.emoji}</span>
+                    <info.icon className="w-5 h-5 text-text-dim flex-shrink-0 group-hover:text-indigo transition-colors" />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1.5">
                         <span className="text-sm font-medium text-text group-hover:text-indigo-light transition-colors">

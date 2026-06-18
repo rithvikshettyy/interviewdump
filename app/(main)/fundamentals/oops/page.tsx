@@ -14,6 +14,8 @@ import {
   Workflow,
   Component,
   BookOpen,
+  CheckCircle2,
+  Bookmark,
 } from 'lucide-react'
 import oopsConcepts from '@/content/oops/concepts.json'
 import { getProgressIds, toggleProgress } from '@/lib/progress'
@@ -207,7 +209,7 @@ export default function OopsConceptsPage() {
                 <div className="flex justify-between items-center mt-4 pt-3 border-t border-border">
                   <div>
                     {isDone ? (
-                      <span className="text-xs font-mono text-green font-semibold">✓ Done</span>
+                      <span className="flex items-center gap-1 text-xs font-mono text-green font-semibold"><CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />Done</span>
                     ) : (
                       <span className="text-xs font-mono text-text-dim">Not started</span>
                     )}
@@ -380,7 +382,7 @@ export default function OopsConceptsPage() {
                   <div className="border-b border-border mb-4" />
                   <div className="bg-red-dim border border-red/20 rounded-xl p-4">
                     <div className="text-[10px] font-mono text-red mb-1 uppercase tracking-wider">
-                      ❌ Common mistake:
+                      Common mistake:
                     </div>
                     <p className="text-sm text-red mb-3 leading-relaxed">
                       {selectedConcept.commonMistake}
@@ -411,7 +413,7 @@ export default function OopsConceptsPage() {
                           : 'border border-border text-text-muted hover:border-border-hover hover:text-text'
                       }`}
                     >
-                      {doneIds.includes(selectedConcept.id) ? 'Completed ✓' : 'Mark Completed'}
+                      {doneIds.includes(selectedConcept.id) ? <><CheckCircle2 className="w-3.5 h-3.5 inline mr-1" aria-hidden="true" />Completed</> : 'Mark Completed'}
                     </button>
                   </div>
                 </div>
@@ -459,7 +461,10 @@ export default function OopsConceptsPage() {
                       : 'border border-border text-text-muted hover:border-border-hover hover:text-text'
                   }`}
                 >
-                  {doneIds.includes(selectedConcept.id) ? 'Done ✓' : 'Mark Done'}
+                  <span className="flex items-center justify-center gap-1.5">
+                    {doneIds.includes(selectedConcept.id) && <CheckCircle2 className="w-4 h-4" aria-hidden="true" />}
+                    {doneIds.includes(selectedConcept.id) ? 'Done' : 'Mark Done'}
+                  </span>
                 </button>
                 <button
                   onClick={() => handleToggleRevision(selectedConcept.id)}
@@ -469,7 +474,10 @@ export default function OopsConceptsPage() {
                       : 'border border-border text-text-muted hover:border-border-hover hover:text-text'
                   }`}
                 >
-                  {revisionIds.includes(selectedConcept.id) ? 'Saved 🔖' : 'Add to Revision'}
+                  <span className="flex items-center justify-center gap-1.5">
+                    {revisionIds.includes(selectedConcept.id) && <Bookmark className="w-4 h-4" aria-hidden="true" />}
+                    {revisionIds.includes(selectedConcept.id) ? 'Saved' : 'Add to Revision'}
+                  </span>
                 </button>
               </div>
             </div>

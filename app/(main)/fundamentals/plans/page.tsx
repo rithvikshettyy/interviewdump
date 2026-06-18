@@ -2,11 +2,17 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Zap, Wrench, Rocket, type LucideIcon } from 'lucide-react'
 import PageHeader from '@/components/layout/PageHeader'
 import Badge from '@/components/shared/Badge'
 import { getProgressIds } from '@/lib/progress'
 import plans from '@/content/plans/index.json'
+
+const PLAN_ICONS: Record<string, LucideIcon> = {
+  'frontend-30': Zap,
+  'backend-30': Wrench,
+  'faang-60': Rocket,
+}
 
 export default function PlansPage() {
   const router = useRouter()
@@ -58,8 +64,8 @@ export default function PlansPage() {
                 <div>
                   {/* Top row */}
                   <div className="flex justify-between items-center">
-                    <div className="w-12 h-12 rounded-xl bg-indigo-dim flex items-center justify-center text-2xl">
-                      {plan.emoji}
+                    <div className="w-12 h-12 rounded-xl bg-indigo-dim flex items-center justify-center">
+                      {(() => { const Icon = PLAN_ICONS[plan.id]; return Icon ? <Icon className="w-6 h-6 text-indigo-light" /> : null })()}
                     </div>
                     <div className="flex items-center gap-2">
                       {completed === plan.stepCount && completed > 0 && (

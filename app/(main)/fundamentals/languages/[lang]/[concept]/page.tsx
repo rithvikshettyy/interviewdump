@@ -3,7 +3,7 @@
 import React, { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Copy, Check, ArrowRight, ArrowLeft } from 'lucide-react'
+import { Copy, Check, ArrowRight, ArrowLeft, CheckCircle2, Bookmark } from 'lucide-react'
 import jsConcepts from '@/content/languages/javascript/concepts.json'
 import pythonConcepts from '@/content/languages/python/concepts.json'
 import javaConcepts from '@/content/languages/java/concepts.json'
@@ -223,7 +223,7 @@ export default function ConceptDetailPage({ params }: PageProps) {
                     : 'bg-surface border border-border text-text-muted hover:border-border-hover hover:text-text'
                 }`}
               >
-                {isDone ? 'Done ✓' : 'Mark as Done'}
+                {isDone ? <><CheckCircle2 className="w-4 h-4" aria-hidden="true" /> Done</> : 'Mark as Done'}
               </button>
               <button
                 onClick={handleToggleSaved}
@@ -233,7 +233,7 @@ export default function ConceptDetailPage({ params }: PageProps) {
                     : 'bg-surface border border-border text-text-muted hover:border-border-hover hover:text-text'
                 }`}
               >
-                {isSaved ? 'Saved 🔖' : 'Add to Revision'}
+                {isSaved ? <><Bookmark className="w-4 h-4" aria-hidden="true" /> Saved</> : 'Add to Revision'}
               </button>
             </div>
           </header>
@@ -334,14 +334,14 @@ export default function ConceptDetailPage({ params }: PageProps) {
               </h2>
               <div className="bg-red-dim border border-red/20 rounded-2xl p-5">
                 <div className="text-[10px] font-mono text-red mb-2 uppercase tracking-widest">
-                  ❌ Common mistake:
+                  Common mistake:
                 </div>
                 <p className="text-sm text-red mb-4 leading-relaxed">
                   {concept.commonMistake}
                 </p>
 
                 <div className="text-[10px] font-mono text-green mb-2 uppercase tracking-widest">
-                  ✓ Correct mental model:
+                  Correct mental model:
                 </div>
                 <p className="text-sm text-green leading-relaxed">
                   {concept.correctMentalModel}
@@ -371,7 +371,7 @@ export default function ConceptDetailPage({ params }: PageProps) {
                       : 'border border-border text-text-muted hover:border-border-hover hover:text-text'
                   }`}
                 >
-                  {isDone ? 'Completed ✓' : 'Mark Completed'}
+                  {isDone ? <><CheckCircle2 className="w-4 h-4 inline mr-1" aria-hidden="true" />Completed</> : 'Mark Completed'}
                 </button>
               </div>
             </section>
@@ -379,7 +379,7 @@ export default function ConceptDetailPage({ params }: PageProps) {
             {/* 7. YOUTUBE RECOMMENDATION */}
             <section id="youtube" className="scroll-mt-6">
               <h2 className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-3">
-                YouTube Recommendation 📺
+                YouTube Recommendation
               </h2>
               <div className="bg-red-dim border border-red/20 rounded-2xl p-4 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">

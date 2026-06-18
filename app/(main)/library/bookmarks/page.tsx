@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { Bookmark, ChevronDown, ChevronUp } from 'lucide-react'
+import { Bookmark, ChevronDown, ChevronUp, Code2, MessageSquare, Monitor, Database, Zap, Hash, type LucideIcon } from 'lucide-react'
 import { toggleProgress, getProgressIds } from '@/lib/progress'
 import QuestionDrawer from '@/components/shared/QuestionDrawer'
 import Badge from '@/components/shared/Badge'
@@ -18,13 +18,13 @@ import corecsQuestions from '@/content/corecs/questions.json'
 import logicalQuestions from '@/content/aptitude/logical.json'
 import quantitativeQuestions from '@/content/aptitude/quantitative.json'
 
-const CATEGORY_META: Record<string, { label: string; emoji: string; href: string }> = {
-  interview: { label: 'Interview Questions', emoji: '💬', href: '/library/interview-questions' },
-  dsa:       { label: 'DSA',                emoji: '🧮', href: '/library/dsa' },
-  corecs:    { label: 'Core CS',            emoji: '🖥️', href: '/library/core-cs' },
-  sql:       { label: 'SQL',                emoji: '🗄️', href: '/library/sql' },
-  scenario:  { label: 'Scenario Based',     emoji: '⚡', href: '/library/scenario' },
-  aptitude:  { label: 'Aptitude',           emoji: '🧠', href: '/library/aptitude' },
+const CATEGORY_META: Record<string, { label: string; icon: LucideIcon; href: string }> = {
+  interview: { label: 'Interview Questions', icon: MessageSquare, href: '/library/interview-questions' },
+  dsa:       { label: 'DSA',                icon: Code2,         href: '/library/dsa' },
+  corecs:    { label: 'Core CS',            icon: Monitor,       href: '/library/core-cs' },
+  sql:       { label: 'SQL',                icon: Database,      href: '/library/sql' },
+  scenario:  { label: 'Scenario Based',     icon: Zap,           href: '/library/scenario' },
+  aptitude:  { label: 'Aptitude',           icon: Hash,          href: '/library/aptitude' },
 }
 
 // Flatten all question banks with their type tag
@@ -132,7 +132,7 @@ export default function BookmarksPage() {
             </div>
 
             {Object.entries(grouped).map(([cat, questions]) => {
-              const meta = CATEGORY_META[cat] ?? { label: cat, emoji: '📌', href: '#' }
+              const meta = CATEGORY_META[cat] ?? { label: cat, icon: Bookmark, href: '#' }
               const isCollapsed = collapsedCategories.has(cat)
 
               return (
@@ -144,7 +144,7 @@ export default function BookmarksPage() {
                     className="w-full flex items-center justify-between px-5 py-4 hover:bg-surface-hover transition-colors focus:outline-none"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-lg">{meta.emoji}</span>
+                      <meta.icon className="w-4 h-4 text-text-dim" />
                       <span className="text-sm font-semibold text-text">{meta.label}</span>
                       <span className="text-xs font-mono bg-indigo-dim text-indigo-light px-2 py-0.5 rounded-full">
                         {questions.length}

@@ -2,17 +2,29 @@
 
 import { useState } from 'react'
 import PageHeader from '@/components/layout/PageHeader'
-import { ChevronDown, ChevronRight } from 'lucide-react'
+import {
+  ChevronDown,
+  ChevronRight,
+  Bot,
+  PenLine,
+  Target,
+  FileText,
+  Rocket,
+  Wrench,
+  XCircle,
+  type LucideIcon,
+} from 'lucide-react'
 
 interface Section {
   id: string
   title: string
-  emoji: string
+  icon: LucideIcon
   content: React.ReactNode
 }
 
 function AccordionSection({ section }: { section: Section }) {
   const [open, setOpen] = useState(false)
+  const Icon = section.icon
   return (
     <div className="border border-border rounded-2xl overflow-hidden">
       <button
@@ -21,7 +33,7 @@ function AccordionSection({ section }: { section: Section }) {
         className="w-full flex items-center justify-between px-5 py-4 bg-surface hover:bg-surface-hover transition-colors text-left focus:outline-none"
       >
         <div className="flex items-center gap-3">
-          <span className="text-xl">{section.emoji}</span>
+          <Icon className="w-4 h-4 text-text-dim flex-shrink-0" aria-hidden="true" />
           <span className="font-semibold text-text text-sm">{section.title}</span>
         </div>
         {open ? (
@@ -74,7 +86,7 @@ const sections: Section[] = [
   {
     id: 'ats',
     title: 'ATS Optimization — Get Past the Bot',
-    emoji: '🤖',
+    icon: Bot,
     content: (
       <>
         <p>
@@ -104,7 +116,7 @@ const sections: Section[] = [
   {
     id: 'bullets',
     title: 'Writing Strong Bullet Points',
-    emoji: '✍️',
+    icon: PenLine,
     content: (
       <>
         <p>
@@ -138,7 +150,7 @@ const sections: Section[] = [
   {
     id: 'roles',
     title: 'Role-Specific Tips',
-    emoji: '🎯',
+    icon: Target,
     content: (
       <>
         <div className="space-y-4">
@@ -184,7 +196,7 @@ const sections: Section[] = [
   {
     id: 'structure',
     title: 'Resume Structure & Order',
-    emoji: '📄',
+    icon: FileText,
     content: (
       <>
         <p>The order of sections signals priority. Put your strongest section first.</p>
@@ -220,7 +232,7 @@ const sections: Section[] = [
   {
     id: 'projects',
     title: 'Showcasing Projects Effectively',
-    emoji: '🚀',
+    icon: Rocket,
     content: (
       <>
         <p>
@@ -254,7 +266,7 @@ const sections: Section[] = [
   {
     id: 'skills',
     title: 'Skills Section Best Practices',
-    emoji: '🛠️',
+    icon: Wrench,
     content: (
       <>
         <p>The skills section is heavily screened by ATS but largely ignored by human interviewers — who will probe your claims in the interview.</p>
@@ -278,7 +290,7 @@ const sections: Section[] = [
   {
     id: 'common-mistakes',
     title: 'Common Mistakes to Avoid',
-    emoji: '❌',
+    icon: XCircle,
     content: (
       <>
         <ul className="space-y-3">

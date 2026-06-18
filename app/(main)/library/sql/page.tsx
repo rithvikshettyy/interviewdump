@@ -1,13 +1,11 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import sqlQuestions from '@/content/sql/questions.json'
 import QuestionPageShell from '@/components/layout/QuestionPageShell'
 
 export default function SqlQuestionsPage() {
-  const [activeTab, setActiveTab] = useState('all')
-
-  const allQuestions = (sqlQuestions as any[])
+  const allQuestions = sqlQuestions as any[]
 
   const topicOptions = [
     'Filtering',
@@ -28,16 +26,11 @@ export default function SqlQuestionsPage() {
     'Interview Problems',
   ]
 
-  const displayQuestions = allQuestions.map((q) => ({
-    ...q,
-    type: activeTab,
-  }))
-
   return (
     <QuestionPageShell
       title="SQL Questions"
       subtitle="SQL and database questions asked at top companies — from query basics to advanced optimization."
-      questions={displayQuestions as any}
+      questions={allQuestions as any}
       itemType="sql"
       filterOptions={{
         difficulties: true,
@@ -45,13 +38,7 @@ export default function SqlQuestionsPage() {
         topicOptions,
       }}
       showTopicColumn={true}
-      tabs={[
-        { label: 'All questions', value: 'all' },
-        { label: 'Solved questions', value: 'solved' },
-        { label: 'Revision questions', value: 'revision' },
-      ]}
-      activeTab={activeTab}
-      onTabChange={setActiveTab}
+      layoutVariant="role-wise"
     />
   )
 }
