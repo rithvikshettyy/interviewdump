@@ -1,0 +1,1056 @@
+GOOGLE QUESTIONS:
+
+Find all triplets with zero sum
+Generate all binary strings from given pattern
+Count of strings that can be formed using a, b and c under given constraints
+Find largest word in dictionary by deleting some characters of given string
+Find subarray with given sum | Set 1 (Nonnegative Numbers)
+Find the longest substring with k unique characters in a given string
+Find the two non-repeating elements in an array of repeating elements
+Flood fill Algorithm - how to implement fill() in paint?
+Meta Strings (Check if two strings can become same after a swap in one string)
+Print all Jumping Numbers smaller than or equal to a given value
+Sum of all the numbers that are formed from root to leaf paths
+The Celebrity Problem
+Unbounded Knapsack (Repetition of items allowed)
+
+medium lvl
+
+Find four elements that sum to a given value | Set 2 ( O(n^2Logn) Solution)
+Given a matrix of ‘O’ and ‘X’, replace 'O' with 'X' if surrounded by 'X'
+How to print maximum number of A's using given four keys
+Inplace rotate square matrix by 90 degrees | Set 1
+Maximum absolute difference between sum of two contiguous sub-arrays
+Merge two BSTs with limited extra space
+Merge Overlapping Intervals
+Modular Exponentiation (Power in Modular Arithmetic)
+Paper Cut into Minimum Number of Squares | Set 2
+Sum of bit differences among all pairs
+
+hard lvl
+
+Allocate minimum number of pages
+Given an array arr[], find the maximum j - i such that arr[j] > arr[i]
+Given a sorted dictionary of an alien language, find order of characters
+Hungarian Algorithm for Assignment Problem | Set 1 (Introduction)
+Implement LRU Cache
+Length of the longest valid substring
+Median in a stream of integers (running integers)
+Sum of bit differences among all pairs
+Travelling Salesman Problem | Set 1 (Naive and Dynamic Programming)
+Word Break Problem using Backtracking
+
+-------------------------------------------------------------------------------------------------------
+
+AMAZON
+
+Graphs
+Process Ordering
+Number of Islands
+k Jumps on Grid
+Trie
+Finding Prefix in Dictionary
+Tree
+Binary Tree Top Down View
+Traversing binary tree in an outward manner.
+Diameter of a binary tree [Path is needed]
+Sliding window
+Contains Duplicates III
+Minimum Window Substring [Variation of this question]
+Linked List
+Reverse a Linked List II
+Remove Loop From Linked List
+Reverse a Linked List in k-groups
+Binary Search
+Search In rotate sorted Array
+Lift Manager
+Arrays
+Max bandWidth [Priority Queue, Sorting]
+Next permutation
+Largest Rectangle in Histogram
+
+---------------------------------------------------------------------------------------------------------
+
+MICROSOFT
+
+Check if a Binary Tree is BST or not
+Remove duplicates from a string, do it in-place 
+Given a rotated array which is sorted search for an element in it 
+Given two linked lists that represent two big numbers (numbers that can not be stored in an int or long long int), write a function that adds the numbers and store the result in a third list.
+Variations of above question like subtract two numbers or multiply two numbers represented by linked lists. 
+Print last 10 lines of a big file or big string.
+Clone a linked list with next and arbitrary (or random) pointer
+Connect nodes at same level. Practice here.
+Least common ancestor of a binary tree or a binary search tree
+Test case questions like test an ATM.
+Run length encoding. 
+Detect cycle in a linked list.
+Given a sorted array of size n. Each element in array is unique and lies from 1 to n+1. Find the missing element. Write code and test cases for the same.
+Check if a binary tree is balanced.
+Validate a given IP address
+Why do you want to join Microsoft?
+Two of the nodes of a BST are swapped. Correct the BST
+Draw a circle without floating point arithmetic
+&t=12s 
+Hashing
+Player Ranking System [Similar description]
+Maximum Distance of Same Elements [Multiple similar questions asked]
+Maximum Sum with same digit Sum [Q2 of the link]
+k-diff pairs in an array
+Constructive Algorithm
+Minimum displacement
+Avoid repeating characters in a string
+Roman to Integer
+String to integer
+Graphs
+Lighting bulbs
+Shortest Bridge
+Word Search
+Stack
+Previous greater number [Asked multiple times]
+Set
+Group anagrams [Could be done with Trie or DP]
+Sliding Window
+Maximum Number of Visible patterns
+Dynamic programming
+Variation of Maximum Subset Sum
+Minimum Path cost in grid
+Sorting
+Making piles equal
+Recursion
+Jump Game III
+Tree
+Kth Smallest element in BST [kth largest was asked as well.
+
+DSA QUESTIONS ASKED IN AMAZON ACC TO LEETCODE
+
+
+1448. Count Good Nodes in Binary Tree
+10. Regular Expression Matching
+394. Decode String
+768. Max Chunks To Make Sorted II
+13. Roman to Integer
+15. 3Sum
+528. Random Pick with Weight
+17. Letter Combinations of a Phone Number
+146. LRU Cache
+273. Integer to English Words
+1304. Find N Unique Integers Sum up to Zero
+151. Reverse Words in a String
+1405. Longest Happy String
+25. Reverse Nodes in k-Group
+285. Inorder Successor in BST
+1822. Sign of the Product of an Array
+2259. Remove Digit From Number to Maximize Result
+1578. Minimum Time to Make Rope Colorful
+295. Find Median from Data Stream
+297. Serialize and Deserialize Binary Tree\42. Trapping Rain Water
+43. Multiply Strings
+556. Next Greater Element III
+173. Binary Search Tree Iterator
+54. Spiral Matrix
+56. Merge Intervals
+2246. Longest Path With Different Adjacent Characters
+453. Minimum Moves to Equal Array Elements
+200. Number of Islands
+1615. Maximal Network Rank
+79. Word Search
+1239. Maximum Length of a Concatenated String with Unique Characters
+1386. Cinema Seat Allocation
+210. Course Schedule II
+212. Word Search II
+1653. Minimum Deletions to Make String Balanced
+224. Basic Calculator
+99. Recover Binary Search Tree
+103. Binary Tree Zigzag Level Order Traversal
+359. Logger Rate Limiter
+1647. Minimum Deletions to Make Character Frequencies Unique
+61.5%
+Med.
+1775. Equal Sum Arrays With Minimum Number of Operations
+240. Search a 2D Matrix II
+1404. Number of Steps to Reduce a Number in Binary Representation to One
+498. Diagonal Traverse
+2035. Partition Array Into Two Arrays to Minimize Sum Difference
+1275. Find Winner on a Tic Tac Toe Game
+380. Insert Delete GetRandom O(1)
+253. Meeting Rooms II
+127. Word Ladder
+
+-----------------------------------------------------------------------------------------------------
+
+META
+
+Move all zeroes to the end of array [Practice Problem]
+Subarray with given sum [Practice Problem]
+Find k numbers with most occurrences in the given array [Practice Problem]
+Largest Sum Contiguous Subarray [Practice Problem]
+Matrix Rotation [Practice Problem]
+Trapping Rain Water [Practice Problem]
+Next Permutation [Practice Problem]
+Product of Array except itself [Practice Problem]
+Search a Word in a 2D Grid of characters [Practice Problem]
+Program for Conway’s Game Of Life [Practice Problem]
+Pascal’s Triangle [Practice Problem]
+Number of square matrices with all 1s [Practice Problem]
+Minimum time required to produce m items [Practice Problem]
+Count of submatrix with sum X in a given Matrix [Practice Problem]
+Third largest element in an array of distinct elements [Practice Problem]
+Count Smaller elements [Practice Problem]
+Minimum number of jumps to reach end [Practice Problem]
+Largest Fibonacci Subsequence [Practice Problem]
+Majority Element [Practice Problem]
+String
+String are defined as an array of characters. The difference between a character array and a string is the string is terminated with a special character ‘\0’.
+
+Program to convert a given number to words [Practice Problem]
+Find the smallest window in a string containing all characters of another string [Practice Problem]
+Print all combinations of balanced parentheses [Practice Problem]
+Given a sequence of words, print all anagrams [Practice Problem]
+Sum of two large numbers [Practice Problem]
+Converting Roman Numerals to Decimal lying between 1 to 3999 [Practice Problem]
+Given a string, find its first non-repeating character [Practice Problem]
+Program to validate an IP address [Practice Problem]
+Look-and-Say Sequence [Practice Problem]
+Generate all binary strings from given pattern [Practice Problem]
+Multiply Large Numbers represented as Strings [Practice Problem]
+Find if a given string can be represented from a substring by iterating the substring “n” times [Practice Problem]
+Length of the smallest sub-string consisting of maximum distinct characters [Practice Problem]
+Put spaces between words starting with capital letters love [Practice Problem]
+Linked List
+LinkedList is the data structure that can overcome all the limitations of an array. A Linked list is a linear data structure, in which the elements are not stored at contiguous memory locations, it allocates memory dynamically.
+
+Reverse a linked list [Practice Problem]
+Merge K sorted linked lists [Practice Problem]
+Add two numbers represented by linked lists [Practice Problem]
+Clone a linked list with next and random [Practice Problem]
+Function to check if a singly linked list is palindrome [Practice Problem]
+Reverse a Linked List in groups of given size [Practice Problem]
+Write a function to get the intersection point of two Linked Lists [Practice Problem]
+Detect loop in a linked list [Practice Problem]
+Delete a Linked List node at a given position [Practice Problem]
+Remove duplicates from a sorted linked list [Practice Problem]
+Tree
+A Tree is non-linear and a hierarchical data structure consisting of a collection of nodes such that each node of the tree stores a value, a list of references to nodes (the “children”).
+
+Binary Tree to DLL [Practice Problem]
+Serialize and Deserialize a Binary Tree [Practice Problem]
+Level Order Binary Tree Traversal [Practice Problem]
+Convert a Binary Tree to a Circular Doubly Link List [Practice Problem]
+Lowest Common Ancestor in a Binary Tree [Practice Problem]
+A program to check if a binary tree is BST or not [Practice Problem]
+Diameter of a Binary Tree [Practice Problem]
+Check if a binary tree is subtree of another binary tree [Practice Problem]
+Given a binary tree, print all root-to-leaf paths [Practice Problem]
+Inorder Successor in Binary Search Tree [Practice Problem]
+Connect nodes at same level using constant extra space [Practice Problem]
+Graph
+A Graph is a non-linear data structure consisting of nodes and edges. The nodes are sometimes also referred to as vertices and the edges are lines or arcs that connect any two nodes in the graph.
+
+Clone an Undirected Graph [Practice Problem]
+Check whether a given graph is Bipartite or not [Practice Problem]
+Topological Sorting [Practice Problem]
+Find the number of islands [Practice Problem]
+Detect Cycle in a Directed Graph [Practice Problem]
+Implementing Dijkstra Algorithm [Practice Problem]
+Strongly Connected Components (Kosaraju's Algo) [Practice Problem]
+Prerequisite Tasks [Practice Problem]
+Distance from the Source (Bellman-Ford Algorithm) [Practice Problem]
+Word Boggle - II [Practice Problem]
+Sorting
+Sorting Algorithm is used to rearrange a given array or list of elements according to a comparison operator on the elements.
+
+Merge Overlapping Intervals [Practice Problem]
+Sort an array of 0s, 1s and 2s [Practice Problem]
+The floor in a Sorted Array [Practice Problem]
+Chocolate Distribution Problem [Practice Problem]
+k largest(or smallest) elements in an array [Practice Problem]
+Sort an array according to the order defined by another array [Practice Problem]
+Overlapping Intervals [Practice Problem]
+Minimum sprinklers required to be turned on to water the plants [Practice Problem]
+Searching
+Searching Algorithms are designed to check for an element or retrieve an element from any data structure where it is stored.
+
+Key Pair [Practice Problem]
+Find all triplets with zero sum [Practice Problem]
+Allocate a minimum number of pages [Practice Problem]
+painter’s partition problem [Practice Problem]
+Minimum Number of Platforms Required for a Railway/Bus Station [Practice Problem]
+The square root of an integer [Practice Problem]
+Sort an array according to the order defined by another array [Practice Problem]
+Find the element that appears once [Practice Problem]
+Stack
+A Stack is a linear data structure in which elements can be inserted and deleted only from one side of the list, called the top. A stack follows the LIFO (Last In First Out) principle.
+
+Stock Span Problem [Practice Problem]
+Sort a stack using recursion [Practice Problem]
+Implement two stacks in an array [Practice Problem]
+Length of the longest valid substring [Practice Problem]
+Next Greater Element [ Practice Problem]
+Maximum size rectangle binary sub-matrix with all 1s [Practice Problem]
+Queue
+A queue is a linear data structure that follows the FIFO principle, where elements are inserted at the rear and removed from the front.
+
+Celebrity Problem [Practice Problem]
+Implement Stack using Queues [Practice Problem]
+Circular tour [Practice Problem]
+Snake and Ladder Problem [Practice Problem]
+Dynamic Programming
+Dynamic Programming is mainly an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for the same inputs, we can optimize it using Dynamic Programming.
+
+Count Possible Decoding's of a given Digit Sequence [Practice Problem]
+Maximum size square sub-matrix with all 1s [Practice Problem]
+Stock Buy Sell to Maximize Profit [Practice Problem]
+Word Break [Practice Problem]
+Wildcard Pattern Matching [Practice Problem]
+Maximum size rectangle binary sub-matrix with all 1s [Practice Problem]
+Painting Fence Algorithm [Practice Problem]
+Longest Increasing Subsequence [Practice Problem]
+Count All Palindrome Sub-Strings in a String [Practice Problem]
+Count ways to reach the n’th stair [Practice Problem]
+Burst Balloon to maximize coins [Practice Problem
+
+---------------------------------------------------------------------------------------------------------------------------
+
+ADD ALL 3544 DSA QUESTIONS AVAILABLE ON LEETCODE TO dsa page
+
+-----------------------------------------------------------------------------------------------------------------
+
+SQL
+
+1. What is Pattern Matching in SQL?
+2. How to create empty tables with the same structure as another table?
+3. What is a Recursive Stored Procedure?
+4. What is a Stored Procedure?
+5. What is Collation? What are the different types of Collation Sensitivity?
+6. What are the differences between OLTP and OLAP?
+7. What is OLTP?
+8. What is User-defined function? What are its various types?
+9. What is a UNIQUE constraint?
+10. What is a Query?
+11. What is Data Integrity?
+12. What is the difference between Clustered and Non-clustered index?
+13. What is an Index? Explain its different types.
+14. What is a Cross-Join?
+15. What is a Self-Join?
+16. What is a Join? List its different types.
+17. What is a Foreign Key?
+18. What is a Subquery? What are its types?
+19. What is a Primary Key?
+20. What are Constraints in SQL?
+21. What are Tables and Fields?
+22. What is the difference between SQL and MySQL?
+23. What is SQL?
+24. What is RDBMS? How is it different from DBMS?
+25. What is DBMS?
+26. What is Database?
+27. What is the SELECT statement?
+28. What are some common clauses used with SELECT query in SQL?
+29. What are UNION, MINUS and INTERSECT commands?
+30. What is Cursor? How to use a Cursor?
+31. What are Entities and Relationships?
+32. List the different types of relationships in SQL.
+33. What is an Alias in SQL?
+34. What is a View?
+35. What is Normalization?
+36. What is Denormalization?
+37. What are the various forms of Normalization?
+38. What are the TRUNCATE, DELETE and DROP statements?
+39. What is the difference between DROP and TRUNCATE statements?
+40. What is the difference between DELETE and TRUNCATE statements?
+41. What are Aggregate and Scalar functions?
+Generate a report that shows employees who their manager is. 
+Show the latest used product. This was simply using MAX on a datetime field.
+Find customers with the highest orders between a date span. This involved CTEs, converting a datetime to date, and a JOIN.
+Calculate the change over time of products for a date span. This involved some aggregation, a case statement, CTE, and window functions.
+Find users who were active for 4 consecutive days on our app. Again, this was more CTES, windows functions, and aggregations. Also using HAVING a lot.
+
+
+APTITUDE
+
+Quantitative Aptitude Topics
+Quantitative aptitude covers a wide range of topics and questions, including:-
+
+Numbers | Solved Questions | Quiz
+LCM and HCF | Solved Questions | Quiz
+Ratio, Proportion | Solved Questions | Quiz
+Average | Solved Questions | Quiz
+Problem on Age | Solved Questions | Quiz
+Percentages | Solved Questions | Quiz
+Profit and Loss | Solved Questions | Quiz
+Mixture and Alligations | Solved Questions | Quiz
+Simple Interest | Solved Questions | Quiz
+Compound Interest | Solved Questions | Quiz
+Time, Speed, and Distance | Solved Questions | Quiz
+Trains, Boats, and Streams | Solved Questions | Quiz
+Race | Solved Questions | Quiz
+Work and Wages | Solved Questions | Quiz
+Pipes and Cistern | Solved Questions | Quiz
+Algebra | Solved Questions | Quiz
+Mensuration 2D | Solved Questions | Quiz
+Mensuration 3D | Solved Questions | Quiz
+Geometry | Solved Questions | Quiz
+Trigonometry & Height and Distances | Solved Questions | Quiz
+Progressions | Solved Questions | Quiz
+Logarithms | Solved Questions | Quiz
+Permutation and Combination | Solved Questions | Quiz
+Probability | Solved Questions | Quiz
+Clocks | Solved Questions | Quiz
+Calendars | Solved Questions | Quiz
+Simplification and Approximation | Solved Questions | Quiz
+Data Interpretation | Solved Questions | Quiz
+Logical Reasoning Topics
+Logical Reasoning covers a wide range of topics and questions, including:-
+
+Number Series | Solved Questions | Quiz
+Letter and Symbol Series | Solved Questions | Quiz
+Verbal Classification | Solved Questions | Quiz
+Analogies | Solved Questions | Quiz
+Logical Problems | Solved Questions | Quiz
+Course of Action | Solved Questions | Quiz
+Statement and Conclusion | Solved Questions | Quiz
+Theme Detection | Solved Questions | Quiz
+Blood Relations | Solved Questions | Quiz
+Directions | Solved Questions | Quiz
+Statement and Argument | Solved Questions | Quiz
+Logical Deduction | Solved Questions | Quiz
+Letter Series | Solved Questions | Quiz
+Coding Decoding | Solved Questions | Quiz
+Statement and Assumptions | Solved Questions | Quiz
+Logical Venn Diagram | Solved Questions | Quiz
+Verbal Ability Topics
+Verbal Ability covers a wide range of topics and questions, including:-
+
+Spotting Errors | Solved Questions | Quiz
+Synonyms | Solved Questions | Quiz
+Antonyms | Solved Questions | Quiz
+Selecting Words | Solved Questions | Quiz
+Spellings | Solved Questions | Quiz
+Sentence Formation | Solved Questions | Quiz
+Ordering of Words | Solved Questions | Quiz
+Sentence Correction | Solved Questions | Quiz
+Sentence Improvement | Solved Questions | Quiz
+Completing Statements | Solved Questions | Quiz
+Para Jumbles | Solved Questions | Quiz
+Paragraph Formation | Solved Questions | Quiz
+Cloze Test | Solved Questions | Quiz
+Comprehension | Solved Questions | Quiz
+One Word Substitutes | Solved Questions | Quiz
+Idioms and Phrases | Solved Questions | Quiz
+Change of Voice | Solved Questions | Quiz
+Change of Speech | Solved Questions | Quiz
+Verbal Analogies | Solved Questions | Quiz
+Articles | Solved Questions | Quiz
+Preposition | Solved Questions | Quiz
+Adjectives | Solved Questions | Quiz
+
+------------------------------------------------------------------------------------------------------------------
+
+SCENARIO BASED QUESTIONS
+
+) Scenario: - There is a field on a form you applied client script to make that field invisible then apply UI policy to make it visible? What will be the output ?
+
+2)Scenario:- In Service Portal, there is one field named quantity having values: [1, 2, 3, 4, 5]. Based on the quantity, the color will change and this should be done only using one class?
+
+3)Scenario: - I want to populate only users in caller field whose department is HR, and I don't want to user reference qualifier, how will you achieve this?
+
+4) Scenario: - I want to send a link using notification to knowledge article, on click of that link we have to open that article?
+
+When user opens the existing incident and there is the parent incident of the same incident then there should be a message at the top “this incident is child xxxx incident” and when user click on parent incident number, it should open the same incident in new tab.
+ 
+
+If the short description contain infra keyword in the beginning then category should add a new choice “INFRA” and set it to the same.
+ 
+
+There is a field on a form you applied client script to make that field invisible then apply UI policy to make it visible? What will be the output ?
+ 
+
+Create a business rule to Create a custom table(cust_incident) with two fields (incident_num, state), and whenever incident created, copy newly created incident associated incident_num, state values into the new custom table.
+ 
+
+Create a business rule, Whenever a record deleted from 'cust_incident' table, delete corrresponding incident record from 'incident' table
+Create two fields state and city and according to state display the cities in city field. (Field type: Choice List)
+ 
+
+If the new value and old value are same show message to user that provide another value.
+ 
+
+how you Validate the user mail id.
+ 
+
+If category is selected as an Inquiry, then remove the Impact 1-
+Show message on start date field that, start date should be less than end date.
+Check whether the start date is greater than end date, if yes show          alert to user that select proper start date.
+check if user has admin role then only allow to set the priority otherwise it will be read only.
+How onChange can be used for both onLoad and onChange.
+1)Write a BR to create an email id of the user.
+
+2) How many ways you can trigger the notification?
+A key deadline is approaching, but your team is falling behind. What actions would you take to get things back on track?
+You notice a colleague repeatedly making mistakes that affect the team’s performance. How would you handle this?
+A customer becomes angry and raises their voice at you. What steps would you take to calm the situation?
+You’ve been given an important task but not enough information to complete it. What do you do?
+You and your manager strongly disagree on an approach. How would you manage the situation?
+Two team members are in conflict and it’s affecting productivity. How would you resolve it?
+You’re assigned a project outside your usual skill set. How do you approach it?
+Your workload becomes unmanageable with several urgent tasks due at once. How would you prioritise?
+A colleague is resistant to a new system or process. How would you support them through the transition?
+You discover a mistake you made that could impact a client or the business. What do you do next?
+A client requests something that goes beyond company policy. How would you respond?
+You’re working with another department that is slow to respond, delaying your project. How do you handle this?
+During a meeting, a team member dominates the discussion, preventing others from contributing. What would you do?
+You’re given two conflicting instructions by different senior managers. How would you decide what to do?
+Your team misses a KPI or performance target. What steps would you take to improve future results?
+A junior colleague asks for help repeatedly and it’s affecting your productivity. How would you manage the situation?
+You witness behaviour that doesn’t align with company values or ethics. What’s your next step?
+You have to deliver difficult feedback to a colleague or team member. How would you approach it?
+A long-term customer is unhappy with a recent experience. How would you repair the relationship?
+You’re asked to present something last minute and you’re unprepared. What do you do?
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+JAVASCRIPT CONCEPTS
+
+Fundamentals
+Primitive Types
+Learn JavaScript's 7 primitive types: string, number, bigint, boolean, undefined, null, and symbol. Understand immutability, typeof quirks, and autoboxing.
+
+Primitives vs Objects
+Learn how JavaScript primitives and objects differ in behavior. Understand immutability, call-by-sharing semantics, why mutation works but reassignment doesn't, and how V8 actually stores values.
+
+Type Coercion
+Learn JavaScript type coercion and implicit conversion. Understand how values convert to strings, numbers, and booleans, the 8 falsy values, and how to avoid common coercion bugs.
+
+Equality Operators
+Learn JavaScript equality operators == vs ===, typeof quirks, and Object.is(). Understand type coercion, why NaN !== NaN, and why typeof null returns 'object'.
+
+Scope and Closures
+Learn JavaScript scope and closures. Understand the three types of scope, var vs let vs const, lexical scoping, the scope chain, and closure patterns for data privacy.
+
+Call Stack
+Learn how the JavaScript call stack tracks function execution. Understand stack frames, LIFO ordering, execution contexts, stack overflow errors, and debugging with stack traces.
+
+Functions & Execution
+Event Loop
+Learn how the JavaScript event loop handles async code. Understand the call stack, task queue, microtasks, and why Promises always run before setTimeout().
+
+IIFE, Modules & Namespaces
+Learn how to organize JavaScript code with IIFEs, namespaces, and ES6 modules. Understand private scope, exports, dynamic imports, and common module mistakes.
+
+Web Platform
+DOM
+Learn how the DOM works in JavaScript. Understand how browsers represent HTML as a tree, select and manipulate elements, traverse nodes, and optimize rendering performance.
+
+Fetch API
+Learn how to make HTTP requests with the JavaScript Fetch API. Understand GET, POST, response handling, JSON parsing, error patterns, and AbortController for cancellation.
+
+Web Workers
+Learn Web Workers in JavaScript for running code in background threads. Understand postMessage, Dedicated and Shared Workers, and transferable objects.
+
+Object-Oriented JavaScript
+Factories and Classes
+Learn JavaScript factory functions and ES6 classes. Understand constructors, prototypes, private fields, inheritance, and when to use each pattern.
+
+this, call, apply, bind
+Learn how JavaScript's 'this' keyword works and how to control context binding. Understand the 5 binding rules, call/apply/bind methods, arrow functions, and common pitfalls.
+
+Object Creation & Prototypes
+Learn JavaScript's prototype chain and object creation. Understand how inheritance works, the new operator's 4 steps, Object.create(), Object.assign(), and prototype methods.
+
+Inheritance & Polymorphism
+Learn inheritance and polymorphism in JavaScript — extending classes, prototype chains, method overriding, and code reuse patterns.
+
+Async JavaScript
+Callbacks
+Learn JavaScript callbacks, functions passed to other functions to be called later. Understand sync vs async callbacks, error-first patterns, callback hell, and why Promises were invented.
+
+Promises
+Learn JavaScript Promises for handling async operations. Understand how to create, chain, and combine Promises, handle errors properly, and avoid common pitfalls.
+
+async/await
+Learn async/await in JavaScript. Syntactic sugar over Promises that makes async code readable. Covers error handling with try/catch, parallel execution with Promise.all, and common pitfalls.
+
+Generators & Iterators
+Learn JavaScript generators and iterators. Understand yield, the iteration protocol, lazy evaluation, infinite sequences, and async generators with for await...of.
+
+Functional Programming
+Higher-Order Functions
+Learn higher-order functions in JavaScript. Understand functions that accept or return other functions, create reusable abstractions, and write cleaner code.
+
+Pure Functions
+Learn pure functions in JavaScript. Understand the two rules of purity, avoid side effects, and write testable, predictable code with immutable patterns.
+
+map, reduce, filter
+Learn map, reduce, and filter in JavaScript. Transform, filter, and combine arrays without mutation. Includes method chaining and common pitfalls.
+
+Recursion
+Learn recursion in JavaScript. Understand base cases, recursive calls, the call stack, and patterns like factorial, tree traversal, and memoization.
+
+Currying & Composition
+Learn currying and function composition in JavaScript. Build reusable functions from simple pieces using curry, compose, and pipe for cleaner, modular code.
+
+Advanced Topics
+JavaScript Engines
+Learn how JavaScript engines work. Understand V8's architecture, parsing, compilation, JIT optimization, hidden classes, inline caching, and garbage collection.
+
+Error Handling
+Learn JavaScript error handling with try/catch/finally. Understand Error types, custom errors, async error patterns, and best practices for robust code.
+
+Regular Expressions
+Learn regular expressions in JavaScript. Covers pattern syntax, character classes, quantifiers, flags, capturing groups, and methods like test, match, and replace.
+
+Modern JS Syntax
+Learn modern JavaScript ES6+ syntax. Covers destructuring, spread/rest operators, arrow functions, optional chaining, nullish coalescing, and template literals.
+
+ES Modules
+Learn ES Modules in JavaScript. Understand import/export syntax, why ESM beats CommonJS, live bindings, dynamic imports, top-level await, and how modules enable tree-shaking.
+
+Data Structures
+Learn JavaScript data structures from built-in Arrays, Objects, Maps, and Sets to implementing Stacks, Queues, and Linked Lists. Understand when to use each structure.
+
+Algorithms & Big O
+Learn Big O notation and algorithms in JavaScript. Understand time complexity, implement searching and sorting algorithms, and recognize common interview patterns.
+
+Design Patterns
+Learn JavaScript design patterns like Module, Singleton, Observer, Factory, Proxy, and Decorator. Understand when to use each pattern and avoid common pitfalls.
+
+Clean Code
+Learn clean code principles for JavaScript. Covers meaningful naming, small functions, DRY, avoiding side effects, and best practices to write maintainable code.
+
+Beyond 33: Extended Concepts
+Ready to go deeper? These advanced topics build on the fundamentals above.
+
+Language Mechanics
+Hoisting
+Learn how JavaScript hoists variable and function declarations. Understand why var behaves differently from let and const, function hoisting order, and how to avoid common bugs.
+
+Temporal Dead Zone
+Learn the Temporal Dead Zone (TDZ) in JavaScript. Understand why accessing let and const before declaration throws errors, and how TDZ differs from var hoisting.
+
+Strict Mode
+Learn JavaScript strict mode and how 'use strict' catches common mistakes. Understand silent errors it prevents, forbidden syntax, and when to use it.
+
+Type System
+JavaScript Type Nuances
+Learn advanced JavaScript type behavior. Understand null vs undefined, short-circuit evaluation, typeof quirks, instanceof and Symbol.hasInstance, Symbols, and BigInt for large numbers.
+Objects & Properties
+Property Descriptors
+Learn JavaScript property descriptors. Understand writable, enumerable, and configurable attributes, Object.defineProperty(), and how to create immutable object properties.
+
+Getters & Setters
+Learn JavaScript getters and setters. Understand how to define computed properties with get and set, validate data on assignment, and create reactive object behavior.
+
+Object Methods
+Learn essential JavaScript Object methods. Master Object.keys(), Object.values(), Object.entries(), Object.fromEntries(), Object.freeze(), Object.seal(), and object cloning patterns.
+
+Proxy & Reflect
+Learn JavaScript Proxy and Reflect APIs. Understand how to intercept object operations, create reactive systems, implement validation, and build powerful metaprogramming patterns.
+
+WeakMap & WeakSet
+Learn JavaScript WeakMap and WeakSet. Understand weak references, automatic garbage collection, private data patterns, and when to use them over Map and Set.
+
+Memory & Performance
+Memory Management
+Learn JavaScript memory management. Understand the memory lifecycle, stack vs heap allocation, memory leaks, and how to profile memory usage in DevTools.
+
+Garbage Collection
+Learn how JavaScript garbage collection works. Understand mark-and-sweep, reference counting, generational GC, and how to write memory-efficient code.
+
+Debouncing & Throttling
+Learn debouncing and throttling in JavaScript. Understand how to optimize event handlers, reduce API calls, improve scroll performance, and implement both patterns from scratch.
+
+Memoization
+Learn memoization in JavaScript. Understand how to cache function results, optimize expensive computations, implement memoization patterns, and when caching hurts performance.
+
+Modern Syntax & Operators
+Tagged Template Literals
+Learn JavaScript tagged template literals. Understand how to create custom string processing functions, build DSLs, sanitize HTML, and use popular libraries like styled-components.
+
+Computed Property Names
+Learn JavaScript computed property names. Understand how to use dynamic keys in object literals, create objects from variables, and leverage Symbol keys.
+
+Browser Storage
+localStorage & sessionStorage
+Learn Web Storage APIs in JavaScript. Understand localStorage vs sessionStorage, storage limits, JSON serialization, storage events, and security considerations.
+
+IndexedDB
+Learn IndexedDB for client-side storage in JavaScript. Understand how to store large amounts of structured data, create indexes, perform transactions, and handle versioning.
+
+Cookies
+Learn JavaScript cookies. Understand how to read, write, and delete cookies, cookie attributes like HttpOnly and SameSite, security best practices, and when to use cookies vs Web Storage.
+
+Events
+Event Bubbling & Capturing
+Learn JavaScript event bubbling and capturing. Understand the three phases of event propagation, stopPropagation(), event flow direction, and when to use each phase.
+
+Event Delegation
+Learn event delegation in JavaScript. Understand how to handle events efficiently using bubbling, manage dynamic elements, reduce memory usage, and implement common delegation patterns.
+
+Custom Events
+Learn JavaScript custom events. Understand how to create, dispatch, and listen for CustomEvent, pass data between components, and build decoupled event-driven architectures.
+
+Observer APIs
+Intersection Observer
+Learn the Intersection Observer API. Understand how to detect element visibility, implement lazy loading, infinite scroll, and animate elements on scroll efficiently.
+
+Mutation Observer
+Learn the Mutation Observer API. Understand how to watch DOM changes, detect attribute modifications, observe child elements, and replace deprecated mutation events.
+
+Resize Observer
+Learn the Resize Observer API. Understand how to respond to element size changes, build responsive components, and replace inefficient window resize listeners.
+
+Performance Observer
+Learn the Performance Observer API. Understand how to measure page performance, track Long Tasks, monitor layout shifts, and collect Core Web Vitals metrics.
+
+Data Handling
+JSON Deep Dive
+Learn advanced JSON in JavaScript. Understand JSON.stringify() replacers, JSON.parse() revivers, handling circular references, BigInt serialization, and custom toJSON methods.
+
+Typed Arrays & ArrayBuffers
+Learn JavaScript Typed Arrays and ArrayBuffers. Understand binary data handling, DataView, working with WebGL, file processing, and network protocol implementation.
+
+Blob & File API
+Learn JavaScript Blob and File APIs. Understand how to create, read, and manipulate binary data, handle file uploads, generate downloads, and work with FileReader.
+
+requestAnimationFrame
+Learn requestAnimationFrame in JavaScript. Understand how to create smooth 60fps animations, sync with browser repaint cycles, and optimize animation performance.
+
+---------------------------------------------------------------------------------------------------------------------------
+
+PYTHON CONCEPTS
+
+Introduction
+Applications
+Input and Output
+Variables
+Operators
+Keywords
+Data Types
+Conditional Statements
+Loops
+Functions
+In this section of Python 3 tutorial we'll explore Python function syntax, parameter handling, return values and variable scope. Along the way, we'll also introduce versatile functions like range(), map, filter and lambda functions.
+
+Functions
+Pass in Functions
+Global and Local Variables
+Recursion
+*args and **kwargs in Function
+First Class Function
+Lambda Function
+Map, Reduce and Filter Function
+Inner Function
+Decorators
+Data Structures
+Python offers versatile collections of data types, including lists, string, tuples, sets, dictionaries and arrays. In this section, we will learn about each data types in detail.
+
+Strings
+List
+Tuples
+Dictionary
+Sets
+Arrays
+List Comprehension
+Python's collections module offers essential data structures, including the following:
+
+Counters
+Heapq
+Deque
+OrderedDict
+Defaultdict
+Complete Tutorial on DSA with Python
+OOP Concepts
+In this section, we'll explore the core principles of object-oriented programming (OOP). From encapsulation to inheritance, polymorphism, abstract classes and iterators, we'll cover the essential concepts that helps you to build modular, reusable and scalable code.
+
+Python OOP
+Classes and Objects
+Constructors
+‘Self’ as Default Argument
+Polymorphism
+Inheritance
+Abstraction
+Encapsulation
+Iterators
+Exception Handling
+In this section, we'll explore Exception Handling explains how Python deals with unexpected errors, enabling us to write fault-tolerant code. We'll cover file handling, including reading from and writing to files.
+
+Exception Handling
+Built-in Exception
+User defined Exception
+File Handling
+In this section, we will cover file handling, including reading from and writing to files.
+
+File Handling
+Read Files
+Write/Create Files
+OS Module
+pathlib Module
+Directory Management
+Database Handling
+In this section we will learn how to access and work with MySQL and MongoDB databases
+
+MongoDB Introduction
+MySQL Introduction
+Packages or Libraries
+Python has a huge collection of packages and standard libraries that make development easier. These libraries help with a wide range of tasks and can save a lot of time by providing ready-to-use tools.
+
+Some commonly used types of libraries include:
+
+Packages
+Built-in Modules
+DSA Libraries
+GUI Libraries
+Data Science
+1. Foundational Libraries: These are the libraries that form the base for all data science work. Start here to build a strong foundation.
+
+NumPy
+Pandas
+Matplotlib
+2. Advanced Visualization and Statistical Tools: Once you’re comfortable with basic data handling and visualization, move to creating cleaner visuals and performing statistical analysis.
+
+Seaborn
+Statsmodel
+3. Machine Learning Libraries: After data manipulation and visualization, learn machine learning, starting with simpler models and moving to advanced ones.
+
+Scikit-learn
+XGBoost /LightGBM
+4. Deep Learning Frameworks: If you’re interested in AI and deep learning, these libraries will allow you to build and train neural networks.
+
+TensorFlow and Keras
+PyTorch
+Complete Tutorial on Data Science
+Web Development
+1. Core Web Frameworks (Backend Development with Python): These are the tools for building Python-based web applications.
+
+Flask
+Django
+2. Database Integration: Learn how to connect Python web frameworks to databases for storing and retrieving data.
+
+SQLite
+SQLAlchemy
+MySQL
+3. Front-End and Backend Integration: Learn how to connect Python backends with front-end technologies to create dynamic, full-stack web applications.
+
+Jinja2 (Flask)
+Django Templates
+4. API Development: Learn to build APIs (Application Programming Interfaces) for connecting your backend with front-end apps or other services.
+
+Flask-RESTful
+Django REST Framework (DRF)
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+JAVA CONCEPTS
+
+Introduction
+Applications
+Input and Output
+Variables
+Operators
+Keywords
+Data Types
+Conditional Statements
+Loops
+Functions
+In this section of Python 3 tutorial we'll explore Python function syntax, parameter handling, return values and variable scope. Along the way, we'll also introduce versatile functions like range(), map, filter and lambda functions.
+
+Functions
+Pass in Functions
+Global and Local Variables
+Recursion
+*args and **kwargs in Function
+First Class Function
+Lambda Function
+Map, Reduce and Filter Function
+Inner Function
+Decorators
+Data Structures
+Python offers versatile collections of data types, including lists, string, tuples, sets, dictionaries and arrays. In this section, we will learn about each data types in detail.
+
+Strings
+List
+Tuples
+Dictionary
+Sets
+Arrays
+List Comprehension
+Python's collections module offers essential data structures, including the following:
+
+Counters
+Heapq
+Deque
+OrderedDict
+Defaultdict
+Complete Tutorial on DSA with Python
+OOP Concepts
+In this section, we'll explore the core principles of object-oriented programming (OOP). From encapsulation to inheritance, polymorphism, abstract classes and iterators, we'll cover the essential concepts that helps you to build modular, reusable and scalable code.
+
+Python OOP
+Classes and Objects
+Constructors
+‘Self’ as Default Argument
+Polymorphism
+Inheritance
+Abstraction
+Encapsulation
+Iterators
+Exception Handling
+In this section, we'll explore Exception Handling explains how Python deals with unexpected errors, enabling us to write fault-tolerant code. We'll cover file handling, including reading from and writing to files.
+
+Exception Handling
+Built-in Exception
+User defined Exception
+File Handling
+In this section, we will cover file handling, including reading from and writing to files.
+
+File Handling
+Read Files
+Write/Create Files
+OS Module
+pathlib Module
+Directory Management
+Database Handling
+In this section we will learn how to access and work with MySQL and MongoDB databases
+
+MongoDB Introduction
+MySQL Introduction
+Packages or Libraries
+Python has a huge collection of packages and standard libraries that make development easier. These libraries help with a wide range of tasks and can save a lot of time by providing ready-to-use tools.
+
+Some commonly used types of libraries include:
+
+Packages
+Built-in Modules
+DSA Libraries
+GUI Libraries
+Data Science
+1. Foundational Libraries: These are the libraries that form the base for all data science work. Start here to build a strong foundation.
+
+NumPy
+Pandas
+Matplotlib
+2. Advanced Visualization and Statistical Tools: Once you’re comfortable with basic data handling and visualization, move to creating cleaner visuals and performing statistical analysis.
+
+Seaborn
+Statsmodel
+3. Machine Learning Libraries: After data manipulation and visualization, learn machine learning, starting with simpler models and moving to advanced ones.
+
+Scikit-learn
+XGBoost /LightGBM
+4. Deep Learning Frameworks: If you’re interested in AI and deep learning, these libraries will allow you to build and train neural networks.
+
+TensorFlow and Keras
+PyTorch
+Complete Tutorial on Data Science
+Web Development
+1. Core Web Frameworks (Backend Development with Python): These are the tools for building Python-based web applications.
+
+Flask
+Django
+2. Database Integration: Learn how to connect Python web frameworks to databases for storing and retrieving data.
+
+SQLite
+SQLAlchemy
+MySQL
+3. Front-End and Backend Integration: Learn how to connect Python backends with front-end technologies to create dynamic, full-stack web applications.
+
+Jinja2 (Flask)
+Django Templates
+4. API Development: Learn to build APIs (Application Programming Interfaces) for connecting your backend with front-end apps or other services.
+
+Flask-RESTful
+Django REST Framework (DRF)
+
+-----------------------------------------------------------------------------------------------------------------------
+
+C++ CONCEPTS
+
+C++ Syntax
+C++ Output
+C++ Comments
+C++ Variables
+C++ User Input
+C++ Data Types
+C++ Operators
+C++ Strings
+C++ Math
+C++ Booleans
+C++ If...Else
+C++ Switch
+C++ While Loop
+C++ For Loop
+C++ Break/Continue
+C++ Arrays
+C++ Structures
+C++ Enums
+C++ References
+C++ Pointers
+C++ Memory Mgmt
+
+C++ Functions
+C++ Functions
+C++ Function Parameters
+C++ Function Overloading
+C++ Scope
+C++ Recursion
+C++ Lambda
+
+C++ Classes
+C++ OOP
+C++ Classes/Objects
+C++ Class Methods
+C++ Constructors
+C++ Access Specifiers
+C++ Encapsulation
+C++ Friend Functions
+C++ Inheritance
+C++ Polymorphism
+C++ Templates
+C++ Files
+C++ Date
+
+C++ Errors
+C++ Errors
+C++ Debugging
+C++ Exceptions
+C++ Input Validation
+
+C++ Data Structures
+C++ Data Structures & STL
+C++ Vectors
+C++ List
+C++ Stacks
+C++ Queues
+C++ Deque
+C++ Sets
+C++ Maps
+C++ Iterators
+C++ Algorithms
+
+C++ Namespaces
+C++ Namespaces
+
+C++ Projects
+C++ Projects
+
+C++ Cert
+C++ Certificate
+
+C++ How To
+C++ Add Two Numbers
+C++ Random Numbers
+
+C++ Reference
+C++ Reference
+C++ Keywords
+C++ <iostream>
+C++ <fstream>
+C++ <cmath>
+C++ <string>
+C++ <cstring>
+C++ <ctime>
+C++ <vector>
+C++ <algorithm>
+
+--------------------------------------------------------------------------------------------------------------------
+

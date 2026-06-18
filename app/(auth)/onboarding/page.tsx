@@ -63,7 +63,7 @@ export default function OnboardingPage() {
         throw upsertError
       }
 
-      router.push('/library/interview-questions')
+      router.push('/introduction')
     } catch (err: any) {
       setError(err.message || 'Something went wrong while saving your profile.')
     } finally {

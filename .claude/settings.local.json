@@ -5,7 +5,8 @@
       "Bash(npm run:*)",
       "Bash(node -e ':*)",
       "Bash(ls:*)",
-      "Bash(grep -l \"export const metadata\" /c/Users/ADMIN/Desktop/Interviewdump/interviewdump/app/\\\\\\(main\\\\\\)/**/page.tsx)"
+      "Bash(grep -l \"export const metadata\" /c/Users/ADMIN/Desktop/Interviewdump/interviewdump/app/\\\\\\(main\\\\\\)/**/page.tsx)",
+      "Bash(npx tsc:*)"
     ]
   }
 }

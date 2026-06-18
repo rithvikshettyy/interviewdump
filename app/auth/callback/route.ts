@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
 
   if (code) {
     // Build a preliminary redirect response so we can attach cookies to it
-    const response = NextResponse.redirect(`${origin}/library/interview-questions`)
+    const response = NextResponse.redirect(`${origin}/introduction`)
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,

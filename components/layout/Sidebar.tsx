@@ -251,6 +251,12 @@ export default function Sidebar() {
 
   const groups = [
     {
+      label: 'Getting Started',
+      items: [
+        { icon: BookOpen, label: 'Introduction', href: '/introduction' },
+      ],
+    },
+    {
       label: 'Library',
       items: [
         { icon: LayoutDashboard, label: 'My Progress', href: '/dashboard' },

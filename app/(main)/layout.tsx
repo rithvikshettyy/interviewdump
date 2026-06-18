@@ -14,7 +14,7 @@ export default async function MainLayout({
   return (
     <div className="min-h-screen bg-bg">
       <Sidebar />
-      <main className="ml-0 md:ml-[240px] w-full md:w-[calc(100%-240px)] min-h-screen overflow-x-hidden pt-14 md:pt-0">
+      <main className="ml-0 md:ml-[240px] w-full md:w-[calc(100%-240px)] min-h-screen pt-14 md:pt-0">
         {children}
       </main>
     </div>
