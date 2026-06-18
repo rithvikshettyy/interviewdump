@@ -13,6 +13,7 @@ interface QuestionDrawerProps {
   isRevision: boolean
   onToggleSolved: () => void
   onToggleRevision: () => void
+  showCompanies?: boolean
 }
 
 export default function QuestionDrawer({
@@ -23,6 +24,7 @@ export default function QuestionDrawer({
   isRevision,
   onToggleSolved,
   onToggleRevision,
+  showCompanies = true,
 }: QuestionDrawerProps) {
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedYt, setCopiedYt] = useState(false)
@@ -126,7 +128,7 @@ export default function QuestionDrawer({
                   variant={question.difficulty.toLowerCase() as any}
                   size="sm"
                 />
-                {question.companies && question.companies.map((company) => (
+                {showCompanies && question.companies && question.companies.map((company) => (
                   <span
                     key={company}
                     className="text-[10px] font-mono bg-surface-hover border border-border text-text-muted rounded-full px-2 py-0.5"

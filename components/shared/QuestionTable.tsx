@@ -12,6 +12,7 @@ interface QuestionTableProps {
   onToggleRevision: (id: string) => void
   showRoleColumn?: boolean
   showTopicColumn?: boolean
+  showCompanies?: boolean
 }
 
 export default function QuestionTable({
@@ -23,6 +24,7 @@ export default function QuestionTable({
   onToggleRevision,
   showRoleColumn = false,
   showTopicColumn = false,
+  showCompanies = true,
 }: QuestionTableProps) {
   return (
     <div className="w-full overflow-x-auto">
@@ -82,7 +84,7 @@ export default function QuestionTable({
                 <td className="px-4 py-[15px]">
                   <div className="text-sm text-text font-medium leading-snug">{q.question}</div>
                   <div className="text-xs text-text-muted mt-0.5 line-clamp-1">{q.summary}</div>
-                  {q.companies && q.companies.length > 0 && (
+                  {showCompanies && q.companies && q.companies.length > 0 && (
                     <div className="flex gap-1 flex-wrap mt-2">
                       {q.companies.map((company) => (
                         <span

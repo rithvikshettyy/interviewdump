@@ -28,6 +28,7 @@ interface QuestionPageShellProps {
   }
   showRoleColumn?: boolean
   showTopicColumn?: boolean
+  showCompanies?: boolean
   tabs?: { label: string; value: string }[]
   activeTab?: string
   onTabChange?: (val: string) => void
@@ -41,6 +42,7 @@ export default function QuestionPageShell({
   filterOptions = {},
   showRoleColumn = false,
   showTopicColumn = false,
+  showCompanies = true,
   tabs,
   activeTab,
   onTabChange,
@@ -322,6 +324,7 @@ export default function QuestionPageShell({
             onToggleRevision={handleToggleRevision}
             showRoleColumn={showRoleColumn}
             showTopicColumn={showTopicColumn}
+            showCompanies={showCompanies}
           />
         ) : (
           <div className="flex flex-col items-center justify-center p-12 text-center text-text-muted">
@@ -343,6 +346,7 @@ export default function QuestionPageShell({
         isRevision={selectedQuestion ? revisionIds.includes(selectedQuestion.id) : false}
         onToggleSolved={() => selectedQuestion && handleToggleSolved(selectedQuestion.id)}
         onToggleRevision={() => selectedQuestion && handleToggleRevision(selectedQuestion.id)}
+        showCompanies={showCompanies}
       />
     </div>
   )

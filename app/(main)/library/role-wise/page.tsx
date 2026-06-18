@@ -274,6 +274,7 @@ export default function RoleWisePage() {
           questions={filteredQuestions}
           itemType={`role-${selectedRole}-${activeQuestionType}`}
           filterOptions={{ difficulties: true }}
+          showCompanies={false}
         />
       </div>
     </div>
