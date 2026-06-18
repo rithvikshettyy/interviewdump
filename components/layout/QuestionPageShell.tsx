@@ -9,6 +9,7 @@ import SearchBar from '@/components/shared/SearchBar'
 import FilterDropdown from '@/components/shared/FilterDropdown'
 import QuestionTable from '@/components/shared/QuestionTable'
 import QuestionDrawer from '@/components/shared/QuestionDrawer'
+import { TrendingUp } from 'lucide-react'
 
 interface QuestionPageShellProps {
   title: string
@@ -32,6 +33,7 @@ interface QuestionPageShellProps {
   tabs?: { label: string; value: string }[]
   activeTab?: string
   onTabChange?: (val: string) => void
+  layoutVariant?: 'default' | 'role-wise'
 }
 
 export default function QuestionPageShell({
@@ -46,6 +48,7 @@ export default function QuestionPageShell({
   tabs,
   activeTab,
   onTabChange,
+  layoutVariant = 'default',
 }: QuestionPageShellProps) {
   // State
   const [searchQuery, setSearchQuery] = useState('')
@@ -55,6 +58,7 @@ export default function QuestionPageShell({
   const [categoryFilter, setCategoryFilter] = useState('')
   const [languageFilter, setLanguageFilter] = useState('')
   const [secondaryFilter, setSecondaryFilter] = useState<'all' | 'solved' | 'revision'>('all')
+  const [showProgress, setShowProgress] = useState(false)
 
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -192,6 +196,103 @@ export default function QuestionPageShell({
 
     return true
   })
+
+  if (layoutVariant === 'role-wise') {
+    return (
+      <div className="flex flex-col min-h-screen bg-bg">
+        <div className="p-6">
+          <div className="bg-surface/30 border border-border/80 rounded-2xl p-6 shadow-xl flex flex-col gap-5 backdrop-blur-md">
+            {/* Header Area */}
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+              <div>
+                <h1 className="text-xl font-bold text-text font-sans tracking-tight">
+                  {title}
+                </h1>
+                <p className="text-sm text-text-muted mt-1">
+                  {subtitle}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowProgress(!showProgress)}
+                className={`flex items-center gap-2 border text-sm rounded-xl px-4 py-2 hover:bg-surface-hover/80 transition-all duration-200 font-medium focus:outline-none cursor-pointer flex-shrink-0 ${
+                  showProgress
+                    ? 'border-indigo bg-indigo-dim/20 text-indigo-light'
+                    : 'border-border text-text-muted hover:border-border-hover hover:text-text'
+                }`}
+              >
+                <TrendingUp className="w-4 h-4" />
+                <span>My progress</span>
+              </button>
+            </div>
+
+            {/* Collapsible Progress Cards */}
+            {showProgress && (
+              <div className="border border-border/60 bg-bg/40 rounded-xl p-4 animate-fadeIn">
+                <ProgressCard {...progressData} />
+              </div>
+            )}
+
+            {/* Filters Row */}
+            <div className="flex items-center gap-3 flex-wrap pt-2">
+              <SearchBar
+                placeholder="Search questions..."
+                value={searchQuery}
+                onChange={setSearchQuery}
+              />
+
+              {filterOptions.difficulties !== false && (
+                <FilterDropdown
+                  label="All Difficulties"
+                  options={['Easy', 'Medium', 'Hard']}
+                  value={difficultyFilter}
+                  onChange={setDifficultyFilter}
+                />
+              )}
+            </div>
+
+            {/* Table wrapper */}
+            <div className="border border-border/60 rounded-xl overflow-hidden bg-bg/20">
+              {filteredQuestions.length > 0 ? (
+                <QuestionTable
+                  questions={filteredQuestions}
+                  onQuestionClick={handleQuestionClick}
+                  solvedIds={solvedIds}
+                  revisionIds={revisionIds}
+                  onToggleSolved={handleToggleSolved}
+                  onToggleRevision={handleToggleRevision}
+                  showRoleColumn={showRoleColumn}
+                  showTopicColumn={showTopicColumn}
+                  showCompanies={showCompanies}
+                  layoutVariant="role-wise"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center p-12 text-center text-text-muted">
+                  <p className="text-base font-semibold">No questions found</p>
+                  <p className="text-sm mt-1">Try adjusting your filters or search query.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Question Drawer */}
+        <QuestionDrawer
+          question={selectedQuestion}
+          isOpen={isDrawerOpen}
+          onClose={() => {
+            setIsDrawerOpen(false)
+            setSelectedQuestion(null)
+          }}
+          isSolved={selectedQuestion ? solvedIds.includes(selectedQuestion.id) : false}
+          isRevision={selectedQuestion ? revisionIds.includes(selectedQuestion.id) : false}
+          onToggleSolved={() => selectedQuestion && handleToggleSolved(selectedQuestion.id)}
+          onToggleRevision={() => selectedQuestion && handleToggleRevision(selectedQuestion.id)}
+          showCompanies={showCompanies}
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-bg">

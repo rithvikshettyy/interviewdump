@@ -258,23 +258,16 @@ export default function RoleWisePage() {
         })}
       </div>
 
-      {/* 3. Section Header info */}
-      <div className="mt-4 mb-0.5 px-6">
-        <h2 className="text-sm font-semibold text-text-muted">
-          {selectedRole} — {questionTypes.find((t) => t.value === activeQuestionType)?.label}
-        </h2>
-        <p className="text-xs text-text-dim mt-0.5">Most asked questions for this role</p>
-      </div>
-
-      {/* 4. Question Page Shell (Hiding empty PageHeader inside it) */}
-      <div className="[&_.pb-0.bg-surface]:hidden flex-1 flex flex-col">
+      {/* 3. Question Page Shell with integrated role-wise layout */}
+      <div className="flex-1 flex flex-col">
         <QuestionPageShell
-          title=""
-          subtitle=""
+          title={`${questionTypes.find((t) => t.value === activeQuestionType)?.label} for ${selectedRole.replace(/ Developer$/, '')} role`}
+          subtitle={`Most asked ${questionTypes.find((t) => t.value === activeQuestionType)?.label} at ${selectedRole.replace(/ Developer$/, '')}.`}
           questions={filteredQuestions}
           itemType={`role-${selectedRole}-${activeQuestionType}`}
           filterOptions={{ difficulties: true }}
           showCompanies={false}
+          layoutVariant="role-wise"
         />
       </div>
     </div>
