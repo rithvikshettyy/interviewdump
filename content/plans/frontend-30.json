@@ -1,0 +1,192 @@
+{
+  "id": "frontend-30",
+  "title": "30-Day Frontend Prep",
+  "emoji": "⚡",
+  "duration": "30 days",
+  "role": "Frontend Engineer",
+  "difficulty": "Medium",
+  "description": "From JavaScript fundamentals to system design — a structured path to crack frontend interviews at top companies.",
+  "tags": ["JavaScript", "React", "DSA", "System Design"],
+  "steps": [
+    {
+      "id": "step-1",
+      "day": "Day 1–2",
+      "title": "JavaScript Core: Closures & Scope",
+      "description": "Master closures, lexical scope, the event loop, and how JavaScript executes code. These come up in almost every JS interview.",
+      "type": "concept",
+      "href": "/fundamentals/languages/javascript/js-closures",
+      "tag": "JavaScript"
+    },
+    {
+      "id": "step-2",
+      "day": "Day 3",
+      "title": "JavaScript: Prototypes & Inheritance",
+      "description": "Understand prototype chains, Object.create, and why JS inheritance differs from classical OOP.",
+      "type": "concept",
+      "href": "/fundamentals/languages/javascript/js-prototypes",
+      "tag": "JavaScript"
+    },
+    {
+      "id": "step-3",
+      "day": "Day 4–5",
+      "title": "JavaScript: Async Patterns",
+      "description": "Callbacks, Promises, async/await — and common pitfalls like Promise.all vs Promise.allSettled.",
+      "type": "concept",
+      "href": "/fundamentals/languages/javascript/js-async-await",
+      "tag": "JavaScript"
+    },
+    {
+      "id": "step-4",
+      "day": "Day 6",
+      "title": "JavaScript: ES6+ Features",
+      "description": "Arrow functions, destructuring, spread/rest, generators, WeakMap/WeakSet — the modern JS toolbox.",
+      "type": "concept",
+      "href": "/fundamentals/languages/javascript/js-es6-features",
+      "tag": "JavaScript"
+    },
+    {
+      "id": "step-5",
+      "day": "Day 7",
+      "title": "CSS: Flexbox & Grid Deep Dive",
+      "description": "Practice 5 CSS layout challenges. Know display:flex vs display:grid, alignment, and responsive design patterns.",
+      "type": "practice",
+      "href": "/library/interview-questions",
+      "tag": "CSS"
+    },
+    {
+      "id": "step-6",
+      "day": "Day 8–9",
+      "title": "React: Virtual DOM & Reconciliation",
+      "description": "How React's diffing algorithm works, why keys matter in lists, and what causes unnecessary re-renders.",
+      "type": "concept",
+      "href": "/library/interview-questions",
+      "tag": "React"
+    },
+    {
+      "id": "step-7",
+      "day": "Day 10",
+      "title": "React: Hooks Deep Dive",
+      "description": "useEffect cleanup, useMemo vs useCallback, custom hooks, and the rules of hooks.",
+      "type": "concept",
+      "href": "/library/interview-questions",
+      "tag": "React"
+    },
+    {
+      "id": "step-8",
+      "day": "Day 11",
+      "title": "DSA: Arrays & Two Pointers",
+      "description": "Solve 5 problems using the two-pointer technique: two-sum, container with most water, trapping rain water.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-9",
+      "day": "Day 12",
+      "title": "DSA: Sliding Window Pattern",
+      "description": "Maximum subarray sum, longest substring without repeating characters, minimum window substring.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-10",
+      "day": "Day 13–14",
+      "title": "DSA: Trees & Recursion",
+      "description": "Binary tree traversals (BFS, DFS), lowest common ancestor, validate BST, serialize/deserialize.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-11",
+      "day": "Day 15",
+      "title": "Browser: Rendering Pipeline",
+      "description": "How the browser parses HTML/CSS, builds the DOM and CSSOM, and paints pixels. Critical rendering path optimization.",
+      "type": "concept",
+      "href": "/library/interview-questions",
+      "tag": "Browser"
+    },
+    {
+      "id": "step-12",
+      "day": "Day 16",
+      "title": "Browser: Performance & Core Web Vitals",
+      "description": "LCP, FID, CLS. Code splitting, lazy loading, debounce/throttle, and reducing main thread blocking.",
+      "type": "concept",
+      "href": "/library/interview-questions",
+      "tag": "Performance"
+    },
+    {
+      "id": "step-13",
+      "day": "Day 17",
+      "title": "Security: XSS, CSRF & CSP",
+      "description": "How XSS and CSRF attacks work, how to prevent them, and what Content Security Policy does.",
+      "type": "concept",
+      "href": "/library/interview-questions",
+      "tag": "Security"
+    },
+    {
+      "id": "step-14",
+      "day": "Day 18–19",
+      "title": "System Design: Design a URL Shortener",
+      "description": "Your first frontend-relevant system design. Cover hashing, redirects, analytics, and scaling read-heavy workloads.",
+      "type": "design",
+      "href": "/library/interview-questions",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-15",
+      "day": "Day 20",
+      "title": "System Design: Design an Autocomplete",
+      "description": "Trie data structure, debouncing search input, caching suggestions, and progressive enhancement.",
+      "type": "design",
+      "href": "/library/interview-questions",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-16",
+      "day": "Day 21",
+      "title": "OOPs: SOLID Principles with Examples",
+      "description": "Single Responsibility, Open/Closed, Liskov Substitution — with concrete frontend examples using React components.",
+      "type": "concept",
+      "href": "/fundamentals/oops",
+      "tag": "OOPs"
+    },
+    {
+      "id": "step-17",
+      "day": "Day 22–23",
+      "title": "Behavioral: Tell Me About Yourself + Past Projects",
+      "description": "Craft your 2-minute intro. Prepare 3 project stories using STAR format (Situation, Task, Action, Result).",
+      "type": "behavioral",
+      "href": "/library/interview-questions",
+      "tag": "Behavioral"
+    },
+    {
+      "id": "step-18",
+      "day": "Day 24–25",
+      "title": "Mock Round: 5 Frontend Interview Questions",
+      "description": "Answer 5 mixed frontend questions (2 JS, 1 React, 1 browser, 1 behavioral) as if in a real interview. Time yourself.",
+      "type": "practice",
+      "href": "/fundamentals/quiz",
+      "tag": "Mock"
+    },
+    {
+      "id": "step-19",
+      "day": "Day 26–27",
+      "title": "Company Research: Read Top 3 Company Question Banks",
+      "description": "Go through question banks for the top companies you're targeting. Note patterns in what they ask.",
+      "type": "research",
+      "href": "/library/company-questions",
+      "tag": "Companies"
+    },
+    {
+      "id": "step-20",
+      "day": "Day 28–30",
+      "title": "Final Review: Revision List + Weak Areas",
+      "description": "Go through your Revision List, re-read any concepts you got wrong, and do a final mock round.",
+      "type": "review",
+      "href": "/library/bookmarks",
+      "tag": "Review"
+    }
+  ]
+}

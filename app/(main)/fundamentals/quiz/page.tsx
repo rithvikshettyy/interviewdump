@@ -16,6 +16,8 @@ interface QuizQuestion {
   trick?: string
 }
 
+const QUESTION_TIME_LIMIT = 30 // seconds per question
+
 export default function QuizPage() {
   // Config States
   const [activeTopic, setActiveTopic] = useState('JavaScript')
@@ -35,8 +37,40 @@ export default function QuizPage() {
   const [startTime, setStartTime] = useState(0)
   const [endTime, setEndTime] = useState(0)
 
+  // Per-question countdown timer
+  const [timeLeft, setTimeLeft] = useState(QUESTION_TIME_LIMIT)
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  // Start per-question timer
+  const startTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    setTimeLeft(QUESTION_TIME_LIMIT)
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current!)
+          // Time's up — auto-mark as wrong
+          setSelectedOption(-1) // sentinel: -1 = timed out (no correct option shown as selected)
+          setAnswersLog((log) => [...log, { index: currentIndex, isCorrect: false }])
+          setStreak(0)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+  }
+
+  // Stop timer
+  const stopTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+  }
+
   // Start / Reset Quiz
   const startQuiz = (questionsSource: QuizQuestion[]) => {
+    stopTimer()
     setQuizQuestions(questionsSource)
     setCurrentIndex(0)
     setSelectedOption(null)
@@ -47,6 +81,15 @@ export default function QuizPage() {
     setIsQuizActive(true)
     setIsFinished(false)
   }
+
+  // Kick off timer whenever a new question is shown
+  useEffect(() => {
+    if (isQuizActive && !isFinished) {
+      startTimer()
+    }
+    return () => stopTimer()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex, isQuizActive])
 
   // Filter and load questions on configuration change or start button click
   const loadAndStart = () => {
@@ -67,6 +110,7 @@ export default function QuizPage() {
   // Answer handler
   const handleOptionSelect = (optionIndex: number) => {
     if (selectedOption !== null) return // already answered
+    stopTimer()
 
     setSelectedOption(optionIndex)
     const currentQuestion = quizQuestions[currentIndex]
@@ -85,6 +129,7 @@ export default function QuizPage() {
 
   // Next Question
   const handleNext = () => {
+    stopTimer()
     if (currentIndex < quizQuestions.length - 1) {
       setCurrentIndex((prev) => prev + 1)
       setSelectedOption(null)
@@ -196,9 +241,20 @@ export default function QuizPage() {
             <span className="font-mono text-sm text-text-muted font-medium">
               Question {currentIndex + 1} of {totalQuestions}
             </span>
-            <span className="font-mono text-sm text-amber font-bold flex items-center gap-1">
-              🔥 {streak} Streak
-            </span>
+            <div className="flex items-center gap-4">
+              {/* Countdown timer */}
+              <div className={`flex items-center gap-1.5 font-mono text-sm font-bold ${
+                timeLeft <= 10 ? 'text-red' : timeLeft <= 20 ? 'text-amber' : 'text-text-muted'
+              }`}>
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                {timeLeft}s
+              </div>
+              <span className="font-mono text-sm text-amber font-bold flex items-center gap-1">
+                🔥 {streak} Streak
+              </span>
+            </div>
           </div>
 
           {/* Progress dots */}
@@ -246,6 +302,7 @@ export default function QuizPage() {
                 
                 if (selectedOption !== null) {
                   if (isCorrectIndex) {
+                    // Always highlight the correct answer (timeout or wrong answer)
                     optionClass = 'bg-green-dim border-green text-green font-semibold'
                   } else if (selectedOption === oIdx) {
                     optionClass = 'bg-red-dim border-red text-red'
@@ -268,6 +325,13 @@ export default function QuizPage() {
                 )
               })}
             </div>
+
+            {/* Time's up banner */}
+            {selectedOption === -1 && (
+              <div className="mt-4 bg-red-dim border border-red/20 rounded-xl px-4 py-2.5 text-sm text-red font-semibold text-center">
+                ⏱ Time&apos;s up! The correct answer is highlighted above.
+              </div>
+            )}
 
             {/* Explanation card (Slides in below options) */}
             {selectedOption !== null && (

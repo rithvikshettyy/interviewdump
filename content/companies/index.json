@@ -6,7 +6,7 @@
     "tier": "FAANG",
     "focusAreas": ["System Design", "DSA", "Algorithms", "Behavioral"],
     "interviewDifficulty": "Hard",
-    "questionCount": 20,
+    "questionCount": 15,
     "description": "Google is a global technology leader focused on search, cloud computing, AI, and advertising technologies."
   },
   {
@@ -16,7 +16,7 @@
     "tier": "FAANG",
     "focusAreas": ["Leadership Principles", "DSA", "System Design", "Behavioral"],
     "interviewDifficulty": "Hard",
-    "questionCount": 18,
+    "questionCount": 15,
     "description": "Amazon is a multinational tech giant focusing on e-commerce, cloud computing, and digital streaming."
   },
   {
@@ -56,7 +56,7 @@
     "tier": "Unicorn",
     "focusAreas": ["DSA", "System Design", "Machine Coding", "Concurrency"],
     "interviewDifficulty": "Hard",
-    "questionCount": 14,
+    "questionCount": 15,
     "description": "Flipkart is one of India's leading e-commerce marketplaces and a key player in digital retail."
   },
   {
@@ -86,7 +86,7 @@
     "tier": "Unicorn",
     "focusAreas": ["API Design", "DSA", "Database Design", "System Design"],
     "interviewDifficulty": "Medium",
-    "questionCount": 12,
+    "questionCount": 15,
     "description": "Razorpay is a fintech platform offering payment gateway and financial solutions for businesses."
   },
   {

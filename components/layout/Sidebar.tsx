@@ -19,12 +19,18 @@ import {
   Zap,
   Settings,
   Search,
+  Database,
+  LayoutDashboard,
+  FileText,
+  Bookmark,
+  Map,
 } from 'lucide-react'
 
 // Import question databases statically for global client search
 import backendQuestions from '@/content/questions/backend.json'
 import frontendQuestions from '@/content/questions/frontend.json'
 import dsaQuestions from '@/content/dsa/questions.json'
+import sqlQuestions from '@/content/sql/questions.json'
 import scenarioQuestions from '@/content/scenario/questions.json'
 import logicalQuestions from '@/content/aptitude/logical.json'
 import quantitativeQuestions from '@/content/aptitude/quantitative.json'
@@ -80,6 +86,16 @@ export default function Sidebar() {
         subtitle: `DSA • ${q.topic}`,
         type: 'question',
         href: `/library/dsa?questionId=${q.id}`,
+      })
+    })
+
+    sqlQuestions.forEach((q) => {
+      items.push({
+        id: q.id,
+        title: q.question,
+        subtitle: `SQL • ${q.topic}`,
+        type: 'question',
+        href: `/library/sql?questionId=${q.id}`,
       })
     })
 
@@ -234,6 +250,7 @@ export default function Sidebar() {
     {
       label: 'Library',
       items: [
+        { icon: LayoutDashboard, label: 'My Progress', href: '/dashboard' },
         { icon: Building2, label: 'Company Questions', href: '/library/company-questions' },
         { icon: MessageSquare, label: 'Interview Questions', href: '/library/interview-questions' },
         { icon: Code2, label: 'DSA', href: '/library/dsa' },
@@ -241,6 +258,8 @@ export default function Sidebar() {
         { icon: Layers, label: 'Role Wise Resources', href: '/library/role-wise' },
         { icon: Hash, label: 'Aptitude Questions', href: '/library/aptitude' },
         { icon: Monitor, label: 'Core CS Subjects', href: '/library/core-cs' },
+        { icon: Database, label: 'SQL Questions', href: '/library/sql' },
+        { icon: Bookmark, label: 'Revision List', href: '/library/bookmarks' },
       ],
     },
     {
@@ -249,6 +268,8 @@ export default function Sidebar() {
         { icon: BookOpen, label: 'Languages', href: '/fundamentals/languages' },
         { icon: Boxes, label: 'OOPs Concepts', href: '/fundamentals/oops' },
         { icon: Zap, label: 'Quiz', href: '/fundamentals/quiz' },
+        { icon: Map, label: 'Study Plans', href: '/fundamentals/plans' },
+        { icon: FileText, label: 'Resume Guide', href: '/resume' },
       ],
     },
   ]

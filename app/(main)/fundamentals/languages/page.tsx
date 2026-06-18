@@ -33,7 +33,7 @@ export default function LanguagesPage() {
       name: 'Python',
       description: 'Known for readability and vast ecosystem. Essential for ML, automation, and backend development.',
       icon: '🐍',
-      conceptCount: 0,
+      conceptCount: 12,
       available: true,
     },
     {
@@ -41,7 +41,7 @@ export default function LanguagesPage() {
       name: 'Java',
       description: 'Class-based, object-oriented. The backbone of enterprise software and Android development.',
       icon: '☕',
-      conceptCount: 0,
+      conceptCount: 12,
       available: true,
     },
     {

@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Copy, Check, ArrowRight, ArrowLeft } from 'lucide-react'
 import jsConcepts from '@/content/languages/javascript/concepts.json'
+import pythonConcepts from '@/content/languages/python/concepts.json'
+import javaConcepts from '@/content/languages/java/concepts.json'
 import { getProgressIds, toggleProgress } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
 import {
@@ -73,6 +75,8 @@ export default function ConceptDetailPage({ params }: PageProps) {
   // Get concepts list
   const getConceptsList = () => {
     if (lang === 'javascript') return jsConcepts as any[]
+    if (lang === 'python') return pythonConcepts as any[]
+    if (lang === 'java') return javaConcepts as any[]
     return []
   }
 

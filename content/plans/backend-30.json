@@ -1,0 +1,192 @@
+{
+  "id": "backend-30",
+  "title": "30-Day Backend Prep",
+  "emoji": "🛠️",
+  "duration": "30 days",
+  "role": "Backend Engineer",
+  "difficulty": "Medium",
+  "description": "Cover databases, APIs, system design, and DSA — everything you need for backend engineering interviews.",
+  "tags": ["System Design", "SQL", "DSA", "APIs"],
+  "steps": [
+    {
+      "id": "step-1",
+      "day": "Day 1–2",
+      "title": "Core CS: OS Fundamentals",
+      "description": "Process vs thread, deadlocks, virtual memory, mutexes vs semaphores. OS questions appear in almost every backend round.",
+      "type": "concept",
+      "href": "/library/core-cs",
+      "tag": "OS"
+    },
+    {
+      "id": "step-2",
+      "day": "Day 3",
+      "title": "Core CS: Networking — TCP, HTTP, DNS",
+      "description": "TCP vs UDP, how HTTPS/TLS works, DNS resolution, HTTP/2 vs HTTP/1.1. Know what happens when you type a URL.",
+      "type": "concept",
+      "href": "/library/core-cs",
+      "tag": "Networking"
+    },
+    {
+      "id": "step-3",
+      "day": "Day 4–5",
+      "title": "SQL: Joins, Indexes & Query Optimization",
+      "description": "INNER vs LEFT vs FULL JOIN, how indexes work (B-tree), EXPLAIN output, N+1 problem, query optimization.",
+      "type": "concept",
+      "href": "/library/sql",
+      "tag": "SQL"
+    },
+    {
+      "id": "step-4",
+      "day": "Day 6",
+      "title": "SQL: Window Functions & CTEs",
+      "description": "ROW_NUMBER, RANK, DENSE_RANK, LAG/LEAD. Recursive CTEs. Solve: 2nd highest salary, running totals.",
+      "type": "practice",
+      "href": "/library/sql",
+      "tag": "SQL"
+    },
+    {
+      "id": "step-5",
+      "day": "Day 7",
+      "title": "DBMS: ACID, Transactions & Isolation Levels",
+      "description": "Read Committed vs Repeatable Read vs Serializable. Dirty reads, phantom reads. When to use each isolation level.",
+      "type": "concept",
+      "href": "/library/core-cs",
+      "tag": "DBMS"
+    },
+    {
+      "id": "step-6",
+      "day": "Day 8–9",
+      "title": "DSA: Hash Maps & Their Applications",
+      "description": "Hash collision handling, load factor, consistent hashing in distributed systems. Solve 5 hash map problems.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-7",
+      "day": "Day 10",
+      "title": "DSA: Graphs — BFS, DFS & Shortest Paths",
+      "description": "BFS for shortest path, DFS for cycle detection, Dijkstra's for weighted graphs. Topological sort.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-8",
+      "day": "Day 11–12",
+      "title": "System Design: Design a URL Shortener",
+      "description": "Base62 encoding, Redis caching, 301 vs 302 redirects, analytics via Kafka, horizontal scaling.",
+      "type": "design",
+      "href": "/library/interview-questions",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-9",
+      "day": "Day 13",
+      "title": "System Design: CAP Theorem & Distributed Systems",
+      "description": "CP vs AP systems, eventual consistency, BASE vs ACID. When to use Cassandra vs PostgreSQL.",
+      "type": "concept",
+      "href": "/library/core-cs",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-10",
+      "day": "Day 14–15",
+      "title": "System Design: Design a Rate Limiter",
+      "description": "Token bucket vs leaky bucket vs sliding window. Redis-based distributed rate limiting with Lua scripts.",
+      "type": "design",
+      "href": "/library/interview-questions",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-11",
+      "day": "Day 16",
+      "title": "API Design: REST Best Practices",
+      "description": "RESTful conventions, versioning strategies, idempotency (PUT vs PATCH), pagination, error response formats.",
+      "type": "concept",
+      "href": "/library/interview-questions",
+      "tag": "APIs"
+    },
+    {
+      "id": "step-12",
+      "day": "Day 17",
+      "title": "API Design: Webhooks, gRPC & GraphQL",
+      "description": "When to use webhooks vs polling. gRPC use cases vs REST. GraphQL N+1 problem and DataLoader.",
+      "type": "concept",
+      "href": "/library/interview-questions",
+      "tag": "APIs"
+    },
+    {
+      "id": "step-13",
+      "day": "Day 18–19",
+      "title": "System Design: Design a Notification System",
+      "description": "Multi-channel delivery (push/SMS/email), Kafka for async, deduplication, rate limiting per user, DLQ.",
+      "type": "design",
+      "href": "/library/interview-questions",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-14",
+      "day": "Day 20",
+      "title": "Caching: Redis Patterns & Cache Invalidation",
+      "description": "Cache-aside vs write-through vs write-behind. Cache stampede, cache penetration, TTL strategies.",
+      "type": "concept",
+      "href": "/library/core-cs",
+      "tag": "Caching"
+    },
+    {
+      "id": "step-15",
+      "day": "Day 21",
+      "title": "DSA: Dynamic Programming Patterns",
+      "description": "Top-down vs bottom-up DP. Classic patterns: coin change, longest common subsequence, knapsack.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-16",
+      "day": "Day 22",
+      "title": "OOP: Design Patterns for Backend",
+      "description": "Singleton, Factory, Observer, Strategy, Repository pattern. Know when each one is appropriate.",
+      "type": "concept",
+      "href": "/fundamentals/oops",
+      "tag": "OOPs"
+    },
+    {
+      "id": "step-17",
+      "day": "Day 23–24",
+      "title": "System Design: Design a Payment System",
+      "description": "Idempotency keys, distributed transactions, saga pattern, handling double-charges, PCI DSS basics.",
+      "type": "design",
+      "href": "/library/company-questions/razorpay",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-18",
+      "day": "Day 25",
+      "title": "Behavioral: STAR Stories for Backend Roles",
+      "description": "Prepare 3 STAR stories: a technical challenge you solved, a system you designed, a time you pushed back on scope.",
+      "type": "behavioral",
+      "href": "/library/interview-questions",
+      "tag": "Behavioral"
+    },
+    {
+      "id": "step-19",
+      "day": "Day 26–28",
+      "title": "Company-Specific Prep: Top 3 Target Companies",
+      "description": "Work through question banks for your target companies. Note what they emphasize (Google: algorithms, Amazon: LPs).",
+      "type": "research",
+      "href": "/library/company-questions",
+      "tag": "Companies"
+    },
+    {
+      "id": "step-20",
+      "day": "Day 29–30",
+      "title": "Final Review: Revision List + Mock Round",
+      "description": "Review all questions in your Revision List. Do one full mock round (DSA + design + behavioral). You're ready.",
+      "type": "review",
+      "href": "/library/bookmarks",
+      "tag": "Review"
+    }
+  ]
+}

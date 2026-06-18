@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
-import { X, Copy, Check } from 'lucide-react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { X, Copy, Check, StickyNote } from 'lucide-react'
 import { Question } from '@/types'
 import Badge from './Badge'
 
@@ -28,7 +28,35 @@ export default function QuestionDrawer({
 }: QuestionDrawerProps) {
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedYt, setCopiedYt] = useState(false)
+  const [note, setNote] = useState('')
+  const [noteSaved, setNoteSaved] = useState(false)
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const drawerRef = useRef<HTMLElement>(null)
+
+  // Load note from localStorage when question changes
+  useEffect(() => {
+    if (!question) return
+    const stored = localStorage.getItem(`id_note_${question.id}`) ?? ''
+    setNote(stored)
+    setNoteSaved(false)
+  }, [question?.id])
+
+  const handleNoteChange = useCallback((value: string) => {
+    setNote(value)
+    setNoteSaved(false)
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current)
+    saveTimerRef.current = setTimeout(() => {
+      if (question) {
+        if (value.trim()) {
+          localStorage.setItem(`id_note_${question.id}`, value)
+        } else {
+          localStorage.removeItem(`id_note_${question.id}`)
+        }
+        setNoteSaved(true)
+        setTimeout(() => setNoteSaved(false), 2000)
+      }
+    }, 600)
+  }, [question])
 
   // ── Focus trap and Escape key listener ────────────────────────────────────
   useEffect(() => {
@@ -282,6 +310,30 @@ export default function QuestionDrawer({
                 </div>
               </div>
             )}
+
+            {/* 8. Personal Notes */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-1.5">
+                  <StickyNote aria-hidden="true" className="w-3.5 h-3.5 text-text-dim" />
+                  <span className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    My Notes
+                  </span>
+                </div>
+                {noteSaved && (
+                  <span className="text-[10px] font-mono text-green">saved</span>
+                )}
+              </div>
+              <div className="border-b border-border mb-4" />
+              <textarea
+                value={note}
+                onChange={(e) => handleNoteChange(e.target.value)}
+                placeholder="Jot down your own notes, key insights, or things to remember..."
+                rows={4}
+                className="w-full bg-bg border border-border rounded-xl px-3 py-2.5 text-sm text-text placeholder-text-dim resize-none focus:border-indigo focus:outline-none transition-colors leading-relaxed"
+              />
+              <p className="text-[10px] font-mono text-text-dim mt-1">Saved locally on this device.</p>
+            </div>
           </div>
         </div>
 

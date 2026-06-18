@@ -1,0 +1,35 @@
+[
+  {
+    "id": "frontend-30",
+    "title": "30-Day Frontend Prep",
+    "emoji": "⚡",
+    "duration": "30 days",
+    "role": "Frontend Engineer",
+    "difficulty": "Medium",
+    "description": "From JavaScript fundamentals to system design — a structured path to crack frontend interviews at top companies.",
+    "tags": ["JavaScript", "React", "DSA", "System Design"],
+    "stepCount": 20
+  },
+  {
+    "id": "backend-30",
+    "title": "30-Day Backend Prep",
+    "emoji": "🛠️",
+    "duration": "30 days",
+    "role": "Backend Engineer",
+    "difficulty": "Medium",
+    "description": "Cover databases, APIs, system design, and DSA — everything you need for backend engineering interviews.",
+    "tags": ["System Design", "SQL", "DSA", "APIs"],
+    "stepCount": 20
+  },
+  {
+    "id": "faang-60",
+    "title": "Crack FAANG in 60 Days",
+    "emoji": "🚀",
+    "duration": "60 days",
+    "role": "Software Engineer",
+    "difficulty": "Hard",
+    "description": "A comprehensive FAANG interview prep covering advanced DSA, large-scale system design, and behavioral excellence.",
+    "tags": ["DSA", "System Design", "Behavioral", "FAANG"],
+    "stepCount": 30
+  }
+]

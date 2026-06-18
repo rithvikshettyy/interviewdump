@@ -1,0 +1,282 @@
+{
+  "id": "faang-60",
+  "title": "Crack FAANG in 60 Days",
+  "emoji": "🚀",
+  "duration": "60 days",
+  "role": "Software Engineer",
+  "difficulty": "Hard",
+  "description": "A comprehensive FAANG interview prep covering advanced DSA, large-scale system design, and behavioral excellence.",
+  "tags": ["DSA", "System Design", "Behavioral", "FAANG"],
+  "steps": [
+    {
+      "id": "step-1",
+      "day": "Week 1: Day 1–2",
+      "title": "Programming Language Deep Dive",
+      "description": "Pick one language (Python/Java/JS) and master: closures, memory model, concurrency primitives, and runtime internals.",
+      "type": "concept",
+      "href": "/fundamentals/languages",
+      "tag": "Language"
+    },
+    {
+      "id": "step-2",
+      "day": "Week 1: Day 3–4",
+      "title": "DSA: Arrays, Strings & Hashing",
+      "description": "Two pointers, sliding window, frequency maps, anagram checks, string manipulation. Solve 10 problems.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-3",
+      "day": "Week 1: Day 5–7",
+      "title": "DSA: Linked Lists & Stacks/Queues",
+      "description": "Reverse linked list, detect cycle (Floyd's), merge sorted lists, LRU cache. Monotonic stack problems.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-4",
+      "day": "Week 2: Day 8–10",
+      "title": "DSA: Trees — BFS, DFS, BST",
+      "description": "Level order traversal, zigzag BFS, path sums, lowest common ancestor, validate BST, kth smallest.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-5",
+      "day": "Week 2: Day 11–12",
+      "title": "DSA: Heaps & Priority Queues",
+      "description": "Kth largest, merge K sorted lists, median of stream, task scheduler. Know heap sort.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-6",
+      "day": "Week 2: Day 13–14",
+      "title": "DSA: Graphs — Advanced",
+      "description": "Union-Find (DSU), Dijkstra, Bellman-Ford, topological sort, number of islands, clone graph.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-7",
+      "day": "Week 3: Day 15–17",
+      "title": "DSA: Dynamic Programming — Core Patterns",
+      "description": "Memoization vs tabulation. Patterns: Fibonacci, grid paths, longest subsequences, 0/1 knapsack, coin change.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-8",
+      "day": "Week 3: Day 18–19",
+      "title": "DSA: Backtracking",
+      "description": "Permutations, subsets, N-Queens, Sudoku solver, word search. Master the choose-explore-unchoose template.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-9",
+      "day": "Week 3: Day 20–21",
+      "title": "DSA: Binary Search & Advanced Patterns",
+      "description": "Binary search on answer space. Rotated array, search in 2D matrix, median of two sorted arrays.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "DSA"
+    },
+    {
+      "id": "step-10",
+      "day": "Week 4: Day 22–23",
+      "title": "Core CS: Operating Systems",
+      "description": "Deep dive: process scheduling, virtual memory, deadlocks (Banker's algorithm), synchronization primitives.",
+      "type": "concept",
+      "href": "/library/core-cs",
+      "tag": "OS"
+    },
+    {
+      "id": "step-11",
+      "day": "Week 4: Day 24–25",
+      "title": "Core CS: Distributed Systems Fundamentals",
+      "description": "CAP theorem, consensus algorithms (Raft/Paxos basics), vector clocks, consistent hashing, replication strategies.",
+      "type": "concept",
+      "href": "/library/core-cs",
+      "tag": "Distributed Systems"
+    },
+    {
+      "id": "step-12",
+      "day": "Week 4: Day 26–27",
+      "title": "SQL & Database Internals",
+      "description": "B-tree indexes, query execution plans, partitioning vs sharding, ACID vs BASE, database replication lag.",
+      "type": "concept",
+      "href": "/library/sql",
+      "tag": "Databases"
+    },
+    {
+      "id": "step-13",
+      "day": "Week 4: Day 28",
+      "title": "System Design: Scale from 1 to 1 Million Users",
+      "description": "Start with a single server. Progressively add: load balancer, DB replica, CDN, cache, message queue, microservices.",
+      "type": "design",
+      "href": "/library/core-cs",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-14",
+      "day": "Week 5: Day 29–30",
+      "title": "System Design: Design Google Search",
+      "description": "Web crawling, inverted index, PageRank concept, distributed indexing, query processing pipeline, caching.",
+      "type": "design",
+      "href": "/library/company-questions/google",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-15",
+      "day": "Week 5: Day 31–32",
+      "title": "System Design: Design a Chat Application",
+      "description": "WebSockets vs long polling, message ordering guarantees, delivery receipts, offline message sync, E2E encryption overview.",
+      "type": "design",
+      "href": "/library/interview-questions",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-16",
+      "day": "Week 5: Day 33–34",
+      "title": "System Design: Design Netflix/YouTube",
+      "description": "Video ingestion pipeline, adaptive bitrate streaming (HLS/DASH), CDN edge caching, recommendation engine.",
+      "type": "design",
+      "href": "/library/interview-questions",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-17",
+      "day": "Week 5: Day 35",
+      "title": "System Design: Design a Distributed Cache",
+      "description": "Consistent hashing for key distribution, eviction policies (LRU/LFU), replication, Redis vs Memcached trade-offs.",
+      "type": "design",
+      "href": "/library/interview-questions",
+      "tag": "System Design"
+    },
+    {
+      "id": "step-18",
+      "day": "Week 6: Day 36–37",
+      "title": "Amazon: Leadership Principles Deep Dive",
+      "description": "Prepare 2 STAR stories for each of the 16 LPs. Focus on: Customer Obsession, Ownership, Bias for Action, Invent & Simplify.",
+      "type": "behavioral",
+      "href": "/library/company-questions/amazon",
+      "tag": "Behavioral"
+    },
+    {
+      "id": "step-19",
+      "day": "Week 6: Day 38–39",
+      "title": "Google: Algorithm Mindset & Clarification",
+      "description": "Practice asking clarifying questions before coding. Know Google's rubric: correctness, efficiency, readability, testing.",
+      "type": "concept",
+      "href": "/library/company-questions/google",
+      "tag": "FAANG Process"
+    },
+    {
+      "id": "step-20",
+      "day": "Week 6: Day 40",
+      "title": "Meta: Product Sense + System Design",
+      "description": "Meta combines system design with product thinking. Practice estimating scale and justifying technical choices by product impact.",
+      "type": "design",
+      "href": "/library/company-questions",
+      "tag": "Meta"
+    },
+    {
+      "id": "step-21",
+      "day": "Week 7: Day 41–43",
+      "title": "Mock DSA Round 1: Medium Problems",
+      "description": "Time yourself: solve 2 medium problems in 45 minutes. Explain your approach as you code (think out loud).",
+      "type": "practice",
+      "href": "/fundamentals/quiz",
+      "tag": "Mock"
+    },
+    {
+      "id": "step-22",
+      "day": "Week 7: Day 44–45",
+      "title": "Mock System Design Round",
+      "description": "Pick a system (Twitter feed, Uber, Dropbox) and design it from scratch in 45 minutes. Follow: requirements → scale estimates → high-level → deep dive.",
+      "type": "practice",
+      "href": "/library/interview-questions",
+      "tag": "Mock"
+    },
+    {
+      "id": "step-23",
+      "day": "Week 7: Day 46–47",
+      "title": "Mock DSA Round 2: Hard Problems",
+      "description": "Two hard-level DSA problems. Focus on optimal solutions — FAANG expects O(n log n) or better.",
+      "type": "practice",
+      "href": "/library/dsa",
+      "tag": "Mock"
+    },
+    {
+      "id": "step-24",
+      "day": "Week 8: Day 48–50",
+      "title": "Review Weak Areas",
+      "description": "Identify the 3 areas you're weakest in from your mock rounds. Spend 3 days drilling exactly those problem types.",
+      "type": "review",
+      "href": "/library/bookmarks",
+      "tag": "Review"
+    },
+    {
+      "id": "step-25",
+      "day": "Week 8: Day 51–52",
+      "title": "OOP & Low-Level Design",
+      "description": "Design patterns: Strategy, Observer, Factory, Decorator. Practice: design a parking lot, design an elevator system.",
+      "type": "concept",
+      "href": "/fundamentals/oops",
+      "tag": "OOPs"
+    },
+    {
+      "id": "step-26",
+      "day": "Week 8: Day 53–54",
+      "title": "Company Research: 5 Target Companies",
+      "description": "Read each company's question bank. Note their interview format, tech stack, and what they emphasize.",
+      "type": "research",
+      "href": "/library/company-questions",
+      "tag": "Companies"
+    },
+    {
+      "id": "step-27",
+      "day": "Week 9: Day 55–56",
+      "title": "Behavioral: Craft Your Final STAR Bank",
+      "description": "Finalize 5–7 STAR stories that cover: leadership, conflict, failure, technical achievement, cross-team impact.",
+      "type": "behavioral",
+      "href": "/library/interview-questions",
+      "tag": "Behavioral"
+    },
+    {
+      "id": "step-28",
+      "day": "Week 9: Day 57–58",
+      "title": "Full Mock Interview Day",
+      "description": "Simulate a full FAANG loop: 45 min DSA → 45 min system design → 30 min behavioral. With a peer if possible.",
+      "type": "practice",
+      "href": "/fundamentals/quiz",
+      "tag": "Mock"
+    },
+    {
+      "id": "step-29",
+      "day": "Week 9: Day 59",
+      "title": "Final Revision Pass",
+      "description": "Review your entire Revision List. Focus on explanations, not just solutions — interviewers want to hear your reasoning.",
+      "type": "review",
+      "href": "/library/bookmarks",
+      "tag": "Review"
+    },
+    {
+      "id": "step-30",
+      "day": "Day 60",
+      "title": "Rest, Reflect & Trust the Process",
+      "description": "No new material today. Review your strengths. Go into interviews knowing you've put in the work. You're ready.",
+      "type": "review",
+      "href": "/library/bookmarks",
+      "tag": "Mindset"
+    }
+  ]
+}

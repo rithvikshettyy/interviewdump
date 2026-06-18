@@ -72,3 +72,24 @@ export async function getStats(): Promise<{
 
   return { solved, revision, done }
 }
+
+export async function getStatsByType(): Promise<Record<string, { solved: number; revision: number }>> {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return {}
+
+  const { data } = await supabase
+    .from('user_progress')
+    .select('item_type, status')
+    .eq('user_id', user.id)
+
+  if (!data) return {}
+
+  const result: Record<string, { solved: number; revision: number }> = {}
+  for (const row of data) {
+    if (!result[row.item_type]) result[row.item_type] = { solved: 0, revision: 0 }
+    if (row.status === 'solved') result[row.item_type].solved++
+    if (row.status === 'revision') result[row.item_type].revision++
+  }
+  return result
+}

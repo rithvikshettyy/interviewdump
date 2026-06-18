@@ -4,6 +4,8 @@ import React, { useState, useEffect, use } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import jsConcepts from '@/content/languages/javascript/concepts.json'
+import pythonConcepts from '@/content/languages/python/concepts.json'
+import javaConcepts from '@/content/languages/java/concepts.json'
 import { getProgressIds } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
 import {
@@ -68,7 +70,9 @@ export default function LanguageConceptsPage({ params }: PageProps) {
   // Get concepts based on language slug
   const getConceptsList = (): Concept[] => {
     if (lang === 'javascript') return jsConcepts as any[]
-    return [] // Fallback for other languages
+    if (lang === 'python') return pythonConcepts as any[]
+    if (lang === 'java') return javaConcepts as any[]
+    return []
   }
 
   const concepts = getConceptsList()
