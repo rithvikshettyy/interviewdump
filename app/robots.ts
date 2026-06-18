@@ -5,15 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: ['/', '/terms', '/privacy', '/login'],
-        disallow: [
-          '/dashboard',
-          '/library/',
-          '/fundamentals/',
-          '/resume',
-          '/onboarding',
-          '/auth/',
-        ],
+        allow: '/',
+        disallow: ['/auth/', '/onboarding'],
       },
     ],
     sitemap: 'https://interviewdump.dev/sitemap.xml',
