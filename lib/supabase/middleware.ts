@@ -28,10 +28,11 @@ export async function updateSession(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
 
   // Protect all (main) routes — redirect to login if not authed
-  const publicPaths = ['/', '/login', '/terms', '/privacy']
+  const publicPaths = ['/', '/login', '/terms', '/privacy', '/sitemap.xml', '/robots.txt']
   const isPublic =
     publicPaths.includes(request.nextUrl.pathname) ||
-    request.nextUrl.pathname.startsWith('/auth')
+    request.nextUrl.pathname.startsWith('/auth') ||
+    request.nextUrl.pathname.startsWith('/opengraph-image')
 
   if (!user && !isPublic) {
     const url = request.nextUrl.clone()
