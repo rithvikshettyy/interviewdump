@@ -7,7 +7,7 @@ const siteUrl = 'https://interviewdump.dev'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${BRAND_DOCUMENT_TITLE} — Free Tech Interview Prep`,
+    default: `${BRAND_DOCUMENT_TITLE} - Free Tech Interview Prep`,
     template: `%s | ${BRAND_DOCUMENT_TITLE}`,
   },
   description: '500+ curated tech interview questions covering DSA, system design, SQL, core CS, aptitude and more. Free forever. No paywall. No signup wall.',
