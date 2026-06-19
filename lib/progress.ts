@@ -1,11 +1,14 @@
 import { createClient } from '@/lib/supabase/client'
 import { updateStreak } from '@/lib/streak'
 
+const VALID_STATUSES = new Set(['solved', 'revision', 'done'])
+
 export async function toggleProgress(
-  itemId: string, 
-  itemType: string, 
+  itemId: string,
+  itemType: string,
   status: 'solved' | 'revision' | 'done'
 ): Promise<boolean> {
+  if (!VALID_STATUSES.has(status)) return false
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return false

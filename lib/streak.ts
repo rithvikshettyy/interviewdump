@@ -19,6 +19,10 @@ async function checkAndAwardBadges(userId: string, streakCount: number) {
 export async function updateStreak(userId: string): Promise<number> {
   const supabase = createClient()
 
+  // Verify the caller is the authenticated user — defense-in-depth
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user || user.id !== userId) return 0
+
   const { data: profile } = await supabase
     .from('profiles')
     .select('streak_count, last_active_date')
