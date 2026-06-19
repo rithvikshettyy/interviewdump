@@ -4,9 +4,14 @@
     "name": "Google",
     "sector": "Product",
     "tier": "FAANG",
-    "focusAreas": ["System Design", "DSA", "Algorithms", "Behavioral"],
+    "focusAreas": [
+      "System Design",
+      "DSA",
+      "Algorithms",
+      "Behavioral"
+    ],
     "interviewDifficulty": "Hard",
-    "questionCount": 15,
+    "questionCount": 28,
     "description": "Google is a global technology leader focused on search, cloud computing, AI, and advertising technologies."
   },
   {
@@ -14,9 +19,14 @@
     "name": "Amazon",
     "sector": "Product",
     "tier": "FAANG",
-    "focusAreas": ["Leadership Principles", "DSA", "System Design", "Behavioral"],
+    "focusAreas": [
+      "Leadership Principles",
+      "DSA",
+      "System Design",
+      "Behavioral"
+    ],
     "interviewDifficulty": "Hard",
-    "questionCount": 15,
+    "questionCount": 30,
     "description": "Amazon is a multinational tech giant focusing on e-commerce, cloud computing, and digital streaming."
   },
   {
@@ -24,9 +34,14 @@
     "name": "Microsoft",
     "sector": "Product",
     "tier": "FAANG",
-    "focusAreas": ["DSA", "OOP Design", "System Design", "Behavioral"],
+    "focusAreas": [
+      "DSA",
+      "OOP Design",
+      "System Design",
+      "Behavioral"
+    ],
     "interviewDifficulty": "Hard",
-    "questionCount": 15,
+    "questionCount": 30,
     "description": "Microsoft is a global leader developing and supporting computer software, electronics, and services."
   },
   {
@@ -34,9 +49,14 @@
     "name": "Meta",
     "sector": "Product",
     "tier": "FAANG",
-    "focusAreas": ["DSA", "System Design", "Behavioral", "Product Sense"],
+    "focusAreas": [
+      "DSA",
+      "System Design",
+      "Behavioral",
+      "Product Sense"
+    ],
     "interviewDifficulty": "Hard",
-    "questionCount": 16,
+    "questionCount": 15,
     "description": "Meta builds technologies that help people connect, find communities, and grow businesses."
   },
   {
@@ -44,7 +64,12 @@
     "name": "Netflix",
     "sector": "Product",
     "tier": "FAANG",
-    "focusAreas": ["System Design", "DSA", "Behavioral", "Culture Fit"],
+    "focusAreas": [
+      "System Design",
+      "DSA",
+      "Behavioral",
+      "Culture Fit"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 12,
     "description": "Netflix is a subscription-based streaming service and media production company."
@@ -54,7 +79,12 @@
     "name": "Flipkart",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["DSA", "System Design", "Machine Coding", "Concurrency"],
+    "focusAreas": [
+      "DSA",
+      "System Design",
+      "Machine Coding",
+      "Concurrency"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 15,
     "description": "Flipkart is one of India's leading e-commerce marketplaces and a key player in digital retail."
@@ -64,7 +94,12 @@
     "name": "Swiggy",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["System Design", "Machine Coding", "DSA", "Concurrency"],
+    "focusAreas": [
+      "System Design",
+      "Machine Coding",
+      "DSA",
+      "Concurrency"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 10,
     "description": "Swiggy is a premier on-demand food delivery and quick commerce platform operating in India."
@@ -74,7 +109,12 @@
     "name": "Zomato",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["System Design", "DSA", "Database Design", "Scalability"],
+    "focusAreas": [
+      "System Design",
+      "DSA",
+      "Database Design",
+      "Scalability"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 11,
     "description": "Zomato is an Indian restaurant aggregator and food delivery company."
@@ -84,7 +124,12 @@
     "name": "Razorpay",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["API Design", "DSA", "Database Design", "System Design"],
+    "focusAreas": [
+      "API Design",
+      "DSA",
+      "Database Design",
+      "System Design"
+    ],
     "interviewDifficulty": "Medium",
     "questionCount": 15,
     "description": "Razorpay is a fintech platform offering payment gateway and financial solutions for businesses."
@@ -94,7 +139,12 @@
     "name": "Zepto",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["DSA", "System Design", "Low-Level Design", "Concurrency"],
+    "focusAreas": [
+      "DSA",
+      "System Design",
+      "Low-Level Design",
+      "Concurrency"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 8,
     "description": "Zepto is a fast-growing Indian startup delivering groceries and essentials in 10 minutes."
@@ -104,7 +154,12 @@
     "name": "Meesho",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["DSA", "System Design", "Scalability", "Java"],
+    "focusAreas": [
+      "DSA",
+      "System Design",
+      "Scalability",
+      "Java"
+    ],
     "interviewDifficulty": "Medium",
     "questionCount": 7,
     "description": "Meesho is a social commerce platform enabling micro and small retail businesses to sell online."
@@ -114,7 +169,12 @@
     "name": "PhonePe",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["System Design", "Concurrency", "DSA", "Database Design"],
+    "focusAreas": [
+      "System Design",
+      "Concurrency",
+      "DSA",
+      "Database Design"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 13,
     "description": "PhonePe is a digital payments company providing UPI and financial services."
@@ -124,7 +184,12 @@
     "name": "CRED",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["System Design", "Frontend Development", "DSA", "Behavioral"],
+    "focusAreas": [
+      "System Design",
+      "Frontend Development",
+      "DSA",
+      "Behavioral"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 9,
     "description": "CRED is a members-only club rewarding individuals for paying credit card bills on time."
@@ -134,7 +199,12 @@
     "name": "Paytm",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["DSA", "Java Backend", "System Design", "APIs"],
+    "focusAreas": [
+      "DSA",
+      "Java Backend",
+      "System Design",
+      "APIs"
+    ],
     "interviewDifficulty": "Medium",
     "questionCount": 11,
     "description": "Paytm is a fintech company specializing in digital payment systems and mobile wallets."
@@ -144,7 +214,12 @@
     "name": "Groww",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["DSA", "System Design", "Java Backend", "Database Design"],
+    "focusAreas": [
+      "DSA",
+      "System Design",
+      "Java Backend",
+      "Database Design"
+    ],
     "interviewDifficulty": "Medium",
     "questionCount": 8,
     "description": "Groww is an investment platform allowing users to trade stocks and invest in mutual funds."
@@ -154,7 +229,12 @@
     "name": "Juspay",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["Functional Programming", "DSA", "Machine Coding", "FP Concepts"],
+    "focusAreas": [
+      "Functional Programming",
+      "DSA",
+      "Machine Coding",
+      "FP Concepts"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 10,
     "description": "Juspay is a payments technology company specializing in mobile payment security and operations."
@@ -164,7 +244,12 @@
     "name": "Navi",
     "sector": "Product",
     "tier": "Unicorn",
-    "focusAreas": ["DSA", "Machine Coding", "Java Backend", "System Design"],
+    "focusAreas": [
+      "DSA",
+      "Machine Coding",
+      "Java Backend",
+      "System Design"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 7,
     "description": "Navi is a digital lending and financial services platform offering loans and insurance."
@@ -174,7 +259,12 @@
     "name": "Atlassian",
     "sector": "Product",
     "tier": "MNC",
-    "focusAreas": ["System Design", "Low-Level Design", "Behavioral", "DSA"],
+    "focusAreas": [
+      "System Design",
+      "Low-Level Design",
+      "Behavioral",
+      "DSA"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 12,
     "description": "Atlassian builds software development and team collaboration tools like Jira and Confluence."
@@ -184,7 +274,12 @@
     "name": "Adobe",
     "sector": "Product",
     "tier": "MNC",
-    "focusAreas": ["DSA", "Operating Systems", "C++", "Algorithms"],
+    "focusAreas": [
+      "DSA",
+      "Operating Systems",
+      "C++",
+      "Algorithms"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 13,
     "description": "Adobe is a global leader in software solutions for creative content and digital marketing."
@@ -194,7 +289,12 @@
     "name": "Salesforce",
     "sector": "Product",
     "tier": "MNC",
-    "focusAreas": ["System Design", "DSA", "OOP Design", "Apex"],
+    "focusAreas": [
+      "System Design",
+      "DSA",
+      "OOP Design",
+      "Apex"
+    ],
     "interviewDifficulty": "Hard",
     "questionCount": 10,
     "description": "Salesforce is a leading cloud-based software provider specializing in CRM solutions."
@@ -204,7 +304,12 @@
     "name": "Zoho",
     "sector": "Product",
     "tier": "Startup",
-    "focusAreas": ["C/Java Development", "DSA", "OOP Design", "Logic Rounds"],
+    "focusAreas": [
+      "C/Java Development",
+      "DSA",
+      "OOP Design",
+      "Logic Rounds"
+    ],
     "interviewDifficulty": "Medium",
     "questionCount": 15,
     "description": "Zoho is a multinational software development company providing business cloud suites."
@@ -214,7 +319,12 @@
     "name": "TCS Digital",
     "sector": "Service",
     "tier": "Service",
-    "focusAreas": ["Aptitude", "Coding Fundamentals", "DBMS", "Java/Python"],
+    "focusAreas": [
+      "Aptitude",
+      "Coding Fundamentals",
+      "DBMS",
+      "Java/Python"
+    ],
     "interviewDifficulty": "Medium",
     "questionCount": 18,
     "description": "TCS Digital represents Tata Consultancy Services' premium engineering hiring category."
@@ -224,7 +334,12 @@
     "name": "Infosys SP",
     "sector": "Service",
     "tier": "Service",
-    "focusAreas": ["Advanced Coding", "Algorithms", "DSA", "DBMS"],
+    "focusAreas": [
+      "Advanced Coding",
+      "Algorithms",
+      "DSA",
+      "DBMS"
+    ],
     "interviewDifficulty": "Medium",
     "questionCount": 14,
     "description": "Infosys Specialist Programmer role focuses on advanced programming and system architecture."
@@ -234,7 +349,12 @@
     "name": "Wipro Elite",
     "sector": "Service",
     "tier": "Service",
-    "focusAreas": ["Aptitude", "Basic Coding", "Communication", "CS Fundamentals"],
+    "focusAreas": [
+      "Aptitude",
+      "Basic Coding",
+      "Communication",
+      "CS Fundamentals"
+    ],
     "interviewDifficulty": "Easy",
     "questionCount": 12,
     "description": "Wipro Elite is Wipro's nationwide initiative for recruiting engineering graduates."
