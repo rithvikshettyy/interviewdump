@@ -6,6 +6,7 @@ import Link from 'next/link'
 import jsConcepts from '@/content/languages/javascript/concepts.json'
 import pythonConcepts from '@/content/languages/python/concepts.json'
 import javaConcepts from '@/content/languages/java/concepts.json'
+import cppConcepts from '@/content/languages/cpp/concepts.json'
 import { getProgressIds } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
 import { CheckCircle2 } from 'lucide-react'
@@ -73,6 +74,7 @@ export default function LanguageConceptsPage({ params }: PageProps) {
     if (lang === 'javascript') return jsConcepts as any[]
     if (lang === 'python') return pythonConcepts as any[]
     if (lang === 'java') return javaConcepts as any[]
+    if (lang === 'cpp') return cppConcepts as any[]
     return []
   }
 

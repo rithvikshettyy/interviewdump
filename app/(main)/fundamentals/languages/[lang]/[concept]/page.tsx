@@ -7,6 +7,7 @@ import { Copy, Check, ArrowRight, ArrowLeft, CheckCircle2, Bookmark } from 'luci
 import jsConcepts from '@/content/languages/javascript/concepts.json'
 import pythonConcepts from '@/content/languages/python/concepts.json'
 import javaConcepts from '@/content/languages/java/concepts.json'
+import cppConcepts from '@/content/languages/cpp/concepts.json'
 import { getProgressIds, toggleProgress } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
 import {
@@ -77,6 +78,7 @@ export default function ConceptDetailPage({ params }: PageProps) {
     if (lang === 'javascript') return jsConcepts as any[]
     if (lang === 'python') return pythonConcepts as any[]
     if (lang === 'java') return javaConcepts as any[]
+    if (lang === 'cpp') return cppConcepts as any[]
     return []
   }
 
