@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useCallback } from 'react'
-import { RotateCcw, ChevronRight, CheckCircle2, AlertCircle, XCircle, BookOpen } from 'lucide-react'
+import { RotateCcw, ChevronRight, CheckCircle2, AlertCircle, XCircle, BookOpen, Code2, Coffee, Cpu, Trees, type LucideIcon } from 'lucide-react'
 import Badge from '@/components/shared/Badge'
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -17,15 +17,15 @@ type Phase = 'selecting' | 'studying' | 'complete'
 
 // ─── Deck Config ────────────────────────────────────────────────────────────
 
-const DECKS = [
-  { id: 'js',     label: 'JavaScript', emoji: 'JS', source: 'lang', lang: 'javascript' },
-  { id: 'python', label: 'Python',     emoji: '🐍', source: 'lang', lang: 'python' },
-  { id: 'java',   label: 'Java',       emoji: '☕', source: 'lang', lang: 'java' },
-  { id: 'cpp',    label: 'C++',        emoji: '👾', source: 'lang', lang: 'cpp' },
-  { id: 'dsa',    label: 'DSA',        emoji: '🌲', source: 'dsa' },
-] as const
+const DECKS: { id: string; label: string; icon: LucideIcon; source: string; lang?: string }[] = [
+  { id: 'js',     label: 'JavaScript', icon: Code2,  source: 'lang', lang: 'javascript' },
+  { id: 'python', label: 'Python',     icon: Code2,  source: 'lang', lang: 'python' },
+  { id: 'java',   label: 'Java',       icon: Coffee, source: 'lang', lang: 'java' },
+  { id: 'cpp',    label: 'C++',        icon: Cpu,    source: 'lang', lang: 'cpp' },
+  { id: 'dsa',    label: 'DSA',        icon: Trees,  source: 'dsa' },
+]
 
-type DeckId = typeof DECKS[number]['id']
+type DeckId = 'js' | 'python' | 'java' | 'cpp' | 'dsa'
 
 // ─── Content Loaders ────────────────────────────────────────────────────────
 
@@ -51,7 +51,7 @@ async function loadDeck(deckId: DeckId): Promise<FlashCard[]> {
 
   const deck = DECKS.find((d) => d.id === deckId)
   if (!deck || deck.source !== 'lang') return []
-  const lang = (deck as any).lang as string
+  const lang = deck.lang as string
   const data = ((await langMap[lang]()).default) as any[]
   return data.map((c) => ({
     id: c.id,
@@ -87,7 +87,7 @@ function FlipCard({
       aria-label={isFlipped ? 'Click to see front' : 'Click to reveal answer'}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onFlip() } }}
     >
-      <div className={`card-flip-inner w-full h-full`} style={{ height: 320 }}>
+      <div className={`card-flip-inner w-full h-full${isFlipped ? ' flipped' : ''}`} style={{ height: 320 }}>
         {/* Front */}
         <div className="card-face absolute inset-0 bg-surface border border-border rounded-2xl p-7 flex flex-col justify-between">
           <div className="flex justify-between items-start">
@@ -113,7 +113,7 @@ function FlipCard({
           {card.back.analogy && (
             <div className="bg-indigo-dim border border-border rounded-xl px-3 py-2">
               <p className="text-xs text-text-muted italic leading-relaxed line-clamp-2">
-                💡 {card.back.analogy}
+                {card.back.analogy}
               </p>
             </div>
           )}
@@ -200,11 +200,11 @@ export default function FlashcardsPage() {
             {DECKS.map((d) => (
               <button
                 key={d.id}
-                onClick={() => startDeck(d.id)}
+                onClick={() => startDeck(d.id as DeckId)}
                 disabled={isLoading}
                 className="bg-surface border border-border rounded-2xl p-6 text-left hover:border-border-hover hover:bg-surface-hover transition-all duration-200 focus:outline-none group disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <span className="text-2xl block mb-3">{d.emoji}</span>
+                <d.icon className="w-6 h-6 text-text-dim mb-3" aria-hidden="true" />
                 <h3 className="text-base font-bold text-text group-hover:text-indigo-light transition-colors">
                   {d.label}
                 </h3>

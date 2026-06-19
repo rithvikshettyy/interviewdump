@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import { getStatsByType, getProgressIds } from '@/lib/progress'
+import { getStreak } from '@/lib/streak'
 import { computeWeakTopics, type WeakTopic } from '@/lib/insights'
 import PageHeader from '@/components/layout/PageHeader'
+import StreakBadge from '@/components/shared/StreakBadge'
 import Link from 'next/link'
 import { Code2, MessageSquare, Monitor, Database, Hash, Zap, AlertTriangle, type LucideIcon } from 'lucide-react'
+import { createClient } from '@/lib/supabase/client'
 
 // Question content for weak-area analysis (imported statically)
 import dsaQuestions from '@/content/dsa/questions.json'
@@ -49,10 +52,14 @@ function ProgressBar({ value, max }: { value: number; max: number }) {
 export default function DashboardPage() {
   const [stats, setStats] = useState<Record<string, { solved: number; revision: number }>>({})
   const [weakTopics, setWeakTopics] = useState<WeakTopic[]>([])
+  const [streakCount, setStreakCount] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const load = async () => {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
       const [statsData, dsaSolved, sqlSolved, corecsSolved, interviewSolved, scenarioSolved] = await Promise.all([
         getStatsByType(),
         getProgressIds('dsa', 'solved'),
@@ -64,6 +71,12 @@ export default function DashboardPage() {
       setStats(statsData)
       const allSolved = [...dsaSolved, ...sqlSolved, ...corecsSolved, ...interviewSolved, ...scenarioSolved]
       setWeakTopics(computeWeakTopics(allSolved, ALL_QUESTIONS))
+
+      if (user) {
+        const { count } = await getStreak(user.id)
+        setStreakCount(count)
+      }
+
       setLoading(false)
     }
     load().catch(() => setLoading(false))
@@ -83,7 +96,7 @@ export default function DashboardPage() {
 
       <div className="px-6 py-6 max-w-3xl mx-auto w-full flex flex-col gap-6">
         {/* Overall summary cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="bg-surface border border-border rounded-2xl p-5 flex flex-col gap-1">
             <span className="text-[10px] font-mono text-text-dim uppercase tracking-widest">Solved</span>
             <span className="text-3xl font-bold font-mono text-indigo-light">{loading ? '—' : totalSolved}</span>
@@ -98,6 +111,17 @@ export default function DashboardPage() {
             <span className="text-[10px] font-mono text-text-dim uppercase tracking-widest">Completion</span>
             <span className="text-3xl font-bold font-mono text-green">{loading ? '—' : `${overallPct}%`}</span>
             <span className="text-xs text-text-muted">overall coverage</span>
+          </div>
+          <div className="bg-surface border border-border rounded-2xl p-5 flex flex-col gap-1">
+            <span className="text-[10px] font-mono text-text-dim uppercase tracking-widest">Streak</span>
+            {loading ? (
+              <span className="text-3xl font-bold font-mono text-amber">—</span>
+            ) : (
+              <StreakBadge count={streakCount} size="md" />
+            )}
+            {!loading && streakCount === 0 && (
+              <span className="text-xs text-text-muted">solve a question to start</span>
+            )}
           </div>
         </div>
 

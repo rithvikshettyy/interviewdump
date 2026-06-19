@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Logo } from '@/components/shared/Logo'
 import { createClient } from '@/lib/supabase/client'
 import SettingsDrawer from '@/components/shared/SettingsDrawer'
+import StreakBadge from '@/components/shared/StreakBadge'
 import {
   Building2,
   MessageSquare,
@@ -415,7 +416,12 @@ export default function Sidebar() {
                 {profile?.role || 'Preferences'}
               </div>
             </div>
-            <Settings className="w-4 h-4 text-text-dim group-hover:text-text-muted transition-colors flex-shrink-0" />
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              {profile?.streak_count > 0 && (
+                <StreakBadge count={profile.streak_count} size="sm" />
+              )}
+              <Settings className="w-4 h-4 text-text-dim group-hover:text-text-muted transition-colors" />
+            </div>
           </button>
         )}
       </div>

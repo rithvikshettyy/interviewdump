@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
+import { updateStreak } from '@/lib/streak'
 
 export async function toggleProgress(
   itemId: string, 
@@ -30,6 +31,9 @@ export async function toggleProgress(
     await supabase
       .from('user_progress')
       .insert({ user_id: user.id, item_id: itemId, item_type: itemType, status })
+    if (status === 'solved') {
+      updateStreak(user.id).catch(() => {})
+    }
     return true
   }
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import { Flame, Trophy, ThumbsUp, Zap, Lightbulb, Clock, Timer } from 'lucide-react'
 import Badge from '@/components/shared/Badge'
 import PageHeader from '@/components/layout/PageHeader'
 
@@ -170,12 +171,7 @@ export default function QuizPage() {
   const durationText = duration >= 60 ? `${Math.floor(duration / 60)}m ${duration % 60}s` : `${duration}s`
   const percentage = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0
 
-  let scoreEmoji = '🎉'
-  if (percentage < 50) {
-    scoreEmoji = '👍'
-  } else if (percentage < 80) {
-    scoreEmoji = '💪'
-  }
+  const ScoreIcon = percentage >= 80 ? Trophy : percentage >= 50 ? Zap : ThumbsUp
 
   return (
     <div className="flex flex-col min-h-screen bg-bg">
@@ -262,7 +258,7 @@ export default function QuizPage() {
                 {timeLeft}s
               </div>
               <span className="font-mono text-sm text-amber font-bold flex items-center gap-1">
-                🔥 {streak} Streak
+                <Flame className="w-3.5 h-3.5" aria-hidden="true" /> {streak}
               </span>
             </div>
           </div>
@@ -338,8 +334,8 @@ export default function QuizPage() {
 
             {/* Time's up banner */}
             {selectedOption === -1 && (
-              <div className="mt-4 bg-red-dim border border-red/20 rounded-xl px-4 py-2.5 text-sm text-red font-semibold text-center">
-                ⏱ Time&apos;s up! The correct answer is highlighted above.
+              <div className="mt-4 bg-red-dim border border-red/20 rounded-xl px-4 py-2.5 text-sm text-red font-semibold text-center flex items-center justify-center gap-2">
+                <Timer className="w-4 h-4" aria-hidden="true" /> Time&apos;s up! The correct answer is highlighted above.
               </div>
             )}
 
@@ -357,8 +353,8 @@ export default function QuizPage() {
                   {/* Optional Trick block */}
                   {quizQuestions[currentIndex].trick && (
                     <div className="bg-amber-dim border border-amber/10 rounded-lg p-3 mt-3">
-                      <div className="text-[9px] font-mono text-amber mb-1 uppercase tracking-wider">
-                        💡 Key Trick
+                      <div className="text-[9px] font-mono text-amber mb-1 uppercase tracking-wider flex items-center gap-1">
+                        <Lightbulb className="w-3 h-3" aria-hidden="true" /> Key Trick
                       </div>
                       <p className="text-xs text-text-muted leading-relaxed">
                         {quizQuestions[currentIndex].trick}
@@ -385,7 +381,7 @@ export default function QuizPage() {
       {isFinished && (
         <div className="px-6 py-12 flex-1 flex items-center justify-center w-full">
           <div className="bg-surface border border-border rounded-2xl p-8 max-w-md w-full text-center shadow-xl">
-            <span className="text-5xl block mb-3">{scoreEmoji}</span>
+            <ScoreIcon className="w-12 h-12 mx-auto mb-3 text-indigo-light" aria-hidden="true" />
             <h2 className="text-xl font-bold text-text mb-1">Quiz Completed!</h2>
             <p className="text-sm text-text-muted mb-6">Topic: {activeTopic}</p>
 
