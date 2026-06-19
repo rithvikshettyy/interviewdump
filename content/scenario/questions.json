@@ -398,5 +398,385 @@
       "Write modular code that is easy to refactor when requirements change."
     ],
     "ytQuery": "Handling fast paced environment interview question"
+  },
+  {
+    "id": "scenario-21",
+    "number": 21,
+    "question": "A key deadline is approaching, but your team is falling behind. What actions would you take to get things back on track?",
+    "summary": "Your sprint deadline is two days away, but the team has completed only 60% of committed work. You need to act decisively to limit the damage and protect the release.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: Our team was two days from a product launch but had only completed roughly half the planned work due to unexpected technical blockers. Task: As a senior contributor, I needed to help the team assess the situation and make clear decisions about what could realistically ship. Action: I called a short stand-up, mapped every remaining task by impact and effort, and proposed cutting lower-priority features to a follow-up release. I paired with two engineers on the critical path items to unblock them and updated the stakeholder on the revised scope immediately. Result: We delivered the core features on schedule, the stakeholder accepted the scope reduction, and the lower-priority items shipped the following week with better quality.",
+    "keyPoints": [
+      "Assess remaining work objectively and rank by business impact.",
+      "Communicate scope changes to stakeholders early, not at the last minute.",
+      "Actively remove blockers by pairing and reprioritising rather than just adding hours."
+    ],
+    "whatToAvoid": "Avoid saying you would simply ask everyone to work overtime without re-evaluating scope, as that leads to burnout and rushed, low-quality output."
+  },
+  {
+    "id": "scenario-22",
+    "number": 22,
+    "question": "You notice a colleague repeatedly making mistakes that affect the team's performance. How would you handle this?",
+    "summary": "A teammate's recurring errors are causing rework and slowing the team down. You need to address it constructively without damaging the relationship.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: A colleague was consistently merging code without running tests, causing broken builds that blocked the whole team. Task: I needed to address the issue in a way that helped them improve without creating defensiveness. Action: I approached them privately after one of the incidents, framed it around the impact on the team rather than personal criticism, and asked if they were facing any pressure or confusion with the workflow. I then offered to walk them through our CI process together and suggested we add a checklist to the PR template as a shared team guard. Result: The colleague appreciated the direct but supportive approach, the broken builds dropped to zero over the following two weeks, and the PR checklist was adopted by the whole team.",
+    "keyPoints": [
+      "Address the issue privately and focus on impact rather than blame.",
+      "Ask questions first to understand if there is an underlying reason for the mistakes.",
+      "Propose a systemic fix, such as a checklist or process change, so the whole team benefits."
+    ],
+    "whatToAvoid": "Avoid going directly to a manager without first trying a private, constructive conversation, as this can damage trust and create unnecessary conflict."
+  },
+  {
+    "id": "scenario-23",
+    "number": 23,
+    "question": "A customer becomes angry and raises their voice at you. What steps would you take to calm the situation?",
+    "summary": "An upset customer is escalating a complaint loudly. You need to de-escalate, demonstrate empathy, and resolve the issue professionally.",
+    "difficulty": "Easy",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: While supporting a client demo, a customer became visibly frustrated when a key feature was not working as expected and began raising their voice in front of other attendees. Task: I needed to de-escalate the situation quickly and restore their confidence in the product. Action: I remained calm, lowered my own voice slightly, and acknowledged their frustration directly: 'I completely understand why this is frustrating, and I want to fix this for you right now.' I moved the conversation to a private channel, took ownership of diagnosing the problem, and gave them a clear timeline for resolution. Result: The customer calmed down within a few minutes once they felt heard and saw I was taking action. The issue was resolved within the hour and the customer sent a follow-up email thanking the team for the quick response.",
+    "keyPoints": [
+      "Stay calm and lower your own tone, which naturally encourages the other person to follow.",
+      "Acknowledge the emotion first before jumping to solutions.",
+      "Move the conversation to a private setting if possible to reduce audience pressure."
+    ],
+    "whatToAvoid": "Avoid matching the customer's energy or becoming defensive, as this escalates the situation further and damages the relationship irreparably."
+  },
+  {
+    "id": "scenario-24",
+    "number": 24,
+    "question": "You've been given an important task but not enough information to complete it. What do you do?",
+    "summary": "You receive a vague assignment with no clear success criteria or technical context. Starting blind risks wasted effort and a wrong deliverable.",
+    "difficulty": "Easy",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: I was asked to 'improve the dashboard performance' with no metrics, no baseline, and no definition of done provided. Task: I needed to gather enough clarity to define a sensible scope and avoid building the wrong thing. Action: I wrote down a targeted list of questions covering the expected outcome, the current performance baseline, affected users, and any known constraints. I scheduled a 15-minute call with the product owner, shared my questions in advance so they could prepare, and agreed on clear acceptance criteria before touching any code. Result: The scoping call revealed that only two specific queries were the bottleneck, not the entire dashboard. This narrowed the task from a week of work to a focused two-day optimisation that hit the agreed targets.",
+    "keyPoints": [
+      "Write down specific questions before any meeting so the conversation is efficient.",
+      "Ask for clear acceptance criteria and a definition of done before starting work.",
+      "Share questions in advance to respect the stakeholder's time and speed up alignment."
+    ],
+    "whatToAvoid": "Avoid starting work based on assumptions to appear proactive, as a misaligned deliverable wastes far more time than a short clarification call."
+  },
+  {
+    "id": "scenario-25",
+    "number": 25,
+    "question": "You and your manager strongly disagree on an approach. How would you manage the situation?",
+    "summary": "You believe a technical decision your manager is pushing will create long-term problems, but they disagree. You need to advocate for your view while maintaining a professional relationship.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: My manager wanted to store session tokens in local storage for simplicity, while I believed this was a significant security risk. Task: I needed to make a clear, evidence-based case for my preferred approach without being dismissive of their reasoning. Action: I prepared a brief written comparison of both approaches, citing specific security risks (XSS vulnerability) and industry standards (HTTPOnly cookies). I asked for 15 minutes to walk them through it, presented the trade-offs objectively, and explicitly acknowledged the simplicity benefit of their approach. Result: My manager agreed to use HTTPOnly cookies once the security implications were laid out clearly. They later told me they appreciated that I had come with evidence rather than just an opinion, and the approach became the team standard.",
+    "keyPoints": [
+      "Make your case with evidence and trade-off analysis, not personal conviction alone.",
+      "Acknowledge the valid points in your manager's approach before presenting your alternative.",
+      "Disagree and commit — if the decision goes against you after a fair discussion, support it fully."
+    ],
+    "whatToAvoid": "Avoid escalating to senior management or expressing frustration publicly before making a direct, well-prepared case to your manager first."
+  },
+  {
+    "id": "scenario-26",
+    "number": 26,
+    "question": "Two team members are in conflict and it's affecting productivity. How would you resolve it?",
+    "summary": "A visible disagreement between two colleagues is creating a tense atmosphere and slowing down collaboration on a shared deliverable.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: Two engineers on my team disagreed over the architecture for a shared service and had stopped communicating directly, routing all questions through me instead. Task: I needed to facilitate a resolution so the team could move forward without permanently damaging the working relationship. Action: I spoke to each person separately first to understand their perspective without judgment. I then facilitated a joint meeting where I framed the discussion around the project goal rather than personal preferences, asking each person to present the merits of their approach rather than attack the other. I helped them find a hybrid solution and documented the agreed decision. Result: The two engineers agreed on an approach within the meeting. The shared documentation meant there was no ambiguity going forward, and the collaboration returned to normal within a few days.",
+    "keyPoints": [
+      "Speak to each party individually first to understand both sides without bias.",
+      "Frame the joint conversation around the shared goal, not personal positions.",
+      "Document the agreed resolution to prevent the conflict from resurfacing."
+    ],
+    "whatToAvoid": "Avoid taking sides or letting the conflict go unaddressed in the hope it resolves itself, as unresolved interpersonal tension grows and affects the broader team."
+  },
+  {
+    "id": "scenario-27",
+    "number": 27,
+    "question": "You're assigned a project outside your usual skill set. How do you approach it?",
+    "summary": "You have been asked to lead a piece of work in a technology or domain you have little experience with. You need to deliver results while managing the learning curve honestly.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: I was asked to build a machine learning data pipeline despite having no prior ML experience, as I was the only engineer available with Python knowledge. Task: I needed to deliver a working pipeline on schedule while being honest about my current knowledge gaps. Action: I spent the first two days on a focused learning sprint, reading documentation and completing a short online module on the specific tools required. I identified a colleague with relevant experience and asked for two structured pairing sessions rather than ad-hoc help. I broke the project into phases and was transparent with my manager about my confidence level at each stage. Result: The pipeline was delivered on schedule and passed code review from the colleague who had mentored me. The experience also opened up a new area of work I continued to develop in subsequent sprints.",
+    "keyPoints": [
+      "Be transparent with your manager about your current knowledge level and learning plan.",
+      "Invest time in a focused learning sprint rather than learning haphazardly while building.",
+      "Seek structured help from an expert early to avoid costly mistakes late in the project."
+    ],
+    "whatToAvoid": "Avoid pretending to have more expertise than you do, as this leads to poor decisions early on that are expensive to unwind and damages trust when discovered."
+  },
+  {
+    "id": "scenario-28",
+    "number": 28,
+    "question": "Your workload becomes unmanageable with several urgent tasks due at once. How would you prioritise?",
+    "summary": "Multiple stakeholders are requesting urgent work simultaneously and you cannot complete everything. You need a structured approach to triage without dropping the most critical items.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: On the same day, I received an urgent bug fix request from a client, a deadline for a feature demo, and a security patching task flagged as high priority by the infrastructure team. Task: I needed to decide what to work on first and communicate clearly so no stakeholder felt ignored. Action: I listed all tasks and evaluated each by business impact, deadline, and consequence of delay. The security patch was elevated to first because a breach risk outweighed demo polish. I communicated to each stakeholder individually, explained my reasoning, and gave realistic revised timelines. I asked my manager to help reprioritise the demo with the product team if needed. Result: The security patch was applied within two hours, the client bug fix was handled next and resolved before end of day, and the demo was rescheduled by 24 hours with no objection from the product team once they understood the context.",
+    "keyPoints": [
+      "Evaluate tasks by business impact and risk of delay, not just by who asked first.",
+      "Communicate proactively to every affected stakeholder rather than going silent.",
+      "Involve your manager when decisions exceed your authority, such as rescheduling a stakeholder demo."
+    ],
+    "whatToAvoid": "Avoid trying to multitask across all items simultaneously, as context switching at this level reduces quality on everything and typically causes you to miss all the deadlines."
+  },
+  {
+    "id": "scenario-29",
+    "number": 29,
+    "question": "A colleague is resistant to a new system or process. How would you support them through the transition?",
+    "summary": "Your team has adopted a new tool or workflow, but one colleague is reluctant to change and is slowing down adoption. You need to bring them on board without creating resentment.",
+    "difficulty": "Easy",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: After our team migrated from a manual deployment process to a CI/CD pipeline, one experienced engineer continued using the old manual steps, arguing the new process was unreliable. Task: I needed to understand their specific concerns and help them gain confidence in the new system without dismissing their experience. Action: I had a one-on-one conversation and listened to their concerns carefully, which revealed a genuine gap in the pipeline's error messaging that was making failures hard to diagnose. I acknowledged this was a valid concern, helped them add better logging to address it, and offered to pair with them on the first few deployments until they felt comfortable. Result: Once the error visibility issue was fixed, their resistance dropped significantly. They became a contributor to improving the pipeline further and eventually helped onboard two other team members.",
+    "keyPoints": [
+      "Listen to understand the specific objection rather than assuming the resistance is irrational.",
+      "Involve the resistant person in improving the system, as ownership reduces resistance.",
+      "Offer structured support such as pairing sessions rather than expecting them to adapt alone."
+    ],
+    "whatToAvoid": "Avoid dismissing their concerns or applying social pressure, as this entrenches resistance and can cause a capable colleague to disengage from the team entirely."
+  },
+  {
+    "id": "scenario-30",
+    "number": 30,
+    "question": "You discover a mistake you made that could impact a client or the business. What do you do next?",
+    "summary": "You find an error in work you have already delivered, and it has the potential to cause a problem for a client or create a business risk. Your next steps define your character under pressure.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: I discovered that a data migration script I had written and run two days earlier had incorrectly formatted a small subset of customer records, which could affect billing calculations. Task: I needed to assess the scope of the impact, inform the right people quickly, and fix the data before it caused downstream harm. Action: I immediately ran a query to determine how many records were affected and documented the scope clearly. I notified my manager and the data team within the hour, presenting the problem alongside a proposed fix and an estimated remediation time. I did not wait until I had a complete solution before raising the issue. I then corrected the affected records, added validation checks to the script, and wrote a post-incident summary. Result: The fix was deployed before any billing runs were affected. My manager noted that the transparent and fast escalation was the right call, and the validation checks I added prevented a similar error from occurring in a subsequent migration.",
+    "keyPoints": [
+      "Own the mistake immediately rather than hoping it goes unnoticed.",
+      "Raise the issue with relevant stakeholders before you have the complete solution.",
+      "Include a root cause and prevention measure in your communication, not just the fix."
+    ],
+    "whatToAvoid": "Avoid delaying disclosure while you attempt to quietly fix the issue, as the window for mitigation narrows quickly and the cover-up damages trust far more than the original mistake."
+  },
+  {
+    "id": "scenario-31",
+    "number": 31,
+    "question": "A client requests something that goes beyond company policy. How would you respond?",
+    "summary": "A client is pushing for something your company's policy does not allow, and you need to decline professionally while preserving the relationship.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: A client asked us to share raw usage data about their employees in a format that our data privacy policy and the relevant regulations did not permit. Task: I needed to decline the request without making the client feel dismissed or penalised for asking. Action: I acknowledged the client's underlying need, which was to understand how their team was using the product. I explained clearly and without jargon why the specific format they requested was not something we could provide, citing privacy compliance as the reason. I then offered two alternative reporting options that met their analytical goals within policy boundaries and scheduled a short call to walk them through these options. Result: The client accepted one of the alternative formats, which actually provided better insight than what they had originally requested. They expressed appreciation for being given workable alternatives rather than a flat refusal.",
+    "keyPoints": [
+      "Acknowledge the client's underlying need before explaining the constraint.",
+      "Explain the reason for the policy boundary clearly and without being dismissive.",
+      "Always offer an alternative where possible rather than delivering a bare no."
+    ],
+    "whatToAvoid": "Avoid making exceptions to policy under client pressure, as this creates legal and ethical risk, sets an unsustainable precedent, and ultimately exposes the client to risk as well."
+  },
+  {
+    "id": "scenario-32",
+    "number": 32,
+    "question": "You're working with another department that is slow to respond, delaying your project. How do you handle this?",
+    "summary": "A cross-functional dependency is stalling your timeline because another team is unresponsive. You need to unblock progress without damaging the inter-team relationship.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: I was leading a feature integration that required input from the legal team to approve the consent copy, but they had not responded to two emails over ten days and our release window was closing. Task: I needed to accelerate their response without creating friction between departments. Action: I first tried to understand the delay by reaching out to a contact I had in that department informally, which revealed they were under a competing deadline. I then re-sent the request with a short summary of the business impact and a specific decision deadline, and copied both our manager and their team lead to ensure visibility. I also prepared a temporary placeholder copy so development could continue in parallel while we awaited approval. Result: The legal team responded within 24 hours once the request had management visibility and a clear deadline. The placeholder approach meant we lost no development time, and the final copy was approved and integrated before the release.",
+    "keyPoints": [
+      "Investigate the reason for the delay before escalating, as context changes your approach.",
+      "Make the business impact and deadline explicit when following up formally.",
+      "Prepare a parallel workaround where possible so your team does not lose momentum."
+    ],
+    "whatToAvoid": "Avoid sending passive-aggressive follow-up messages or escalating aggressively without first trying to understand the other team's constraints, as this damages relationships that you will need long-term."
+  },
+  {
+    "id": "scenario-33",
+    "number": 33,
+    "question": "During a meeting, a team member dominates the discussion, preventing others from contributing. What would you do?",
+    "summary": "One voice is crowding out the rest of the team in a collaborative meeting, and valuable perspectives are being lost. You need to rebalance the discussion constructively.",
+    "difficulty": "Easy",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: During a design review meeting, one senior engineer dominated the entire session with their preferred solution, and two junior engineers who had done significant research on the problem had not been able to contribute. Task: As the meeting facilitator, I needed to create space for broader input without embarrassing the senior engineer or making the meeting adversarial. Action: At a natural pause, I thanked the senior engineer for the thorough walkthrough and then explicitly invited the others by name: 'Sam and Priya, you both researched the alternatives last week — what's your read on this approach?' I also introduced a quick round-robin at the end to ensure everyone had a final chance to raise concerns. Result: Both junior engineers shared perspectives that modified the final decision in meaningful ways. After the meeting, the senior engineer privately acknowledged they had been unaware of how much space they were taking and said they found the structured round-robin useful.",
+    "keyPoints": [
+      "Intervene at a natural pause rather than interrupting, which feels less confrontational.",
+      "Invite quieter participants by name with a specific, targeted question rather than a general open invitation.",
+      "Use a structured technique like a round-robin to ensure everyone has a formal opportunity to contribute."
+    ],
+    "whatToAvoid": "Avoid publicly calling out or criticising the dominant speaker, as this creates defensiveness and derails the meeting from its actual purpose."
+  },
+  {
+    "id": "scenario-34",
+    "number": 34,
+    "question": "You're given two conflicting instructions by different senior managers. How would you decide what to do?",
+    "summary": "Two people with authority over you have given you contradictory direction. Acting on one will conflict with the other, and you cannot satisfy both without clarity.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: My direct manager asked me to prioritise a customer-facing bug fix for the sprint, while the CTO asked me directly during a hallway conversation to focus on a performance improvement initiative instead. Task: I needed to resolve the conflict without appearing to ignore either manager or making a unilateral decision that could backfire. Action: I went back to my direct manager that same day, explained the situation transparently, and shared both instructions. I asked them to align with the CTO directly on priority so there was a clear, agreed direction. While they had that conversation, I spent the morning on tasks that were unambiguously in scope for both requests. Result: My manager and the CTO agreed within the hour that the bug fix was the correct priority for the sprint cycle. Having raised it quickly meant no time was wasted, and both managers appreciated that I surfaced the conflict rather than guessing.",
+    "keyPoints": [
+      "Do not attempt to resolve competing senior instructions unilaterally — surface the conflict immediately.",
+      "Bring the situation to your direct manager first, as they are responsible for your day-to-day priorities.",
+      "Continue productive work on unambiguous tasks while the conflict is being resolved above you."
+    ],
+    "whatToAvoid": "Avoid simply following the most recent instruction or the instruction from the more senior person without flagging the conflict, as this can damage your relationship with the other manager and misalign team priorities."
+  },
+  {
+    "id": "scenario-35",
+    "number": 35,
+    "question": "Your team misses a KPI or performance target. What steps would you take to improve future results?",
+    "summary": "The team has failed to meet a key performance metric this quarter. You need to diagnose the root cause and drive a credible improvement plan.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: Our team missed a target response time SLA for the second consecutive month, which was being tracked at executive level. Task: I needed to lead a structured diagnosis and present an improvement plan, not just a list of excuses. Action: I facilitated a retrospective focused on the data — specifically which request types were breaching the SLA and at what times of day. This revealed that the breaches were concentrated on a single slow query path that accounted for 80% of the violations. I created a prioritised action plan: optimise the query in the next sprint, add alerting to catch future regressions early, and review the SLA threshold itself to ensure it was calibrated to realistic system behaviour. I presented the findings and plan to the leadership team with an expected improvement timeline. Result: The optimisation reduced that query's response time by 65%, and we met the SLA target the following month. The alerting system also caught a different regression two sprints later before it became a miss.",
+    "keyPoints": [
+      "Use data to identify the specific root cause rather than making general statements about the team working harder.",
+      "Present a concrete, prioritised action plan alongside the diagnosis.",
+      "Add monitoring so future regressions are caught before they become misses."
+    ],
+    "whatToAvoid": "Avoid attributing the miss to external factors or team effort issues without evidence, as leadership needs a credible technical explanation and a clear path to improvement, not reassurances."
+  },
+  {
+    "id": "scenario-36",
+    "number": 36,
+    "question": "A junior colleague asks for help repeatedly and it's affecting your productivity. How would you manage the situation?",
+    "summary": "A newer team member is frequently interrupting your focus with questions, many of which they could resolve independently. You need to support their growth without sacrificing your own output.",
+    "difficulty": "Easy",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: A junior colleague was asking me around six to eight questions a day, many of them on topics covered in our internal documentation, and my deep work time had dropped noticeably over two weeks. Task: I needed to address this in a way that still supported their development while protecting the focused time I needed for complex tasks. Action: I had an honest but kind conversation with them, first acknowledging that asking questions was absolutely the right behaviour, then suggesting a more structured approach. We agreed on a daily 20-minute check-in slot where they could batch their questions, and I pointed them to the specific documentation sections most relevant to their current work. I also gave them a simple debugging framework to follow before escalating a question to me. Result: Ad-hoc interruptions dropped significantly within the first week. The batched check-in was actually more effective for them because they had time to think through their questions properly first. By the following month they were resolving most issues independently.",
+    "keyPoints": [
+      "Address the pattern, not individual questions — one conversation is far less disruptive than ongoing friction.",
+      "Suggest a structured alternative such as batched check-in slots rather than simply saying no to questions.",
+      "Give the junior colleague a self-resolution framework so they build independence rather than just being redirected."
+    ],
+    "whatToAvoid": "Avoid becoming visibly impatient or dismissive when they ask questions, as this discourages a learning culture and can cause junior team members to disengage or make expensive mistakes in silence."
+  },
+  {
+    "id": "scenario-37",
+    "number": 37,
+    "question": "You witness behaviour that doesn't align with company values or ethics. What's your next step?",
+    "summary": "You observe something at work — such as dishonest reporting, exclusionary behaviour, or a safety violation — that conflicts with stated company values. You must decide how to respond responsibly.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: I observed a colleague presenting inflated performance numbers in a client report, attributing results to our team's work that had clearly been driven by the client's own marketing campaign. Task: I needed to decide how to act in a way that was honest, fair, and professionally appropriate without overstepping. Action: I first spoke to the colleague directly and privately, raising what I had noticed calmly and asking if there was context I was missing. They became defensive and dismissed my concern. I then escalated to my direct manager, documenting what I had seen and when. I focused on the factual discrepancy rather than making character judgements. Result: My manager reviewed the report and confirmed the inaccuracy. The report was corrected before it was sent to the client. No formal disciplinary action was taken but the colleague was spoken to by the manager. I was told my approach had been exactly right — direct first, then escalate.",
+    "keyPoints": [
+      "Address the person directly first where it is safe to do so, giving them the opportunity to explain or correct themselves.",
+      "Document what you observed factually before escalating, focusing on the behaviour rather than personal character.",
+      "Escalate through the appropriate channel — manager, HR, or an ethics reporting mechanism — if the direct approach fails."
+    ],
+    "whatToAvoid": "Avoid ignoring the behaviour because it feels uncomfortable to speak up, as silence makes you complicit and allows the problem to grow into something more serious."
+  },
+  {
+    "id": "scenario-38",
+    "number": 38,
+    "question": "You have to deliver difficult feedback to a colleague or team member. How would you approach it?",
+    "summary": "You need to tell someone something they may not want to hear about their work or behaviour. Done well, this conversation can strengthen a relationship; done poorly, it can damage it permanently.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: A colleague I worked closely with had been consistently interrupting people in technical discussions, which was stifling the team's ability to contribute ideas. Task: I needed to raise this with them in a way that was honest enough to create change but caring enough to preserve our good working relationship. Action: I asked for a private conversation and opened by affirming what I genuinely valued about working with them. I then described the specific behaviours I had observed — not a character assessment — and explained the impact on the team. I asked for their perspective before assuming I had the full picture. I ended by expressing that I was raising it because I respected them and wanted the team environment to be at its best. Result: The colleague was initially surprised but thanked me for being direct. They acknowledged the pattern and said they had not realised the impact. Over the following weeks their listening behaviour improved noticeably, and the team began contributing more freely in discussions.",
+    "keyPoints": [
+      "Be specific about the behaviour and its impact rather than making general character observations.",
+      "Create a two-way conversation — ask for their perspective rather than delivering a verdict.",
+      "Choose a private setting and a calm moment, not directly after an incident when emotions are high."
+    ],
+    "whatToAvoid": "Avoid the temptation to soften the message so much that the key point gets lost, as unclear feedback does not give the person a fair chance to understand and improve."
+  },
+  {
+    "id": "scenario-39",
+    "number": 39,
+    "question": "A long-term customer is unhappy with a recent experience. How would you repair the relationship?",
+    "summary": "A valued client has expressed significant dissatisfaction after a recent interaction or deliverable. You need to acknowledge the failure, address the immediate concern, and rebuild trust over the long term.",
+    "difficulty": "Medium",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: A client we had worked with for three years escalated their dissatisfaction after a product update changed a workflow they relied on heavily, without any advance notice from our team. Task: I was responsible for managing the relationship and needed to address both the immediate disruption and the underlying trust damage. Action: I called the client within the hour of receiving their complaint rather than responding by email. I opened by taking clear ownership: 'We should have communicated this change to you in advance, and we didn't — I'm sorry for the disruption this caused.' I then walked them through a short-term workaround to restore their workflow immediately and committed to a follow-up call with our product team to discuss how we handle change communication for their account going forward. Result: The client acknowledged the apology and responded positively to the direct phone call. The workaround was in place within the day. We implemented a change notification process for key clients that quarter, and the client renewed their contract the following cycle with an expanded scope.",
+    "keyPoints": [
+      "Act quickly — the speed of your response signals how seriously you take the relationship.",
+      "Take ownership without deflecting to process or other teams, even if others contributed to the problem.",
+      "Provide both an immediate fix and a structural change to prevent recurrence."
+    ],
+    "whatToAvoid": "Avoid responding defensively or explaining why the change was made before acknowledging the customer's experience, as this signals that you value the decision over the relationship."
+  },
+  {
+    "id": "scenario-40",
+    "number": 40,
+    "question": "You're asked to present something last minute and you're unprepared. What do you do?",
+    "summary": "You are unexpectedly called upon to present or speak on a topic with little or no preparation time. How you handle this reveals your composure, honesty, and ability to add value under pressure.",
+    "difficulty": "Easy",
+    "companies": ["General"],
+    "roles": ["All"],
+    "type": "behavioral",
+    "topic": "Behavioral",
+    "language": "Language Agnostic",
+    "answer": "Situation: Ten minutes before an executive review, I was asked to step in and present an analysis of a recent service outage because the engineer who had prepared it was unexpectedly unavailable. Task: I needed to present something credible and useful to a senior audience with minimal preparation time. Action: I quickly reviewed the incident report and timeline that had been drafted, identified the three most important points — what happened, what the immediate fix was, and what the long-term prevention plan was — and structured my delivery around those. I was upfront at the start: 'I'm stepping in for James at short notice, so I'll walk you through the key findings and flag anything I'd need to confirm before committing to the details.' I delivered a clear summary and confidently flagged two data points I was not certain of rather than guessing. Result: The executives appreciated the clarity and honesty. One commented that it was a well-structured summary given the circumstances. I followed up later that day with a written note confirming the two flagged points.",
+    "keyPoints": [
+      "Identify the two or three most important points and structure your delivery around those only.",
+      "Be transparent about your preparation level upfront — audiences respect honesty over false confidence.",
+      "Commit to a follow-up for anything you are not certain of rather than guessing under pressure."
+    ],
+    "whatToAvoid": "Avoid trying to bluff your way through details you are uncertain about, as a wrong statement to a senior audience creates a far worse impression than a transparent knowledge gap."
   }
 ]
