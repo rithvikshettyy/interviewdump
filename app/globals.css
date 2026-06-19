@@ -112,3 +112,10 @@
   outline: 2px solid var(--indigo) !important;
   outline-offset: 2px !important;
 }
+
+/* Flashcard 3D flip */
+.card-flip-container { perspective: 1000px; }
+.card-flip-inner { transform-style: preserve-3d; transition: transform 0.5s ease; position: relative; }
+.card-flip-inner.flipped { transform: rotateY(180deg); }
+.card-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.card-back { transform: rotateY(180deg); }

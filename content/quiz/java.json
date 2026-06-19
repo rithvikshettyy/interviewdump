@@ -1,0 +1,152 @@
+[
+  {
+    "id": "java-quiz-1",
+    "concept": "equals vs ==",
+    "difficulty": "Easy",
+    "question": "What does the following code print?\n\nString a = new String(\"hello\");\nString b = new String(\"hello\");\nSystem.out.println(a == b);\nSystem.out.println(a.equals(b));",
+    "options": ["true\ntrue", "false\ntrue", "true\nfalse", "false\nfalse"],
+    "correctIndex": 1,
+    "explanation": "`==` on objects checks reference equality — whether both variables point to the same object in heap memory. Since `new String()` creates two distinct objects, `a == b` is false. `equals()` on String is overridden to check character-by-character value equality, so `a.equals(b)` is true.",
+    "trick": "Always use .equals() to compare String values. Use == only for primitives or intentional identity checks (like enum comparison)."
+  },
+  {
+    "id": "java-quiz-2",
+    "concept": "Static",
+    "difficulty": "Easy",
+    "question": "What is true about a `static` method in Java?",
+    "options": ["It can access instance variables directly", "It belongs to the class, not to any instance", "It cannot be overridden", "It is automatically synchronized"],
+    "correctIndex": 1,
+    "explanation": "A `static` method belongs to the Class itself, not to any particular object instance. It can be called without creating an object: `ClassName.method()`. Because of this, static methods cannot access non-static (instance) fields or methods directly — there's no `this` reference.",
+    "trick": "static = class-level. No `this`, no instance variables. Think: Math.sqrt(), Collections.sort() — utility methods that don't need object state."
+  },
+  {
+    "id": "java-quiz-3",
+    "concept": "Autoboxing",
+    "difficulty": "Medium",
+    "question": "What does the following code print?\n\nInteger a = 127;\nInteger b = 127;\nInteger c = 128;\nInteger d = 128;\nSystem.out.println(a == b);\nSystem.out.println(c == d);",
+    "options": ["true\ntrue", "false\nfalse", "true\nfalse", "false\ntrue"],
+    "correctIndex": 2,
+    "explanation": "Java caches Integer objects for values from -128 to 127. When you autobox 127, both `a` and `b` get the same cached object — so `a == b` is true. Values outside this range (like 128) create new objects each time, so `c == d` is false even though the values are equal.",
+    "trick": "Integer caches -128 to 127. Always use .equals() for Integer comparison. This is a famous Java interview trap."
+  },
+  {
+    "id": "java-quiz-4",
+    "concept": "Interface vs Abstract",
+    "difficulty": "Medium",
+    "question": "When should you use an abstract class over an interface in Java?",
+    "options": ["When you need multiple inheritance", "When you want to share state (fields) or provide partial implementation", "When all methods need to be public", "When you want to use generics"],
+    "correctIndex": 1,
+    "explanation": "Use abstract classes when: (1) you want to share code/implementation among related classes, (2) you need non-public methods, (3) you need instance variables (interfaces can only have static final fields). Use interfaces for defining a contract that unrelated classes can implement and when you need multiple inheritance of type.",
+    "trick": "Abstract class = IS-A with shared code and state. Interface = CAN-DO capability contract. Java 8+ interfaces can have default methods, blurring the line slightly."
+  },
+  {
+    "id": "java-quiz-5",
+    "concept": "Final",
+    "difficulty": "Easy",
+    "question": "What does the `final` keyword mean when applied to a variable in Java?",
+    "options": ["The variable is thread-safe", "The variable cannot be reassigned after initial assignment", "The variable is stored in the stack, not the heap", "The variable is automatically garbage collected"],
+    "correctIndex": 1,
+    "explanation": "A `final` variable can only be assigned once. For primitives, this means the value cannot change. For objects, `final` means the reference cannot be reassigned (cannot point to a different object), but the object's internal state can still be mutated. `final` on a method means it cannot be overridden. `final` on a class means it cannot be subclassed.",
+    "trick": "final variable = constant reference, not necessarily immutable content. `final List<String> list = new ArrayList<>()` — you can still add to the list."
+  },
+  {
+    "id": "java-quiz-6",
+    "concept": "Try-with-resources",
+    "difficulty": "Medium",
+    "question": "What is the main benefit of try-with-resources in Java?",
+    "options": ["It makes exceptions silent", "It automatically closes resources that implement AutoCloseable", "It converts checked exceptions to unchecked", "It allows multiple catch blocks"],
+    "correctIndex": 1,
+    "explanation": "Try-with-resources (introduced in Java 7) automatically calls `close()` on any resource that implements `AutoCloseable` (like streams, connections) at the end of the try block — whether or not an exception occurred. This eliminates the need for verbose try/finally boilerplate and prevents resource leaks.",
+    "trick": "try (Resource r = new Resource()) {} → r.close() is called automatically. Works for anything implementing AutoCloseable."
+  },
+  {
+    "id": "java-quiz-7",
+    "concept": "JVM Memory",
+    "difficulty": "Hard",
+    "question": "Where are local variables stored in Java's memory model?",
+    "options": ["Heap", "Stack", "Method Area", "Native Method Stack"],
+    "correctIndex": 1,
+    "explanation": "Local variables (primitive values and object references) are stored on the Stack. Each thread has its own stack. When a method is called, a stack frame is created for its local variables. The actual objects that references point to live on the Heap. The Method Area (Metaspace in Java 8+) stores class metadata, static variables, and bytecode.",
+    "trick": "Stack: local vars, method frames (one per thread). Heap: all objects (shared). Method Area/Metaspace: class definitions, static vars. GC operates on the Heap."
+  },
+  {
+    "id": "java-quiz-8",
+    "concept": "Generics",
+    "difficulty": "Hard",
+    "question": "What is 'type erasure' in Java generics?",
+    "options": ["The compiler deletes unused generic classes", "Generic type parameters are removed at compile time and replaced with Object or bounds", "Generics cannot be used with primitive types", "Type erasure causes ClassCastException at runtime"],
+    "correctIndex": 1,
+    "explanation": "Java implements generics through type erasure: at compile time, generic type parameters (like <T>) are removed and replaced with `Object` (or the upper bound if specified). This preserves backward compatibility with pre-generics Java bytecode. Consequence: you cannot create `new T[]`, cannot use instanceof with generic types, and generics don't exist at runtime.",
+    "trick": "Generics are compile-time only in Java. At runtime, `List<String>` and `List<Integer>` are both just `List`. This is why you can't do `new T()` or `instanceof List<String>`."
+  },
+  {
+    "id": "java-quiz-9",
+    "concept": "StringBuilder",
+    "difficulty": "Easy",
+    "question": "Why is StringBuilder preferred over String concatenation in a loop?",
+    "options": ["StringBuilder is thread-safe; String is not", "String concatenation in a loop creates a new String object each iteration (O(n²)); StringBuilder mutates in place (O(n))", "StringBuilder uses less memory in all cases", "String cannot be concatenated inside loops"],
+    "correctIndex": 1,
+    "explanation": "Java Strings are immutable. In a loop, `str += value` creates a new String object every iteration, copying all previous content each time — O(n²) total. StringBuilder maintains a mutable character buffer and amortizes resizing, giving O(n) total for n appends. Always use StringBuilder for building strings in loops.",
+    "trick": "String concat in loop = O(n²). StringBuilder append in loop = O(n). StringBuffer is like StringBuilder but thread-safe (and slower)."
+  },
+  {
+    "id": "java-quiz-10",
+    "concept": "Checked vs Unchecked",
+    "difficulty": "Medium",
+    "question": "What is the difference between checked and unchecked exceptions in Java?",
+    "options": ["Checked exceptions are faster; unchecked are slower", "Checked exceptions must be declared or caught; unchecked exceptions (RuntimeException subclasses) do not", "Unchecked exceptions cannot be caught with try-catch", "Checked exceptions only occur at compile time"],
+    "correctIndex": 1,
+    "explanation": "Checked exceptions (subclasses of Exception but not RuntimeException) represent recoverable conditions the caller should handle — the compiler forces you to either catch them or declare them with `throws`. Unchecked exceptions (RuntimeException subclasses like NullPointerException, ArrayIndexOutOfBoundsException) represent programming errors and don't need explicit handling.",
+    "trick": "Checked = 'checked' by compiler, must handle (IOException, SQLException). Unchecked = RuntimeException, compiler doesn't force handling (NPE, ClassCastException)."
+  },
+  {
+    "id": "java-quiz-11",
+    "concept": "HashMap",
+    "difficulty": "Medium",
+    "question": "What happens in Java's HashMap when two keys have the same hashCode()?",
+    "options": ["An exception is thrown", "The second key-value pair overwrites the first", "The collision is handled using chaining (linked list / tree in bucket)", "The HashMap doubles in size automatically"],
+    "correctIndex": 2,
+    "explanation": "HashMap handles hash collisions using separate chaining: multiple entries with the same hash are stored in a linked list at that bucket index. In Java 8+, when a bucket's linked list exceeds 8 entries, it's converted to a balanced tree (TreeMap) for O(log n) worst-case bucket traversal instead of O(n).",
+    "trick": "HashMap collision → chaining (linked list → tree in Java 8+). This is why HashMap is O(1) average but O(n) worst case when many collisions occur."
+  },
+  {
+    "id": "java-quiz-12",
+    "concept": "Streams",
+    "difficulty": "Medium",
+    "question": "What is the output of:\n\nList<Integer> nums = List.of(1, 2, 3, 4, 5);\nint sum = nums.stream().filter(n -> n % 2 == 0).mapToInt(Integer::intValue).sum();\nSystem.out.println(sum);",
+    "options": ["15", "6", "9", "10"],
+    "correctIndex": 1,
+    "explanation": "The stream pipeline: filter(n % 2 == 0) keeps even numbers [2, 4]. mapToInt converts to IntStream. sum() returns 2 + 4 = 6. Java Streams are lazy — filter and map operations only run when a terminal operation (sum, collect, forEach) is invoked.",
+    "trick": "Streams are lazy. Intermediate ops (filter, map, sorted) do nothing until a terminal op (sum, collect, forEach, findFirst) triggers execution."
+  },
+  {
+    "id": "java-quiz-13",
+    "concept": "Immutability",
+    "difficulty": "Easy",
+    "question": "Which of the following makes a class effectively immutable in Java?",
+    "options": ["Declare all methods as static", "Make the class final, all fields private and final, and provide no setters", "Use the volatile keyword on all fields", "Extend the Immutable abstract class"],
+    "correctIndex": 1,
+    "explanation": "To create an immutable class: (1) declare the class `final` so it can't be subclassed, (2) make all fields `private final`, (3) initialize all fields in the constructor, (4) provide no setter methods, (5) for mutable field types (arrays, lists), return defensive copies in getters. String and LocalDate are examples of immutable Java classes.",
+    "trick": "Immutable class: final class + private final fields + no setters + defensive copies of mutable fields. Benefits: thread-safe, safe to cache, no defensive copying needed by callers."
+  },
+  {
+    "id": "java-quiz-14",
+    "concept": "Polymorphism",
+    "difficulty": "Medium",
+    "question": "What concept explains why calling `animal.sound()` on a variable of type Animal calls the Dog's `sound()` method when the actual object is a Dog?",
+    "options": ["Method overloading", "Dynamic dispatch (runtime polymorphism)", "Static binding", "Encapsulation"],
+    "correctIndex": 1,
+    "explanation": "Dynamic dispatch (runtime polymorphism) means the JVM determines at runtime which method implementation to call based on the actual type of the object, not the declared type of the reference variable. This is how overriding works: `Animal a = new Dog(); a.sound();` calls Dog's sound() because `a` actually holds a Dog object.",
+    "trick": "Overriding = runtime decision (dynamic dispatch). Overloading = compile-time decision (static binding). The 'which method?' question: overriding answers at runtime, overloading at compile time."
+  },
+  {
+    "id": "java-quiz-15",
+    "concept": "Optional",
+    "difficulty": "Medium",
+    "question": "What is the primary purpose of Java's Optional<T>?",
+    "options": ["To make a method return type faster by skipping null checks", "To explicitly model the possibility of a missing value and avoid NullPointerException", "To make fields thread-safe", "To enable lazy initialization of objects"],
+    "correctIndex": 1,
+    "explanation": "Optional<T> is a container that may or may not hold a non-null value. It forces the caller to explicitly handle the 'value might be absent' case using methods like `isPresent()`, `orElse()`, `orElseThrow()`, `ifPresent()`, instead of returning null and risking NPE. It makes the API's intent explicit.",
+    "trick": "Optional = a box that may be empty. Use orElse(), orElseThrow(), or ifPresent() instead of get(). Avoid Optional<T> as a field type or parameter — use it for return types."
+  }
+]

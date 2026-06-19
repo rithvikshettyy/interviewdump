@@ -1,0 +1,152 @@
+[
+  {
+    "id": "sql-quiz-1",
+    "concept": "JOIN Types",
+    "difficulty": "Easy",
+    "question": "Which JOIN returns ALL rows from the left table and matching rows from the right table (NULL if no match)?",
+    "options": ["INNER JOIN", "LEFT JOIN (LEFT OUTER JOIN)", "RIGHT JOIN", "CROSS JOIN"],
+    "correctIndex": 1,
+    "explanation": "LEFT JOIN returns all rows from the left table. For rows with a matching row in the right table, the right table's columns are filled in. For rows with no match in the right table, the right table columns are filled with NULL. Use LEFT JOIN when you want all left-side records regardless of whether there's a right-side match.",
+    "trick": "INNER = matching rows only. LEFT = all left rows + matching right. RIGHT = all right rows + matching left. FULL = all rows from both. CROSS = every combination."
+  },
+  {
+    "id": "sql-quiz-2",
+    "concept": "NULL Handling",
+    "difficulty": "Medium",
+    "question": "What does the query `SELECT * FROM users WHERE name != 'Alice'` return when some rows have name = NULL?",
+    "options": ["Rows where name is NULL are included", "Rows where name is NULL are excluded", "It throws an error for NULL values", "NULL rows are returned as 'unknown'"],
+    "correctIndex": 1,
+    "explanation": "In SQL, any comparison with NULL using = or != produces NULL (unknown), not TRUE or FALSE. NULL != 'Alice' evaluates to NULL, which is not TRUE, so those rows are filtered out. To include NULLs, you must explicitly add `OR name IS NULL`.",
+    "trick": "NULL is contagious in comparisons — anything = NULL or != NULL is NULL (not true/false). Always use IS NULL / IS NOT NULL to test for NULL values."
+  },
+  {
+    "id": "sql-quiz-3",
+    "concept": "GROUP BY vs HAVING",
+    "difficulty": "Medium",
+    "question": "What is the difference between WHERE and HAVING in SQL?",
+    "options": ["WHERE is faster; HAVING is more accurate", "WHERE filters rows BEFORE grouping; HAVING filters groups AFTER aggregation", "HAVING can only be used with COUNT(); WHERE works with all functions", "They are interchangeable"],
+    "correctIndex": 1,
+    "explanation": "WHERE filters individual rows before GROUP BY creates groups. HAVING filters the resulting groups after aggregation. Example: `SELECT dept, COUNT(*) FROM employees WHERE salary > 50000 GROUP BY dept HAVING COUNT(*) > 5` — WHERE removes low-salary employees first, then HAVING keeps only departments with more than 5 remaining employees.",
+    "trick": "WHERE = row-level filter (before grouping). HAVING = group-level filter (after aggregation). You can't use aggregate functions in WHERE."
+  },
+  {
+    "id": "sql-quiz-4",
+    "concept": "Window Functions",
+    "difficulty": "Hard",
+    "question": "What does the `ROW_NUMBER() OVER (PARTITION BY dept ORDER BY salary DESC)` expression do?",
+    "options": ["Deletes duplicate rows within each department", "Assigns a sequential rank number to each row within each department, ordered by salary descending", "Returns the total row count per department", "Calculates the running sum of salaries per department"],
+    "correctIndex": 1,
+    "explanation": "ROW_NUMBER() assigns a unique sequential integer starting from 1 to each row within a partition (group). PARTITION BY dept resets the counter for each department. ORDER BY salary DESC means the highest-paid employee gets rank 1. Window functions don't collapse rows like GROUP BY — each row keeps its original data plus the computed window value.",
+    "trick": "Window functions (ROW_NUMBER, RANK, LEAD, LAG, SUM OVER) compute across rows WITHOUT collapsing them. Key clause: OVER (PARTITION BY ... ORDER BY ...)."
+  },
+  {
+    "id": "sql-quiz-5",
+    "concept": "Query Execution Order",
+    "difficulty": "Hard",
+    "question": "In what order does SQL actually execute the clauses of a SELECT query?",
+    "options": ["SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY", "FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY", "WHERE → FROM → SELECT → GROUP BY → ORDER BY → HAVING", "FROM → SELECT → WHERE → HAVING → GROUP BY → ORDER BY"],
+    "correctIndex": 1,
+    "explanation": "SQL's logical execution order is: FROM (identify tables), JOIN (combine tables), WHERE (filter rows), GROUP BY (create groups), HAVING (filter groups), SELECT (compute output columns), DISTINCT, ORDER BY, LIMIT. This is why you can't use a SELECT alias in a WHERE clause — the alias doesn't exist yet when WHERE is evaluated.",
+    "trick": "Remember: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY. This explains why aliases defined in SELECT can't be used in WHERE but can be used in ORDER BY."
+  },
+  {
+    "id": "sql-quiz-6",
+    "concept": "Indexes",
+    "difficulty": "Medium",
+    "question": "When does adding an index SLOW DOWN database operations?",
+    "options": ["On SELECT queries with WHERE clauses", "On INSERT, UPDATE, and DELETE operations", "When the table has fewer than 100 rows", "When the indexed column has many NULL values"],
+    "correctIndex": 1,
+    "explanation": "Indexes speed up reads (SELECT) but slow down writes (INSERT, UPDATE, DELETE) because the database must update the index data structure whenever the underlying data changes. For write-heavy tables with many indexes, write performance can degrade significantly. Index selection is always a read vs write trade-off.",
+    "trick": "Indexes = faster reads, slower writes. Don't over-index write-heavy tables. Index columns used in WHERE, JOIN ON, and ORDER BY clauses."
+  },
+  {
+    "id": "sql-quiz-7",
+    "concept": "ACID",
+    "difficulty": "Medium",
+    "question": "What does the 'Isolation' in ACID transactions guarantee?",
+    "options": ["Data is always accurate and consistent", "Committed transactions are never lost", "Concurrent transactions appear to execute sequentially, not interfering with each other", "Operations within a transaction all succeed or all fail"],
+    "correctIndex": 2,
+    "explanation": "Isolation ensures that the intermediate state of a transaction is invisible to other concurrent transactions. Different isolation levels (READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE) offer different trade-offs between consistency and concurrency. Without isolation, problems like dirty reads, non-repeatable reads, and phantom reads can occur.",
+    "trick": "ACID: Atomicity (all or nothing), Consistency (valid state to valid state), Isolation (concurrent = sequential appearance), Durability (committed = permanent). Isolation is most complex — learn the isolation levels."
+  },
+  {
+    "id": "sql-quiz-8",
+    "concept": "Subquery vs CTE",
+    "difficulty": "Medium",
+    "question": "What is the primary advantage of a Common Table Expression (CTE) over a subquery?",
+    "options": ["CTEs always execute faster than subqueries", "CTEs can be referenced multiple times in the query and improve readability", "CTEs support UPDATE and DELETE; subqueries do not", "CTEs are the only way to do recursive queries in all databases"],
+    "correctIndex": 1,
+    "explanation": "A CTE (defined with WITH clause) is named and can be referenced multiple times in the query, avoiding code repetition. They also make complex queries more readable by breaking them into named steps. Subqueries must be repeated each time if needed. Recursive CTEs are the standard way to handle hierarchical/tree data, though some databases also support recursive subqueries.",
+    "trick": "CTE (`WITH name AS (...)`) = named, reusable, readable subquery. Use CTEs to break complex queries into readable steps and avoid repeating the same subquery."
+  },
+  {
+    "id": "sql-quiz-9",
+    "concept": "UNION vs UNION ALL",
+    "difficulty": "Easy",
+    "question": "What is the difference between UNION and UNION ALL?",
+    "options": ["UNION combines tables; UNION ALL combines columns", "UNION removes duplicates; UNION ALL keeps all rows including duplicates", "UNION ALL is slower because it checks for duplicates", "They are identical in behavior"],
+    "correctIndex": 1,
+    "explanation": "UNION combines the result sets of two queries and removes duplicate rows (requiring a sort/dedup operation). UNION ALL also combines result sets but keeps ALL rows including duplicates, making it faster. Use UNION ALL when you know there are no duplicates or when you explicitly want them — it avoids the expensive deduplication step.",
+    "trick": "UNION = deduplicated (slower). UNION ALL = all rows including dupes (faster). Always prefer UNION ALL when you're sure there are no duplicates."
+  },
+  {
+    "id": "sql-quiz-10",
+    "concept": "Aggregate Functions",
+    "difficulty": "Easy",
+    "question": "How does COUNT(*) differ from COUNT(column_name)?",
+    "options": ["COUNT(*) is faster; COUNT(column) is more accurate", "COUNT(*) counts all rows including NULLs; COUNT(column) counts only non-NULL values in that column", "COUNT(column) counts all rows; COUNT(*) only counts distinct rows", "They always return the same result"],
+    "correctIndex": 1,
+    "explanation": "COUNT(*) counts every row in the result set, including rows with NULL values. COUNT(column_name) counts only the rows where that specific column is NOT NULL. This difference matters when a column can be NULL — COUNT(*) and COUNT(nullable_column) may return different numbers.",
+    "trick": "COUNT(*) = total rows (including NULLs). COUNT(col) = non-NULL values in col. COUNT(DISTINCT col) = unique non-NULL values."
+  },
+  {
+    "id": "sql-quiz-11",
+    "concept": "Normalization",
+    "difficulty": "Medium",
+    "question": "What does 'First Normal Form' (1NF) require?",
+    "options": ["No duplicate rows and a primary key", "All columns must contain only atomic (indivisible) values — no repeating groups or arrays", "Each non-key column must depend on the ENTIRE primary key", "No transitive dependencies between non-key columns"],
+    "correctIndex": 1,
+    "explanation": "1NF requires: (1) each cell contains only one atomic (single) value — no comma-separated lists or arrays, (2) each column has a unique name, (3) order of rows/columns doesn't matter, and often (4) a primary key is defined. Storing 'Alice,Bob' in a 'members' column violates 1NF.",
+    "trick": "1NF: atomic values, no repeating groups. 2NF: 1NF + no partial dependencies (all cols depend on full PK). 3NF: 2NF + no transitive dependencies."
+  },
+  {
+    "id": "sql-quiz-12",
+    "concept": "Self Join",
+    "difficulty": "Hard",
+    "question": "Which scenario requires a SELF JOIN?",
+    "options": ["Combining two different tables with similar schemas", "Finding employees whose manager is also in the same employees table", "Comparing aggregate values between departments", "Joining a table with a subquery of itself"],
+    "correctIndex": 1,
+    "explanation": "A self join joins a table with itself using aliases. The classic example is an employee table where `manager_id` references `employee_id` in the same table. To get each employee with their manager's name: `SELECT e.name, m.name AS manager FROM employees e JOIN employees m ON e.manager_id = m.id`.",
+    "trick": "Self join = joining a table to itself with two aliases. Use case: hierarchical/tree data stored in a single table (employee-manager, category-parent)."
+  },
+  {
+    "id": "sql-quiz-13",
+    "concept": "Transactions",
+    "difficulty": "Medium",
+    "question": "What happens if a database server crashes AFTER a COMMIT statement completes?",
+    "options": ["The committed data may be lost due to the crash", "The committed data is permanently saved due to Durability", "The transaction is automatically rolled back on restart", "The behavior depends on the programming language used"],
+    "correctIndex": 1,
+    "explanation": "Durability (the 'D' in ACID) guarantees that once a transaction is committed, it remains committed even in the event of a system failure. Databases achieve durability through write-ahead logging (WAL) — the transaction is written to a durable log on disk before being applied to the actual data pages.",
+    "trick": "COMMIT = permanent. Durability is enforced by write-ahead logging (WAL). If you COMMIT and then the server crashes, the data is recovered from the log on restart."
+  },
+  {
+    "id": "sql-quiz-14",
+    "concept": "Primary vs Foreign Key",
+    "difficulty": "Easy",
+    "question": "What does a FOREIGN KEY constraint enforce?",
+    "options": ["The column must have unique values", "Values in this column must exist in the referenced table's primary key column (referential integrity)", "The column cannot contain NULL values", "This column is the fastest to search in the table"],
+    "correctIndex": 1,
+    "explanation": "A FOREIGN KEY constraint enforces referential integrity: values in the foreign key column must match an existing value in the referenced table's primary key (or be NULL if the FK allows NULLs). This prevents orphaned records — you can't insert an `order` with a `customer_id` that doesn't exist in the `customers` table.",
+    "trick": "Primary Key = unique identifier, no NULL. Foreign Key = references another table's PK, enforces referential integrity. Deleting a referenced row fails unless ON DELETE CASCADE or SET NULL is set."
+  },
+  {
+    "id": "sql-quiz-15",
+    "concept": "Query Optimization",
+    "difficulty": "Hard",
+    "question": "Which operation is generally the most expensive in a SQL query?",
+    "options": ["A simple WHERE clause on an indexed column", "A table scan (no index on the filtered column)", "A LIMIT 1 clause", "Selecting a specific column by name"],
+    "correctIndex": 1,
+    "explanation": "A full table scan reads every row in the table to find matches. For large tables this can read millions of rows from disk. An index on the WHERE column allows the database to jump directly to matching rows (B-tree lookup = O(log n)), avoiding the full scan. LIMIT 1 and column selection are cheap operations.",
+    "trick": "Look for full table scans in query plans (EXPLAIN). Adding an index on heavily-filtered or joined columns is the most common query optimization. Watch for non-SARGable conditions that bypass indexes (e.g., WHERE YEAR(date) = 2024 vs WHERE date >= '2024-01-01')."
+  }
+]

@@ -1,10 +1,28 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getStatsByType } from '@/lib/progress'
+import { getStatsByType, getProgressIds } from '@/lib/progress'
+import { computeWeakTopics, type WeakTopic } from '@/lib/insights'
 import PageHeader from '@/components/layout/PageHeader'
 import Link from 'next/link'
-import { Code2, MessageSquare, Monitor, Database, Hash, Zap, type LucideIcon } from 'lucide-react'
+import { Code2, MessageSquare, Monitor, Database, Hash, Zap, AlertTriangle, type LucideIcon } from 'lucide-react'
+
+// Question content for weak-area analysis (imported statically)
+import dsaQuestions from '@/content/dsa/questions.json'
+import sqlQuestions from '@/content/sql/questions.json'
+import scenarioQuestions from '@/content/scenario/questions.json'
+import corecsQuestions from '@/content/corecs/questions.json'
+import backendQuestions from '@/content/questions/backend.json'
+import frontendQuestions from '@/content/questions/frontend.json'
+
+const ALL_QUESTIONS = [
+  ...dsaQuestions,
+  ...sqlQuestions,
+  ...scenarioQuestions,
+  ...corecsQuestions,
+  ...backendQuestions,
+  ...frontendQuestions,
+] as { id: string; topic?: string; type?: string }[]
 
 // Total question counts per category (static)
 const TOTALS: Record<string, { label: string; total: number; href: string; icon: LucideIcon }> = {
@@ -30,15 +48,25 @@ function ProgressBar({ value, max }: { value: number; max: number }) {
 
 export default function DashboardPage() {
   const [stats, setStats] = useState<Record<string, { solved: number; revision: number }>>({})
+  const [weakTopics, setWeakTopics] = useState<WeakTopic[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getStatsByType()
-      .then((data) => {
-        setStats(data)
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false))
+    const load = async () => {
+      const [statsData, dsaSolved, sqlSolved, corecsSolved, interviewSolved, scenarioSolved] = await Promise.all([
+        getStatsByType(),
+        getProgressIds('dsa', 'solved'),
+        getProgressIds('sql', 'solved'),
+        getProgressIds('corecs', 'solved'),
+        getProgressIds('interview', 'solved'),
+        getProgressIds('scenario', 'solved'),
+      ])
+      setStats(statsData)
+      const allSolved = [...dsaSolved, ...sqlSolved, ...corecsSolved, ...interviewSolved, ...scenarioSolved]
+      setWeakTopics(computeWeakTopics(allSolved, ALL_QUESTIONS))
+      setLoading(false)
+    }
+    load().catch(() => setLoading(false))
   }, [])
 
   const totalSolved = Object.values(stats).reduce((sum, s) => sum + s.solved, 0)
@@ -126,6 +154,54 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+
+        {/* Weak Areas Panel */}
+        {!loading && weakTopics.length > 0 && (
+          <div className="bg-surface border border-border rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-border flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-amber" aria-hidden="true" />
+              <span className="text-[10px] font-mono text-text-dim uppercase tracking-widest">Needs Work</span>
+              <span className="ml-auto text-[10px] font-mono text-text-dim">Topics with lowest completion</span>
+            </div>
+            <div className="divide-y divide-border">
+              {weakTopics.map((wt) => (
+                <Link
+                  key={`${wt.topic}-${wt.type}`}
+                  href={`${wt.href}?topic=${encodeURIComponent(wt.topic)}`}
+                  className="flex items-center gap-4 px-5 py-3.5 hover:bg-surface-hover transition-colors group"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium text-text group-hover:text-indigo-light transition-colors truncate">
+                          {wt.topic}
+                        </span>
+                        <span className="text-[10px] font-mono uppercase text-text-dim bg-surface-hover border border-border rounded-full px-1.5 py-0.5 flex-shrink-0">
+                          {wt.type}
+                        </span>
+                      </div>
+                      <span className="text-xs font-mono text-text-muted ml-2 flex-shrink-0">
+                        {wt.solved}/{wt.total}
+                      </span>
+                    </div>
+                    <div className="w-full h-1.5 bg-border rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{
+                          width: `${wt.pct}%`,
+                          background: wt.pct === 0 ? 'var(--red)' : wt.pct < 40 ? 'var(--amber)' : 'var(--indigo)',
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <span className="text-xs font-mono text-text-dim w-8 text-right flex-shrink-0">
+                    {wt.pct}%
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Quick actions */}
         {!loading && totalSolved === 0 && (

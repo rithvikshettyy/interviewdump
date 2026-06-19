@@ -26,6 +26,9 @@ import {
   Map,
   Menu,
   X,
+  Activity,
+  ClipboardList,
+  BrainCircuit,
 } from 'lucide-react'
 
 // Import question databases statically for global client search
@@ -260,6 +263,7 @@ export default function Sidebar() {
       label: 'Library',
       items: [
         { icon: LayoutDashboard, label: 'My Progress', href: '/dashboard' },
+        { icon: ClipboardList, label: 'Mock Test', href: '/library/mock-test' },
         { icon: Building2, label: 'Company Questions', href: '/library/company-questions' },
         { icon: MessageSquare, label: 'Interview Questions', href: '/library/interview-questions' },
         { icon: Code2, label: 'DSA', href: '/library/dsa' },
@@ -276,7 +280,9 @@ export default function Sidebar() {
       items: [
         { icon: BookOpen, label: 'Languages', href: '/fundamentals/languages' },
         { icon: Boxes, label: 'OOPs Concepts', href: '/fundamentals/oops' },
+        { icon: BrainCircuit, label: 'Flashcards', href: '/fundamentals/flashcards' },
         { icon: Zap, label: 'Quiz', href: '/fundamentals/quiz' },
+        { icon: Activity, label: 'Visualizer', href: '/fundamentals/visualizer' },
         { icon: Map, label: 'Study Plans', href: '/fundamentals/plans' },
         { icon: FileText, label: 'Resume Guide', href: '/resume' },
       ],

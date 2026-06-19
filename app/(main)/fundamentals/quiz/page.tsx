@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
-import jsQuizQuestions from '@/content/quiz/javascript.json'
 import Badge from '@/components/shared/Badge'
 import PageHeader from '@/components/layout/PageHeader'
 
@@ -16,12 +15,23 @@ interface QuizQuestion {
   trick?: string
 }
 
+async function loadQuizDeck(topic: string): Promise<QuizQuestion[]> {
+  if (topic === 'JavaScript') return (await import('@/content/quiz/javascript.json')).default as QuizQuestion[]
+  if (topic === 'Python')     return (await import('@/content/quiz/python.json')).default as QuizQuestion[]
+  if (topic === 'Java')       return (await import('@/content/quiz/java.json')).default as QuizQuestion[]
+  if (topic === 'DSA')        return (await import('@/content/quiz/dsa.json')).default as QuizQuestion[]
+  if (topic === 'SQL')        return (await import('@/content/quiz/sql.json')).default as QuizQuestion[]
+  if (topic === 'Core CS')    return (await import('@/content/quiz/corecs.json')).default as QuizQuestion[]
+  return []
+}
+
 const QUESTION_TIME_LIMIT = 30 // seconds per question
 
 export default function QuizPage() {
   // Config States
   const [activeTopic, setActiveTopic] = useState('JavaScript')
   const [activeDifficulty, setActiveDifficulty] = useState<'All Levels' | 'Easy' | 'Medium' | 'Hard'>('All Levels')
+  const [isLoading, setIsLoading] = useState(false)
 
   // Quiz Engine States
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([])
@@ -92,13 +102,13 @@ export default function QuizPage() {
   }, [currentIndex, isQuizActive])
 
   // Filter and load questions on configuration change or start button click
-  const loadAndStart = () => {
-    let source = jsQuizQuestions as QuizQuestion[]
-    // If other topics are selected, we fallback to JS questions for playability
+  const loadAndStart = async () => {
+    setIsLoading(true)
+    let source = await loadQuizDeck(activeTopic)
     if (activeDifficulty !== 'All Levels') {
       source = source.filter((q) => q.difficulty === activeDifficulty)
     }
-    
+    setIsLoading(false)
     if (source.length > 0) {
       startQuiz(source)
     } else {
@@ -147,8 +157,7 @@ export default function QuizPage() {
   }
 
   const handleNextTopic = () => {
-    // Cycle topic
-    const topics = ['JavaScript', 'Python', 'Java', 'DSA', 'System Design', 'OOPs']
+    const topics = ['JavaScript', 'Python', 'Java', 'DSA', 'SQL', 'Core CS']
     const nextIdx = (topics.indexOf(activeTopic) + 1) % topics.length
     setActiveTopic(topics[nextIdx])
     setIsFinished(false)
@@ -185,7 +194,7 @@ export default function QuizPage() {
               Select Topic
             </div>
             <div className="flex gap-2 overflow-x-auto scrollbar-hide border-b border-border pb-3">
-              {['JavaScript', 'Python', 'Java', 'DSA', 'System Design', 'OOPs'].map((topic) => (
+              {['JavaScript', 'Python', 'Java', 'DSA', 'SQL', 'Core CS'].map((topic) => (
                 <button
                   key={topic}
                   onClick={() => setActiveTopic(topic)}
@@ -226,9 +235,10 @@ export default function QuizPage() {
           {/* Start trigger */}
           <button
             onClick={loadAndStart}
-            className="w-full mt-4 bg-indigo hover:bg-indigo/90 text-white rounded-xl py-3 text-sm font-bold transition-all focus:outline-none shadow-lg shadow-indigo/20"
+            disabled={isLoading}
+            className="w-full mt-4 bg-indigo hover:bg-indigo/90 text-white rounded-xl py-3 text-sm font-bold transition-all focus:outline-none shadow-lg shadow-indigo/20 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Start {activeTopic} Quiz
+            {isLoading ? 'Loading...' : `Start ${activeTopic} Quiz`}
           </button>
         </div>
       )}

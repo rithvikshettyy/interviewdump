@@ -1,0 +1,152 @@
+[
+  {
+    "id": "cs-quiz-1",
+    "concept": "Process vs Thread",
+    "difficulty": "Easy",
+    "question": "What is the key difference between a process and a thread?",
+    "options": ["Processes are faster than threads", "A process has its own memory space; threads within a process share the same memory space", "Threads cannot run in parallel; processes can", "Processes are managed by the programmer; threads are managed by the OS"],
+    "correctIndex": 1,
+    "explanation": "A process is an independent execution unit with its own dedicated memory space (code, heap, stack). Threads are lightweight execution units that exist within a process and share the same memory space (code and heap), but each thread has its own stack. Shared memory makes inter-thread communication fast but introduces synchronization challenges.",
+    "trick": "Process = isolated memory (expensive IPC needed). Thread = shared memory within process (fast communication, but race conditions). Context switch between threads is cheaper than between processes."
+  },
+  {
+    "id": "cs-quiz-2",
+    "concept": "Deadlock",
+    "difficulty": "Medium",
+    "question": "Which of the four Coffman conditions must hold simultaneously for a deadlock to occur?",
+    "options": ["Starvation, Livelock, Preemption, Hold-and-Wait", "Mutual Exclusion, Hold-and-Wait, No Preemption, Circular Wait", "Semaphore, Mutex, Monitor, Critical Section", "Busy Waiting, Spinning, Blocking, Preemption"],
+    "correctIndex": 1,
+    "explanation": "The four Coffman conditions for deadlock: (1) Mutual Exclusion — resources can't be shared, (2) Hold-and-Wait — a process holds at least one resource while waiting for others, (3) No Preemption — resources can't be forcibly taken away, (4) Circular Wait — a cycle of processes each waiting for a resource held by the next. All four must hold simultaneously for deadlock.",
+    "trick": "Coffman: Mutual Exclusion + Hold-and-Wait + No Preemption + Circular Wait. To prevent deadlock, eliminate any ONE of these four conditions."
+  },
+  {
+    "id": "cs-quiz-3",
+    "concept": "TCP vs UDP",
+    "difficulty": "Easy",
+    "question": "Which protocol would you choose for a live video streaming application where some packet loss is acceptable but low latency is critical?",
+    "options": ["TCP — it guarantees delivery", "UDP — lower overhead, no retransmission delays", "Both are equally suitable", "Neither — use WebSockets exclusively"],
+    "correctIndex": 1,
+    "explanation": "UDP is connectionless and does not guarantee delivery, ordering, or duplication prevention — but these come with low latency and no head-of-line blocking. For live video/audio, a dropped packet showing as a brief glitch is better than TCP's retransmission causing video freeze. UDP is used by WebRTC, DNS, and gaming. TCP is preferred for reliability (HTTP, email, files).",
+    "trick": "TCP = reliable, ordered, connection-oriented (HTTP, FTP, email). UDP = fast, unreliable, connectionless (DNS, VoIP, streaming, gaming). 'Live' and 'real-time' = usually UDP."
+  },
+  {
+    "id": "cs-quiz-4",
+    "concept": "HTTP Methods",
+    "difficulty": "Easy",
+    "question": "Which HTTP method is both idempotent AND non-safe (it modifies server state)?",
+    "options": ["GET", "POST", "PUT", "DELETE"],
+    "correctIndex": 2,
+    "explanation": "PUT is idempotent (calling it multiple times with the same data produces the same result as calling it once) but it modifies server state (creates or replaces a resource), making it non-safe. GET is both safe and idempotent. POST is neither (each call may create a new resource). DELETE is idempotent but non-safe.",
+    "trick": "Safe = no side effects (GET, HEAD). Idempotent = same result if called multiple times (GET, PUT, DELETE). POST is neither. PUT = replace/create at a known URL. PATCH = partial update (not necessarily idempotent)."
+  },
+  {
+    "id": "cs-quiz-5",
+    "concept": "ACID",
+    "difficulty": "Medium",
+    "question": "In a banking system, a transfer debits Account A and credits Account B. If the system crashes after debiting but before crediting, which ACID property protects you?",
+    "options": ["Consistency", "Durability", "Atomicity", "Isolation"],
+    "correctIndex": 2,
+    "explanation": "Atomicity guarantees that a transaction is all-or-nothing. If any part of the transaction fails (including a crash mid-transaction), the entire transaction is rolled back to its initial state. In this case, if the credit to Account B doesn't happen, the debit from Account A is also undone, leaving both accounts unchanged.",
+    "trick": "Atomicity = all operations in a transaction succeed, or none do. Think: 'atomic' means indivisible. The classic example is the bank transfer."
+  },
+  {
+    "id": "cs-quiz-6",
+    "concept": "CPU Scheduling",
+    "difficulty": "Medium",
+    "question": "Which CPU scheduling algorithm can cause starvation (a process waiting indefinitely)?",
+    "options": ["Round Robin", "First Come First Served (FCFS)", "Shortest Job First (SJF) / Priority Scheduling", "Multilevel Feedback Queue"],
+    "correctIndex": 2,
+    "explanation": "SJF and Priority Scheduling can cause starvation: if short jobs or high-priority jobs keep arriving, long-running or low-priority processes may never get CPU time. The solution is aging — gradually increasing the priority of waiting processes over time. Round Robin and FCFS are starvation-free by design.",
+    "trick": "Starvation risk: SJF (always picks shortest) and Priority (low priority never runs). Fix: aging (gradually boost priority of waiting processes). Round Robin prevents starvation via time quantum."
+  },
+  {
+    "id": "cs-quiz-7",
+    "concept": "Virtual Memory",
+    "difficulty": "Hard",
+    "question": "What is 'thrashing' in the context of virtual memory?",
+    "options": ["When a process uses 100% of physical RAM", "When the OS spends more time swapping pages than executing actual process code", "When a page fault causes a system crash", "When multiple processes try to access the same memory address"],
+    "correctIndex": 1,
+    "explanation": "Thrashing occurs when a system has insufficient physical memory and continuously swaps pages in and out between RAM and disk. Processes spend most of their time waiting for page faults to be resolved instead of executing code, severely degrading performance. It's caused by too many processes competing for too little physical memory.",
+    "trick": "Thrashing = more time swapping than running. Cause: too little RAM for too many processes. Fix: reduce degree of multiprogramming (run fewer processes), add RAM, or use a better page replacement algorithm."
+  },
+  {
+    "id": "cs-quiz-8",
+    "concept": "OSI Model",
+    "difficulty": "Medium",
+    "question": "At which OSI layer does the IP protocol operate?",
+    "options": ["Layer 2 (Data Link)", "Layer 3 (Network)", "Layer 4 (Transport)", "Layer 7 (Application)"],
+    "correctIndex": 1,
+    "explanation": "IP (Internet Protocol) operates at Layer 3 (Network layer). It handles logical addressing (IP addresses) and routing packets across networks. Layer 2 (Data Link) handles MAC addresses and physical network communication. Layer 4 (Transport) is where TCP and UDP operate. Layer 7 (Application) is where HTTP, DNS, FTP operate.",
+    "trick": "OSI layers: Physical, Data Link, Network (IP), Transport (TCP/UDP), Session, Presentation, Application (HTTP). Mnemonic: 'Please Do Not Throw Sausage Pizza Away'."
+  },
+  {
+    "id": "cs-quiz-9",
+    "concept": "Cache",
+    "difficulty": "Medium",
+    "question": "Which cache eviction policy removes the item that was LEAST RECENTLY USED?",
+    "options": ["FIFO (First In, First Out)", "LRU (Least Recently Used)", "LFU (Least Frequently Used)", "MRU (Most Recently Used)"],
+    "correctIndex": 1,
+    "explanation": "LRU (Least Recently Used) evicts the item that hasn't been accessed for the longest time, based on the intuition that recently-used items are likely to be used again soon (temporal locality). It's commonly used in CPU caches, browser caches, and database buffer pools. LFU evicts the least frequently accessed item over time, which is better for access patterns with long-lived popular items.",
+    "trick": "LRU = evict oldest-accessed (time since last use). LFU = evict least-often-accessed (access frequency). FIFO = evict oldest-inserted regardless of access. LRU is most common in interviews."
+  },
+  {
+    "id": "cs-quiz-10",
+    "concept": "Normalization",
+    "difficulty": "Medium",
+    "question": "In database normalization, what problem does 3NF (Third Normal Form) specifically eliminate?",
+    "options": ["Repeating groups in a single column", "Partial dependencies on a composite primary key", "Transitive dependencies between non-key columns", "Duplicate rows in the table"],
+    "correctIndex": 2,
+    "explanation": "3NF eliminates transitive dependencies: where a non-key column determines another non-key column (A → B → C where A is the PK). For example, if `student_id` determines `zip_code` and `zip_code` determines `city`, then `city` is transitively dependent on `student_id` through `zip_code`. To achieve 3NF, split `zip_code` and `city` into a separate table.",
+    "trick": "1NF: atomic values. 2NF: 1NF + no partial dependencies (non-key cols depend on FULL PK). 3NF: 2NF + no transitive dependencies (non-key cols depend ONLY on PK, not each other)."
+  },
+  {
+    "id": "cs-quiz-11",
+    "concept": "Semaphore vs Mutex",
+    "difficulty": "Hard",
+    "question": "What is the key difference between a mutex and a semaphore?",
+    "options": ["Mutexes are used in databases; semaphores are used in operating systems", "A mutex is a binary lock owned by a thread; a semaphore is a signaling mechanism that can allow multiple threads", "Semaphores are always faster than mutexes", "A mutex counts resources; a semaphore is a simple boolean"],
+    "correctIndex": 1,
+    "explanation": "A mutex (mutual exclusion lock) is a binary lock (locked/unlocked) with ownership — only the thread that locked it can unlock it. It's used for protecting a critical section. A semaphore is a counter-based signaling mechanism: a counting semaphore allows up to N concurrent accesses; a binary semaphore (value 0 or 1) can be signaled by any thread (no ownership), useful for thread synchronization.",
+    "trick": "Mutex = binary, owned (only locker can unlock). Semaphore = counter, no ownership (anyone can signal). Mutex for critical sections; semaphore for signaling/coordination."
+  },
+  {
+    "id": "cs-quiz-12",
+    "concept": "REST vs GraphQL",
+    "difficulty": "Medium",
+    "question": "What problem does GraphQL solve that REST APIs commonly face?",
+    "options": ["REST is slower because it uses HTTP/1.1; GraphQL uses HTTP/2 exclusively", "Over-fetching (too much data) and under-fetching (too little data, requiring multiple requests)", "REST cannot handle authentication; GraphQL has built-in auth", "REST cannot be versioned; GraphQL supports automatic versioning"],
+    "correctIndex": 1,
+    "explanation": "REST endpoints return fixed data structures, causing over-fetching (getting fields you don't need) or under-fetching (needing multiple round trips to get related data). GraphQL lets clients specify exactly what data they need in a single query, getting precisely the requested fields across multiple related resources in one request.",
+    "trick": "GraphQL: one endpoint, client specifies shape. REST: multiple endpoints, fixed response shape. GraphQL solves over/under-fetching. REST is simpler to cache (HTTP caching)."
+  },
+  {
+    "id": "cs-quiz-13",
+    "concept": "Hashing",
+    "difficulty": "Medium",
+    "question": "Why can't you reverse a cryptographic hash function to get the original input?",
+    "options": ["Hash functions use encryption keys that are kept secret", "Hash functions are many-to-one: multiple inputs map to the same output space, and the process is computationally one-way by design", "Hashing compresses data, making it impossible to decompress", "Legal restrictions prevent reverse engineering of hash algorithms"],
+    "correctIndex": 1,
+    "explanation": "Cryptographic hash functions (SHA-256, bcrypt) are designed to be one-way (preimage resistance). They map variable-length inputs to fixed-length outputs, meaning infinite possible inputs map to the same output space. There's also no mathematical inverse operation. Collision resistance means it's computationally infeasible to find two inputs that hash to the same value.",
+    "trick": "Hash = one-way (cannot reverse). Encryption = two-way (can decrypt with key). Use hashing for password storage, not encryption. Always salt passwords before hashing to prevent rainbow table attacks."
+  },
+  {
+    "id": "cs-quiz-14",
+    "concept": "DNS",
+    "difficulty": "Easy",
+    "question": "What is the primary function of DNS (Domain Name System)?",
+    "options": ["Encrypting web traffic between browser and server", "Translating human-readable domain names to IP addresses", "Managing user authentication and sessions", "Routing packets across network boundaries"],
+    "correctIndex": 1,
+    "explanation": "DNS is the internet's phone book: it translates domain names (google.com) to their corresponding IP addresses (142.250.80.46) that computers use to communicate. When you type a URL, your browser queries DNS resolvers (locally cached, then ISP, then authoritative servers) to find the IP address before making an HTTP request.",
+    "trick": "DNS = domain to IP translation. UDP port 53. TTL controls how long DNS responses are cached. A record = IPv4, AAAA = IPv6, CNAME = alias, MX = mail."
+  },
+  {
+    "id": "cs-quiz-15",
+    "concept": "Load Balancing",
+    "difficulty": "Medium",
+    "question": "Which load balancing algorithm is best for requests that have highly variable processing times?",
+    "options": ["Round Robin — distributes equally in sequence", "Least Connections — routes to server with fewest active connections", "IP Hash — routes same client to same server", "Random — distributes randomly"],
+    "correctIndex": 1,
+    "explanation": "When request processing times vary significantly, Round Robin can overload slow servers (they accumulate a backlog of long-running requests). Least Connections routes new requests to the server currently handling the fewest active connections, naturally balancing load when response times differ. IP Hash is useful for session affinity (stateful apps).",
+    "trick": "Round Robin = simple, good for uniform requests. Least Connections = best for variable workloads. IP Hash = sticky sessions (same client → same server). Weighted variants exist for heterogeneous server capacity."
+  }
+]

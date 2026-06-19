@@ -1,0 +1,152 @@
+[
+  {
+    "id": "dsa-quiz-1",
+    "concept": "Arrays",
+    "difficulty": "Easy",
+    "question": "What is the time complexity of accessing an element at index i in an array of n elements?",
+    "options": ["O(n)", "O(log n)", "O(1)", "O(n²)"],
+    "correctIndex": 2,
+    "explanation": "Arrays store elements in contiguous memory locations. Since the memory address of any index can be calculated directly as base_address + i * element_size, access is always O(1) regardless of array size.",
+    "trick": "Any time you can calculate the location directly without searching, it's O(1)."
+  },
+  {
+    "id": "dsa-quiz-2",
+    "concept": "HashMap",
+    "difficulty": "Easy",
+    "question": "What is the average time complexity for insert and lookup operations in a HashMap?",
+    "options": ["O(n)", "O(log n)", "O(n log n)", "O(1)"],
+    "correctIndex": 3,
+    "explanation": "HashMaps use a hash function to map keys to bucket indices, allowing direct access to the bucket. In the average case (with a good hash function and low load factor), both insert and lookup are O(1). Worst case is O(n) due to hash collisions.",
+    "trick": "HashMaps trade space for time. Average O(1), worst O(n) when all keys collide to the same bucket."
+  },
+  {
+    "id": "dsa-quiz-3",
+    "concept": "Two Pointers",
+    "difficulty": "Medium",
+    "question": "Given a sorted array, you want to find if any two elements sum to a target value. Which approach gives the best time complexity?",
+    "options": ["Nested loops — O(n²)", "Binary search for complement — O(n log n)", "Two pointers (left + right) — O(n)", "HashMap of complements — O(n)"],
+    "correctIndex": 2,
+    "explanation": "Both the two-pointer approach and the HashMap approach achieve O(n) time. However, the two-pointer approach uses O(1) extra space because it works in-place on the already-sorted array, making it optimal in both time and space.",
+    "trick": "For sorted arrays, two pointers beats hashmap because it uses O(1) extra space."
+  },
+  {
+    "id": "dsa-quiz-4",
+    "concept": "Binary Search",
+    "difficulty": "Easy",
+    "question": "Binary search requires the input array to be ___.",
+    "options": ["Filled with integers only", "Sorted", "Have no duplicates", "Have an even number of elements"],
+    "correctIndex": 1,
+    "explanation": "Binary search works by comparing the target with the middle element and eliminating half the search space each time. This only works correctly if the array is sorted, so the algorithm knows whether to search the left or right half.",
+    "trick": "If the problem says 'find in sorted array', think binary search (O(log n)) before linear search (O(n))."
+  },
+  {
+    "id": "dsa-quiz-5",
+    "concept": "Trees",
+    "difficulty": "Medium",
+    "question": "In a Binary Search Tree (BST), which traversal produces nodes in sorted ascending order?",
+    "options": ["Pre-order (Root → Left → Right)", "Post-order (Left → Right → Root)", "In-order (Left → Root → Right)", "Level-order (BFS)"],
+    "correctIndex": 2,
+    "explanation": "In a BST, every node's left subtree contains values less than the node, and the right subtree contains greater values. In-order traversal visits Left → Root → Right, which processes smaller values first and produces a sorted ascending sequence.",
+    "trick": "In-order = In-sorted-order for a BST. Pre-order is great for copying/serializing a tree."
+  },
+  {
+    "id": "dsa-quiz-6",
+    "concept": "BFS vs DFS",
+    "difficulty": "Medium",
+    "question": "You need to find the SHORTEST path between two nodes in an unweighted graph. Which algorithm should you use?",
+    "options": ["Depth-First Search (DFS)", "Breadth-First Search (BFS)", "Both give the same result", "Binary Search on the adjacency list"],
+    "correctIndex": 1,
+    "explanation": "BFS explores nodes level by level (all nodes at distance 1 first, then distance 2, etc.). When BFS first reaches the destination, it has taken the minimum number of edges — the shortest path. DFS might find a longer path first and miss the shortest.",
+    "trick": "BFS = Shortest path in unweighted graphs. DFS = Better for detecting cycles, topological sort, and exploring all paths."
+  },
+  {
+    "id": "dsa-quiz-7",
+    "concept": "Dynamic Programming",
+    "difficulty": "Hard",
+    "question": "What are the two key properties a problem must have to be solvable with Dynamic Programming?",
+    "options": ["Greedy choice property + Optimal structure", "Overlapping subproblems + Optimal substructure", "Divide and conquer + Memoization", "Recursion + Backtracking"],
+    "correctIndex": 1,
+    "explanation": "DP applies when: (1) the problem has overlapping subproblems — the same smaller problems are solved multiple times (unlike Divide & Conquer where subproblems are independent), and (2) optimal substructure — the optimal solution can be built from optimal solutions to subproblems.",
+    "trick": "If you see exponential recursion with repeated calls (like fib(n) calling fib(n-1) and fib(n-2)), DP/memoization will help."
+  },
+  {
+    "id": "dsa-quiz-8",
+    "concept": "Sorting",
+    "difficulty": "Medium",
+    "question": "Which sorting algorithm has the best average-case time complexity AND is stable?",
+    "options": ["Quick Sort — O(n log n), unstable", "Merge Sort — O(n log n), stable", "Heap Sort — O(n log n), unstable", "Bubble Sort — O(n²), stable"],
+    "correctIndex": 1,
+    "explanation": "Merge Sort runs in O(n log n) in all cases (best, average, worst) and is stable — equal elements preserve their original order. Quick Sort is also O(n log n) average but O(n²) worst case and is unstable. Heap Sort is O(n log n) but unstable.",
+    "trick": "Merge Sort is the go-to stable O(n log n) sort. Quick Sort is faster in practice but not stable."
+  },
+  {
+    "id": "dsa-quiz-9",
+    "concept": "Stacks",
+    "difficulty": "Easy",
+    "question": "Which real-world problem is naturally modeled by a Stack (LIFO)?",
+    "options": ["Printer job queue", "Browser history (Back button)", "Hospital triage queue", "Message queue in microservices"],
+    "correctIndex": 1,
+    "explanation": "A browser's back button is a classic stack use case — each page you visit is pushed; pressing Back pops the most recently visited page first (Last In, First Out). Printer and hospital queues are FIFO (Queue), not LIFO.",
+    "trick": "Stack = LIFO. Think: call stack, undo/redo, browser back. Queue = FIFO. Think: BFS, task scheduling, print jobs."
+  },
+  {
+    "id": "dsa-quiz-10",
+    "concept": "Linked List",
+    "difficulty": "Medium",
+    "question": "What is the time complexity of inserting an element at the BEGINNING of a singly linked list?",
+    "options": ["O(n) — must traverse to find the end", "O(log n)", "O(1) — update the head pointer", "O(n²)"],
+    "correctIndex": 2,
+    "explanation": "To insert at the beginning of a linked list, you create the new node, point its 'next' to the current head, and update the head pointer to the new node. No traversal needed — just pointer updates — making it O(1).",
+    "trick": "Linked list insertions at head/tail (if tail pointer exists) are O(1). Insertions in the middle or by value require O(n) traversal."
+  },
+  {
+    "id": "dsa-quiz-11",
+    "concept": "Recursion",
+    "difficulty": "Medium",
+    "question": "What happens if a recursive function has no base case?",
+    "options": ["It returns null automatically", "It results in a Stack Overflow", "It runs in O(1) time", "It terminates when memory is full and returns 0"],
+    "correctIndex": 1,
+    "explanation": "Without a base case, a recursive function calls itself indefinitely. Each call adds a new stack frame to the call stack. Eventually, the stack runs out of memory and the runtime throws a Stack Overflow error (in most languages).",
+    "trick": "Every recursive function needs: (1) a base case to stop, and (2) a recursive case that moves toward the base case."
+  },
+  {
+    "id": "dsa-quiz-12",
+    "concept": "Graphs",
+    "difficulty": "Hard",
+    "question": "Which algorithm detects a cycle in a DIRECTED graph?",
+    "options": ["BFS with a visited array", "DFS with a 'currently in recursion stack' flag", "Union-Find (Disjoint Set)", "Dijkstra's Algorithm"],
+    "correctIndex": 1,
+    "explanation": "In a directed graph, a cycle exists if we encounter a node that is currently in the DFS recursion stack (i.e., an ancestor in the current DFS path). Union-Find detects cycles in undirected graphs. BFS alone without tracking the stack state is insufficient for directed cycles.",
+    "trick": "Directed cycle: DFS + recursion stack flag. Undirected cycle: Union-Find or DFS with visited set."
+  },
+  {
+    "id": "dsa-quiz-13",
+    "concept": "Big O",
+    "difficulty": "Easy",
+    "question": "Which of the following is the most efficient time complexity?",
+    "options": ["O(n log n)", "O(n²)", "O(2ⁿ)", "O(log n)"],
+    "correctIndex": 3,
+    "explanation": "From fastest to slowest: O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ) < O(n!). O(log n) grows very slowly — doubling n only adds 1 operation. This is why binary search (O(log n)) is so much faster than linear search (O(n)).",
+    "trick": "Memorize the hierarchy: O(1) → O(log n) → O(n) → O(n log n) → O(n²) → O(2ⁿ) → O(n!)"
+  },
+  {
+    "id": "dsa-quiz-14",
+    "concept": "Heaps",
+    "difficulty": "Medium",
+    "question": "What is the time complexity of finding the MINIMUM element in a Min-Heap?",
+    "options": ["O(n)", "O(log n)", "O(n log n)", "O(1)"],
+    "correctIndex": 3,
+    "explanation": "In a Min-Heap, the minimum element is always stored at the root (index 0). Peeking at the root is a direct array access — O(1). However, extracting (removing) the minimum requires re-heapifying, which is O(log n).",
+    "trick": "Heap peek (find min/max) = O(1). Heap extract (remove min/max) = O(log n). Building a heap from an array = O(n)."
+  },
+  {
+    "id": "dsa-quiz-15",
+    "concept": "Backtracking",
+    "difficulty": "Hard",
+    "question": "Backtracking improves on brute force by ___.",
+    "options": ["Using memoization to cache results", "Pruning branches that cannot lead to a valid solution", "Converting recursive calls to iteration", "Using heuristics to guess the answer"],
+    "correctIndex": 1,
+    "explanation": "Backtracking is a refined brute force that abandons a partial solution ('backtracks') as soon as it determines that this path cannot lead to a valid complete solution. This pruning eliminates large branches of the search tree, making it much faster than exhaustive brute force.",
+    "trick": "Backtracking = DFS + pruning. Classic problems: N-Queens, Sudoku, permutations, combinations."
+  }
+]

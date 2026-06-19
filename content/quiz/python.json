@@ -1,0 +1,152 @@
+[
+  {
+    "id": "py-quiz-1",
+    "concept": "Mutable Defaults",
+    "difficulty": "Hard",
+    "question": "What is the output of the following Python code?\n\ndef append_to(element, to=[]):\n    to.append(element)\n    return to\n\nprint(append_to(1))\nprint(append_to(2))",
+    "options": ["[1]\n[2]", "[1]\n[1, 2]", "[1]\n[2, 1]", "Error: list is immutable"],
+    "correctIndex": 1,
+    "explanation": "Default argument values in Python are evaluated ONCE when the function is defined, not each time the function is called. The empty list `[]` is created once and reused across all calls. After append_to(1), `to` is [1]. After append_to(2), the same list becomes [1, 2].",
+    "trick": "Never use mutable objects (list, dict, set) as default arguments. Use None instead and create the object inside the function."
+  },
+  {
+    "id": "py-quiz-2",
+    "concept": "is vs ==",
+    "difficulty": "Medium",
+    "question": "What does the `is` operator check in Python?",
+    "options": ["Whether two values are equal", "Whether two variables point to the SAME object in memory", "Whether two objects have the same type", "Whether a value is not None"],
+    "correctIndex": 1,
+    "explanation": "`is` checks object identity — whether two variables reference the exact same object in memory (same id()). `==` checks value equality. Example: `a = [1,2]; b = [1,2]` → `a == b` is True, but `a is b` is False because they're different list objects.",
+    "trick": "Use `is` only for None checks (`if x is None`). Use `==` for value comparisons. `is` can surprise you with small integers and string interning."
+  },
+  {
+    "id": "py-quiz-3",
+    "concept": "List Comprehensions",
+    "difficulty": "Easy",
+    "question": "What does the following list comprehension produce?\n\nresult = [x**2 for x in range(5) if x % 2 == 0]",
+    "options": ["[0, 1, 4, 9, 16]", "[0, 4, 16]", "[1, 9]", "[0, 2, 4]"],
+    "correctIndex": 1,
+    "explanation": "range(5) produces [0, 1, 2, 3, 4]. The condition `x % 2 == 0` keeps only even numbers: [0, 2, 4]. Then x**2 is applied: [0, 4, 16]. The expression evaluates to [0, 4, 16].",
+    "trick": "List comprehension syntax: [expression for item in iterable if condition]. The condition is a filter applied before the expression."
+  },
+  {
+    "id": "py-quiz-4",
+    "concept": "Generators",
+    "difficulty": "Medium",
+    "question": "What is the key advantage of a generator function over a regular list-returning function?",
+    "options": ["Generators run faster because they use C extensions", "Generators use lazy evaluation — values are produced one at a time, saving memory", "Generators automatically sort the output", "Generators can only be used with for loops"],
+    "correctIndex": 1,
+    "explanation": "A generator uses `yield` and produces values lazily — one at a time, only when requested. This means a generator of 1 million items uses O(1) memory, while a list of 1 million items uses O(n) memory. Generators are ideal for large datasets, streaming data, and infinite sequences.",
+    "trick": "If a function has `yield`, it's a generator. Call it to get a generator object; iterate to get values. Memory-efficient for large/infinite sequences."
+  },
+  {
+    "id": "py-quiz-5",
+    "concept": "Decorators",
+    "difficulty": "Hard",
+    "question": "What does a Python decorator fundamentally do?",
+    "options": ["Adds comments to a function automatically", "Takes a function and returns a modified/wrapped version of it", "Converts a function into a class method", "Optimizes function execution speed"],
+    "correctIndex": 1,
+    "explanation": "A decorator is a higher-order function: it takes a function as input, wraps it with additional behavior (before/after), and returns the wrapped function. `@my_decorator` above a function is syntactic sugar for `func = my_decorator(func)`. Common uses: logging, timing, authentication, caching.",
+    "trick": "@decorator syntax is sugar for func = decorator(func). The wrapper function usually calls the original via *args, **kwargs."
+  },
+  {
+    "id": "py-quiz-6",
+    "concept": "GIL",
+    "difficulty": "Hard",
+    "question": "Python's Global Interpreter Lock (GIL) means that:",
+    "options": ["Python code cannot run in parallel on multiple cores for CPU-bound tasks", "Python cannot use threads at all", "Python programs are always single-threaded", "The GIL prevents any I/O operations from blocking"],
+    "correctIndex": 0,
+    "explanation": "The GIL ensures that only one thread executes Python bytecode at a time, even on multi-core machines. This makes CPU-bound multithreading ineffective. However, for I/O-bound tasks (network, file), threads can still provide parallelism because the GIL is released during I/O waits. Use multiprocessing for CPU parallelism.",
+    "trick": "GIL blocks CPU-bound parallelism. Workaround: multiprocessing (separate processes). For I/O-bound: threads or asyncio work fine."
+  },
+  {
+    "id": "py-quiz-7",
+    "concept": "Args and Kwargs",
+    "difficulty": "Easy",
+    "question": "What does `**kwargs` do in a Python function definition?",
+    "options": ["Raises the second argument to the power of kwargs", "Collects any extra keyword arguments into a dictionary", "Makes all arguments optional", "Unpacks a list into positional arguments"],
+    "correctIndex": 1,
+    "explanation": "`**kwargs` collects all extra keyword arguments passed to the function into a dictionary called `kwargs`. So `def func(**kwargs)` called as `func(a=1, b=2)` gives `kwargs = {'a': 1, 'b': 2}`. Similarly, `*args` collects positional arguments into a tuple.",
+    "trick": "*args → tuple of extra positional args. **kwargs → dict of extra keyword args. Use ** to unpack a dict when calling: func(**my_dict)."
+  },
+  {
+    "id": "py-quiz-8",
+    "concept": "Context Managers",
+    "difficulty": "Medium",
+    "question": "What is the primary purpose of Python's `with` statement?",
+    "options": ["To define a temporary variable scope", "To ensure resource cleanup even if an exception occurs", "To create an asynchronous block of code", "To import a module temporarily"],
+    "correctIndex": 1,
+    "explanation": "The `with` statement ensures that `__enter__` is called when entering the block and `__exit__` is called when leaving it — even if an exception is raised. This guarantees proper cleanup of resources like file handles, database connections, and locks without needing try/finally.",
+    "trick": "`with open('file') as f:` is a context manager. The file is always closed when the block exits. You can create custom ones with __enter__/__exit__ or @contextmanager."
+  },
+  {
+    "id": "py-quiz-9",
+    "concept": "Walrus Operator",
+    "difficulty": "Medium",
+    "question": "What is the walrus operator `:=` in Python 3.8+ used for?",
+    "options": ["Comparing two values with strict equality", "Assigning a value to a variable as part of an expression", "Creating a dictionary from two lists", "Defining lambda functions inline"],
+    "correctIndex": 1,
+    "explanation": "The walrus operator `:=` (named for its resemblance to walrus eyes) assigns a value to a variable while also returning it as an expression. Example: `while chunk := f.read(8192):` reads a chunk AND tests its truthiness in one step, avoiding the need to call `f.read()` twice.",
+    "trick": "Walrus := is 'assignment expression'. Useful in while loops and list comprehensions to avoid calling expensive functions twice."
+  },
+  {
+    "id": "py-quiz-10",
+    "concept": "Enumerate",
+    "difficulty": "Easy",
+    "question": "What does `enumerate(['a', 'b', 'c'])` produce?",
+    "options": ["['a', 'b', 'c']", "[(0, 'a'), (1, 'b'), (2, 'c')]", "[0, 1, 2]", "{'a': 0, 'b': 1, 'c': 2}"],
+    "correctIndex": 1,
+    "explanation": "`enumerate()` wraps an iterable and produces (index, value) tuples. The default start index is 0, but you can set `enumerate(items, start=1)` to begin from 1. This avoids using a manual counter variable in loops.",
+    "trick": "Use enumerate() instead of range(len(list)). It's cleaner and more Pythonic: `for i, val in enumerate(lst):`"
+  },
+  {
+    "id": "py-quiz-11",
+    "concept": "Shallow vs Deep Copy",
+    "difficulty": "Hard",
+    "question": "What is the difference between `copy.copy()` and `copy.deepcopy()`?",
+    "options": ["copy.copy() is faster; there is no functional difference", "copy.copy() copies the outer object but nested objects are still shared; deepcopy() copies everything recursively", "deepcopy() only works on lists; copy.copy() works on all types", "copy.copy() copies by reference; deepcopy() copies by value"],
+    "correctIndex": 1,
+    "explanation": "A shallow copy creates a new container object but references the same nested objects. Modifying a nested object in the copy also affects the original. A deep copy recursively copies all nested objects, creating a fully independent clone. Use deepcopy when the structure contains mutable nested objects.",
+    "trick": "Shallow copy: new outer, same inner objects. Deep copy: new everything. `a = b[:]` and `list(b)` are also shallow copies."
+  },
+  {
+    "id": "py-quiz-12",
+    "concept": "Sets",
+    "difficulty": "Easy",
+    "question": "What is the time complexity of checking if an element is in a Python set?",
+    "options": ["O(n)", "O(log n)", "O(1) average", "O(n²)"],
+    "correctIndex": 2,
+    "explanation": "Python sets are implemented as hash tables. Membership testing (`x in my_set`) computes the hash of x and checks the corresponding bucket — O(1) average case. This makes sets ideal for fast lookups when you don't need ordering.",
+    "trick": "Set and dict membership testing is O(1). List membership is O(n). Always use a set for repeated 'is this in there?' checks."
+  },
+  {
+    "id": "py-quiz-13",
+    "concept": "Lambda",
+    "difficulty": "Easy",
+    "question": "What does the following code output?\n\nfns = [lambda x: x*i for i in range(3)]\nprint(fns[0](10))",
+    "options": ["0", "10", "20", "30"],
+    "correctIndex": 2,
+    "explanation": "This is a classic closure-in-loop trap. All lambda functions capture the variable `i` by reference, not by value. By the time any function is called, the loop has completed and `i` is 2. So `fns[0](10)` returns `10 * 2 = 20`. To capture the current value, use a default argument: `lambda x, i=i: x*i`.",
+    "trick": "Lambdas in a loop capture the variable reference, not its current value. Fix: use default argument `lambda x, i=i: ...` to bind the value."
+  },
+  {
+    "id": "py-quiz-14",
+    "concept": "String Immutability",
+    "difficulty": "Medium",
+    "question": "You need to concatenate 10,000 strings in Python. Which approach is most efficient?",
+    "options": ["Use `+` operator in a loop", "Use `str.join()`", "Use string formatting with %s", "Use `append()` on the string"],
+    "correctIndex": 1,
+    "explanation": "Python strings are immutable. Using `+` in a loop creates a new string object on every iteration — O(n²) total. `''.join(list_of_strings)` collects all strings first and concatenates them in a single pass — O(n). For large-scale concatenation, `join()` is significantly faster.",
+    "trick": "Strings are immutable — `+` in a loop is O(n²). Use `''.join(parts)` for O(n) concatenation."
+  },
+  {
+    "id": "py-quiz-15",
+    "concept": "Type Hints",
+    "difficulty": "Easy",
+    "question": "What is the effect of Python type hints (annotations) at runtime?",
+    "options": ["They enforce type checking and raise TypeError if violated", "They are stored as metadata but not enforced by Python at runtime", "They convert values to the specified types automatically", "They make the function run faster by skipping type inference"],
+    "correctIndex": 1,
+    "explanation": "Python type hints (e.g., `def greet(name: str) -> None:`) are purely informational. Python does NOT enforce them at runtime — you can still pass an int where str is expected and Python won't complain. Type hints are used by static analysis tools (mypy, Pyright) and IDEs for tooling support, not by the interpreter.",
+    "trick": "Type hints = documentation + tooling. They're ignored at runtime. Use mypy/Pyright to actually check types statically."
+  }
+]
