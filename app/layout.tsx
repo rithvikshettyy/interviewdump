@@ -42,6 +42,14 @@ export const metadata: Metadata = {
     siteName: BRAND_DOCUMENT_TITLE,
     title: `${BRAND_DOCUMENT_TITLE} — Free Tech Interview Prep`,
     description: '500+ curated tech interview questions covering DSA, system design, SQL, core CS, aptitude and more. Free forever. No paywall.',
+    images: [
+      {
+        url: `${siteUrl}/opengraph.png`,
+        width: 1200,
+        height: 630,
+        alt: `${BRAND_DOCUMENT_TITLE} — Free Tech Interview Prep`,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -49,6 +57,7 @@ export const metadata: Metadata = {
     creator: '@RithvikShetty04',
     title: `${BRAND_DOCUMENT_TITLE} — Free Tech Interview Prep`,
     description: '500+ curated tech interview questions. Free forever. No paywall.',
+    images: [`${siteUrl}/opengraph.png`],
   },
   verification: {
     google: 'dlBaHc6d9AT1OtAmRJHJSU2WTweIjUp8thlmWEKFYXQ',
