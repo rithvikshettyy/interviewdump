@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@RithvikShetty04',
     creator: '@RithvikShetty04',
-    title: `${BRAND_DOCUMENT_TITLE} — Free Tech Interview Prep`,
+    title: `${BRAND_DOCUMENT_TITLE}: Free Tech Interview Prep`,
     description: '500+ curated tech interview questions. Free forever. No paywall.',
   },
   verification: {
