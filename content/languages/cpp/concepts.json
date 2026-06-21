@@ -23,7 +23,12 @@
     "commonMistake": "Returning a reference or pointer to a local variable — the local variable is destroyed when the function returns, leaving a dangling reference/pointer. Accessing it is undefined behavior.",
     "correctMentalModel": "A pointer is an address in memory — a number you can do arithmetic on and test for null. A reference is a compiler-enforced guarantee that something always exists and is always the same thing. Prefer references for cleaner code; use pointers when nullability or reassignment is needed.",
     "miniTask": "Write a swap function using pointers (void swap(int* a, int* b)) and another using references (void swap(int& a, int& b)). Call both from main() and verify. Then attempt to make a pointer to a reference and observe the compiler error.",
-    "ytQuery": "C++ pointers vs references tutorial"
+    "ytQuery": "C++ pointers vs references tutorial",
+    "whenNotToUse": "Don't use raw pointers for ownership — use smart pointers (unique_ptr, shared_ptr) instead. Avoid pointer arithmetic on non-array types — it's undefined behavior. Don't use pointers where references work (function parameters that are always valid and never null). Avoid void* in modern C++ — use templates or std::any instead.",
+    "systemDesignConnection": "Pointer-based data structures (linked lists, trees, graphs) are the foundation of database indexes, OS kernel data structures, and memory allocators. Understanding pointers is essential for designing memory-efficient systems and custom allocators in high-performance C++ services.",
+    "memoryTrick": "Pointer = sticky note with an address (can be blank/null, can be rewritten). Reference = a chain to the house (always attached, can't move). & = 'address of', * = 'value at address.'",
+    "prerequisites": [],
+    "eli10": "A pointer is like writing down your friend's house address on a piece of paper. You can look at the paper to find their house (*ptr), change the address to someone else's house, or leave it blank (null). A reference is like holding your friend's hand — you're always connected to the same friend."
   },
   {
     "id": "cpp-memory-management",
@@ -49,7 +54,12 @@
     "commonMistake": "Using delete on a new[] array (or delete[] on a single new) — this is undefined behavior. Also forgetting to set pointer to nullptr after delete, leading to double-delete bugs when the same pointer is accidentally deleted twice.",
     "correctMentalModel": "Every heap allocation (new) is a contract to free (delete). RAII encapsulates this contract in an object's lifetime — the constructor acquires, the destructor releases. Since destructors are called deterministically when objects go out of scope (including on exception!), RAII makes resource management exception-safe and leak-proof.",
     "miniTask": "Write a RAII 'Timer' class that records a start time in its constructor and prints elapsed milliseconds in its destructor. Use it to time a sorting operation without any explicit timing teardown code.",
-    "ytQuery": "C++ RAII memory management new delete smart pointers"
+    "ytQuery": "C++ RAII memory management new delete smart pointers",
+    "whenNotToUse": "Don't use raw new/delete in modern C++ — use make_unique/make_shared instead. Avoid heap allocation when stack allocation suffices (small objects with known lifetimes). Don't write custom memory management unless profiling proves the default allocator is a bottleneck. Avoid malloc/free in C++ — they don't call constructors/destructors.",
+    "systemDesignConnection": "Memory management strategy defines system performance characteristics. Game engines, trading systems, and databases use custom allocators (arena, pool, slab) for deterministic latency. RAII maps to resource management in distributed systems — connections, locks, and file handles must be released reliably, especially under failure conditions.",
+    "memoryTrick": "RAII = 'Resource Acquired In Initialization, Released In Destruction.' Constructor = check-in at hotel. Destructor = automatic checkout. No matter how you leave (normal or exception), you always check out.",
+    "prerequisites": ["cpp-pointers"],
+    "eli10": "In C++, you have to clean up after yourself — if you take a toy out of the box (new), you must put it back (delete). RAII is like a magic toy box that automatically puts toys away when you're done playing. Smart pointers are these magic boxes."
   },
   {
     "id": "cpp-oop",
@@ -75,7 +85,12 @@
     "commonMistake": "Assuming members are initialized in the order they appear in the initialization list — they are actually initialized in declaration order. This can cause subtle bugs when one member's init depends on another.",
     "correctMentalModel": "The initialization list is where C++ objects 'come to life' — members are constructed here, not assigned. The constructor body is for additional logic after all members are initialized. Think of it as: init list builds the parts, constructor body assembles them.",
     "miniTask": "Create a class 'Matrix' with a fixed-size 2D array, a constructor that takes rows and cols, copy constructor, and member functions to get/set values and compute the transpose. Use const methods where appropriate.",
-    "ytQuery": "C++ classes constructors destructors this pointer tutorial"
+    "ytQuery": "C++ classes constructors destructors this pointer tutorial",
+    "whenNotToUse": "Don't use classes for everything — free functions and structs are fine for simple data bundling. Avoid friend functions unless absolutely necessary — they break encapsulation. Don't rely on the implicit default constructor when your class has raw pointer members — always define or delete the special member functions (Rule of Five).",
+    "systemDesignConnection": "Class design directly maps to module boundaries in large systems. Encapsulation ensures that internal state changes don't ripple across service boundaries. In database design, classes often mirror table schemas (ORM pattern). Well-designed classes with clear public APIs enable team parallelism in large codebases.",
+    "memoryTrick": "Init list = building materials delivered before construction starts. Constructor body = the builder arranging furniture after walls are up. Init list is REQUIRED for const/ref members because those must exist from day one.",
+    "prerequisites": ["cpp-pointers"],
+    "eli10": "A class is like a blueprint for a toy robot. It tells the factory what parts to use (variables) and what the robot can do (methods). The constructor is the assembly line that builds each robot, and the destructor is what takes it apart when you're done with it."
   },
   {
     "id": "cpp-inheritance",
@@ -101,7 +116,12 @@
     "commonMistake": "Forgetting virtual ~Base() when the base class has virtual methods — deleting a derived object through a base pointer calls only the base destructor, leaking derived resources. Rule: if a class has any virtual method, make its destructor virtual.",
     "correctMentalModel": "Virtual functions enable 'late binding' — the decision of which function to call is deferred from compile time to runtime based on the actual type of the object. The vtable is the mechanism: a lookup table per class that maps virtual slot numbers to the correct function for that class. It costs one pointer dereference — a tiny price for runtime polymorphism.",
     "miniTask": "Create an abstract Shape hierarchy with Circle, Rectangle, Triangle. Store them in a vector<unique_ptr<Shape>>. Write a function that sorts them by area using std::sort with a lambda comparator. Verify virtual destructors are called correctly.",
-    "ytQuery": "C++ virtual functions vtable inheritance polymorphism tutorial"
+    "ytQuery": "C++ virtual functions vtable inheritance polymorphism tutorial",
+    "whenNotToUse": "Don't use virtual functions in performance-critical inner loops — the vtable indirection prevents inlining. Use CRTP (Curiously Recurring Template Pattern) or templates for compile-time polymorphism instead. Avoid deep inheritance hierarchies (>3 levels) — they create tight coupling. Don't use multiple inheritance unless genuinely needed — it introduces diamond problem complexity.",
+    "systemDesignConnection": "Virtual functions implement the Strategy pattern at the language level — plugin architectures, driver models, and protocol handlers all use virtual dispatch. In game engines, the Entity-Component-System (ECS) pattern often replaces deep inheritance with composition for better cache performance and flexibility.",
+    "memoryTrick": "vtable = phone book for a class (which function to call). vptr = each object's personal copy of which phone book to use. Virtual destructor = making sure the right cleanup crew is called, not just the generic one.",
+    "prerequisites": ["cpp-oop"],
+    "eli10": "Imagine a remote control (base pointer) that works with both a TV and a radio. When you press 'play,' it does different things depending on what's plugged in. Virtual functions are what make the remote smart enough to know which device it's talking to, even though it looks the same for both."
   },
   {
     "id": "cpp-templates",
@@ -127,7 +147,12 @@
     "commonMistake": "Putting template implementations in a .cpp file — the linker will fail with 'undefined reference' because template instantiation requires the definition to be visible at the call site. Always put template definitions in headers.",
     "correctMentalModel": "Templates are 'blueprints for blueprints.' The compiler is the factory that stamps out real code from the blueprint for each type you use. Unlike Python duck typing (runtime) or Java generics (erased at compile time), C++ templates produce separate, fully optimized code for each type — zero-overhead abstraction.",
     "miniTask": "Write a generic binary search function template that works on sorted ranges. It should accept any container with begin()/end() iterators and a value to search for. Test it with int[], vector<string>, and a custom sorted type.",
-    "ytQuery": "C++ templates tutorial function class template specialization"
+    "ytQuery": "C++ templates tutorial function class template specialization",
+    "whenNotToUse": "Don't use templates when a simple inheritance hierarchy or std::function suffices — templates increase compile time and produce cryptic error messages. Avoid excessive template metaprogramming that makes code unreadable. Don't put template implementations in .cpp files — they must be in headers (or use explicit instantiation).",
+    "systemDesignConnection": "Templates power zero-overhead generic libraries (STL, Boost, Eigen). In high-performance system design, templates enable compile-time policy selection — choose between different allocators, serializers, or hashing strategies without runtime cost. Template-based compile-time computation replaces runtime configuration in embedded and real-time systems.",
+    "memoryTrick": "Template = cookie cutter. Each type = different dough. Compiler stamps out a separate cookie (code) for each dough (type). Unlike Java generics (one cookie, any filling), C++ makes a perfect custom cookie each time — zero overhead.",
+    "prerequisites": ["cpp-oop"],
+    "eli10": "A template is like a fill-in-the-blank sentence: 'The ___ ran fast.' You can fill in 'dog,' 'cat,' or 'horse' and get a different sentence each time. C++ templates work the same way — you write code once with a blank for the type, and the computer fills it in for each type you use."
   },
   {
     "id": "cpp-stl-containers",
@@ -153,7 +178,12 @@
     "commonMistake": "Invalidating iterators by modifying a container while iterating — inserting into a vector can cause reallocation, invalidating ALL iterators. Erasing from map/unordered_map only invalidates the erased element's iterator.",
     "correctMentalModel": "Choose container by access pattern: sequential indexed → vector. Queue/stack → deque/stack/queue. Fast lookup → unordered_map. Sorted traversal → map/set. Frequent insert/remove in middle → list. The STL containers are all interchangeable through iterators — changing from vector to list is often a one-line change.",
     "miniTask": "Implement a word frequency counter using unordered_map. Read words from a string stream, count frequencies, then copy to a vector<pair<string,int>>, sort by frequency descending, and print the top 5 most common words.",
-    "ytQuery": "C++ STL containers vector map unordered_map tutorial"
+    "ytQuery": "C++ STL containers vector map unordered_map tutorial",
+    "whenNotToUse": "Don't use list when vector works — vector's cache locality makes it faster for almost everything in practice. Avoid unordered_map for small collections (<100 elements) — the hash overhead can make it slower than a sorted vector with binary search. Don't use map when you don't need sorted order — unordered_map is ~3-5x faster for lookups.",
+    "systemDesignConnection": "Container choice impacts system performance at scale. vector powers contiguous buffers in networking (zero-copy I/O). unordered_map is the backbone of in-memory caches and symbol tables. Priority_queue implements task schedulers and event-driven simulations. In database engines, B-trees (similar to std::map) implement disk-based indexes.",
+    "memoryTrick": "vector = parking lot (contiguous, fast by spot #). list = train cars (linked, easy to add/remove). map = sorted filing cabinet (log N). unordered_map = hash warehouse (O(1) average). Default to vector — it's almost always the fastest.",
+    "prerequisites": ["cpp-templates"],
+    "eli10": "C++ gives you different types of containers, like different bags for your stuff. A vector is like a backpack with numbered pockets (fast to find by number). A map is like a dictionary (find things by name, alphabetically). An unordered_map is like a messy desk with a labeling system — super fast to find things, but not in any particular order."
   },
   {
     "id": "cpp-stl-algorithms",
@@ -179,7 +209,12 @@
     "commonMistake": "Using remove/remove_if alone without erase — the container still has the same size, just with 'garbage' values at the end. Always chain: v.erase(remove_if(...), v.end()).",
     "correctMentalModel": "STL algorithms are a vocabulary of common operations expressed generically over iterators. They separate 'what to do' (algorithm) from 'what data structure to do it on' (container). Master the iterator interface and you can combine any algorithm with any container.",
     "miniTask": "Given a vector of Student structs with name and grade fields, use STL algorithms only (no raw loops) to: filter students with grade >= 70, sort them by grade descending, transform to a vector of their names, and compute the average grade of passing students.",
-    "ytQuery": "C++ STL algorithms sort transform accumulate find tutorial"
+    "ytQuery": "C++ STL algorithms sort transform accumulate find tutorial",
+    "whenNotToUse": "Don't use STL algorithms when a simple range-based for loop is clearer for trivial operations. Avoid sort() on a list — list has its own .sort() member (merge sort). Don't use remove() alone without erase() — the erase-remove idiom is required. Avoid parallel execution policies (execution::par) without benchmarking — overhead can outweigh gains for small data.",
+    "systemDesignConnection": "STL algorithms are the C++ equivalent of MapReduce primitives. transform = Map, accumulate = Reduce, partition = data sharding. In system design, understanding algorithm complexity helps choose between sorting-based (O(N log N)) and hash-based (O(N)) approaches for data processing pipelines.",
+    "memoryTrick": "Erase-Remove idiom: remove_if moves junk to the back (like sweeping trash to the corner), erase actually throws it away. Always pair them: v.erase(remove_if(...), v.end()).",
+    "prerequisites": ["cpp-stl-containers", "cpp-lambda"],
+    "eli10": "STL algorithms are like a set of magic spells for your data. 'Sort!' arranges everything in order. 'Find!' locates one item. 'Transform!' changes every item. 'Accumulate!' adds everything up. The cool part is these spells work on any container — vectors, lists, anything!"
   },
   {
     "id": "cpp-smart-pointers",
@@ -205,7 +240,12 @@
     "commonMistake": "Creating two shared_ptrs from the same raw pointer — each creates its own control block, so each thinks it's the sole owner and will both try to delete the object. Always create shared_ptr once and copy it.",
     "correctMentalModel": "Ownership semantics: unique_ptr = 'I own this and I alone.' shared_ptr = 'We share ownership and it lives until the last of us dies.' weak_ptr = 'I want to access this but I don't own it — tell me if it's been deleted.' Default to unique_ptr; upgrade to shared_ptr only when sharing is necessary.",
     "miniTask": "Create a linked list using unique_ptr<Node> for ownership (each node owns its next). Then create the same structure using shared_ptr but with a cycle, observe the memory leak. Fix it with weak_ptr and verify nodes are destroyed.",
-    "ytQuery": "C++ unique_ptr shared_ptr weak_ptr smart pointers tutorial"
+    "ytQuery": "C++ unique_ptr shared_ptr weak_ptr smart pointers tutorial",
+    "whenNotToUse": "Don't use shared_ptr when unique_ptr suffices — shared_ptr has atomic ref-count overhead (~10% slower). Avoid creating shared_ptr from raw pointers multiple times — this creates multiple control blocks and double-deletes. Don't use weak_ptr unless you specifically need to break circular references or observe without owning.",
+    "systemDesignConnection": "Smart pointers model ownership semantics that mirror distributed system resource management. unique_ptr = exclusive lock on a resource. shared_ptr = reference-counted distributed cache entries. weak_ptr = cache observer that doesn't prevent eviction. Understanding ownership is critical for designing connection pools, object caches, and resource managers.",
+    "memoryTrick": "unique_ptr = house deed (one owner, house demolished when owner dies). shared_ptr = co-owned house (demolished when LAST owner leaves). weak_ptr = neighbor watching the house (can't prevent demolition, must check if house still exists before visiting).",
+    "prerequisites": ["cpp-memory-management", "cpp-pointers"],
+    "eli10": "Smart pointers are like responsible pet owners. unique_ptr is one person who takes care of one pet — when they move away, the pet goes with them. shared_ptr is when multiple people share a pet — the pet stays as long as at least one person is around. weak_ptr is a neighbor who visits the pet but doesn't actually own it."
   },
   {
     "id": "cpp-lambda",
@@ -231,7 +271,12 @@
     "commonMistake": "Capturing by reference in a lambda that outlives the scope of the captured variable — the reference becomes dangling (undefined behavior). This is common when storing lambdas in callbacks or returning them from functions.",
     "correctMentalModel": "A lambda is a local anonymous class with captured variables as members. The capture list is the constructor argument list — what state from the enclosing scope is baked into the lambda. Prefer [=] (safe copy) for short-lived lambdas passed to algorithms; use [&] only when performance matters and lifetime is certain.",
     "miniTask": "Write a lambda-based 'pipeline' function that takes a vector<int> and a vector of transformation lambdas (function<int(int)>). Apply each transformation in sequence to every element. Test with square, negate, and add-offset transformations.",
-    "ytQuery": "C++ lambda expressions capture list tutorial"
+    "ytQuery": "C++ lambda expressions capture list tutorial",
+    "whenNotToUse": "Don't capture by reference [&] in lambdas that outlive the enclosing scope (callbacks, async tasks) — this creates dangling references. Avoid [=] (capture all by value) when it copies large objects — capture specific variables or use std::move. Don't use std::function for lambdas passed to templates — it adds heap allocation and type-erasure overhead; use auto or template parameters instead.",
+    "systemDesignConnection": "Lambdas enable inline callbacks in event-driven systems, async I/O handlers, and task schedulers. In system design, lambdas power the 'handler' pattern — registering behavior for specific events without creating named classes. C++ lambdas with captures are the foundation of closures in callback-heavy architectures (networking, UI frameworks).",
+    "memoryTrick": "Capture list = what you pack in your suitcase before traveling (the lambda's trip). [=] = photocopy everything (safe but heavy). [&] = take sticky notes pointing back home (light but dangerous if home is demolished). [] = travel light, no baggage.",
+    "prerequisites": ["cpp-oop"],
+    "eli10": "A lambda is a tiny instruction you write right where you need it, without giving it a name. It's like writing a quick note: 'Take any number and double it.' The capture list is what information from your surroundings the note is allowed to use — like saying 'this note can see my age but not my name.'"
   },
   {
     "id": "cpp-move-semantics",
@@ -257,7 +302,12 @@
     "commonMistake": "Using a moved-from object — after std::move(x) is passed to something, x is in a valid but unspecified state. Using x afterwards (other than assigning a new value or destroying it) is undefined behavior. Always treat moved-from objects as logically empty.",
     "correctMentalModel": "Copy = give someone a duplicate. Move = give someone the original and receive an empty shell. Move is O(1) for containers because only internal pointers are swapped, not the data itself. Use std::move to opt into this when you know you're done with an object.",
     "miniTask": "Implement a String class with a char* internal buffer. Write copy constructor (deep copy), move constructor (steal pointer, null source), copy assignment, and move assignment (rule of five). Measure the performance difference between push_back(s) and push_back(std::move(s)) into a vector.",
-    "ytQuery": "C++ move semantics rvalue reference std::move tutorial"
+    "ytQuery": "C++ move semantics rvalue reference std::move tutorial",
+    "whenNotToUse": "Don't use std::move on small trivially-copyable types (int, double, pointers) — moving and copying are identical for them. Avoid using a moved-from object for anything other than destruction or reassignment — its state is unspecified. Don't add std::move to return statements of local variables — it prevents Return Value Optimization (RVO), making things slower.",
+    "systemDesignConnection": "Move semantics enable zero-copy data pipelines in high-performance systems. In message queues and buffer management, moving large payloads between processing stages avoids expensive copies. Understanding move vs copy semantics is critical for designing efficient serialization layers and memory-mapped I/O systems.",
+    "memoryTrick": "Copy = photocopy (both copies exist, expensive). Move = hand over the original (fast, source becomes empty). std::move doesn't move — it's a cast that says 'I'm done with this, steal it.' The actual move happens in the move constructor.",
+    "prerequisites": ["cpp-memory-management", "cpp-oop"],
+    "eli10": "Imagine you have a big box of LEGO. Copying means building an identical second box (slow and wasteful). Moving means just handing your box to your friend — you don't have it anymore, but it was instant! C++ move semantics let the computer hand things over instead of copying them."
   },
   {
     "id": "cpp-exception-handling",
@@ -283,7 +333,12 @@
     "commonMistake": "Throwing exceptions from destructors — if a destructor throws during stack unwinding (from another exception), std::terminate() is called and the program aborts immediately. Always make destructors noexcept and handle errors internally.",
     "correctMentalModel": "Exceptions propagate up by unwinding the stack, calling destructors along the way. RAII makes this safe: every acquired resource has a destructor that releases it. The catch block is where you handle the error; RAII is what ensures you don't leak resources getting there.",
     "miniTask": "Write a Transaction class that acquires a DB lock in its constructor and releases it in its destructor. Simulate a failure in the middle of a multi-step transaction. Verify that the lock is always released even when an exception occurs.",
-    "ytQuery": "C++ exception handling try catch RAII noexcept tutorial"
+    "ytQuery": "C++ exception handling try catch RAII noexcept tutorial",
+    "whenNotToUse": "Don't throw exceptions from destructors — if another exception is already in flight during stack unwinding, std::terminate() is called. Avoid using exceptions for expected control flow (like 'item not found') — use return codes or std::optional instead. Don't catch(...) and silently swallow errors — at minimum, log the exception.",
+    "systemDesignConnection": "Exception safety levels (basic, strong, no-throw) map to transaction guarantees in distributed systems: basic = no resource leaks, strong = all-or-nothing (like database transactions), no-throw = guaranteed success. In system design, error handling strategy (exceptions vs error codes vs Result types) affects API design and fault tolerance.",
+    "memoryTrick": "Stack unwinding = emergency evacuation — destructors are the fire doors that close automatically on the way out (RAII). noexcept = 'I promise this room has no fire hazards' — the compiler can optimize escape routes for these rooms.",
+    "prerequisites": ["cpp-oop", "cpp-memory-management"],
+    "eli10": "When something goes wrong in your program (like dividing by zero), C++ throws an exception — it's like pulling a fire alarm. The program stops what it's doing and runs through the building (call stack), closing all doors properly (calling destructors) until it finds someone who can handle the emergency (catch block)."
   },
   {
     "id": "cpp-concurrency",
@@ -309,6 +364,11 @@
     "commonMistake": "Not joining (or detaching) a thread before the thread object is destroyed — the destructor of a joinable thread calls std::terminate(). Always call t.join() or t.detach() before the thread object goes out of scope.",
     "correctMentalModel": "Threads share memory but each has its own execution stream. Shared mutable state requires synchronization (mutex) to prevent data races. lock_guard is the RAII mutex guardian — it enforces the invariant that the mutex is always released, even on exceptions. For fire-and-forget parallel tasks, std::async is the cleanest high-level tool.",
     "miniTask": "Implement a thread-safe bounded queue (capacity of N items) using mutex and condition_variable. It should block producers when full and consumers when empty. Test with 3 producer threads and 2 consumer threads running concurrently.",
-    "ytQuery": "C++ thread mutex lock_guard condition_variable async future tutorial"
+    "ytQuery": "C++ thread mutex lock_guard condition_variable async future tutorial",
+    "whenNotToUse": "Don't use raw threads for simple parallel tasks — use std::async or a thread pool instead. Avoid locking mutexes in inconsistent order across functions — this causes deadlocks. Don't use volatile for thread synchronization in C++ (unlike Java, C++ volatile has no threading guarantees) — use std::atomic or mutex instead.",
+    "systemDesignConnection": "C++ concurrency primitives power high-performance servers, databases, and game engines. mutex + condition_variable implement producer-consumer queues (the foundation of message passing). std::async models task-based parallelism used in MapReduce and parallel build systems. Lock-free data structures (using std::atomic) enable ultra-low-latency trading systems.",
+    "memoryTrick": "mutex = bathroom door lock (only one person at a time). lock_guard = auto-locking door (locks when you enter, unlocks when you leave — even if you trip). condition_variable = walkie-talkie ('ready to go!' signal between threads).",
+    "prerequisites": ["cpp-memory-management", "cpp-smart-pointers", "cpp-lambda"],
+    "eli10": "Imagine two kids trying to color the same picture at the same time — they'd mess it up! A mutex is like a special crayon that only one kid can hold at a time. When you have the crayon, you can color. When you're done, you pass it to the next kid. lock_guard makes sure you always pass the crayon back, even if you get distracted."
   }
 ]

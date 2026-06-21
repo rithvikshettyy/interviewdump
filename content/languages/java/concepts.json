@@ -23,7 +23,12 @@
     "commonMistake": "Confusing JVM with JRE — the JVM is just the execution engine inside the JRE. To run a Java program, you need the JRE (which includes the JVM). To develop, you need the JDK.",
     "correctMentalModel": "Your Java source → javac → bytecode (.class) → JVM reads bytecode → JIT compiles hot paths → native CPU instructions. The 'write once' part is the bytecode; the 'run anywhere' part is the platform-specific JVM that reads it.",
     "miniTask": "Write a Java program that prints the JVM version, total memory, and free memory using Runtime.getRuntime() and System.getProperty(). Observe what JIT optimization flags are available with java -XX:+PrintCompilation.",
-    "ytQuery": "Java JVM JRE JDK difference explained"
+    "ytQuery": "Java JVM JRE JDK difference explained",
+    "whenNotToUse": "Don't obsess over JVM internals for simple scripting tasks — if you just need a quick script, Python or shell scripting is faster to set up. Avoid manually tuning JIT flags unless you've profiled and confirmed a bottleneck; premature JVM tuning adds complexity with no measurable gain.",
+    "systemDesignConnection": "In system design, the JVM's JIT warmup affects cold-start latency — critical for serverless (AWS Lambda) and microservices. GraalVM's AOT compilation (native-image) eliminates this, trading peak throughput for instant startup. Interviewers may ask about JVM memory sizing for high-throughput services.",
+    "memoryTrick": "JDK = Developer's Kitchen (everything). JRE = Restaurant (just serves food). JVM = the Oven (just cooks). Each one contains the next: JDK ⊃ JRE ⊃ JVM.",
+    "prerequisites": [],
+    "eli10": "Java is like a recipe written in a special language. The JVM is a magic kitchen that can read this recipe on any computer — Windows, Mac, or Linux. The JDK is the full chef's toolkit you need to write new recipes."
   },
   {
     "id": "java-gc",
@@ -49,7 +54,12 @@
     "commonMistake": "Calling System.gc() explicitly — this is a hint, not a guarantee, and it often triggers unnecessary Full GCs. Trust the JVM to GC on its own schedule and tune with GC flags instead.",
     "correctMentalModel": "Java's GC is a background service that continuously watches which objects are reachable. An object is alive if any chain of references from GC roots leads to it. When nothing points to an object, the GC can reclaim it — but the timing is the JVM's choice, not yours.",
     "miniTask": "Enable G1 GC verbose logging on a Java application (-XX:+PrintGCDetails -Xlog:gc*). Run a workload that creates many short-lived objects. Observe Eden fill-ups, Minor GC frequency, and promotion to Old Gen in the logs.",
-    "ytQuery": "Java garbage collection G1 GC explained"
+    "ytQuery": "Java garbage collection G1 GC explained",
+    "whenNotToUse": "Don't manually call System.gc() or finalize() to control garbage collection — the JVM's heuristics are almost always better. Avoid obsessing over GC tuning for short-lived programs or batch jobs — GC tuning matters for long-running servers, not scripts.",
+    "systemDesignConnection": "GC pause times directly impact tail latency (p99) in real-time systems. In system design, choosing ZGC or Shenandoah for latency-sensitive services (payment processing, gaming) vs G1/Parallel GC for throughput-oriented batch processing is a key architecture decision.",
+    "memoryTrick": "Young objects die young (Eden → graveyard). Old survivors get promoted (retirement home). GC is the janitor who cleans up after everyone — Young Gen janitor visits often, Old Gen janitor visits rarely.",
+    "prerequisites": ["java-jvm", "java-memory-model"],
+    "eli10": "Imagine your room fills up with toys (objects) as you play. Garbage collection is like your mom cleaning up toys you're not using anymore. She checks the new toys first because you usually stop playing with those quickly. Old favorite toys get checked less often."
   },
   {
     "id": "java-generics",
@@ -75,7 +85,12 @@
     "commonMistake": "Using raw types (List instead of List<String>) which bypasses compile-time type checking. The compiler warns about this. Always parameterize generic types.",
     "correctMentalModel": "Generics are a compile-time safety feature — they tell the compiler to check types and insert casts automatically. At runtime, the types are erased. Think of generics as a contract: 'this Box will only contain Strings' — the compiler enforces the contract, not the JVM.",
     "miniTask": "Write a generic 'Result<T>' class (like Rust's Result type) with static factory methods ok(T value) and error(String message). Add a map(Function<T,U>) method that transforms the value if ok, and passes the error through if error.",
-    "ytQuery": "Java generics type erasure wildcards tutorial"
+    "ytQuery": "Java generics type erasure wildcards tutorial",
+    "whenNotToUse": "Don't use generics when working with primitive-heavy performance-critical code — autoboxing (int → Integer) adds overhead. Use primitive arrays or specialized libraries (Eclipse Collections, HPPC) instead. Avoid overly complex generic signatures (nested wildcards) that hurt readability.",
+    "systemDesignConnection": "Generics enable type-safe API design in SDK/library layers. In system design, generic repository patterns (Repository<T, ID>) power Spring Data and similar frameworks, allowing one codebase to handle multiple entity types without duplication.",
+    "memoryTrick": "PECS = Producer Extends, Consumer Super. A mail carrier (producer) EXTENDS outward to deliver; a mailbox (consumer) is SUPER open to accept anything.",
+    "prerequisites": ["java-oop-pillars"],
+    "eli10": "Imagine a box that can hold exactly one type of thing. A Box<Toys> only holds toys, and a Box<Books> only holds books. If you try to put a book in a toy box, Java stops you before you make a mess."
   },
   {
     "id": "java-exceptions",
@@ -101,7 +116,12 @@
     "commonMistake": "Swallowing exceptions silently: catch (Exception e) {} with empty block. This hides bugs and makes debugging impossible. At minimum, log the exception.",
     "correctMentalModel": "Checked = 'caller is expected to handle this' (external resource failures). Unchecked = 'this is a programmer bug' (fix the code, don't catch it). In modern APIs (Spring, Hibernate), checked exceptions are often wrapped in unchecked ones to avoid verbose throws declarations.",
     "miniTask": "Create a custom exception hierarchy: AppException (unchecked base) with subclasses ValidationException and ResourceNotFoundException. Write a method that throws ValidationException when input is invalid and ResourceNotFoundException when a database record doesn't exist. Handle both in a caller with different messages.",
-    "ytQuery": "Java checked unchecked exceptions difference"
+    "ytQuery": "Java checked unchecked exceptions difference",
+    "whenNotToUse": "Don't use exceptions for control flow (e.g., catching an exception to check if a value exists). Exceptions are expensive due to stack trace capture — use if-checks or Optional for expected conditions. Don't create deep checked exception hierarchies that force callers into verbose try-catch chains.",
+    "systemDesignConnection": "In microservices, exception handling maps to HTTP status codes (404 → ResourceNotFoundException, 400 → ValidationException). Global exception handlers (@ControllerAdvice in Spring) centralize error formatting. Circuit breakers (Resilience4j) catch repeated exceptions to prevent cascade failures.",
+    "memoryTrick": "Checked = 'Check your bag before flying' (compiler forces you). Unchecked = 'Oops, you tripped' (runtime bug, just fix the code).",
+    "prerequisites": ["java-oop-pillars"],
+    "eli10": "Sometimes things go wrong in a program, like trying to open a file that doesn't exist. Java has two kinds of warnings: ones you MUST handle (like a seatbelt reminder) and ones that mean you made a mistake (like dividing by zero). The first kind won't let you run until you deal with it."
   },
   {
     "id": "java-collections",
@@ -127,7 +147,12 @@
     "commonMistake": "Using LinkedList thinking it's always faster for insertions — for most use cases, ArrayList is faster due to CPU cache locality (contiguous memory). LinkedList nodes are scattered in heap memory, causing cache misses.",
     "correctMentalModel": "Choose by access pattern: random access by index → ArrayList. Queue/Stack operations → ArrayDeque. Key lookup → HashMap. Sorted key traversal → TreeMap. Uniqueness guarantee → HashSet. The 'best' collection is the one whose O-notation matches your dominant operation.",
     "miniTask": "Implement an LRU (Least Recently Used) cache using LinkedHashMap — override removeEldestEntry() to evict the oldest entry when the size exceeds capacity. Test with 5 get/put operations and verify eviction.",
-    "ytQuery": "Java Collections Framework ArrayList HashMap tutorial"
+    "ytQuery": "Java Collections Framework ArrayList HashMap tutorial",
+    "whenNotToUse": "Don't use LinkedList as your default list — ArrayList outperforms it in nearly every scenario due to CPU cache locality. Don't use synchronized collections (Vector, Hashtable) in single-threaded code — the synchronization overhead is wasted. Use ConcurrentHashMap only when actual concurrent access is needed.",
+    "systemDesignConnection": "Choosing the right collection impacts service latency. In caching layers, LinkedHashMap powers LRU caches. In real-time systems, PriorityQueue is used for task scheduling. HashMap vs TreeMap choice affects whether range queries are possible in in-memory stores.",
+    "memoryTrick": "ArrayList = Array with benefits (fast index). HashMap = Hash + Map (fast lookup). TreeMap = Tree (sorted). LinkedHashMap = Linked + Hash + Map (ordered + fast).",
+    "prerequisites": ["java-generics", "java-arrays-arraylist"],
+    "eli10": "Java has different types of containers, like how your room has a shelf (ArrayList — things in order), a drawer with labels (HashMap — find things by name), and a sorted bookshelf (TreeMap — everything alphabetical). Pick the right container for what you need to do."
   },
   {
     "id": "java-streams",
@@ -153,7 +178,12 @@
     "commonMistake": "Using parallel streams by default thinking they're always faster — for small collections or I/O-bound operations, the ForkJoin overhead makes them slower than sequential. Always benchmark before using parallel.",
     "correctMentalModel": "Streams are a declarative description of a data transformation pipeline. The pipeline doesn't execute until you call a terminal operation. Think of it as: source → pipeline stages (lazy) → terminal (triggers execution). Each element flows through the entire pipeline before the next element starts.",
     "miniTask": "Given a list of log entries (String), use the Streams API to: filter only ERROR entries, extract the timestamp (first 19 chars), group by day (first 10 chars of timestamp), count errors per day, and return the result as a Map<String, Long> sorted by day.",
-    "ytQuery": "Java Streams API tutorial filter map collect"
+    "ytQuery": "Java Streams API tutorial filter map collect",
+    "whenNotToUse": "Don't use streams for simple loops with 1-2 elements — the pipeline overhead isn't worth it. Avoid parallel streams for I/O-bound operations or small collections — the ForkJoinPool overhead makes them slower. Don't chain too many operations in one stream making it unreadable; break into named steps.",
+    "systemDesignConnection": "Streams power data transformation pipelines in ETL processes and microservice data layers. In reactive systems, the Stream concept extends to Reactive Streams (Project Reactor's Flux/Mono), enabling non-blocking async data processing. Collectors.groupingBy() mirrors SQL GROUP BY in application-layer aggregation.",
+    "memoryTrick": "Streams are LAZY rivers — water (data) only flows when someone opens the dam (terminal operation). filter = net in the river, map = a converter station, collect = the bucket at the end.",
+    "prerequisites": ["java-lambdas", "java-collections"],
+    "eli10": "Imagine a conveyor belt in a factory. You put items on one end, and they go through different stations — one removes bad items (filter), another changes their shape (map), and at the end they're collected into a box (collect). The belt doesn't start moving until someone turns it on (terminal operation)."
   },
   {
     "id": "java-interfaces-abstract",
@@ -179,7 +209,12 @@
     "commonMistake": "Creating deep abstract class hierarchies when interfaces with default methods would suffice — Java doesn't allow multiple inheritance for classes, so deep hierarchies make the design rigid.",
     "correctMentalModel": "Interface = 'CAN do X' (capability contract). Abstract class = 'IS a thing with some shared behavior' (partial blueprint). Most modern Java APIs favor interfaces + default methods over abstract classes.",
     "miniTask": "Design a payment processing system: create a Payable interface (pay, refund), a Loggable interface (log), and an abstract class BasePayment that implements both. Then create CreditCardPayment and UPIPayment subclasses with specific implementations.",
-    "ytQuery": "Java interface vs abstract class difference"
+    "ytQuery": "Java interface vs abstract class difference",
+    "whenNotToUse": "Don't create abstract classes just for code reuse — use composition or interfaces with default methods instead. Avoid deep inheritance hierarchies (more than 2-3 levels) — they create tight coupling and make refactoring painful. Don't use interfaces for everything either — if shared state (fields) is needed, an abstract class is appropriate.",
+    "systemDesignConnection": "Interfaces define service contracts in microservices (PaymentService interface implemented by StripePaymentService, PayPalPaymentService). In plugin architectures, interfaces enable extensibility without modifying core code. The Strategy pattern (interface + multiple implementations) is the backbone of configurable system design.",
+    "memoryTrick": "Interface = 'I CAN do this' (capability). Abstract class = 'I AM this, partly built' (identity). A bird CAN fly (Flyable interface) and IS AN animal (abstract Animal class).",
+    "prerequisites": ["java-oop-pillars"],
+    "eli10": "An interface is like a job listing: 'Must know cooking and cleaning.' Anyone can apply if they have those skills. An abstract class is like a half-built LEGO set: some pieces are already snapped together, but you need to add the missing parts to finish it."
   },
   {
     "id": "java-multithreading",
@@ -205,7 +240,12 @@
     "commonMistake": "Using volatile instead of synchronized for read-modify-write operations (like counter++). volatile ensures visibility but NOT atomicity — counter++ is three operations (read, increment, write) and is still a race condition with volatile alone.",
     "correctMentalModel": "Two separate problems: (1) Visibility: will thread B see thread A's writes? → volatile or synchronized. (2) Atomicity: can the read-modify-write sequence be interrupted? → synchronized or Atomic classes. volatile solves only (1). synchronized solves both.",
     "miniTask": "Implement a thread-safe cache with a fixed capacity using ConcurrentHashMap and AtomicInteger to track size. Test with 10 concurrent threads doing reads and writes to verify no race conditions occur.",
-    "ytQuery": "Java multithreading synchronized volatile tutorial"
+    "ytQuery": "Java multithreading synchronized volatile tutorial",
+    "whenNotToUse": "Don't use raw threads when ExecutorService or CompletableFuture can do the job — manual thread management is error-prone. Avoid synchronized blocks on public objects or String literals — external code might lock on the same object. Don't use volatile for compound operations (read-modify-write) — use AtomicInteger or synchronized instead.",
+    "systemDesignConnection": "Multithreading powers web server request handling (Tomcat's thread pool), database connection pools, and async event processing. In system design interviews, understanding thread pools, connection pools, and their sizing (Little's Law: L = λW) is essential for capacity planning.",
+    "memoryTrick": "Two problems, two solutions: Visibility (will B see A's write?) → volatile/synchronized. Atomicity (can the operation be interrupted?) → synchronized/Atomic. Volatile solves ONLY visibility.",
+    "prerequisites": ["java-jvm", "java-memory-model"],
+    "eli10": "Imagine two people drawing on the same whiteboard at the same time without talking to each other — they'll mess up each other's drawings. Multithreading is like having rules: 'Only one person draws at a time' (synchronized) so the picture doesn't get ruined."
   },
   {
     "id": "java-lambdas",
@@ -231,7 +271,12 @@
     "commonMistake": "Trying to modify a captured variable from inside a lambda — this doesn't compile because captured variables must be effectively final. Use AtomicInteger or an array wrapper if you need a mutable captured state.",
     "correctMentalModel": "A lambda is a value — an object implementing a single-method interface, created inline. Method references are aliases for existing methods used as lambdas. Both enable passing behavior (functions) as data in Java.",
     "miniTask": "Build a pipeline of Function<String, String> lambdas using Function.andThen() and Function.compose() that: trims whitespace, converts to lowercase, replaces spaces with underscores, and removes non-alphanumeric characters. Apply it to a list of user-input strings.",
-    "ytQuery": "Java lambda expressions functional interfaces tutorial"
+    "ytQuery": "Java lambda expressions functional interfaces tutorial",
+    "whenNotToUse": "Don't use lambdas for complex multi-line logic — extract it into a named method for readability and testability. Avoid capturing mutable state in lambdas used with parallel streams — this creates race conditions. Don't overuse method references when they reduce clarity (e.g., deeply nested method references).",
+    "systemDesignConnection": "Lambdas enable the Strategy pattern at scale — pass behavior as data to event handlers, message processors, and pipeline stages. In reactive architectures, lambdas are the building blocks of event-driven processing chains (callbacks, stream transformations).",
+    "memoryTrick": "Lambda = 'Lazy Anonymous Method By Direct Application.' A sticky note with instructions you hand to someone else to execute.",
+    "prerequisites": ["java-interfaces-abstract", "java-functional-interfaces"],
+    "eli10": "Instead of writing a whole recipe book just to describe one recipe, you can write a quick sticky note: 'Take a number, double it.' That's a lambda — a tiny set of instructions you can pass around without giving it a name."
   },
   {
     "id": "java-optional",
@@ -257,7 +302,12 @@
     "commonMistake": "Using Optional as a method parameter: void process(Optional<User> user) — this forces callers to wrap their value. Instead, use two overloads or a @Nullable annotation.",
     "correctMentalModel": "Optional is a return type annotation that says 'this method might return nothing.' It forces callers to decide what to do when absent. The fluent API (map, filter, flatMap) lets you express the happy path cleanly without nested null checks.",
     "miniTask": "Refactor a null-heavy method that chains 3 method calls (each potentially returning null) into an Optional chain. Show how Optional.flatMap() handles methods that themselves return Optional.",
-    "ytQuery": "Java Optional tutorial orElse map flatMap"
+    "ytQuery": "Java Optional tutorial orElse map flatMap",
+    "whenNotToUse": "Don't use Optional as method parameters, class fields, or collection elements — it adds unnecessary wrapping. Don't use Optional.get() without checking — use orElse(), orElseGet(), or orElseThrow() instead. Avoid Optional in performance-critical loops — the object allocation adds overhead.",
+    "systemDesignConnection": "Optional models the 'might not exist' pattern common in service layers — findById() returns Optional<User> instead of null. In API design, Optional return types make the contract explicit: callers know absence is possible. This pairs with HTTP 404 responses in REST APIs.",
+    "memoryTrick": "Optional is a gift box — it might have a present inside or be empty. Never rip it open blindly (get()), always check first (orElse) or shake it (map/flatMap).",
+    "prerequisites": ["java-generics"],
+    "eli10": "Sometimes when you search for something, you find it, and sometimes you don't. Optional is like a treasure box that might be empty or might have treasure. Instead of getting upset when it's empty (NullPointerException), you plan ahead: 'If empty, use my backup treasure.'"
   },
   {
     "id": "java-memory-model",
@@ -283,7 +333,12 @@
     "commonMistake": "Thinking all primitives live on the stack — primitive fields of objects (int, double inside a class) live on the heap inside the object. Only LOCAL primitive variables live on the stack.",
     "correctMentalModel": "The rule is about LOCATION, not TYPE: local variables → stack. Object fields (regardless of type) → heap. The stack holds references (pointers) to heap objects; the objects themselves always live on the heap.",
     "miniTask": "Deliberately cause both StackOverflowError (write infinite recursion) and OutOfMemoryError (create objects in a loop without releasing them). Catch both and log the error. Understand the difference in recovery options.",
-    "ytQuery": "Java memory model stack heap tutorial"
+    "ytQuery": "Java memory model stack heap tutorial",
+    "whenNotToUse": "Don't over-optimize for stack vs heap placement — the JVM's escape analysis handles many cases. Don't allocate massive arrays on the stack (they live on the heap anyway in Java). Avoid premature memory optimization — profile with VisualVM or JFR first to find actual bottlenecks.",
+    "systemDesignConnection": "Understanding memory layout is crucial for JVM sizing in production. Heap size (-Xmx) directly affects GC behavior and service latency. Stack size (-Xss) limits thread count (each thread needs its own stack). In system design, memory per thread × thread count = memory footprint for connection-heavy services.",
+    "memoryTrick": "Stack = your desk (local, fast, auto-cleared). Heap = warehouse (shared, big, needs janitor/GC). References on desk point to boxes in warehouse.",
+    "prerequisites": ["java-jvm"],
+    "eli10": "Your computer has two kinds of storage. The stack is like your desk — small, fast, and automatically cleaned up. The heap is like a big warehouse — lots of space but someone (garbage collector) has to clean it. Simple numbers go on your desk, but big things like lists go in the warehouse."
   },
   {
     "id": "java-oop-pillars",
@@ -309,7 +364,12 @@
     "commonMistake": "Confusing overriding (runtime polymorphism — subclass changes inherited method) with overloading (compile-time — same method name, different parameters in same class). They are completely different mechanisms.",
     "correctMentalModel": "OOP is about modeling real-world relationships. Encapsulation = information hiding. Inheritance = code reuse via hierarchy. Polymorphism = one name, many behaviors. Abstraction = expose what matters, hide what doesn't. All four work together to create maintainable, extensible systems.",
     "miniTask": "Model a zoo using all four pillars: abstract Animal class (abstraction/inheritance), encapsulated name and age fields, overridden sound() methods for Dog/Cat/Bird (polymorphism), and an AnimalCare interface (abstraction). Iterate a list of animals and call sound() polymorphically.",
-    "ytQuery": "Java OOP four pillars encapsulation inheritance polymorphism abstraction"
+    "ytQuery": "Java OOP four pillars encapsulation inheritance polymorphism abstraction",
+    "whenNotToUse": "Don't force OOP when procedural code is simpler — utility functions and data transformations don't always need classes. Avoid deep inheritance hierarchies (prefer composition over inheritance). Don't use inheritance just for code reuse — if there's no genuine 'is-a' relationship, use composition or delegation instead.",
+    "systemDesignConnection": "OOP principles directly map to system design: Encapsulation → API boundaries and microservice isolation. Polymorphism → plugin architectures and strategy selection. Abstraction → service interfaces that hide implementation. SOLID principles extend OOP to large-scale system architecture.",
+    "memoryTrick": "E-I-P-A: Encapsulation (hide), Inheritance (reuse), Polymorphism (many forms), Abstraction (simplify). Think 'Each Intelligent Programmer Abstracts.'",
+    "prerequisites": [],
+    "eli10": "OOP is like building with LEGO. Encapsulation: each piece hides its internal clicks. Inheritance: a special brick can do everything a basic brick does plus more. Polymorphism: the same 'connect' instruction works differently for different pieces. Abstraction: you just snap pieces together without worrying about the plastic chemistry inside."
   },
   {
     "id": "java-string",
@@ -335,7 +395,12 @@
     "commonMistake": "Using == to compare Strings — this compares object identity, not content. Two Strings with the same text may be different objects. ALWAYS use .equals() or .equalsIgnoreCase() for String value comparison.",
     "correctMentalModel": "Every String operation that 'changes' a String actually creates a new String. Immutability is a feature (safe sharing, caching, thread-safety). When you need to build a String piece by piece (especially in a loop), use StringBuilder — it's a mutable buffer that produces one String at the end.",
     "miniTask": "Benchmark String concatenation in a loop (+) versus StringBuilder for 100,000 iterations. Measure the time difference. Then write a method that reverses a String using StringBuilder without calling StringBuilder.reverse().",
-    "ytQuery": "Java String immutability StringBuilder StringPool tutorial"
+    "ytQuery": "Java String immutability StringBuilder StringPool tutorial",
+    "whenNotToUse": "Don't use String concatenation with + in loops — it creates O(N²) intermediate objects. Use StringBuilder instead. Don't use StringBuffer in single-threaded code — the synchronization is unnecessary overhead. Avoid intern() on user-generated strings — it fills the String pool permanently and can cause memory issues.",
+    "systemDesignConnection": "String handling affects serialization/deserialization performance in APIs. In high-throughput systems, excessive String creation causes GC pressure. Interned strings are used in compiler/interpreter design for symbol tables. String pool behavior matters when designing caching layers.",
+    "memoryTrick": "String = printed book (can't change, need new copy). StringBuilder = whiteboard (erase and rewrite). == checks 'same book copy', .equals() checks 'same content.'",
+    "prerequisites": [],
+    "eli10": "A String in Java is like writing with a permanent marker — once you write something, you can't erase it. If you want to change it, you have to get a new piece of paper. StringBuilder is like a whiteboard — you can erase and add things easily."
   },
   {
     "id": "java-arrays-arraylist",
@@ -361,7 +426,12 @@
     "commonMistake": "Calling list.remove(1) on List<Integer> — this removes by INDEX (position 1), not by value. To remove the Integer value 1, call list.remove(Integer.valueOf(1)) — the ambiguity is a classic Java gotcha.",
     "correctMentalModel": "Use arrays when you know the exact size at creation and need to store primitives (avoids boxing overhead). Use ArrayList when size is unknown, you need to add/remove elements, or you're working with the Collections API. For very performance-sensitive code with millions of items, array of primitives is significantly faster.",
     "miniTask": "Write a method that takes a String and returns an int[] of the ASCII values of each character, then converts it back to an ArrayList<Integer> and sorts it in descending order using Collections.sort() with a comparator.",
-    "ytQuery": "Java arrays vs ArrayList autoboxing tutorial"
+    "ytQuery": "Java arrays vs ArrayList autoboxing tutorial",
+    "whenNotToUse": "Don't use ArrayList for millions of primitive values — autoboxing int→Integer wastes 16+ bytes per element. Use int[] or specialized primitive collections instead. Don't use Arrays.asList() when you need a mutable list — it returns a fixed-size wrapper that throws on add/remove.",
+    "systemDesignConnection": "Array vs ArrayList choice matters in memory-constrained systems. In data-intensive applications, primitive arrays reduce memory footprint by 4-8x compared to boxed ArrayLists. Pre-sizing collections (new ArrayList<>(expectedSize)) prevents costly reallocations in high-throughput data pipelines.",
+    "memoryTrick": "Array = fixed egg carton (pick size once, can hold raw eggs). ArrayList = magic expanding carton (grows automatically, but wraps each egg in a box first — autoboxing).",
+    "prerequisites": [],
+    "eli10": "An array is like a row of lockers — you pick how many when you set them up, and you can't add more later. An ArrayList is like a magic locker row that grows when you need more space. But the magic lockers need to wrap each item in a special box first (autoboxing), which takes a tiny bit extra time."
   },
   {
     "id": "java-hashmap-internals",
@@ -387,7 +457,12 @@
     "commonMistake": "Overriding equals() without overriding hashCode() — your object will break as a HashMap key. Two objects that are 'equal' by equals() would hash to different buckets, so get() would not find what put() stored.",
     "correctMentalModel": "HashMap = array of buckets + chaining for collisions. The two-step lookup is: hashCode() to find the bucket (fast O(1)), then equals() to find the exact entry within the bucket. Both methods must be consistent — this is the hashCode/equals contract.",
     "miniTask": "Create a custom class Employee with name and id fields. Override hashCode() and equals() based only on id. Store several Employee objects in a HashMap and verify that two Employee objects with the same id map to the same key, even with different names.",
-    "ytQuery": "Java HashMap internals hashCode equals collision tutorial"
+    "ytQuery": "Java HashMap internals hashCode equals collision tutorial",
+    "whenNotToUse": "Don't use HashMap when you need sorted iteration — use TreeMap. Don't use mutable objects as HashMap keys — if the key's hashCode changes after insertion, the entry becomes unreachable. Avoid HashMap in multi-threaded code without synchronization — use ConcurrentHashMap instead.",
+    "systemDesignConnection": "HashMap is the backbone of in-memory caches, lookup tables, and routing tables. Understanding hash collisions and load factors is critical for designing consistent hashing in distributed systems. The hashCode/equals contract mirrors database indexing — a bad hash function is like a poorly chosen index column.",
+    "memoryTrick": "HashMap = hotel: hashCode() assigns room number, equals() checks your ID at the door. Load factor 0.75 = hotel expands when 75% full. Collisions = two guests in same room (chain them together).",
+    "prerequisites": ["java-collections", "java-oop-pillars"],
+    "eli10": "Imagine a library where every book gets a shelf number based on its title (hash). Most titles get unique numbers, but sometimes two books get the same number (collision) — they share a shelf. To find a book, you go to its shelf number first (fast!), then check which one is the right book."
   },
   {
     "id": "java-design-patterns",
@@ -413,7 +488,12 @@
     "commonMistake": "Using Singleton everywhere as a 'global variable' substitute — this creates hidden dependencies and makes testing difficult (can't mock a Singleton). Prefer dependency injection (Spring @Bean) over direct Singleton usage.",
     "correctMentalModel": "Design patterns are vocabulary, not templates. Knowing when NOT to use a pattern is as important as knowing how. Singleton = 'only one should exist.' Factory = 'hide how objects are made.' Builder = 'build complex objects step by step.' Observer = 'notify many from one event.' Strategy = 'swap algorithms at runtime.'",
     "miniTask": "Implement a thread-safe Singleton Logger class that accepts log messages and writes them to a file. Then refactor it using the Builder pattern to configure the log level, output file path, and timestamp format at construction time.",
-    "ytQuery": "Java design patterns Singleton Factory Builder Observer Strategy"
+    "ytQuery": "Java design patterns Singleton Factory Builder Observer Strategy",
+    "whenNotToUse": "Don't apply patterns just because you know them — over-engineering with patterns adds unnecessary complexity. Avoid Singleton for anything that needs testing (use dependency injection instead). Don't use Observer when simple method calls suffice — event systems add indirection that makes debugging harder.",
+    "systemDesignConnection": "Design patterns are the vocabulary of system design interviews. Factory → service instantiation in DI containers. Observer → event-driven architectures, pub/sub systems (Kafka). Builder → API client configuration (OkHttpClient.Builder). Strategy → algorithm selection in load balancers and routing.",
+    "memoryTrick": "Singleton = 'Only ONE ring to rule them all.' Factory = 'Order from menu, chef decides how to cook.' Builder = 'LEGO instruction booklet, step by step.' Observer = 'YouTube subscription — get notified on new videos.'",
+    "prerequisites": ["java-interfaces-abstract", "java-oop-pillars"],
+    "eli10": "Design patterns are like recipes that programmers share. Singleton: only one principal in a school. Factory: a vending machine that makes different snacks depending on which button you press. Builder: building a custom sandwich step by step (bread, then cheese, then lettuce). Observer: a class newsletter — everyone signed up gets notified when there's news."
   },
   {
     "id": "java-concurrency-utils",
@@ -439,7 +519,12 @@
     "commonMistake": "Not calling pool.shutdown() after submitting tasks — the JVM will not exit because ExecutorService threads are non-daemon by default. Also blocking the ForkJoinPool common pool with I/O in CompletableFuture.supplyAsync() without a custom executor.",
     "correctMentalModel": "ExecutorService separates task submission from thread management. CompletableFuture separates result retrieval from execution — you define the what (pipeline of transformations) and the when is handled by the framework. Think of CompletableFuture as a declarative async pipeline, not a thread management tool.",
     "miniTask": "Write a method that concurrently fetches data from 5 simulated slow API calls (Thread.sleep(1000) each) using CompletableFuture.supplyAsync(), combines all results with allOf(), and returns the aggregated results. Measure total time — it should be ~1s, not 5s.",
-    "ytQuery": "Java CompletableFuture ExecutorService CountDownLatch tutorial"
+    "ytQuery": "Java CompletableFuture ExecutorService CountDownLatch tutorial",
+    "whenNotToUse": "Don't use the default ForkJoinPool for I/O-bound CompletableFuture tasks — it has limited threads and can starve under load. Always provide a custom Executor for I/O operations. Don't use CountDownLatch when CyclicBarrier is needed (CountDownLatch is one-shot only). Avoid creating a new ExecutorService for each request — reuse thread pools.",
+    "systemDesignConnection": "ExecutorService is how web servers handle concurrent requests (Tomcat, Netty). CompletableFuture powers async microservice calls — fan-out to multiple services and aggregate results. Semaphore implements rate limiting and connection pool bounds. These are the building blocks of any high-concurrency system design.",
+    "memoryTrick": "Future = receipt (pick up result later). CompletableFuture = receipt with forwarding instructions (when done, do X, then Y). ExecutorService = staffing agency (manages worker threads for you).",
+    "prerequisites": ["java-multithreading", "java-lambdas"],
+    "eli10": "Imagine you send three friends to buy different things from three stores at the same time. Instead of going to each store yourself one by one (slow), you wait for all three to come back (CompletableFuture.allOf). ExecutorService is like having a team of helpers you can send on errands whenever you need."
   },
   {
     "id": "java-functional-interfaces",
@@ -465,7 +550,12 @@
     "commonMistake": "Using Supplier<T> where you intend Function — Supplier takes NO arguments. If you need a value from a parameter, use Function. Also confusing Function.compose() vs andThen(): compose(g) = g(f(x)), andThen(g) = g(f(x)) — they look similar but compose applies the argument to the passed function FIRST.",
     "correctMentalModel": "Each functional interface describes one type of arrow in a data flow diagram: Function (T→R), Predicate (T→bool), Consumer (T→side-effect), Supplier (→T). They're the building blocks of any functional pipeline — combine them using composition methods to express complex transformations without explicit loops.",
     "miniTask": "Build a data validation pipeline using Predicate composition: create predicates for 'non-null', 'non-empty', 'min length 8', and 'contains digit'. Compose them into a single password validator Predicate<String>. Test it and print a meaningful error message for the first failing condition.",
-    "ytQuery": "Java functional interfaces Function Predicate Consumer Supplier tutorial"
+    "ytQuery": "Java functional interfaces Function Predicate Consumer Supplier tutorial",
+    "whenNotToUse": "Don't create custom functional interfaces when java.util.function already has one that fits (Function, Predicate, Consumer, Supplier cover most cases). Avoid deeply nested Function.compose() chains that become unreadable — name intermediate functions instead. Don't use functional interfaces where a simple method call is clearer.",
+    "systemDesignConnection": "Functional interfaces power pluggable behavior in framework design — Spring's validators, serializers, and converters all use Function/Predicate/Consumer patterns. In event-driven architectures, Consumer<Event> is the standard handler type. Predicate chains implement filter pipelines in data processing systems.",
+    "memoryTrick": "Function = transformer (T → R). Predicate = bouncer (T → yes/no). Consumer = black hole (T → void). Supplier = vending machine (→ T). Each is named for what it does with the data.",
+    "prerequisites": ["java-lambdas", "java-interfaces-abstract"],
+    "eli10": "Java has four types of helper instructions: Function takes something and gives back something different (like a translator). Predicate checks if something passes a test (like a guard). Consumer takes something and uses it up (like eating food). Supplier creates something from nothing (like a cookie factory)."
   },
   {
     "id": "java-annotations",
@@ -491,7 +581,12 @@
     "commonMistake": "Forgetting @Retention(RUNTIME) on a custom annotation meant to be processed at runtime — the annotation is silently absent at runtime, and getAnnotation() returns null with no error.",
     "correctMentalModel": "Annotations are data, not behavior. They tag code elements with metadata. Reflection is the mechanism that reads that metadata at runtime. The framework (Spring, JUnit) uses reflection to find annotations and act on them — your annotation defines the what, the framework defines the how.",
     "miniTask": "Create a @LogExecutionTime annotation. Write an annotation processor that uses reflection to find all methods annotated with @LogExecutionTime in a class, invokes them via reflection, and logs how long each takes to execute.",
-    "ytQuery": "Java custom annotations reflection tutorial"
+    "ytQuery": "Java custom annotations reflection tutorial",
+    "whenNotToUse": "Don't use reflection in performance-critical code — it's 10-100x slower than direct method calls. Avoid reflection to access private fields in production code — it breaks encapsulation and fails with Java module restrictions (Java 9+). Don't create annotations for simple configurations — use properties/YAML files instead.",
+    "systemDesignConnection": "Annotations + reflection power all major Java frameworks: Spring (@Component, @Autowired), JPA (@Entity, @Column), JUnit (@Test), Jackson (@JsonProperty). In system design, annotation-driven configuration enables declarative programming — describing WHAT you want rather than HOW to achieve it.",
+    "memoryTrick": "Annotations = sticky labels on code. Reflection = X-ray vision to read those labels at runtime. @Retention(RUNTIME) = label stays visible under X-ray. @Retention(SOURCE) = label falls off after compilation.",
+    "prerequisites": ["java-interfaces-abstract", "java-oop-pillars"],
+    "eli10": "Annotations are like labels you stick on things: 'This is important!' or 'Handle with care!' The computer reads these labels and does special things based on them. Reflection is the computer's ability to look at any code and read all its labels, even secret ones."
   },
   {
     "id": "java-serialization",
@@ -517,7 +612,12 @@
     "commonMistake": "Not declaring serialVersionUID explicitly — the JVM generates one automatically, but any class change (adding a field, changing a method signature) regenerates it, causing InvalidClassException when deserializing old data.",
     "correctMentalModel": "Serialization = object → bytes (for storage/network). Deserialization = bytes → object. The serialVersionUID is the compatibility contract between the bytes and the class. Treat native Java serialization as a legacy mechanism — use Jackson JSON for any new cross-system communication.",
     "miniTask": "Serialize a list of Product objects (name, price, transient inventory count) to a file and deserialize it. Verify that inventory count is null after deserialization. Then add a new field 'category' to Product and observe what happens with a stale serialVersionUID.",
-    "ytQuery": "Java serialization serialVersionUID transient tutorial"
+    "ytQuery": "Java serialization serialVersionUID transient tutorial",
+    "whenNotToUse": "Don't use native Java serialization for new projects — it has critical security vulnerabilities (deserialization attacks) and poor cross-language support. Use JSON (Jackson) or Protocol Buffers instead. Don't serialize database connections, thread handles, or other non-portable resources. Avoid Java serialization for long-term data storage — class changes break compatibility.",
+    "systemDesignConnection": "Serialization format choice impacts API design and system interoperability. JSON (human-readable, larger) vs Protobuf (binary, compact, schema-enforced) vs Avro (schema evolution for streaming). In distributed systems, serialization overhead affects network latency — Protobuf is 3-10x faster than JSON for large payloads.",
+    "memoryTrick": "Serialization = flat-pack furniture (disassemble for shipping, reassemble on arrival). serialVersionUID = assembly instruction version number. transient = 'do not ship this part' (passwords, temp data).",
+    "prerequisites": ["java-oop-pillars"],
+    "eli10": "Imagine you built a LEGO spaceship and want to mail it to a friend. You take it apart (serialize), put the pieces in a box with instructions (bytes), and mail it. Your friend rebuilds it (deserialize). The transient keyword means 'leave this piece out of the box.'"
   },
   {
     "id": "java-spring-boot",
@@ -543,6 +643,11 @@
     "commonMistake": "Using @Autowired field injection instead of constructor injection — field injection makes classes harder to unit test (can't inject mocks without Spring context) and hides dependencies. Always prefer constructor injection.",
     "correctMentalModel": "Spring Boot = Spring (IoC/DI/AOP) + auto-configuration + starter dependencies. You declare WHAT your class needs (via constructor parameters or @Autowired), and Spring finds/creates the right bean and injects it. The container owns the object lifecycle (create, configure, destroy) — you just define the beans.",
     "miniTask": "Create a Spring Boot REST API with a /api/products endpoint that lists products from an in-memory H2 database using Spring Data JPA. Add a POST endpoint to create a product with @Valid @RequestBody validation. Write a unit test for the service layer using Mockito to mock the repository.",
-    "ytQuery": "Spring Boot tutorial IoC DI REST API beginner"
+    "ytQuery": "Spring Boot tutorial IoC DI REST API beginner",
+    "whenNotToUse": "Don't use Spring Boot for tiny scripts or CLI tools — the startup overhead and dependency size are overkill. Avoid Spring Boot when you need fast cold starts (serverless/Lambda) — consider Quarkus or Micronaut with GraalVM instead. Don't use field injection (@Autowired on fields) — always use constructor injection for testability.",
+    "systemDesignConnection": "Spring Boot is the de facto standard for building Java microservices. In system design, understanding Spring's layered architecture (Controller → Service → Repository), connection pooling (HikariCP), and auto-configuration enables rapid design of scalable APIs. Spring Cloud extends this to distributed systems (service discovery, config server, circuit breakers).",
+    "memoryTrick": "Spring IoC = 'You don't call us, we call you' (Hollywood Principle). @Autowired = 'I need this, Spring will find it.' @Bean = 'Hey Spring, manage this object for me.'",
+    "prerequisites": ["java-annotations", "java-interfaces-abstract", "java-design-patterns"],
+    "eli10": "Spring Boot is like a helpful robot assistant that sets up your whole kitchen (application) for you. You just say 'I need a database and a web server' and the robot figures out all the wiring. Dependency Injection is like telling the robot 'I need a calculator' and it hands you one — you don't have to build it yourself."
   }
 ]

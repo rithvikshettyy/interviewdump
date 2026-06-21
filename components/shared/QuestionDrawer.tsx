@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { X, Copy, Check, StickyNote, CheckCircle2, Bookmark } from 'lucide-react'
+import { X, Copy, Check, StickyNote, CheckCircle2, Bookmark, Zap, Building2, GitBranch, Baby } from 'lucide-react'
 import { Question } from '@/types'
 import Badge from './Badge'
 
@@ -262,7 +262,143 @@ export default function QuestionDrawer({
               </div>
             </div>
 
-            {/* 6. Companies that ask this */}
+            {/* 6. 30-Second Interview Answer */}
+            {question.quickAnswer && (
+              <div>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Zap aria-hidden="true" className="w-3.5 h-3.5 text-amber" />
+                  <span className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    30s Interview Answer
+                  </span>
+                </div>
+                <div className="border-b border-border mb-4" />
+                <div className="bg-amber-dim border border-amber/20 rounded-xl p-4 text-sm text-text leading-relaxed italic">
+                  &ldquo;{question.quickAnswer}&rdquo;
+                </div>
+              </div>
+            )}
+
+            {/* 7. Explain Like I'm 10 */}
+            {question.eli10 && (
+              <div>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Baby aria-hidden="true" className="w-3.5 h-3.5 text-indigo-light" />
+                  <span className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    Explain Like I&apos;m 10
+                  </span>
+                </div>
+                <div className="border-b border-border mb-4" />
+                <div className="bg-indigo-dim border border-indigo/20 rounded-xl p-4 text-sm text-text-muted leading-relaxed">
+                  {question.eli10}
+                </div>
+              </div>
+            )}
+
+            {/* 8. Real Company Example */}
+            {question.realWorldExample && (
+              <div>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Building2 aria-hidden="true" className="w-3.5 h-3.5 text-text-dim" />
+                  <span className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    Real Production Story
+                  </span>
+                </div>
+                <div className="border-b border-border mb-4" />
+                <div className="bg-surface-hover border border-border rounded-xl p-4 text-sm text-text-muted leading-relaxed">
+                  {question.realWorldExample}
+                </div>
+              </div>
+            )}
+
+            {/* 9. Table Visualization (SQL) */}
+            {question.tableVisualization && (
+              <div>
+                <div className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">
+                  Table Visualization
+                </div>
+                <div className="border-b border-border mb-4" />
+                {question.tableVisualization.description && (
+                  <p className="text-xs text-text-muted mb-3">{question.tableVisualization.description}</p>
+                )}
+                <div className="flex flex-col gap-3">
+                  {question.tableVisualization.before && (
+                    <div>
+                      <span className="text-[10px] font-mono text-text-dim uppercase tracking-wider mb-1 block">Before</span>
+                      <div className="overflow-x-auto rounded-lg border border-border">
+                        <table className="w-full text-xs font-mono">
+                          <thead>
+                            <tr className="bg-surface">
+                              {question.tableVisualization.before.headers.map((h, i) => (
+                                <th key={i} className="px-3 py-2 text-left text-text-dim border-b border-border font-semibold">{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {question.tableVisualization.before.rows.map((row, i) => (
+                              <tr key={i} className="border-b border-border last:border-0">
+                                {row.map((cell, j) => (
+                                  <td key={j} className="px-3 py-1.5 text-text-muted">{cell}</td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                  {question.tableVisualization.after && (
+                    <div>
+                      <span className="text-[10px] font-mono text-green uppercase tracking-wider mb-1 block">After Query</span>
+                      <div className="overflow-x-auto rounded-lg border border-green/30">
+                        <table className="w-full text-xs font-mono">
+                          <thead>
+                            <tr className="bg-green-dim">
+                              {question.tableVisualization.after.headers.map((h, i) => (
+                                <th key={i} className="px-3 py-2 text-left text-green font-semibold border-b border-green/20">{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {question.tableVisualization.after.rows.map((row, i) => (
+                              <tr key={i} className="border-b border-green/10 last:border-0">
+                                {row.map((cell, j) => (
+                                  <td key={j} className="px-3 py-1.5 text-text-muted">{cell}</td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* 10. Related Topics */}
+            {question.relatedTopics && question.relatedTopics.length > 0 && (
+              <div>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <GitBranch aria-hidden="true" className="w-3.5 h-3.5 text-text-dim" />
+                  <span className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    Related Topics
+                  </span>
+                </div>
+                <div className="border-b border-border mb-4" />
+                <div className="flex gap-2 flex-wrap">
+                  {question.relatedTopics.map((topic) => (
+                    <span
+                      key={topic}
+                      className="text-xs font-mono bg-indigo-dim border border-indigo/20 text-indigo-light rounded-full px-3 py-1"
+                    >
+                      {topic}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 11. Companies that ask this */}
             {question.companies && question.companies.length > 0 && (
               <div>
                 <div className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">

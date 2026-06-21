@@ -3,7 +3,7 @@
 import React, { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Copy, Check, ArrowRight, ArrowLeft, CheckCircle2, Bookmark } from 'lucide-react'
+import { Copy, Check, ArrowRight, ArrowLeft, CheckCircle2, Bookmark, Baby, Ban, Network, Lightbulb, GitBranch } from 'lucide-react'
 import jsConcepts from '@/content/languages/javascript/concepts.json'
 import pythonConcepts from '@/content/languages/python/concepts.json'
 import javaConcepts from '@/content/languages/java/concepts.json'
@@ -168,10 +168,15 @@ export default function ConceptDetailPage({ params }: PageProps) {
 
   const sectionsNav = [
     { label: 'What is it?', id: 'what-is-it' },
+    ...(concept.eli10 ? [{ label: 'Explain Like I\'m 10', id: 'eli10' }] : []),
     { label: 'Code Example', id: 'code-example' },
+    ...(concept.whenNotToUse ? [{ label: 'When NOT to Use', id: 'when-not-to-use' }] : []),
     { label: 'Under the Hood', id: 'under-the-hood' },
+    ...(concept.memoryTrick ? [{ label: 'Memory Trick', id: 'memory-trick' }] : []),
+    ...(concept.systemDesignConnection ? [{ label: 'System Design', id: 'system-design' }] : []),
     { label: 'Interview Question', id: 'interview-question' },
     { label: 'Common Mistake', id: 'common-mistake' },
+    ...(concept.prerequisites?.length ? [{ label: 'Prerequisites', id: 'prerequisites' }] : []),
     { label: 'Mini Task', id: 'mini-task' },
     { label: 'YouTube recommendation', id: 'youtube' },
   ]
@@ -264,6 +269,21 @@ export default function ConceptDetailPage({ params }: PageProps) {
               </div>
             </section>
 
+            {/* ELI10 */}
+            {concept.eli10 && (
+              <section id="eli10" className="scroll-mt-6">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Baby className="w-4 h-4 text-indigo-light" aria-hidden="true" />
+                  <h2 className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    Explain Like I&apos;m 10
+                  </h2>
+                </div>
+                <div className="bg-indigo-dim border border-indigo/20 rounded-2xl p-6 text-sm text-text-muted leading-relaxed">
+                  {concept.eli10}
+                </div>
+              </section>
+            )}
+
             {/* 2. CODE EXAMPLE */}
             <section id="code-example" className="scroll-mt-6">
               <h2 className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-3">
@@ -291,6 +311,21 @@ export default function ConceptDetailPage({ params }: PageProps) {
               </div>
             </section>
 
+            {/* WHEN NOT TO USE */}
+            {concept.whenNotToUse && (
+              <section id="when-not-to-use" className="scroll-mt-6">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Ban className="w-4 h-4 text-red" aria-hidden="true" />
+                  <h2 className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    When NOT to Use
+                  </h2>
+                </div>
+                <div className="bg-red-dim border border-red/20 rounded-2xl p-6 text-sm text-red leading-relaxed">
+                  {concept.whenNotToUse}
+                </div>
+              </section>
+            )}
+
             {/* 3. UNDER THE HOOD */}
             <section id="under-the-hood" className="scroll-mt-6">
               <h2 className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-3">
@@ -300,6 +335,36 @@ export default function ConceptDetailPage({ params }: PageProps) {
                 {concept.underTheHood}
               </p>
             </section>
+
+            {/* MEMORY TRICK */}
+            {concept.memoryTrick && (
+              <section id="memory-trick" className="scroll-mt-6">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Lightbulb className="w-4 h-4 text-amber" aria-hidden="true" />
+                  <h2 className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    Memory Trick
+                  </h2>
+                </div>
+                <div className="bg-amber-dim border-l-4 border-amber rounded-r-2xl p-5 text-sm text-text leading-relaxed">
+                  {concept.memoryTrick}
+                </div>
+              </section>
+            )}
+
+            {/* SYSTEM DESIGN CONNECTION */}
+            {concept.systemDesignConnection && (
+              <section id="system-design" className="scroll-mt-6">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Network className="w-4 h-4 text-indigo-light" aria-hidden="true" />
+                  <h2 className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    System Design Connection
+                  </h2>
+                </div>
+                <div className="bg-surface border border-border rounded-2xl p-6 text-sm text-text-muted leading-relaxed">
+                  {concept.systemDesignConnection}
+                </div>
+              </section>
+            )}
 
             {/* 4. INTERVIEW QUESTION */}
             <section id="interview-question" className="scroll-mt-6">
@@ -350,6 +415,39 @@ export default function ConceptDetailPage({ params }: PageProps) {
                 </p>
               </div>
             </section>
+
+            {/* PREREQUISITES */}
+            {concept.prerequisites && concept.prerequisites.length > 0 && (
+              <section id="prerequisites" className="scroll-mt-6">
+                <div className="flex items-center gap-1.5 mb-3">
+                  <GitBranch className="w-4 h-4 text-text-dim" aria-hidden="true" />
+                  <h2 className="text-[11px] font-mono text-text-dim uppercase tracking-widest">
+                    Learn These First
+                  </h2>
+                </div>
+                <div className="flex gap-2 flex-wrap">
+                  {concept.prerequisites.map((prereq: string) => {
+                    const prereqConcept = concepts.find((c) => c.id === prereq || c.title.toLowerCase() === prereq.toLowerCase())
+                    return prereqConcept ? (
+                      <button
+                        key={prereq}
+                        onClick={() => router.push(`/fundamentals/languages/${lang}/${prereqConcept.id}`)}
+                        className="text-xs font-mono bg-indigo-dim border border-indigo/20 text-indigo-light rounded-full px-3 py-1.5 hover:bg-indigo/20 transition-colors"
+                      >
+                        {prereqConcept.title}
+                      </button>
+                    ) : (
+                      <span
+                        key={prereq}
+                        className="text-xs font-mono bg-surface-hover border border-border text-text-muted rounded-full px-3 py-1.5"
+                      >
+                        {prereq}
+                      </span>
+                    )
+                  })}
+                </div>
+              </section>
+            )}
 
             {/* 6. MINI TASK */}
             <section id="mini-task" className="scroll-mt-6">

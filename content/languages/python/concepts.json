@@ -23,7 +23,12 @@
     "commonMistake": "Using a list comprehension where a generator expression would suffice: [x**2 for x in range(10**7)] builds 10 million items in RAM, while (x**2 for x in range(10**7)) uses constant memory.",
     "correctMentalModel": "A comprehension is a declarative way to describe a new collection — 'I want this shape of data, filtered and transformed from this source.' If you only need to iterate once, prefer a generator.",
     "miniTask": "Given a list of sentences, write a single comprehension that returns a dict mapping each sentence to its word count, but only for sentences with more than 5 words.",
-    "ytQuery": "Python list comprehension tutorial"
+    "ytQuery": "Python list comprehension tutorial",
+    "whenNotToUse": "Don't use list comprehensions when the logic requires multiple statements, side effects (like printing or writing to a file), or deeply nested iterations (3+ levels). If a comprehension needs an if/else AND a nested loop, switch to a regular for-loop — readability matters more than one-liners. Also avoid when you only need to iterate once; use a generator expression instead to save memory.",
+    "systemDesignConnection": "In data pipeline architectures, comprehensions model the transform and filter stages of ETL pipelines. In system design interviews, when discussing stream processing (e.g., processing log entries), generator expressions are the Python equivalent of lazy evaluation in systems like Kafka Streams or Spark — processing items one at a time without loading everything into memory.",
+    "memoryTrick": "Comprehension = '[what] for [each] in [source] if [filter]' — read it left to right like a sentence: 'Give me [what] for [each item] in [source] if [condition].'",
+    "prerequisites": [],
+    "eli10": "Imagine you have a big box of LEGOs and you want only the red ones. Instead of picking them out one by one and putting them in a new box, a list comprehension is like a magic scoop that grabs all the red LEGOs in one swoop and puts them in your new box."
   },
   {
     "id": "py-decorators",
@@ -49,7 +54,12 @@
     "commonMistake": "Forgetting @functools.wraps — without it, the wrapped function loses its __name__ and __doc__, breaking logging, error messages, and test frameworks that rely on function metadata.",
     "correctMentalModel": "A decorator is a factory that transforms a function — takes a function, returns an enhanced function. The original function still runs; the wrapper just adds pre/post behavior around it.",
     "miniTask": "Write a @cache decorator that stores results in a dictionary keyed by (args, kwargs) and returns the cached result on repeated calls instead of re-executing the function.",
-    "ytQuery": "Python decorators explained"
+    "ytQuery": "Python decorators explained",
+    "whenNotToUse": "Don't use decorators for logic that only applies in one place — a regular function call is simpler. Avoid deep decorator stacking (3+ decorators on one function) because it makes debugging difficult — stack traces show wrapper functions, not the original. Don't use decorators to hide critical business logic; the decorated function should still make sense when read standalone.",
+    "systemDesignConnection": "Decorators implement the Aspect-Oriented Programming pattern used in system design for cross-cutting concerns: rate limiting, authentication, circuit breaking, and request logging. In microservice architectures, frameworks like Flask and FastAPI use decorators (@app.route, @limiter.limit) to attach routing and middleware behavior to handler functions without modifying them.",
+    "memoryTrick": "Decorator = 'gift wrapper for functions.' The @ symbol even looks like a bow on top of a present. @timer wraps your function with timing paper.",
+    "prerequisites": ["py-args-kwargs"],
+    "eli10": "Imagine you drew a picture. A decorator is like putting a fancy frame around it — the picture stays the same, but now it looks special. You can add a gold frame (logging), a glass cover (error handling), or glitter edges (timing) without changing the picture itself."
   },
   {
     "id": "py-generators",
@@ -75,7 +85,12 @@
     "commonMistake": "Trying to iterate a generator twice — once a generator is exhausted, it doesn't reset. You need to create a new generator instance. This is a common bug when reusing a generator in multiple for-loops.",
     "correctMentalModel": "A generator is a resumable function. Each yield is a 'pause point' that returns a value and saves all local state. next() is 'resume from where you left off.'",
     "miniTask": "Write a generator 'chunker(iterable, size)' that yields successive chunks of length 'size' from any iterable. Example: chunker(range(10), 3) should yield [0,1,2], [3,4,5], [6,7,8], [9].",
-    "ytQuery": "Python generators yield tutorial"
+    "ytQuery": "Python generators yield tutorial",
+    "whenNotToUse": "Don't use generators when you need random access (indexing), length checking (len()), or need to iterate over the data multiple times — generators are single-use and don't support these. If your dataset fits comfortably in memory and you need to access it repeatedly, use a list. Also avoid generators for simple transformations where a list comprehension is just as readable.",
+    "systemDesignConnection": "Generators model producer-consumer patterns in system design. They are the Python equivalent of streaming data pipelines — reading from a Kafka topic, processing one message at a time, and yielding results downstream. In pagination design, async generators naturally model cursor-based pagination without loading all pages into memory.",
+    "memoryTrick": "Generator = 'lazy tap, not eager bathtub.' yield = 'pause and hand over one drip.' A tap gives water on demand; a bathtub fills everything at once.",
+    "prerequisites": ["py-list-comprehensions"],
+    "eli10": "Imagine a popcorn machine. Instead of making ALL the popcorn at once and filling up your whole room, a generator pops one kernel at a time — only when you ask for it. You get fresh popcorn without ever running out of space!"
   },
   {
     "id": "py-gil",
@@ -101,7 +116,12 @@
     "commonMistake": "Adding more threads to a CPU-bound program expecting it to get faster — due to the GIL it will actually get slightly slower due to lock contention. Use multiprocessing or concurrent.futures.ProcessPoolExecutor instead.",
     "correctMentalModel": "GIL = one Python instruction at a time. I/O (file reads, network) releases the GIL while waiting, so threads work. Pure Python loops/math never release it. When parallelism matters for CPU work, switch to processes.",
     "miniTask": "Benchmark a CPU-bound function using both threading.Thread and multiprocessing.Process on your machine. Record the times and explain the results in terms of the GIL.",
-    "ytQuery": "Python GIL Global Interpreter Lock explained"
+    "ytQuery": "Python GIL Global Interpreter Lock explained",
+    "whenNotToUse": "Don't reach for threading to speed up CPU-bound tasks in CPython — the GIL will prevent any speedup and may even slow things down due to lock contention overhead. Use multiprocessing or concurrent.futures.ProcessPoolExecutor for CPU parallelism. Threading is only beneficial for I/O-bound work (network, disk, database queries).",
+    "systemDesignConnection": "Understanding the GIL is critical when designing Python-based backend systems. In system design, this is why Python web servers (Gunicorn, uWSGI) use multiple worker processes, not threads, for CPU-heavy request handling. It also explains why asyncio (single-threaded event loop) is preferred for high-concurrency I/O servers rather than thread-per-request models.",
+    "memoryTrick": "GIL = 'One Chef, One Knife.' Many cooks (threads) but only one knife (GIL) — for chopping (CPU), only one works. For marinating (I/O wait), others can do their thing.",
+    "prerequisites": ["py-generators"],
+    "eli10": "Imagine a classroom with one talking stick. Only the kid holding the stick can talk (run code). Even if there are 10 kids (threads), only one talks at a time. But if a kid is waiting for their turn at the water fountain (I/O), they pass the stick so someone else can talk!"
   },
   {
     "id": "py-context-managers",
@@ -127,7 +147,12 @@
     "commonMistake": "Trying to use a file handle after the 'with' block — the file is already closed at that point. All processing must happen inside the 'with' block.",
     "correctMentalModel": "A context manager is a bracket that owns the setup (enter) and teardown (exit). Python guarantees the teardown runs, making it safer than manual try/finally.",
     "miniTask": "Write a context manager 'suppress_errors(*exceptions)' that catches and suppresses specified exception types without crashing the program. Use @contextmanager.",
-    "ytQuery": "Python context manager with statement"
+    "ytQuery": "Python context manager with statement",
+    "whenNotToUse": "Don't write a custom context manager for one-off cleanup — a try/finally block is simpler for isolated cases. Avoid using context managers to hide complex control flow or state mutations that should be explicit. Don't use context managers for logic that doesn't follow the acquire-use-release pattern.",
+    "systemDesignConnection": "Context managers implement the Resource Acquisition Is Initialization (RAII) pattern from system design. In database systems, transaction management (BEGIN/COMMIT/ROLLBACK) maps directly to __enter__/__exit__. In distributed systems, context managers manage connection pools, distributed locks, and temporary file resources — ensuring cleanup even during failures.",
+    "memoryTrick": "'With' = 'walk in, walk out.' __enter__ opens the door, __exit__ closes it behind you — even if you trip and fall (exception) on the way out.",
+    "prerequisites": ["py-exception-handling"],
+    "eli10": "Imagine borrowing a library book. The 'with' statement is like a magic rule: when you borrow the book (enter), it automatically returns itself when you're done reading (exit) — even if you fall asleep! You never have to worry about forgetting to return it."
   },
   {
     "id": "py-args-kwargs",
@@ -153,7 +178,12 @@
     "commonMistake": "Putting *args before regular positional arguments — parameters after *args are keyword-only. Common gotcha: def func(a, *args, b) means b MUST be passed as a keyword argument.",
     "correctMentalModel": "*args is a 'catch remaining positionals in a tuple' and **kwargs is a 'catch remaining keywords in a dict.' Together they make any function accept any call signature.",
     "miniTask": "Write a function 'merge_dicts(*dicts, **overrides)' that merges all provided dicts and then applies the override keyword arguments on top, returning the combined dict.",
-    "ytQuery": "Python args kwargs explained"
+    "ytQuery": "Python args kwargs explained",
+    "whenNotToUse": "Don't use *args/**kwargs when the function has a clear, fixed signature — explicit parameters are more readable and provide better IDE autocompletion. Avoid **kwargs for public APIs where callers need to know what options exist. Don't pass **kwargs through multiple layers blindly — it obscures what arguments are actually supported and makes debugging difficult.",
+    "systemDesignConnection": "The *args/**kwargs pattern is the foundation of middleware chains and plugin architectures. In web frameworks (Django, Flask), middleware functions use *args/**kwargs to forward request data through a chain of processors without each middleware needing to know about arguments added by others. This is the same 'pass-through' pattern used in message queues and event systems.",
+    "memoryTrick": "* = 'star catches stars (many things).' *args catches loose positional stars into a bag (tuple). **kwargs catches labeled stars into a drawer (dict).",
+    "prerequisites": [],
+    "eli10": "Imagine ordering pizza. *args is like saying 'I want pepperoni, mushrooms, olives' — you can add as many toppings as you want. **kwargs is like saying 'size=large, crust=thin' — you name each thing you want. Together, they let you order ANY pizza!"
   },
   {
     "id": "py-dunder-methods",
@@ -179,7 +209,12 @@
     "commonMistake": "Forgetting that defining __eq__ automatically sets __hash__ = None, making your objects unhashable (can't be used in sets or as dict keys). Explicitly set __hash__ if you need hashable objects with custom equality.",
     "correctMentalModel": "Dunder methods are Python's hook system. Python calls them implicitly when you use syntax or built-in functions. Your class is 'speaking Python' by implementing the right dunders.",
     "miniTask": "Create a class 'BoundedList' that wraps a list but raises IndexError on out-of-bounds access, supports len(), in operator, and pretty-printing via __repr__.",
-    "ytQuery": "Python dunder magic methods data model"
+    "ytQuery": "Python dunder magic methods data model",
+    "whenNotToUse": "Don't implement dunder methods that don't make semantic sense for your class — adding __add__ to a User class is confusing. Avoid overriding __del__ for cleanup — use context managers instead, as __del__ timing is unpredictable. Don't implement __getattr__ unless you truly need dynamic attribute access — it makes debugging much harder because attribute errors get silently intercepted.",
+    "systemDesignConnection": "Dunder methods implement the Strategy and Adapter patterns from system design. In ORM frameworks (SQLAlchemy, Django ORM), __getattr__ enables lazy-loading related objects. __enter__/__exit__ power connection pool management. Custom __hash__ and __eq__ are critical for designing cache keys and ensuring correct behavior in distributed hash-based systems (consistent hashing).",
+    "memoryTrick": "Dunder = 'Double UNDERscore' = 'plug adapters.' Each dunder lets your object plug into a Python socket: __len__ plugs into len(), __add__ plugs into +, __str__ plugs into print().",
+    "prerequisites": ["py-classes"],
+    "eli10": "Imagine your toy robot. Dunder methods are like secret buttons on the robot. When you press '+' (use the + sign), it secretly presses the __add__ button. When you ask 'how big are you?' (use len()), it presses the __len__ button. Every Python trick has a secret button inside!"
   },
   {
     "id": "py-classes",
@@ -205,7 +240,12 @@
     "commonMistake": "Using @staticmethod when you should use @classmethod — if the utility function might need to be overridden in a subclass and call the subclass constructor, you need @classmethod. @staticmethod can't be polymorphically overridden via cls.",
     "correctMentalModel": "Ask: does the method need instance data? → instance method. Does it need class data or make instances? → classmethod. Does it need neither? → staticmethod. Does it need to look like an attribute? → @property.",
     "miniTask": "Build a 'Temperature' class with a Celsius internal value and @property for Celsius, Fahrenheit, and Kelvin (each auto-converted), plus @classmethod constructors from_fahrenheit() and from_kelvin().",
-    "ytQuery": "Python classmethod staticmethod property"
+    "ytQuery": "Python classmethod staticmethod property",
+    "whenNotToUse": "Don't use @staticmethod when the method might need to be overridden in subclasses — use @classmethod so subclasses get their own cls reference. Avoid @property for expensive computations without caching — callers expect attribute access to be fast. Don't use @classmethod as a regular method that just happens to not use self — that's a sign it should be a module-level function or @staticmethod.",
+    "systemDesignConnection": "@classmethod factory methods appear in the Factory pattern from system design — creating objects without specifying the exact class (e.g., from_config(), from_env()). @property models computed attributes, which map to derived columns in database design or computed fields in API response schemas. These patterns are common in configuration management and dependency injection systems.",
+    "memoryTrick": "Ask three questions: 'Need self?' → instance method. 'Need cls?' → @classmethod. 'Need neither?' → @staticmethod. 'Look like an attribute?' → @property.",
+    "prerequisites": ["py-args-kwargs"],
+    "eli10": "In a bakery, an instance method is what each baker does with their own cake (self). A class method is a recipe that any baker can follow to make a new cake (cls). A static method is a kitchen tool like a timer — it doesn't need a baker or a cake to work. A property is a window display — it looks simple but runs a little machine behind it."
   },
   {
     "id": "py-duck-typing",
@@ -231,7 +271,12 @@
     "commonMistake": "Over-using isinstance() to mimic Java-style type checking in Python — this defeats the purpose of duck typing and makes code less flexible (breaks when you pass a compatible but unrelated class).",
     "correctMentalModel": "Python trusts objects to do what they claim by having the right attributes. You describe what an object needs to do (methods), not what it needs to be (type). This makes code more reusable and composable.",
     "miniTask": "Write a function 'serialize(data)' that works with any object that has a .to_dict() method, and falls back to vars(data) if it doesn't — without using isinstance() at all.",
-    "ytQuery": "Python duck typing explained"
+    "ytQuery": "Python duck typing explained",
+    "whenNotToUse": "Don't rely on duck typing when type safety is critical — in financial calculations, medical software, or data serialization, use explicit type checks or Protocols with a static type checker. Avoid duck typing when error messages from missing methods would be confusing to end users — a clear TypeError from isinstance() is better than a cryptic AttributeError deep in a call stack.",
+    "systemDesignConnection": "Duck typing enables the Plugin/Adapter pattern in system design. In microservice architectures, services communicate through interfaces (APIs), not concrete types — any service that implements the correct endpoints 'ducks' the interface. Python's Protocol type mirrors Interface Segregation from SOLID principles, letting you define minimal required behaviors for components.",
+    "memoryTrick": "'If it quacks, it's a duck.' Don't check the birth certificate (type) — check if it can do the job (has the method). EAFP: 'try first, apologize later.'",
+    "prerequisites": [],
+    "eli10": "Imagine you need someone to help carry a box. You don't ask 'Are you a professional mover?' You just ask 'Can you carry this?' If they can carry it, great — they're a mover for today! Python works the same way: it doesn't care what type something is, just whether it can do what you asked."
   },
   {
     "id": "py-memory",
@@ -257,7 +302,12 @@
     "commonMistake": "Using 'is' for value comparison instead of '=='. 'is' checks object identity (same memory address). It works for small ints and interned strings due to caching, but is misleading and fragile for general use.",
     "correctMentalModel": "CPython is an automatic memory manager with two layers: immediate refcount cleanup (handles 99% of cases) and periodic cyclic GC cleanup (handles cycles). For deterministic cleanup, use context managers ('with') rather than relying on GC timing.",
     "miniTask": "Create a class that prints when it's allocated and deallocated (__init__ and __del__). Create two instances that reference each other, delete them, and verify with gc.collect() that the cyclic GC cleaned them up.",
-    "ytQuery": "Python memory management garbage collection reference counting"
+    "ytQuery": "Python memory management garbage collection reference counting",
+    "whenNotToUse": "Don't manually call gc.collect() in production code unless you have a specific, measured memory issue — it's slow and usually unnecessary. Avoid using __del__ destructors for resource cleanup (use context managers instead). Don't rely on 'is' for value comparison just because it works for small integers — that's an implementation detail, not a guarantee.",
+    "systemDesignConnection": "Memory management knowledge is critical for designing high-performance Python services. In system design, understanding reference counting explains why long-lived Python processes (web servers, data pipelines) can develop memory leaks from circular references. It's also why tools like tracemalloc and memory_profiler are part of the observability stack for production Python services.",
+    "memoryTrick": "RefCount = 'popularity counter.' When nobody likes you anymore (refcount = 0), you get kicked out (freed). Cyclic GC = 'the bouncer who breaks up cliques that only talk to each other.'",
+    "prerequisites": ["py-classes"],
+    "eli10": "Imagine every toy in your room has a number that counts how many kids are playing with it. When no kid wants it anymore (the number reaches zero), your mom puts it away. But sometimes two toys are holding onto each other — the garbage collector is like mom coming in to break them apart and put both away."
   },
   {
     "id": "py-asyncio",
@@ -283,7 +333,12 @@
     "commonMistake": "Mixing synchronous blocking calls inside async code — calling requests.get() inside an async def blocks the entire event loop, making all other coroutines stall. Use aiohttp or run blocking code in a thread executor: await loop.run_in_executor(None, blocking_func).",
     "correctMentalModel": "asyncio is cooperative multitasking — coroutines voluntarily yield control at 'await' points. The event loop decides who runs next. If a coroutine never awaits, it monopolizes the thread. Always await at I/O boundaries.",
     "miniTask": "Write an async function that fetches data from 3 URLs concurrently using asyncio.gather(), handles individual failures with try/except inside each fetch coroutine, and returns a list of (url, result_or_error) tuples.",
-    "ytQuery": "Python asyncio async await event loop tutorial"
+    "ytQuery": "Python asyncio async await event loop tutorial",
+    "whenNotToUse": "Don't use asyncio for CPU-bound tasks — it's single-threaded and will block the event loop. Avoid asyncio when your dependencies don't have async versions (e.g., using requests instead of aiohttp defeats the purpose). Don't introduce asyncio into a small script or CLI tool — the overhead of async/await syntax adds complexity without benefit when you don't have concurrent I/O.",
+    "systemDesignConnection": "asyncio is the foundation of Python's high-concurrency server design. In system design, it powers frameworks like FastAPI and aiohttp for handling thousands of concurrent connections with a single process — similar to Node.js's event loop model. It's the Python implementation of the Reactor pattern used in network server design (like Nginx's event-driven architecture).",
+    "memoryTrick": "async = 'I might wait.' await = 'I'm waiting now, let others go.' The event loop is a single waiter serving many tables — never idle, always moving to the next ready table.",
+    "prerequisites": ["py-generators", "py-gil"],
+    "eli10": "Imagine you're cooking dinner with one stove. You put pasta on to boil, and while waiting, you chop vegetables. Then while vegetables roast, you make sauce. You're one person doing many things by switching between them whenever you'd be waiting. That's asyncio — one worker, many tasks, never standing still!"
   },
   {
     "id": "py-comprehensions-advanced",
@@ -309,7 +364,12 @@
     "commonMistake": "Using groupby() on unsorted data — it only groups consecutive equal elements. If your list has 'A', 'B', 'A', groupby will produce three groups (A, B, A), not two. Always sort on the same key before calling groupby.",
     "correctMentalModel": "Functional tools (map, filter, reduce) describe transformations without explicit loops. itertools tools are building blocks for composing lazy data pipelines. Combine them with generators for processing large datasets in constant memory.",
     "miniTask": "Using only itertools and functools, write a one-pass pipeline that reads a list of log strings, filters for 'ERROR' entries, extracts the error code (first word after 'ERROR:'), counts occurrences of each code, and returns the top 3 most common codes.",
-    "ytQuery": "Python itertools tutorial map filter reduce"
+    "ytQuery": "Python itertools tutorial map filter reduce",
+    "whenNotToUse": "Don't chain map+filter+reduce with lambdas into an unreadable one-liner — a list comprehension or explicit loop is clearer. Avoid reduce() when sum(), max(), min(), or any() already do what you need. Don't use map() with a lambda when a list comprehension does the same thing more readably.",
+    "systemDesignConnection": "Functional tools model the MapReduce paradigm from distributed computing (Hadoop, Spark). map() corresponds to the Map phase (transform each record), filter() is the filtering stage, and reduce() is the Reduce phase (aggregate results). Understanding these primitives helps explain how distributed data processing frameworks scale across clusters.",
+    "memoryTrick": "Map = 'transform each.' Filter = 'keep matching.' Reduce = 'squish all into one.' Assembly line: paint (map) → inspect (filter) → weld together (reduce).",
+    "prerequisites": ["py-lambda", "py-list-comprehensions"],
+    "eli10": "Imagine you have a box of mixed fruits. map() is like painting every fruit gold. filter() is like picking out only the apples. reduce() is like squishing all the apples together into one big apple juice. Each step does one simple thing to your collection!"
   },
   {
     "id": "py-exception-handling",
@@ -335,7 +395,12 @@
     "commonMistake": "Catching bare 'except:' or 'except BaseException:' which catches even KeyboardInterrupt and SystemExit, making programs impossible to stop with Ctrl+C. Always catch specific exception types or at minimum 'except Exception:'.",
     "correctMentalModel": "Exceptions propagate up the call stack until caught. Use specific exception types to catch only what you can handle. Let unexpected exceptions bubble up so they surface as bugs rather than being silently swallowed.",
     "miniTask": "Write a function 'safe_divide(a, b)' that raises a custom 'DivisionByZeroError' with a helpful message when b is zero, and returns the float result otherwise. Wrap the call in a try/except that logs the error and returns None on failure.",
-    "ytQuery": "Python exception handling try except tutorial"
+    "ytQuery": "Python exception handling try except tutorial",
+    "whenNotToUse": "Don't use exceptions for normal control flow — checking if a key exists with try/except KeyError is fine (EAFP), but using exceptions to break out of deeply nested loops is an anti-pattern. Avoid catching broad 'except Exception' unless you're at the top-level error boundary. Never use bare 'except:' — it catches KeyboardInterrupt and SystemExit, making your program impossible to stop.",
+    "systemDesignConnection": "Exception handling maps to error boundaries in system design. In microservices, exceptions at service boundaries should be caught and converted to appropriate HTTP status codes or gRPC error codes. The 'raise from' pattern preserves error chains, which is essential for distributed tracing and debugging across service boundaries. Circuit breaker patterns rely on counting and categorizing exceptions.",
+    "memoryTrick": "try = 'attempt the risky thing.' except = 'plan B if it fails.' else = 'bonus if it works.' finally = 'always clean up, no matter what.' TEFF: Try, Except, else(Fine), Finally.",
+    "prerequisites": [],
+    "eli10": "Imagine you're trying to jump across a stream. 'try' means you jump. 'except' is the safety net if you fall in. 'else' is your victory dance if you make it. 'finally' is drying off your shoes — you do it no matter what happened!"
   },
   {
     "id": "py-file-handling",
@@ -361,7 +426,12 @@
     "commonMistake": "Opening a file without a context manager and forgetting to call f.close() — especially in exception paths. This causes resource leaks (file descriptors held open) that can cause 'Too many open files' errors in long-running programs.",
     "correctMentalModel": "File I/O is a stateful operation: open (acquire OS resource) → read/write (transfer data) → close (release resource). The 'with' statement automates the acquire/release pattern, making resource management explicit and safe.",
     "miniTask": "Write a function 'count_words_in_file(path)' that reads a file and returns a Counter of word frequencies. Handle FileNotFoundError gracefully. Use pathlib.Path for the path argument.",
-    "ytQuery": "Python file handling read write open pathlib"
+    "ytQuery": "Python file handling read write open pathlib",
+    "whenNotToUse": "Don't use f.read() to load entire large files into memory — iterate line by line for files larger than available RAM. Avoid string concatenation for building file paths (use pathlib or os.path.join instead). Don't use open() without specifying encoding on text files — the default encoding varies by OS and can cause cross-platform bugs.",
+    "systemDesignConnection": "File handling patterns map directly to storage layer design. In system design, the streaming read pattern (line by line) mirrors how log aggregation systems (ELK stack, Fluentd) process log files. Temporary file handling with context managers models the spool-and-commit pattern used in database write-ahead logs and message queues.",
+    "memoryTrick": "'With open, never worry.' The 'with' statement is your file butler — opens the door (file) when you arrive, closes it when you leave, even if you trip (exception).",
+    "prerequisites": ["py-context-managers"],
+    "eli10": "Reading a file is like opening a book — you can read the whole thing at once, or one page at a time. Writing is like filling in a notebook. The 'with' keyword is like a responsible friend who always puts the book back on the shelf when you're done, even if you get distracted."
   },
   {
     "id": "py-lambda",
@@ -387,7 +457,12 @@
     "commonMistake": "Using lambdas inside list comprehensions for complex logic — this produces unreadable code and hides bugs. Also forgetting the late-binding gotcha: all lambdas in a loop share the same closure variable, so they all see the final loop value.",
     "correctMentalModel": "Lambdas are syntactic sugar for simple, throwaway functions. Their value is conciseness in one-liner usage (sort key, map callback). When the logic grows beyond a single expression, switch to def — named functions are first-class citizens in Python too.",
     "miniTask": "Write a one-liner using sorted() with a lambda key that sorts a list of dicts by two fields: first by 'department' alphabetically, then by 'salary' descending. Example: sorted(employees, key=lambda e: ...).",
-    "ytQuery": "Python lambda functions explained"
+    "ytQuery": "Python lambda functions explained",
+    "whenNotToUse": "Don't assign a lambda to a variable — if you need to name it, use def instead (PEP 8 explicitly discourages this). Avoid lambdas with complex logic or multiple operations — they become unreadable. Don't use lambda in loops without default argument binding — all lambdas will share the last loop variable value (late binding trap).",
+    "systemDesignConnection": "Lambdas model the callback pattern used in event-driven architectures and pub/sub systems. In serverless computing (AWS Lambda is literally named after this concept), small, stateless functions are triggered by events — mirroring how Python lambdas are used as inline callbacks for sort keys, map operations, and event handlers.",
+    "memoryTrick": "Lambda = 'sticky note function.' Quick, disposable, one line. If you need a whole page, use def. If you're naming the sticky note, you should have written a letter (def) instead.",
+    "prerequisites": [],
+    "eli10": "A lambda is like a quick math shortcut you write on a sticky note: 'double this number.' Instead of writing a whole recipe with a name, you just scribble the one step you need and use it right away. If you need more steps, write a real recipe (use def)."
   },
   {
     "id": "py-map-filter-reduce",
@@ -413,7 +488,12 @@
     "commonMistake": "Expecting map() and filter() to return lists in Python 3 — they return iterator objects. Passing the result to len() or indexing it will fail. Always wrap with list() or use in a for loop.",
     "correctMentalModel": "map/filter/reduce are the functional triple: transform (map), select (filter), aggregate (reduce). They describe what to do with data, not how to loop. In Python, comprehensions often replace map+lambda and filter+lambda for clarity, but reduce has no direct comprehension equivalent.",
     "miniTask": "Without using any for/while loops or list comprehensions, use map(), filter(), and reduce() to compute the product of all even numbers in a list of integers. E.g., [1,2,3,4,5,6] → 2*4*6 = 48.",
-    "ytQuery": "Python map filter reduce functools tutorial"
+    "ytQuery": "Python map filter reduce functools tutorial",
+    "whenNotToUse": "Don't use map() with a lambda when a list comprehension is clearer — [x**2 for x in nums] beats list(map(lambda x: x**2, nums)). Avoid reduce() for simple aggregations where sum(), max(), min(), or any() already exist. Don't chain multiple map/filter calls when a single comprehension with conditions is more readable.",
+    "systemDesignConnection": "map/filter/reduce directly model the MapReduce distributed computing paradigm. In system design interviews, explaining how Google's MapReduce framework scales these operations across thousands of machines shows understanding of horizontal scaling. map() = distribute work, filter() = discard irrelevant data, reduce() = aggregate results — the same three stages in Hadoop and Spark.",
+    "memoryTrick": "MFR: Map = 'Modify each.' Filter = 'Find matching.' Reduce = 'Roll into one.' Think of a conveyor belt: shape (map), inspect (filter), box up (reduce).",
+    "prerequisites": ["py-lambda"],
+    "eli10": "Imagine you have a pile of toy cars. map() is like painting every car blue. filter() is like picking out only the fast ones. reduce() is like stacking them all into one giant super-car. Each step does something simple to your whole collection!"
   },
   {
     "id": "py-inheritance",
@@ -439,7 +519,12 @@
     "commonMistake": "Calling Parent.__init__(self) directly instead of super().__init__() — in multiple inheritance, this skips other classes in the MRO chain, causing some base classes to be initialized twice or not at all.",
     "correctMentalModel": "Inheritance creates a chain (MRO). super() is a cursor that walks this chain, calling the next class's method. With multiple inheritance, all classes in the MRO must cooperate by always calling super() for the chain to work correctly.",
     "miniTask": "Create an abstract class 'Animal' with abstract methods speak() and move(). Subclass it with 'Dog' and 'Bird'. Then create 'FlyingDog' using multiple inheritance and verify its MRO. Ensure all abstract methods are implemented.",
-    "ytQuery": "Python inheritance MRO super abstractmethod tutorial"
+    "ytQuery": "Python inheritance MRO super abstractmethod tutorial",
+    "whenNotToUse": "Don't use deep inheritance hierarchies (3+ levels) — prefer composition over inheritance for complex behaviors. Avoid multiple inheritance unless you truly need it (mixins are the acceptable use case). Don't inherit from concrete classes when an abstract base class or Protocol would better express the contract.",
+    "systemDesignConnection": "Inheritance models the Template Method and Strategy patterns in system design. Abstract base classes define contracts that different implementations must follow — the same principle behind interface-based design in microservices. In plugin architectures, ABC defines the plugin interface, and each plugin subclass implements the required methods.",
+    "memoryTrick": "MRO = 'Method Resolution Order' = 'the family tree phone chain.' When you call super(), Python calls the NEXT person in the chain, not just your parent. super() follows the MRO, not the family tree.",
+    "prerequisites": ["py-classes"],
+    "eli10": "Inheritance is like a family recipe book. Your grandma wrote the original cookie recipe (parent class). Your mom added chocolate chips (subclass). You added sprinkles (your subclass). You get all the recipes from above, plus your own additions. Multiple inheritance is like having TWO grandmas with different recipe books!"
   },
   {
     "id": "py-dataclasses",
@@ -465,7 +550,12 @@
     "commonMistake": "Using a mutable default value directly: skills: List[str] = [] — this raises a ValueError at class definition. Python requires field(default_factory=list) to ensure each instance gets a fresh list.",
     "correctMentalModel": "@dataclass is code generation at class creation time. It reads your field annotations and writes the __init__ and other methods for you. Think of it as a shortcut for the class boilerplate pattern — you declare WHAT the data is, Python generates HOW to create and compare it.",
     "miniTask": "Create a frozen dataclass 'Point3D' with x, y, z float fields and a distance_to() method. Create a list of Point3D instances and sort them by their distance from the origin. Verify they are hashable by adding them to a set.",
-    "ytQuery": "Python dataclasses tutorial @dataclass field frozen"
+    "ytQuery": "Python dataclasses tutorial @dataclass field frozen",
+    "whenNotToUse": "Don't use @dataclass when you need complex initialization logic — the auto-generated __init__ doesn't support validation or computed fields well (use __post_init__ for simple cases, or a regular class for complex ones). Avoid dataclasses for classes with many methods and little data — they're designed for data containers. Don't use mutable dataclasses as dict keys or set members — use frozen=True instead.",
+    "systemDesignConnection": "Dataclasses model Data Transfer Objects (DTOs) and Value Objects from domain-driven design. In API design, dataclasses with frozen=True represent immutable request/response schemas. In event-driven architectures, frozen dataclasses are ideal for event payloads — immutable, hashable, and easily serializable. Libraries like Pydantic extend this pattern with runtime validation for API input.",
+    "memoryTrick": "@dataclass = 'auto-fill the boring parts.' It writes __init__, __repr__, __eq__ for you. frozen=True = 'lock the form — nobody can change it after filling it out.'",
+    "prerequisites": ["py-classes", "py-typing"],
+    "eli10": "Imagine filling out a form for a new student: name, age, grade. A dataclass is like a magic form that automatically knows how to print itself, compare with other forms, and make copies — without you writing those instructions every time. frozen=True means the form is written in pen — no erasing!"
   },
   {
     "id": "py-itertools",
@@ -491,7 +581,12 @@
     "commonMistake": "Using groupby() on unsorted data and expecting all matching keys to be grouped — it only groups consecutive runs. Also consuming an iterator twice after passing it to an itertools function — iterators are single-use.",
     "correctMentalModel": "itertools functions are like building blocks for lazy pipelines. They accept iterators and return iterators — nothing is computed until you pull from the end. Chain them together to describe complex transformations that execute in a single pass over the data.",
     "miniTask": "Using itertools only, generate all possible poker hands (choose 5 from a 52-card deck). Count how many hands contain at least one pair. Do this without storing all hands in a list simultaneously — use a generator approach.",
-    "ytQuery": "Python itertools tutorial chain groupby product combinations"
+    "ytQuery": "Python itertools tutorial chain groupby product combinations",
+    "whenNotToUse": "Don't use itertools for simple operations that a list comprehension handles more readably. Avoid product() on large input sets without understanding the combinatorial explosion (product of two 1000-item lists = 1 million pairs). Don't use groupby() without sorting first — it only groups consecutive equal elements, not all matching elements.",
+    "systemDesignConnection": "itertools models streaming data pipelines in system design. chain() is pipeline concatenation, islice() is windowing/pagination, and groupby() is the GROUP BY operation in stream processing. In batch processing systems, itertools patterns enable processing datasets larger than memory by working lazily — the same principle behind Spark's lazy evaluation.",
+    "memoryTrick": "itertools = 'LEGO blocks for lazy data.' Each function clicks onto any other. Nothing happens until you pull the first piece. chain = glue, islice = scissors, groupby = sorter, product = multiplication table.",
+    "prerequisites": ["py-generators", "py-list-comprehensions"],
+    "eli10": "Imagine a toy factory with different machines. One machine glues toy trains together (chain). Another cuts them into groups of 3 (islice). Another sorts them by color (groupby). The cool part? None of them start working until you press the button — they wait until you need them!"
   },
   {
     "id": "py-typing",
@@ -517,7 +612,12 @@
     "commonMistake": "Assuming type hints enforce types at runtime — Python happily accepts the wrong type and only fails when the wrong-typed value is actually used. Always use a static type checker (mypy, pyright) in CI to get the real benefit.",
     "correctMentalModel": "Type hints are documentation that machines can read. They describe intent (this function expects an int) and enable tools to verify that intent across your codebase without running the code. Think of them as compile-time checks bolted onto a dynamic language.",
     "miniTask": "Add type hints to a function 'merge_configs(base: ..., overrides: ...) -> ...' that merges two nested dicts of arbitrary depth. Use TypeVar or recursive types as appropriate. Then run mypy to verify correctness.",
-    "ytQuery": "Python type hints mypy typing module tutorial"
+    "ytQuery": "Python type hints mypy typing module tutorial",
+    "whenNotToUse": "Don't add type hints to quick scripts, prototypes, or throwaway code — the overhead isn't worth it. Avoid overly complex type annotations (deeply nested generics like Dict[str, List[Tuple[int, ...]]]) that hurt readability more than they help. Don't assume type hints enforce types at runtime — they're only checked by static analyzers like mypy.",
+    "systemDesignConnection": "Type hints enable contract-based API design. In system design, they document the expected shape of data flowing between components — the same role that Protocol Buffers and JSON Schema play in microservice communication. In large codebases, type hints + mypy form a lightweight type system that catches integration errors at build time rather than runtime.",
+    "memoryTrick": "Type hints = 'labels on boxes, not locks.' They tell you what SHOULD be inside, but Python won't stop you from putting the wrong thing in. mypy = the inspector who reads labels.",
+    "prerequisites": [],
+    "eli10": "Imagine labeling your toy boxes: 'CARS' on one, 'DOLLS' on another. The labels help you find things fast, but nobody stops you from putting a car in the doll box. Type hints are those labels — they help you and your tools keep things organized, but Python itself doesn't enforce them."
   },
   {
     "id": "py-collections",
@@ -543,7 +643,12 @@
     "commonMistake": "Using list as a queue with list.insert(0, item) or list.pop(0) — both are O(N) operations. Use deque for any queue or stack that needs efficient operations on both ends.",
     "correctMentalModel": "Each collections type solves a specific common pattern: counting (Counter), grouping with auto-init (defaultdict), fast double-ended queue (deque), lightweight records (namedtuple). Reach for these before implementing the pattern manually with a regular dict or list.",
     "miniTask": "Using Counter, write a function 'most_common_chars(text, n)' that returns the n most common characters (excluding spaces) in a string. Then use defaultdict to group those characters by their frequency value.",
-    "ytQuery": "Python collections module Counter defaultdict deque namedtuple"
+    "ytQuery": "Python collections module Counter defaultdict deque namedtuple",
+    "whenNotToUse": "Don't use OrderedDict in Python 3.7+ unless you need move_to_end() — regular dicts maintain insertion order. Avoid namedtuple for classes that need methods or mutability — use @dataclass instead. Don't use defaultdict when you actually want KeyError on missing keys (e.g., validating that expected keys exist).",
+    "systemDesignConnection": "collections types map directly to system design patterns. Counter models the counting/metrics layer in monitoring systems (like Prometheus counters). deque with maxlen models bounded buffers and sliding windows in stream processing. defaultdict(list) models adjacency lists for graph-based problems like social networks and dependency resolution. OrderedDict.move_to_end() is the core of LRU cache implementation.",
+    "memoryTrick": "Counter = 'tally machine.' defaultdict = 'self-filling shelf.' deque = 'double-door queue.' namedtuple = 'labeled tuple.' Each solves ONE common 'I wish dict/list could...' complaint.",
+    "prerequisites": [],
+    "eli10": "Imagine different types of toy boxes. Counter is a box that automatically counts how many of each toy you put in. defaultdict is a magic box that creates a new section when you ask for one that doesn't exist. deque is a tunnel — you can put toys in or take them out from both ends super fast!"
   },
   {
     "id": "py-walrus",
@@ -569,6 +674,11 @@
     "commonMistake": "Overusing := everywhere for cleverness — it reduces readability when the value assignment and expression aren't clearly related. Use it only when it genuinely eliminates a redundant call or clarifies the intent of a condition.",
     "correctMentalModel": "The walrus operator solves the 'compute, check, use' pattern in a single expression. Ask: am I computing a value to check AND use? If yes, := avoids the double computation. If you're just checking without using the result, a regular expression is cleaner.",
     "miniTask": "Rewrite a while loop that reads lines from a file, strips whitespace, skips blank lines, and processes the line — using the walrus operator to both read and test the stripped line in one expression.",
-    "ytQuery": "Python walrus operator := assignment expression PEP 572"
+    "ytQuery": "Python walrus operator := assignment expression PEP 572",
+    "whenNotToUse": "Don't use := for simple assignments — regular = is clearer. Avoid := when the assignment and usage are far apart in the expression — it becomes hard to track what was assigned where. Don't use := in comprehensions just to be clever — if the logic is complex enough to need intermediate variables, extract it into a function.",
+    "systemDesignConnection": "The walrus operator models the 'compute-check-use' pattern common in data processing pipelines. In stream processing systems, values are often computed, validated against a condition, and then forwarded — all in a single pipeline stage. This is analogous to filter-transform stages in Apache Kafka Streams or AWS Kinesis data processing.",
+    "memoryTrick": ":= looks like a walrus on its side (eyes : and tusks =). It does two things at once: assigns AND returns. 'Grab it AND check it' in one bite.",
+    "prerequisites": ["py-list-comprehensions"],
+    "eli10": "Imagine you're fishing. Normally you catch a fish, put it down, then check if it's big enough. The walrus operator is like catching AND measuring the fish at the same time — if it's big enough, keep it; if not, throw it back. One motion instead of two!"
   }
 ]

@@ -5,8 +5,16 @@
     "question": "What is the difference between a Process and a Thread?",
     "summary": "Explains execution contexts, memory sharing, and context switching overhead in OS.",
     "difficulty": "Easy",
-    "companies": ["Google", "Microsoft", "TCS Digital", "Amazon"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Google",
+      "Microsoft",
+      "TCS Digital",
+      "Amazon"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "corecs",
     "topic": "Operating Systems",
     "language": "Language Agnostic",
@@ -21,7 +29,16 @@
       "Use processes for CPU-bound work (avoids GIL in Python), threads for I/O-bound work."
     ],
     "whatToAvoid": "Do not say threads are completely independent — they cannot exist without a parent process and share its heap memory.",
-    "ytQuery": "Process vs Thread Operating System"
+    "ytQuery": "Process vs Thread Operating System",
+    "quickAnswer": "A process is an independent execution unit with its own memory space. A thread is a lightweight unit within a process that shares the process's memory. Processes are isolated and heavy to switch; threads share memory and are faster to switch but need synchronization.",
+    "eli10": "A process is like a separate house with its own rooms and stuff. A thread is like a person inside that house. Multiple people (threads) in the same house share the kitchen and living room, but people in different houses (processes) can't share.",
+    "realWorldExample": "Chrome uses a multi-process architecture where each tab runs in its own process for isolation — if one tab crashes, others survive. Within each tab, JavaScript runs on a single thread while web workers spawn additional threads for heavy computation.",
+    "relatedTopics": [
+      "Context Switching",
+      "Concurrency",
+      "Race Conditions",
+      "Thread Safety"
+    ]
   },
   {
     "id": "corecs-2",
@@ -29,8 +46,16 @@
     "question": "What are the four necessary conditions for a Deadlock?",
     "summary": "Covers Coffman's conditions: mutual exclusion, hold-and-wait, no preemption, circular wait.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Microsoft", "Infosys SP"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft",
+      "Infosys SP"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "corecs",
     "topic": "Operating Systems",
     "language": "Language Agnostic",
@@ -45,7 +70,16 @@
       "Banker's algorithm is a classic avoidance strategy but impractical in real OSes."
     ],
     "whatToAvoid": "Do not confuse deadlock with starvation — starvation is a process never getting CPU time, not a circular lock dependency.",
-    "ytQuery": "Deadlock Operating System Coffman conditions"
+    "ytQuery": "Deadlock Operating System Coffman conditions",
+    "quickAnswer": "The four Coffman conditions for deadlock are: Mutual Exclusion (resource held exclusively), Hold and Wait (holding one resource while waiting for another), No Preemption (resources cannot be forcibly taken), and Circular Wait (circular chain of waiting). Break any one to prevent deadlock.",
+    "eli10": "Imagine two kids each holding one toy and wanting the other kid's toy, but neither will let go first. They're stuck forever! This happens when four rules are all true at once. Break any one rule and the kids can play again.",
+    "realWorldExample": "Amazon's DynamoDB lock manager enforces consistent lock ordering to prevent deadlocks in their distributed transaction system. When the 2020 Prime Day had a deadlock issue, they added lock timeouts as a safety net.",
+    "relatedTopics": [
+      "Mutex",
+      "Semaphore",
+      "Resource Allocation Graph",
+      "Banker's Algorithm"
+    ]
   },
   {
     "id": "corecs-3",
@@ -53,8 +87,16 @@
     "question": "How does Virtual Memory and Paging work?",
     "summary": "Explains how OS gives each process its own address space using pages and the page table.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Adobe", "Microsoft"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Adobe",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "corecs",
     "topic": "Operating Systems",
     "language": "Language Agnostic",
@@ -69,7 +111,16 @@
       "TLB (Translation Lookaside Buffer) caches recent page table entries for speed."
     ],
     "whatToAvoid": "Do not confuse paging (fixed-size blocks) with segmentation (variable-size logical segments like code, stack, heap).",
-    "ytQuery": "Virtual Memory Paging Operating System"
+    "ytQuery": "Virtual Memory Paging Operating System",
+    "quickAnswer": "Virtual memory gives each process the illusion of having its own large, contiguous memory. The OS divides memory into fixed-size pages (typically 4KB), mapped to physical frames via a page table. Page faults load missing pages from disk. TLB caches recent translations.",
+    "eli10": "Imagine every kid in school thinks they have the whole library to themselves. The librarian (OS) secretly shares books between kids and quickly fetches books from the storage room when needed. Each kid never knows they're sharing.",
+    "realWorldExample": "Linux kernel's virtual memory system powers every Android device. When your phone runs low on RAM, Android's Low Memory Killer uses page fault rates to decide which background apps to terminate.",
+    "relatedTopics": [
+      "Page Faults",
+      "TLB",
+      "Thrashing",
+      "Memory Management"
+    ]
   },
   {
     "id": "corecs-4",
@@ -77,8 +128,16 @@
     "question": "What is the difference between Mutex and Semaphore?",
     "summary": "Compares ownership-based mutual exclusion with counting synchronization primitives.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Flipkart", "Atlassian"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Flipkart",
+      "Atlassian"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "corecs",
     "topic": "Operating Systems",
     "language": "Language Agnostic",
@@ -93,7 +152,16 @@
       "Mutexes can implement priority inheritance to prevent priority inversion; semaphores cannot."
     ],
     "whatToAvoid": "Do not say semaphore and mutex are interchangeable — the ownership distinction matters for correctness in priority inheritance scenarios.",
-    "ytQuery": "Mutex vs Semaphore operating system"
+    "ytQuery": "Mutex vs Semaphore operating system",
+    "quickAnswer": "A Mutex is a binary lock with ownership — only the locking thread can unlock it. A Semaphore is a counting mechanism without ownership — any thread can signal it. Binary semaphore resembles mutex but lacks ownership. Counting semaphore controls access to N resources.",
+    "eli10": "A mutex is like a bathroom key — only the person who took the key can return it. A semaphore is like a parking lot with N spots — anyone can enter when there's a spot, and anyone can leave to free a spot.",
+    "realWorldExample": "PostgreSQL uses mutexes to protect shared buffer pool pages during concurrent reads and writes. Their connection pool uses a counting semaphore to limit concurrent connections to the configured max_connections value.",
+    "relatedTopics": [
+      "Thread Synchronization",
+      "Critical Section",
+      "Priority Inversion",
+      "Deadlock"
+    ]
   },
   {
     "id": "corecs-5",
@@ -101,8 +169,15 @@
     "question": "Explain CPU Scheduling algorithms: FCFS, SJF, and Round Robin.",
     "summary": "Compares scheduling policies by throughput, fairness, and response time trade-offs.",
     "difficulty": "Medium",
-    "companies": ["TCS Digital", "Infosys SP", "Microsoft", "Wipro Elite"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Microsoft",
+      "Wipro Elite"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "Operating Systems",
     "language": "Language Agnostic",
@@ -117,7 +192,16 @@
       "Modern OSes use multi-level feedback queues combining multiple policies."
     ],
     "whatToAvoid": "Do not claim SJF is used in modern OSes — it is theoretically optimal but impractical because future CPU burst times are unknown.",
-    "ytQuery": "CPU Scheduling FCFS SJF Round Robin"
+    "ytQuery": "CPU Scheduling FCFS SJF Round Robin",
+    "quickAnswer": "FCFS runs processes in arrival order (simple but convoy effect). SJF runs shortest burst first (optimal average wait but needs burst prediction). Round Robin gives each process a fixed time quantum in circular order (fair, good for interactive). Modern OSes use multi-level feedback queues.",
+    "eli10": "FCFS is like a regular line — first come, first served, even if you only need 2 seconds. SJF lets quick tasks jump ahead. Round Robin gives everyone a short turn, then sends them to the back of the line. Fair but lots of switching.",
+    "realWorldExample": "Linux's Completely Fair Scheduler (CFS) uses a red-black tree to implement a virtual runtime-based scheduling that approximates ideal fairness, replacing the older O(1) scheduler since kernel 2.6.23.",
+    "relatedTopics": [
+      "Process Scheduling",
+      "Convoy Effect",
+      "Starvation",
+      "Multi-Level Feedback Queue"
+    ]
   },
   {
     "id": "corecs-6",
@@ -125,8 +209,16 @@
     "question": "What is the difference between TCP and UDP?",
     "summary": "Compares connection-oriented reliable streams with connectionless fast datagrams.",
     "difficulty": "Easy",
-    "companies": ["Cisco", "Zomato", "Swiggy", "Amazon"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Cisco",
+      "Zomato",
+      "Swiggy",
+      "Amazon"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "Computer Networks",
     "language": "Language Agnostic",
@@ -141,7 +233,16 @@
       "Use UDP for: DNS, live video/audio streaming, online gaming, VoIP."
     ],
     "whatToAvoid": "Do not say UDP is 'bad' — it is deliberately designed for speed over reliability, and applications like DNS and video streaming depend on it.",
-    "ytQuery": "TCP vs UDP Computer Networks"
+    "ytQuery": "TCP vs UDP Computer Networks",
+    "quickAnswer": "TCP is connection-oriented (3-way handshake), reliable (guarantees delivery and ordering), with flow/congestion control. UDP is connectionless, unreliable, no ordering, but fast with low overhead. Use TCP for HTTP/email/file transfer; UDP for DNS/streaming/gaming.",
+    "eli10": "TCP is like sending a registered letter — you get confirmation it arrived, and pages are numbered so they're read in order. UDP is like shouting across a field — faster, but some words might get lost and that's okay for things like video calls.",
+    "realWorldExample": "Netflix uses TCP for their main video streaming to ensure reliable delivery, but Discord uses UDP for voice chat because a dropped audio packet is better than a delayed one — users tolerate tiny gaps but hate latency.",
+    "relatedTopics": [
+      "Transport Layer",
+      "Three-Way Handshake",
+      "Flow Control",
+      "Congestion Control"
+    ]
   },
   {
     "id": "corecs-7",
@@ -149,8 +250,16 @@
     "question": "Describe the OSI Model and its 7 layers.",
     "summary": "Explains the conceptual framework for network communication from physical bits to applications.",
     "difficulty": "Easy",
-    "companies": ["Cisco", "TCS Digital", "Wipro Elite", "Microsoft"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Cisco",
+      "TCS Digital",
+      "Wipro Elite",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "corecs",
     "topic": "Computer Networks",
     "language": "Language Agnostic",
@@ -165,7 +274,16 @@
       "A firewall operates at L3/L4; a load balancer at L4/L7; a switch at L2."
     ],
     "whatToAvoid": "Do not confuse OSI (7-layer conceptual model) with TCP/IP (4-layer practical model). TCP/IP combines Layers 5-7 into 'Application'.",
-    "ytQuery": "OSI Model 7 Layers Explained"
+    "ytQuery": "OSI Model 7 Layers Explained",
+    "quickAnswer": "The OSI model has 7 layers: Physical (bits), Data Link (frames, MAC), Network (packets, IP), Transport (segments, TCP/UDP), Session, Presentation (TLS), Application (HTTP). Each layer encapsulates the one above it. TCP/IP model simplifies to 4 layers.",
+    "eli10": "Sending a message on the internet is like wrapping a present in 7 layers. Each layer adds a label (header). The bottom layer is the actual wire. The top layer is your app. Each layer only talks to the layer next to it.",
+    "realWorldExample": "Cloudflare operates at multiple OSI layers: their WAF works at Layer 7 (HTTP inspection), DDoS protection at Layer 3/4 (IP/TCP), and Argo Smart Routing optimizes Layer 3 paths across their global network.",
+    "relatedTopics": [
+      "TCP/IP Model",
+      "Encapsulation",
+      "Network Protocols",
+      "Load Balancing Layers"
+    ]
   },
   {
     "id": "corecs-8",
@@ -173,8 +291,17 @@
     "question": "How does DNS Resolution work?",
     "summary": "Traces the journey from a domain name to an IP address through recursive resolvers and authoritative servers.",
     "difficulty": "Medium",
-    "companies": ["Cloudflare", "Amazon", "Google", "Razorpay"],
-    "roles": ["Backend", "Software Engineer", "DevOps"],
+    "companies": [
+      "Cloudflare",
+      "Amazon",
+      "Google",
+      "Razorpay"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "DevOps"
+    ],
     "type": "corecs",
     "topic": "Computer Networks",
     "language": "Language Agnostic",
@@ -189,7 +316,16 @@
       "DNS poisoning / spoofing is an attack where false entries are injected — DNSSEC adds cryptographic signing."
     ],
     "whatToAvoid": "Do not imply DNS always makes a full round trip — caching at browser, OS, and resolver levels means most lookups never reach a root server.",
-    "ytQuery": "How DNS Resolution works step by step"
+    "ytQuery": "How DNS Resolution works step by step",
+    "quickAnswer": "DNS resolves domain names to IPs through: browser cache, OS cache, recursive resolver, root name server (returns TLD address), TLD server (returns authoritative NS), authoritative server (returns IP). Results are cached at each layer with TTL.",
+    "eli10": "Typing \"google.com\" is like asking for directions. First you check your memory, then ask your family, then a local guide, then a regional office, and finally Google's own building gives you the address. Everyone remembers the answer for a while.",
+    "realWorldExample": "When Dyn DNS suffered a massive DDoS attack in 2016, major sites like Twitter, Netflix, and Reddit went down because their DNS resolver was unreachable — even though the actual servers were fine.",
+    "relatedTopics": [
+      "DNS Caching",
+      "TTL",
+      "DNS Security (DNSSEC)",
+      "CDN"
+    ]
   },
   {
     "id": "corecs-9",
@@ -197,8 +333,18 @@
     "question": "What is HTTP vs HTTPS, and how does TLS work?",
     "summary": "Explains the TLS handshake, certificate authorities, and why HTTPS matters.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Razorpay", "Stripe", "Flipkart"],
-    "roles": ["Backend", "Software Engineer", "Frontend"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Razorpay",
+      "Stripe",
+      "Flipkart"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "corecs",
     "topic": "Computer Networks",
     "language": "Language Agnostic",
@@ -213,7 +359,16 @@
       "HSTS (HTTP Strict Transport Security) prevents downgrade attacks by forcing HTTPS."
     ],
     "whatToAvoid": "Do not say HTTPS encrypts the URL — the domain is visible in SNI (Server Name Indication) and DNS; only the path and payload are encrypted.",
-    "ytQuery": "TLS HTTPS handshake explained"
+    "ytQuery": "TLS HTTPS handshake explained",
+    "quickAnswer": "HTTP sends data in plaintext. HTTPS adds TLS encryption. TLS handshake: client sends supported ciphers, server sends certificate (verified by CA chain), both derive a shared session key via ECDHE, then use symmetric AES encryption for all data.",
+    "eli10": "HTTP is like sending a postcard — anyone can read it. HTTPS is like putting your message in a locked box. First you and the website agree on a secret lock code that only you two know, then everything is sealed inside.",
+    "realWorldExample": "Let's Encrypt revolutionized HTTPS adoption by providing free TLS certificates. Before their launch in 2015, only 40% of web traffic was encrypted. Now it's over 95%, protecting billions of users.",
+    "relatedTopics": [
+      "TLS Handshake",
+      "Certificate Authority",
+      "Symmetric vs Asymmetric Encryption",
+      "HSTS"
+    ]
   },
   {
     "id": "corecs-10",
@@ -221,8 +376,18 @@
     "question": "Explain the ACID properties of database transactions.",
     "summary": "Covers Atomicity, Consistency, Isolation, and Durability — the guarantees of a reliable database.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Google", "Paytm", "Razorpay", "Flipkart"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Paytm",
+      "Razorpay",
+      "Flipkart"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "corecs",
     "topic": "DBMS",
     "language": "Language Agnostic",
@@ -237,7 +402,16 @@
       "NoSQL databases often relax ACID for availability/performance (BASE: Basically Available, Soft state, Eventual consistency)."
     ],
     "whatToAvoid": "Do not say all databases are fully ACID — many distributed/NoSQL systems (Cassandra, DynamoDB) offer eventual consistency, not full ACID.",
-    "ytQuery": "ACID properties database transactions"
+    "ytQuery": "ACID properties database transactions",
+    "quickAnswer": "ACID: Atomicity (all-or-nothing transactions), Consistency (valid state to valid state), Isolation (concurrent transactions don't interfere — configurable levels), Durability (committed data survives crashes via WAL). NoSQL often relaxes ACID for BASE.",
+    "eli10": "ACID is like a promise: either the whole bank transfer happens or none of it does (Atomicity), the bank always has correct totals (Consistency), two transfers at the same time don't mess each other up (Isolation), and once done, it stays done even if the power goes out (Durability).",
+    "realWorldExample": "Razorpay processes millions of payment transactions using PostgreSQL with strict ACID compliance. When a payment fails mid-transaction, atomicity ensures the customer's account is never debited without the merchant being credited.",
+    "relatedTopics": [
+      "Transactions",
+      "Isolation Levels",
+      "Write-Ahead Logging",
+      "BASE vs ACID"
+    ]
   },
   {
     "id": "corecs-11",
@@ -245,8 +419,16 @@
     "question": "Explain the Database Normalization rules (1NF, 2NF, 3NF).",
     "summary": "Covers schema design, eliminating data redundancy, and database anomalies.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Paytm", "Zoho", "TCS Digital"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Paytm",
+      "Zoho",
+      "TCS Digital"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "DBMS",
     "language": "Language Agnostic",
@@ -261,7 +443,16 @@
       "BCNF is stronger than 3NF: every determinant must be a candidate key."
     ],
     "whatToAvoid": "Do not imply 3NF is always optimal — data warehouses deliberately denormalize for read performance.",
-    "ytQuery": "Database Normalization 1NF 2NF 3NF"
+    "ytQuery": "Database Normalization 1NF 2NF 3NF",
+    "quickAnswer": "1NF: atomic values, no repeating groups. 2NF: no partial dependencies on composite keys. 3NF: no transitive dependencies (non-key depending on non-key). Normalization prevents update anomalies but over-normalization causes too many JOINs.",
+    "eli10": "Imagine a messy spreadsheet where one cell has \"Shoes, Belt, Hat.\" That breaks the rules (1NF). If changing a product name means editing 100 rows, your table needs splitting (2NF/3NF). Each fact should live in exactly one place.",
+    "realWorldExample": "Shopify stores product data in 3NF for their transactional database but denormalizes into star schemas for their analytics warehouse, because dashboards need fast reads over thousands of JOINs.",
+    "relatedTopics": [
+      "Database Design",
+      "Foreign Keys",
+      "Denormalization",
+      "Star Schema"
+    ]
   },
   {
     "id": "corecs-12",
@@ -269,8 +460,18 @@
     "question": "What are Database Indexes and how do B-Trees work?",
     "summary": "Explains how indexes speed up reads, the B-Tree data structure, and write overhead trade-offs.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Razorpay", "Flipkart", "Atlassian"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Razorpay",
+      "Flipkart",
+      "Atlassian"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "corecs",
     "topic": "DBMS",
     "language": "Language Agnostic",
@@ -285,7 +486,16 @@
       "Too many indexes hurt write performance — every DML operation must update all relevant indexes."
     ],
     "whatToAvoid": "Do not say indexes always speed everything up — they add storage overhead and slow down INSERT/UPDATE/DELETE. Analyze query patterns before adding indexes.",
-    "ytQuery": "Database Index B-Tree explained"
+    "ytQuery": "Database Index B-Tree explained",
+    "quickAnswer": "An index is a sorted data structure (usually B-Tree) that enables O(log N) lookups instead of O(N) full table scans. B-Trees are self-balancing with sorted keys at each node. Indexes speed reads but slow writes since every DML must update indexes too.",
+    "eli10": "An index is like the table of contents in a book. Instead of reading every page to find \"dinosaurs,\" you look up \"D\" in the index and jump straight to page 142. But every time you add a new page, you must update the index too.",
+    "realWorldExample": "Stack Overflow had a famous incident where a missing index on a frequently queried column caused their database CPU to spike to 100%. Adding one composite index reduced the query time from 3 seconds to 2 milliseconds.",
+    "relatedTopics": [
+      "B-Trees",
+      "Query Optimization",
+      "Composite Index",
+      "Clustered vs Non-Clustered"
+    ]
   },
   {
     "id": "corecs-13",
@@ -293,8 +503,17 @@
     "question": "What is the CAP Theorem?",
     "summary": "Explains why distributed systems must choose between Consistency, Availability, and Partition Tolerance.",
     "difficulty": "Hard",
-    "companies": ["Google", "Amazon", "Microsoft", "Razorpay", "Flipkart"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft",
+      "Razorpay",
+      "Flipkart"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "System Design",
     "language": "Language Agnostic",
@@ -309,7 +528,16 @@
       "PACELC extends CAP: even without partitions, there's a latency vs consistency trade-off."
     ],
     "whatToAvoid": "Do not present CAP as 'pick any 2 of 3 freely' — partition tolerance is mandatory in distributed systems, so the real choice is always CP vs AP.",
-    "ytQuery": "CAP Theorem distributed systems"
+    "ytQuery": "CAP Theorem distributed systems",
+    "quickAnswer": "CAP theorem: distributed systems can guarantee only 2 of 3 — Consistency, Availability, Partition Tolerance. Since partitions are inevitable, the real choice is CP (reject requests during partition) vs AP (serve stale data). PACELC extends this with latency trade-offs.",
+    "eli10": "Imagine three friends trying to always agree on a number, stay reachable, and handle phone disconnections. They can only guarantee two of these at once. Since phones do disconnect, they choose: either always agree (CP) or always answer (AP).",
+    "realWorldExample": "DynamoDB is AP — it prioritizes availability, serving eventually consistent reads by default. Zookeeper is CP — it rejects writes during network partitions to maintain strict consistency for leader election.",
+    "relatedTopics": [
+      "Distributed Systems",
+      "Consistency Models",
+      "Eventual Consistency",
+      "PACELC"
+    ]
   },
   {
     "id": "corecs-14",
@@ -317,8 +545,18 @@
     "question": "What is the difference between SQL and NoSQL databases?",
     "summary": "Compares relational and non-relational databases across schema, scalability, and use-case suitability.",
     "difficulty": "Easy",
-    "companies": ["Amazon", "Google", "Razorpay", "Swiggy", "Zoho"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Razorpay",
+      "Swiggy",
+      "Zoho"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "corecs",
     "topic": "DBMS",
     "language": "Language Agnostic",
@@ -333,7 +571,16 @@
       "NoSQL does not mean 'no structure' — most NoSQL systems have implicit schemas."
     ],
     "whatToAvoid": "Do not say NoSQL is always faster or more scalable — a well-tuned PostgreSQL outperforms a poorly designed MongoDB setup. Choose based on data model, not hype.",
-    "ytQuery": "SQL vs NoSQL database differences"
+    "ytQuery": "SQL vs NoSQL database differences",
+    "quickAnswer": "SQL databases have fixed schemas, use tables with relationships, provide ACID guarantees, and scale vertically. NoSQL encompasses document (MongoDB), key-value (Redis), wide-column (Cassandra), and graph (Neo4j) stores with flexible schemas and horizontal scaling.",
+    "eli10": "SQL is like a spreadsheet with strict rows and columns — every row must fit the same format. NoSQL is like a filing cabinet where each folder can hold different stuff. Spreadsheets are organized but rigid; filing cabinets are flexible but messier.",
+    "realWorldExample": "Instagram uses PostgreSQL (SQL) for user data and relationships but Redis (NoSQL key-value) for their feed cache. They process 100M+ daily active users by using each database for what it does best.",
+    "relatedTopics": [
+      "Database Selection",
+      "Polyglot Persistence",
+      "Sharding",
+      "Schema Design"
+    ]
   },
   {
     "id": "corecs-15",
@@ -341,8 +588,19 @@
     "question": "What are the SOLID Principles?",
     "summary": "Explains the five OOP design principles that lead to maintainable, extensible, and testable code.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Microsoft", "Atlassian", "Adobe"],
-    "roles": ["Software Engineer", "Backend", "Frontend", "Full Stack"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft",
+      "Atlassian",
+      "Adobe"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend",
+      "Frontend",
+      "Full Stack"
+    ],
     "type": "corecs",
     "topic": "OOP",
     "language": "Language Agnostic",
@@ -357,7 +615,16 @@
       "DIP: enables dependency injection, making code testable by decoupling from concrete implementations."
     ],
     "whatToAvoid": "Do not just recite definitions — always give a concrete code example. Interviewers want to know you can apply SOLID, not just name it.",
-    "ytQuery": "SOLID Principles OOP explained with examples"
+    "ytQuery": "SOLID Principles OOP explained with examples",
+    "quickAnswer": "SOLID: Single Responsibility (one reason to change), Open/Closed (extend, don't modify), Liskov Substitution (subtypes must be substitutable), Interface Segregation (small focused interfaces), Dependency Inversion (depend on abstractions, not concretions).",
+    "eli10": "SOLID is five rules for building with LEGO: each piece does one thing (S), you add new pieces without breaking old ones (O), replacement pieces must fit the same way (L), don't give a piece too many connectors (I), and pieces should connect through standard joints, not be glued together (D).",
+    "realWorldExample": "Stripe's payment SDK follows SOLID rigorously. Their PaymentMethod interface (I) allows adding new payment types (O) without modifying existing code, and every integration depends on the interface, not the Stripe implementation (D).",
+    "relatedTopics": [
+      "OOP Design",
+      "Clean Architecture",
+      "Dependency Injection",
+      "Design Patterns"
+    ]
   },
   {
     "id": "corecs-16",
@@ -365,8 +632,17 @@
     "question": "Explain common Design Patterns: Singleton, Factory, and Observer.",
     "summary": "Covers three foundational GoF patterns — creational and behavioral — with real-world use cases.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Microsoft", "Atlassian"],
-    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft",
+      "Atlassian"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend",
+      "Frontend"
+    ],
     "type": "corecs",
     "topic": "OOP",
     "language": "Language Agnostic",
@@ -381,7 +657,16 @@
       "Know when NOT to use patterns — over-engineering with patterns for simple problems adds unnecessary complexity."
     ],
     "whatToAvoid": "Do not say design patterns always improve code — misapplied patterns add complexity. Singleton in particular is considered an anti-pattern by some due to global state.",
-    "ytQuery": "Singleton Factory Observer Design Patterns"
+    "ytQuery": "Singleton Factory Observer Design Patterns",
+    "quickAnswer": "Singleton ensures one instance globally (e.g., DB pool). Factory creates objects without exposing creation logic (e.g., payment provider selector). Observer defines one-to-many notification (e.g., event emitter, React state). Use patterns when they solve a real problem, not preemptively.",
+    "eli10": "Singleton: there's only one principal in a school — everyone talks to the same one. Factory: a toy machine that makes different toys depending on which button you press. Observer: a newsletter — when something happens, everyone subscribed gets notified.",
+    "realWorldExample": "Node.js uses the Observer pattern extensively — EventEmitter is the backbone of its event-driven architecture. Express.js middleware chain is essentially a Chain of Responsibility pattern.",
+    "relatedTopics": [
+      "Creational Patterns",
+      "Behavioral Patterns",
+      "Anti-Patterns",
+      "Event-Driven Architecture"
+    ]
   },
   {
     "id": "corecs-17",
@@ -389,8 +674,17 @@
     "question": "What is the difference between Inheritance and Composition?",
     "summary": "Compares 'is-a' and 'has-a' relationships in OOP and explains why composition is often preferred.",
     "difficulty": "Easy",
-    "companies": ["Google", "Microsoft", "Amazon", "Zoho"],
-    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "companies": [
+      "Google",
+      "Microsoft",
+      "Amazon",
+      "Zoho"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend",
+      "Frontend"
+    ],
     "type": "corecs",
     "topic": "OOP",
     "language": "Language Agnostic",
@@ -405,7 +699,16 @@
       "Mixins (Python) and interfaces (Java/TypeScript) are lighter alternatives to deep inheritance."
     ],
     "whatToAvoid": "Do not say inheritance is always bad — it is appropriate when a genuine 'is-a' relationship exists and the hierarchy is shallow. The advice is to prefer composition when in doubt.",
-    "ytQuery": "Composition vs Inheritance OOP"
+    "ytQuery": "Composition vs Inheritance OOP",
+    "quickAnswer": "Inheritance is \"is-a\" (Dog is-an Animal) — tight coupling, fragile base class problem. Composition is \"has-a\" (Car has-an Engine) — flexible, swap components at runtime. Favor composition when in doubt; use inheritance only for genuine \"is-a\" hierarchies.",
+    "eli10": "Inheritance is like being born as a specific animal — you're stuck with what you are. Composition is like building a robot from different parts — you can swap the arms, legs, or brain anytime to make it do new things.",
+    "realWorldExample": "React moved from class-based inheritance (class components with lifecycle methods) to composition with hooks (useState, useEffect) precisely because composition proved more flexible and easier to share logic between components.",
+    "relatedTopics": [
+      "OOP Design",
+      "Mixins",
+      "Interfaces",
+      "Diamond Problem"
+    ]
   },
   {
     "id": "corecs-18",
@@ -413,8 +716,18 @@
     "question": "What is Load Balancing and what are common algorithms?",
     "summary": "Explains how traffic is distributed across servers and the trade-offs of different balancing strategies.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Google", "Flipkart", "Razorpay", "Swiggy"],
-    "roles": ["Backend", "Software Engineer", "DevOps"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Flipkart",
+      "Razorpay",
+      "Swiggy"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "DevOps"
+    ],
     "type": "corecs",
     "topic": "System Design",
     "language": "Language Agnostic",
@@ -429,7 +742,16 @@
       "Consistent hashing minimizes cache invalidation when scaling — critical for distributed caches."
     ],
     "whatToAvoid": "Do not confuse load balancing with auto-scaling — load balancing distributes traffic across existing servers; auto-scaling adds/removes servers based on demand.",
-    "ytQuery": "Load Balancing algorithms system design"
+    "ytQuery": "Load Balancing algorithms system design",
+    "quickAnswer": "A load balancer distributes traffic across servers. L4 operates at TCP level (fast, no content inspection). L7 at HTTP level (can route by URL/headers). Algorithms: Round Robin, Weighted Round Robin, Least Connections, IP Hash, Consistent Hashing.",
+    "eli10": "A load balancer is like a receptionist at a busy doctor's office. When patients (requests) arrive, the receptionist sends them to whichever doctor (server) is least busy, so no single doctor gets overwhelmed.",
+    "realWorldExample": "Netflix uses their custom Zuul L7 load balancer to route traffic based on request content, enabling canary deployments where 1% of users get the new version while 99% stay on the stable version.",
+    "relatedTopics": [
+      "Reverse Proxy",
+      "Health Checks",
+      "Sticky Sessions",
+      "Consistent Hashing"
+    ]
   },
   {
     "id": "corecs-19",
@@ -437,8 +759,17 @@
     "question": "What is Caching and what are common eviction policies?",
     "summary": "Explains cache layers, LRU/LFU/FIFO eviction strategies, and cache invalidation challenges.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Razorpay", "Swiggy", "Flipkart"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Razorpay",
+      "Swiggy",
+      "Flipkart"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "System Design",
     "language": "Language Agnostic",
@@ -453,7 +784,16 @@
       "Redis supports TTL per key, sorted sets (LFU approximation), and pub/sub for cache invalidation events."
     ],
     "whatToAvoid": "Do not say caching always solves performance problems — stale cache data can cause correctness bugs. Cache invalidation strategy is as important as the caching strategy itself.",
-    "ytQuery": "Caching LRU eviction policy Redis"
+    "ytQuery": "Caching LRU eviction policy Redis",
+    "quickAnswer": "A cache stores frequently accessed data in fast storage. Eviction policies: LRU (least recently used), LFU (least frequently used), FIFO, TTL. Strategies: cache-aside (lazy), write-through, write-behind. Cache invalidation is notoriously hard to get right.",
+    "eli10": "A cache is like keeping your favorite books on your desk instead of walking to the library every time. When your desk gets full, you put back the book you haven't read in the longest time (LRU) to make room for a new one.",
+    "realWorldExample": "Reddit uses Memcached to cache hot posts and comment trees. During a 2023 incident, a cache stampede occurred when their cache expired and millions of concurrent requests hit the database simultaneously, causing a cascading outage.",
+    "relatedTopics": [
+      "LRU Cache",
+      "Redis",
+      "CDN",
+      "Cache Stampede"
+    ]
   },
   {
     "id": "corecs-20",
@@ -461,8 +801,17 @@
     "question": "What is the difference between Microservices and Monolithic architecture?",
     "summary": "Compares single-deployable-unit architectures with distributed service meshes across development and operational complexity.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Google", "Flipkart", "Razorpay", "Atlassian"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Flipkart",
+      "Razorpay",
+      "Atlassian"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "System Design",
     "language": "Language Agnostic",
@@ -477,7 +826,16 @@
       "The hardest part of microservices: defining service boundaries — use Domain-Driven Design (DDD) to identify bounded contexts."
     ],
     "whatToAvoid": "Do not say microservices are always better — for small teams and early-stage products, the operational overhead of microservices far outweighs the benefits.",
-    "ytQuery": "Microservices vs Monolith architecture"
+    "ytQuery": "Microservices vs Monolith architecture",
+    "quickAnswer": "Monolith: single deployable unit, simple to develop/debug, in-process calls. Microservices: independent services with own databases, independently deployable, but adds network complexity, distributed tracing, and eventual consistency challenges. Start monolith, split when needed.",
+    "eli10": "A monolith is like one big LEGO castle — easy to build but hard to change one room without touching everything. Microservices are like separate LEGO buildings that talk through walkie-talkies — each can be rebuilt independently, but the walkie-talkies add complexity.",
+    "realWorldExample": "Amazon famously migrated from a monolith to microservices around 2001 after Jeff Bezos's \"API mandate.\" This architecture now powers AWS. However, they recently moved their Prime Video monitoring back to a monolith because microservices were overkill for that use case.",
+    "relatedTopics": [
+      "Service Discovery",
+      "API Gateway",
+      "Saga Pattern",
+      "Domain-Driven Design"
+    ]
   },
   {
     "id": "corecs-21",
@@ -485,8 +843,18 @@
     "question": "What is Horizontal vs Vertical Scaling?",
     "summary": "Compares scaling by adding more machines versus upgrading existing machines, with statelessness requirements.",
     "difficulty": "Easy",
-    "companies": ["Amazon", "Google", "Razorpay", "Flipkart", "Swiggy"],
-    "roles": ["Backend", "Software Engineer", "DevOps"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Razorpay",
+      "Flipkart",
+      "Swiggy"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "DevOps"
+    ],
     "type": "corecs",
     "topic": "System Design",
     "language": "Language Agnostic",
@@ -501,7 +869,16 @@
       "Auto-scaling in cloud (AWS ASG, Kubernetes HPA) adds/removes instances based on CPU/memory metrics."
     ],
     "whatToAvoid": "Do not say horizontal scaling is always better — stateful workloads (databases, ML model inference with large models) are hard to scale horizontally.",
-    "ytQuery": "Horizontal vs Vertical Scaling system design"
+    "ytQuery": "Horizontal vs Vertical Scaling system design",
+    "quickAnswer": "Vertical scaling: add more CPU/RAM to one machine (simple, but has hardware ceiling and single point of failure). Horizontal scaling: add more machines behind a load balancer (theoretically unlimited, but requires stateless design and shared storage).",
+    "eli10": "Vertical scaling is like making one truck bigger to carry more stuff. Horizontal scaling is like adding more trucks. The bigger truck eventually can't get any bigger, but you can always add more trucks if they all know the delivery routes.",
+    "realWorldExample": "Twitter initially scaled vertically (bigger servers) but hit limits during viral moments. They migrated to horizontal scaling with their Manhattan distributed database, handling 500M+ tweets per day across thousands of nodes.",
+    "relatedTopics": [
+      "Auto-Scaling",
+      "Stateless Design",
+      "Sharding",
+      "Read Replicas"
+    ]
   },
   {
     "id": "corecs-22",
@@ -509,8 +886,15 @@
     "question": "What is a compiler and what are its main phases?",
     "summary": "Explains the pipeline from source code to machine code: lexing, parsing, semantic analysis, optimization, and code generation.",
     "difficulty": "Medium",
-    "companies": ["Google", "Microsoft", "Amazon", "TCS Digital"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Microsoft",
+      "Amazon",
+      "TCS Digital"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "Compiler Design",
     "language": "Language Agnostic",
@@ -525,7 +909,16 @@
       "LLVM is a popular compiler infrastructure that many languages (Rust, Swift, Clang) use for optimization and code generation."
     ],
     "whatToAvoid": "Do not confuse compiler with interpreter — a compiler translates the entire program before execution; an interpreter executes line-by-line. Python is interpreted (with bytecode compilation to .pyc).",
-    "ytQuery": "Compiler phases explained"
+    "ytQuery": "Compiler phases explained",
+    "quickAnswer": "A compiler translates source code to machine code in phases: Lexical Analysis (tokens), Parsing (AST), Semantic Analysis (type checking), Intermediate Code, Optimization (dead code elimination, constant folding), Code Generation. JIT compilers compile at runtime.",
+    "eli10": "A compiler is like a translator who converts a book from English to Spanish. First they break sentences into words (lexing), understand the grammar (parsing), check it makes sense (semantics), then write the Spanish version as efficiently as possible.",
+    "realWorldExample": "V8 (Chrome's JS engine) uses a two-tier JIT compiler: Ignition compiles to bytecode quickly, then TurboFan optimizes hot functions to machine code. This is why JavaScript can run nearly as fast as C++ in some benchmarks.",
+    "relatedTopics": [
+      "Lexer",
+      "Parser",
+      "AST",
+      "JIT Compilation"
+    ]
   },
   {
     "id": "corecs-23",
@@ -533,8 +926,15 @@
     "question": "What is the Von Neumann architecture?",
     "summary": "Explains the stored-program model with CPU, memory, and I/O, and its bottleneck.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "Wipro Elite", "Microsoft"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Wipro Elite",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "Computer Architecture",
     "language": "Language Agnostic",
@@ -549,7 +949,16 @@
       "Harvard architecture (used in microcontrollers and CPU caches) uses separate memory for instructions and data."
     ],
     "whatToAvoid": "Do not say modern computers don't use Von Neumann — they all do at the macro level. The L1 instruction/data cache split is a Harvard architecture optimization within a Von Neumann system.",
-    "ytQuery": "Von Neumann Architecture computer organization"
+    "ytQuery": "Von Neumann Architecture computer organization",
+    "quickAnswer": "Von Neumann architecture stores both instructions and data in the same memory (stored-program concept). Components: CPU (ALU + Control Unit), Memory (RAM), I/O, System Bus. The Von Neumann bottleneck: CPU is faster than the memory bus. Modern CPUs use caches to mitigate.",
+    "eli10": "The Von Neumann architecture is like a chef (CPU) who keeps both recipes (instructions) and ingredients (data) in the same fridge (memory). The problem? The chef is super fast but the fridge door is slow, so the chef often waits.",
+    "realWorldExample": "Intel's CPU design addresses the Von Neumann bottleneck with split L1 caches (Harvard-style) — separate instruction and data caches — while maintaining Von Neumann architecture at the system level for programming simplicity.",
+    "relatedTopics": [
+      "Harvard Architecture",
+      "CPU Pipeline",
+      "Memory Hierarchy",
+      "Fetch-Decode-Execute"
+    ]
   },
   {
     "id": "corecs-24",
@@ -557,8 +966,15 @@
     "question": "What are CPU Cache levels (L1, L2, L3) and why do they matter?",
     "summary": "Explains the memory hierarchy, cache hit/miss, and why cache-friendly code dramatically outperforms naive code.",
     "difficulty": "Hard",
-    "companies": ["Google", "Amazon", "Microsoft", "Adobe"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft",
+      "Adobe"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "corecs",
     "topic": "Computer Architecture",
     "language": "Language Agnostic",
@@ -573,7 +989,16 @@
       "False sharing: two threads writing to different variables in the same cache line causes unnecessary cache coherency traffic."
     ],
     "whatToAvoid": "Do not treat cache as just an implementation detail — cache behavior explains why array-based algorithms consistently outperform linked-list ones at scale.",
-    "ytQuery": "CPU Cache L1 L2 L3 explained performance"
+    "ytQuery": "CPU Cache L1 L2 L3 explained performance",
+    "quickAnswer": "CPU caches bridge the speed gap: L1 (~4ns, 64KB/core), L2 (~12ns, 256KB-1MB/core), L3 (~30-60ns, shared). Cache lines are 64 bytes. Sequential access exploits spatial locality; random access causes cache misses. Cache-friendly code can be 10-100x faster.",
+    "eli10": "Your brain remembers recent things fastest (like L1 cache). Your notebook is slower but holds more (L2). Your bookshelf holds even more but takes longer to reach (L3). The library downtown has everything but takes forever (RAM). Keep important stuff close!",
+    "realWorldExample": "Game engines like Unity and Unreal use Entity Component System (ECS) architecture specifically for cache-friendly memory layouts. Storing components in contiguous arrays instead of scattered objects improved frame rates by 10-50x.",
+    "relatedTopics": [
+      "Cache Lines",
+      "Spatial Locality",
+      "Temporal Locality",
+      "False Sharing"
+    ]
   },
   {
     "id": "corecs-25",
@@ -581,8 +1006,19 @@
     "question": "What is a REST API and what makes an API RESTful?",
     "summary": "Covers the 6 REST constraints, HTTP methods, status codes, and idempotency.",
     "difficulty": "Easy",
-    "companies": ["Amazon", "Google", "Razorpay", "Flipkart", "Swiggy", "Zoho"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Razorpay",
+      "Flipkart",
+      "Swiggy",
+      "Zoho"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "corecs",
     "topic": "System Design",
     "language": "Language Agnostic",
@@ -597,6 +1033,15 @@
       "REST vs GraphQL: REST has fixed endpoints/shapes; GraphQL lets clients specify exactly what data they need."
     ],
     "whatToAvoid": "Do not say 'REST uses JSON' — REST is protocol-agnostic; it commonly uses JSON over HTTP but the REST constraints don't mandate either.",
-    "ytQuery": "REST API design best practices HTTP methods"
+    "ytQuery": "REST API design best practices HTTP methods",
+    "quickAnswer": "REST is an architectural style with constraints: uniform interface (resource URLs), stateless requests, client-server separation, cacheability, layered system. HTTP methods: GET (read), POST (create), PUT (replace), PATCH (update), DELETE. GET/PUT/DELETE are idempotent.",
+    "eli10": "A REST API is like a library system. Each book has an address (URL). You can READ a book (GET), ADD a new book (POST), REPLACE a book (PUT), or REMOVE a book (DELETE). Every request is independent — the library doesn't remember your previous visit.",
+    "realWorldExample": "Stripe's REST API is considered the gold standard of API design. Their consistent resource-based URLs, proper HTTP status codes, and idempotency keys for payment retries have been studied and copied by thousands of companies.",
+    "relatedTopics": [
+      "HTTP Methods",
+      "Status Codes",
+      "GraphQL",
+      "API Design"
+    ]
   }
 ]

@@ -36,7 +36,7 @@ async function loadDeck(deckId: DeckId): Promise<FlashCard[]> {
       id: q.id,
       front: { title: q.question, tag: q.topic, difficulty: q.difficulty },
       back: {
-        explanation: q.explanation,
+        explanation: q.eli10 ?? q.quickAnswer ?? q.explanation,
         keyPoints: q.strongAnswerPoints?.slice(0, 4) ?? [],
       },
     }))
@@ -57,9 +57,9 @@ async function loadDeck(deckId: DeckId): Promise<FlashCard[]> {
     id: c.id,
     front: { title: c.title, tag: c.tag, difficulty: c.difficulty, language: lang },
     back: {
-      explanation: c.explanation ?? c.teaser,
+      explanation: c.eli10 ?? c.whatIsIt ?? c.teaser,
       keyPoints: c.strongAnswerPoints?.slice(0, 4) ?? [],
-      analogy: c.realWorldAnalogy,
+      analogy: c.analogy,
     },
   }))
 }

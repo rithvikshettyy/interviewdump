@@ -19,7 +19,11 @@
       "Mention Margin Collapse where vertical margins of adjacent boxes merge."
     ],
     "whatToAvoid": "Do not forget to mention that margins are outside the element box and do not count towards the box-sizing width calculation.",
-    "ytQuery": "CSS Box Model Box Sizing Border Box"
+    "ytQuery": "CSS Box Model Box Sizing Border Box",
+    "quickAnswer": "The CSS Box Model defines every element as a box with content, padding, border, and margin. By default, padding and border add to the element's width. Setting box-sizing: border-box makes padding and border fit inside the declared width, which is why most CSS resets include it globally.",
+    "eli10": "Imagine you have a picture frame. The picture is the content, the white space around it is padding, the frame itself is the border, and the gap between frames on the wall is the margin. With border-box, the frame and white space fit inside the size you pick, so things don't get bigger than you expect.",
+    "realWorldExample": "When building the Airbnb listing grid, engineers initially faced broken layouts because card widths overflowed their containers. Adding a global `*, *::before, *::after { box-sizing: border-box; }` reset fixed all layout calculations across the product.",
+    "relatedTopics": ["CSS Flexbox", "CSS Grid", "CSS Specificity", "Responsive Design"]
   },
   {
     "id": "fe-2",
@@ -41,7 +45,11 @@
       "Explain the role of ARIA attributes when custom elements are required."
     ],
     "whatToAvoid": "Do not imply that CSS styling can replace the structural and accessibility features of semantic tags.",
-    "ytQuery": "Semantic HTML and Web Accessibility a11y"
+    "ytQuery": "Semantic HTML and Web Accessibility a11y",
+    "quickAnswer": "Semantic HTML uses meaningful tags like <nav>, <main>, and <button> instead of generic divs. This gives screen readers and search engines a clear structure of the page, improving both accessibility and SEO without extra effort.",
+    "eli10": "It's like labeling boxes when you move houses. If you write 'kitchen stuff' on a box, anyone can find the plates. But if every box just says 'stuff', nobody knows what's inside. Semantic HTML puts the right labels on your webpage so computers and people who can't see the screen still understand it.",
+    "realWorldExample": "In 2019, Domino's Pizza was sued because their website wasn't accessible to visually impaired users. The case went to the Supreme Court, highlighting that non-semantic HTML with missing ARIA labels made the site impossible to navigate with screen readers.",
+    "relatedTopics": ["ARIA Attributes", "SEO Fundamentals", "CSS Box Model", "Web Content Accessibility Guidelines"]
   },
   {
     "id": "fe-3",
@@ -63,7 +71,11 @@
       "Explain that !important overrides specificity entirely but creates technical debt."
     ],
     "whatToAvoid": "Do not guess specificity calculations; lay down the explicit scoring framework.",
-    "ytQuery": "CSS Specificity Calculation Rules"
+    "ytQuery": "CSS Specificity Calculation Rules",
+    "quickAnswer": "CSS specificity is a scoring system: inline styles beat IDs, IDs beat classes, classes beat elements. When two rules target the same element, the higher-specificity rule wins. If tied, the rule declared last wins. Avoid !important — it breaks this system and makes debugging painful.",
+    "eli10": "Imagine a school election. The principal's vote counts more than a teacher's, and a teacher's counts more than a student's. CSS works the same way — some rules are more 'important' than others, so the strongest rule wins when they disagree.",
+    "realWorldExample": "GitHub's design system team documented how uncontrolled specificity in their legacy CSS led to over 300 uses of !important. When they migrated to Primer (their component library), they enforced flat BEM-style classes to keep specificity predictable across thousands of components.",
+    "relatedTopics": ["CSS Box Model", "CSS-in-JS", "BEM Methodology", "CSS Cascade Layers"]
   },
   {
     "id": "fe-4",
@@ -85,7 +97,11 @@
       "Give practical examples like encapsulation, event handlers, or data memoization."
     ],
     "whatToAvoid": "Do not imply closures are unique to class structures—they exist in any nested function setup.",
-    "ytQuery": "JavaScript Closures Explained Simply"
+    "ytQuery": "JavaScript Closures Explained Simply",
+    "quickAnswer": "A closure is when a function remembers variables from its outer scope even after that scope has finished executing. It's used for data privacy, memoization, and callbacks. For example, a counter function can keep a private count variable that only its returned methods can access.",
+    "eli10": "Imagine you go to school and put a secret note in your locker. Even when school is over and everyone goes home, that note is still in your locker. A closure is like that — a function keeps a secret copy of the variables around it, even after everything else is done.",
+    "realWorldExample": "React Hooks like useState rely heavily on closures. Each time a component renders, useState creates a closure that captures the current state value. This is why stale closures are a common bug in React — if a useEffect callback captures an old state value, it reads outdated data.",
+    "relatedTopics": ["Scope Chain", "Hoisting", "Event Loop", "React Hooks"]
   },
   {
     "id": "fe-5",
@@ -107,7 +123,11 @@
       "Explain that class syntax in modern JS (ES6) is just syntactical sugar over prototypes."
     ],
     "whatToAvoid": "Do not confuse compiler prototype definitions with instances of prototype references.",
-    "ytQuery": "JavaScript Prototypes and Prototype Chain"
+    "ytQuery": "JavaScript Prototypes and Prototype Chain",
+    "quickAnswer": "JavaScript uses prototypal inheritance — objects inherit directly from other objects through an internal prototype link. When you access a property, JS walks up the prototype chain until it finds it or reaches null. ES6 classes are syntactic sugar over this prototype mechanism.",
+    "eli10": "Imagine you ask your dad a question. If he doesn't know the answer, he asks your grandpa. If grandpa doesn't know, he asks great-grandpa. That chain of asking parents is the prototype chain — JavaScript keeps asking parent objects until it finds what it needs or runs out of parents.",
+    "realWorldExample": "Lodash, one of the most popular JS libraries, uses prototype chain mechanics internally for its chain() method. Understanding prototypes helped the Lodash team optimize method lookups across chained operations, reducing memory allocation for large data transformations.",
+    "relatedTopics": ["Closures", "ES6 Classes", "Object.create", "this Keyword"]
   },
   {
     "id": "fe-6",
@@ -129,7 +149,11 @@
       "Mention browser rendering ticks happen immediately after the microtask queue is cleared."
     ],
     "whatToAvoid": "Do not guess the output order; explicitly explain the event loop priority queue logic.",
-    "ytQuery": "JS Event Loop Microtasks vs Macrotasks"
+    "ytQuery": "JS Event Loop Microtasks vs Macrotasks",
+    "quickAnswer": "The event loop lets single-threaded JavaScript handle async work. It processes all synchronous code first, then drains the microtask queue (Promises), then picks one macrotask (setTimeout). Microtasks always run before macrotasks, and the microtask queue is fully emptied before any macrotask executes.",
+    "eli10": "Imagine you're doing homework. You finish all your main work first. Then you check if Mom left any urgent sticky notes on your desk (microtasks) — you do ALL of those. Only after that do you check the mailbox outside for letters (macrotasks). You do one letter, then check for sticky notes again. That's the event loop!",
+    "realWorldExample": "Node.js creator Ryan Dahl specifically designed Node around the event loop to handle thousands of concurrent connections with a single thread. This is why Node.js powers Netflix's streaming API — it handles 200 million users without spawning a thread per connection like traditional Java servers.",
+    "relatedTopics": ["Promises & Async/Await", "Web Workers", "setTimeout vs setInterval", "requestAnimationFrame"]
   },
   {
     "id": "fe-7",
@@ -151,7 +175,11 @@
       "Explain performance benefits for typing search APIs (debounce) vs scroll/resize handlers (throttle)."
     ],
     "whatToAvoid": "Do not mix up the scenarios; typing is always best for debounce, scroll is best for throttle.",
-    "ytQuery": "Debounce vs Throttle JavaScript Explained"
+    "ytQuery": "Debounce vs Throttle JavaScript Explained",
+    "quickAnswer": "Debouncing waits until a user stops triggering an event for a set delay before executing — perfect for search inputs. Throttling ensures a function runs at most once per interval, no matter how many triggers occur — ideal for scroll and resize handlers. Both reduce unnecessary function calls and improve performance.",
+    "eli10": "Debouncing is like waiting for your friend to stop talking before you reply. You don't interrupt — you wait for them to pause. Throttling is like a bus that only leaves every 10 minutes. No matter how many people show up, the bus only goes at its scheduled time.",
+    "realWorldExample": "Google Search uses debouncing for its autocomplete suggestions. Instead of querying on every keystroke, it waits 300ms after the user stops typing. Twitter uses throttling on their infinite scroll feed to limit scroll event handlers to 60fps, preventing the main thread from getting overwhelmed.",
+    "relatedTopics": ["Closures", "Event Loop", "requestAnimationFrame", "Performance Optimization"]
   },
   {
     "id": "fe-8",
@@ -171,7 +199,11 @@
       "Mention React Fiber's capability to pause, resume, and prioritize UI render work."
     ],
     "whatToAvoid": "Do not say the Virtual DOM is faster than direct DOM updates (it is only faster than rebuilding the whole real DOM tree).",
-    "ytQuery": "React Fiber Reconciliation Virtual DOM"
+    "ytQuery": "React Fiber Reconciliation Virtual DOM",
+    "quickAnswer": "React keeps a lightweight Virtual DOM in memory. On state change, it builds a new tree and diffs it against the previous one to calculate the minimum real DOM updates needed. React Fiber enhances this by breaking rendering into interruptible chunks so high-priority updates like animations aren't blocked by heavy computations.",
+    "eli10": "Imagine you have a LEGO house and want to change the roof color. Instead of tearing down the whole house and rebuilding it, you take a photo of the new design, compare it with the old one, and only swap the pieces that changed. That's what React's Virtual DOM does — it's smart enough to only fix what's different.",
+    "realWorldExample": "Facebook built React Fiber specifically to solve jank in their News Feed. The old reconciler would block the main thread during large updates, causing dropped frames. Fiber lets React pause rendering a long list to handle a user's typing input first, then resume — this is the foundation of React 18's concurrent features.",
+    "relatedTopics": ["React Hooks", "Hydration & SSR", "Browser Critical Rendering Path", "React.memo & useMemo"]
   },
   {
     "id": "fe-9",
@@ -193,7 +225,11 @@
       "List resources that must be cleaned: event listeners, intervals/timeouts, websockets, and abort controllers."
     ],
     "whatToAvoid": "Do not skip cleaning up intervals or event listeners, as it leads to memory bloat over time.",
-    "ytQuery": "React useEffect Cleanup Function Memory Leaks"
+    "ytQuery": "React useEffect Cleanup Function Memory Leaks",
+    "quickAnswer": "The useEffect cleanup function runs before the effect re-executes and when the component unmounts. It prevents memory leaks by removing event listeners, clearing intervals, and aborting pending requests. Without cleanup, side effects keep running even after the component is gone from the DOM.",
+    "eli10": "When you finish playing with your toys, you put them back in the box. If you don't, the room gets messier and messier. The cleanup function is like cleaning up after yourself — when React is done with a component, the cleanup function puts everything back so nothing is left running in the background.",
+    "realWorldExample": "Slack's desktop app historically suffered from memory leaks because WebSocket connections weren't cleaned up when switching channels. Each channel switch opened a new socket without closing the old one, eventually consuming gigabytes of RAM. Proper useEffect cleanup would have prevented this.",
+    "relatedTopics": ["React Hooks", "Closures", "Memory Leaks", "AbortController"]
   },
   {
     "id": "fe-10",
@@ -213,7 +249,11 @@
       "Recommend Context for static configurations (themes, auth context) and Redux/Zustand for highly active dynamic data."
     ],
     "whatToAvoid": "Do not say Context API is a state management tool—it is only a dependency injection mechanism; the state is still local React state.",
-    "ytQuery": "React Context API vs Redux State Management"
+    "ytQuery": "React Context API vs Redux State Management",
+    "quickAnswer": "Use Context API for low-frequency data like themes and auth state — it's built-in and simple. Use Redux or Zustand for complex, frequently changing state because they offer fine-grained subscriptions that prevent unnecessary re-renders. Context re-renders all consumers on any change, which kills performance at scale.",
+    "eli10": "Context is like a school announcement over the loudspeaker — everyone hears it, even if only one class needs the message. Redux is like passing a note directly to the right person. When you have lots of messages, passing notes is faster because you're not interrupting everyone.",
+    "realWorldExample": "Instagram's web team initially used React Context for their feed state but switched to Redux when they noticed severe re-render cascades — every like/comment caused the entire feed tree to re-render. Redux selectors let individual posts subscribe only to their own data, cutting re-renders by 80%.",
+    "relatedTopics": ["React.memo & useMemo", "Zustand", "Prop Drilling", "React Hooks"]
   },
   {
     "id": "fe-11",
@@ -235,7 +275,11 @@
       "Explain the cost of checking props vs re-rendering, and why over-memoizing can degrade performance."
     ],
     "whatToAvoid": "Do not recommend wrapping every single function or value in useMemo/useCallback by default.",
-    "ytQuery": "React memo useMemo useCallback Performance Optimization"
+    "ytQuery": "React memo useMemo useCallback Performance Optimization",
+    "quickAnswer": "React.memo skips re-rendering a component if its props haven't changed. useMemo caches an expensive computed value. useCallback caches a function reference so it doesn't break memoized children's prop comparisons. Only use them when profiling shows actual performance issues — premature memoization wastes memory.",
+    "eli10": "Imagine you solve a hard math problem. Instead of solving it again every time someone asks, you write the answer on a sticky note (useMemo). useCallback is like keeping the same phone number so your friends don't have to update their contacts every day. React.memo tells a component: don't repaint yourself unless something actually changed.",
+    "realWorldExample": "The Figma engineering team wrote about how over-memoizing their canvas components actually degraded performance. The shallow comparison cost of React.memo on 10,000+ layer components exceeded the cost of just re-rendering, proving that memoization should be guided by profiling, not intuition.",
+    "relatedTopics": ["Virtual DOM & Reconciliation", "Redux vs Context", "React Profiler", "useRef"]
   },
   {
     "id": "fe-12",
@@ -255,7 +299,11 @@
       "Discuss Hydration Mismatch errors (when server HTML differs from initial client render output)."
     ],
     "whatToAvoid": "Do not imply that the page is immediately clickable the millisecond the HTML is downloaded during SSR.",
-    "ytQuery": "What is Hydration React NextJS"
+    "ytQuery": "What is Hydration React NextJS",
+    "quickAnswer": "SSR renders React components to HTML on the server for fast initial paint. Hydration is the process where the browser downloads JS and attaches event listeners to that static HTML, making it interactive. Hydration mismatches occur when the server-rendered HTML doesn't match what React expects on the client.",
+    "eli10": "It's like getting a coloring book with the outlines already drawn (SSR). You can see the picture immediately, but you can't play with it yet. Hydration is when you add the buttons that make things pop up and move — it turns a flat picture into an interactive toy.",
+    "realWorldExample": "Flipkart's mobile web (Flipkart Lite) was one of the first major e-commerce sites to adopt SSR with React. They reported a 3x improvement in time-to-interactive on slow 2G networks in India, because users could see product listings while JavaScript was still downloading in the background.",
+    "relatedTopics": ["Virtual DOM", "React Server Components", "Static Site Generation", "Core Web Vitals"]
   },
   {
     "id": "fe-13",
@@ -276,7 +324,11 @@
       "Provide solutions: adding width/height to images (CLS), code splitting (INP), and optimizing server response times (LCP)."
     ],
     "whatToAvoid": "Do not talk about old page load indicators (like onload events)—focus specifically on the user-centered Core Web Vitals.",
-    "ytQuery": "How to optimize Core Web Vitals LCP CLS INP"
+    "ytQuery": "How to optimize Core Web Vitals LCP CLS INP",
+    "quickAnswer": "Core Web Vitals are Google's key UX metrics: LCP measures loading speed (target under 2.5s), CLS measures layout stability (target under 0.1), and INP measures responsiveness (target under 200ms). Optimize by preloading critical assets, setting explicit image dimensions, and breaking up long JavaScript tasks.",
+    "eli10": "Imagine visiting a website is like opening a door. LCP is how fast the door opens. CLS is whether furniture keeps sliding around after you walk in. INP is how quickly the light switch responds when you flip it. Google grades websites on these three things.",
+    "realWorldExample": "The Washington Post improved their LCP from 4.2s to 2.0s by preloading hero images and inlining critical CSS. After the change, they saw a 12% increase in returning visitors — Google confirmed Core Web Vitals directly impact search ranking positions.",
+    "relatedTopics": ["Code Splitting & Lazy Loading", "Image Optimization", "Browser Critical Rendering Path", "Lighthouse Audits"]
   },
   {
     "id": "fe-14",
@@ -298,7 +350,11 @@
       "Show how to implement using React.lazy, Suspense, or dynamic imports."
     ],
     "whatToAvoid": "Do not lazy load components above the fold (the main header or initial content), as it degrades the user's LCP score.",
-    "ytQuery": "React Code Splitting and Lazy Loading"
+    "ytQuery": "React Code Splitting and Lazy Loading",
+    "quickAnswer": "Code splitting breaks your JavaScript bundle into smaller chunks loaded on demand. Lazy loading defers loading non-critical chunks until they're needed — like loading a chart library only when a user visits the analytics page. Together they reduce initial bundle size and speed up first load.",
+    "eli10": "Imagine packing for a trip. Instead of stuffing everything into one giant suitcase, you pack separate bags and only bring the beach bag when you go to the beach. Code splitting is like packing smaller bags, and lazy loading means you only grab the bag you need right now.",
+    "realWorldExample": "Airbnb reduced their initial JavaScript bundle by 50% using route-based code splitting. Their search results page no longer loads the listing detail page code upfront. This brought their Time to Interactive from 8 seconds to under 4 seconds on mobile devices.",
+    "relatedTopics": ["Core Web Vitals", "Webpack & Vite", "React Suspense", "Tree Shaking"]
   },
   {
     "id": "fe-15",
@@ -320,7 +376,11 @@
       "Enable native lazy loading (loading=\"lazy\") for offscreen images."
     ],
     "whatToAvoid": "Do not load high-resolution desktop-sized images on small mobile screens.",
-    "ytQuery": "Modern Web Image Optimization Techniques"
+    "ytQuery": "Modern Web Image Optimization Techniques",
+    "quickAnswer": "Use modern formats like WebP and AVIF for 30-50% smaller files. Serve responsive images with srcset so mobile devices get smaller files. Add loading='lazy' to offscreen images and set explicit width/height to prevent layout shift. Use a CDN for caching.",
+    "eli10": "Sending a huge photo to your friend takes forever on slow internet. Image optimization is like shrinking the photo just enough that it still looks good but downloads way faster. You also only download photos when you scroll down to see them, instead of loading everything at once.",
+    "realWorldExample": "Pinterest migrated from JPEG to WebP and saw a 30% reduction in image file sizes with no visible quality loss. Combined with lazy loading, this reduced their data consumption by 40% for mobile users, directly improving engagement metrics in regions with slow networks.",
+    "relatedTopics": ["Core Web Vitals", "CDN Caching", "Responsive Design", "Next.js Image Component"]
   },
   {
     "id": "fe-16",
@@ -340,7 +400,11 @@
       "Differentiate between Reflow (Layout changes) and Repaint (Style changes) and their performance impacts."
     ],
     "whatToAvoid": "Do not skip the separation between Paint (drawing elements) and Composite (layer merging).",
-    "ytQuery": "Browser Critical Rendering Path Explained"
+    "ytQuery": "Browser Critical Rendering Path Explained",
+    "quickAnswer": "The browser parses HTML into a DOM tree and CSS into a CSSOM tree, then combines them into a Render Tree. It calculates element positions (Layout), draws pixels (Paint), and merges layers (Composite). CSS and synchronous JS block rendering — use defer/async for scripts and inline critical CSS to optimize the path.",
+    "eli10": "When you open a webpage, the browser reads the HTML like a recipe, figures out what everything should look like from the CSS, calculates where to put things, and then paints it on screen. It's like building with LEGO — first read the instructions, then sort pieces, then build step by step.",
+    "realWorldExample": "Google Chrome's engineering team found that render-blocking CSS was the #1 cause of slow First Contentful Paint across the top 1000 websites. Their recommendation to inline critical CSS above the fold reduced average FCP by 1.2 seconds across tested sites.",
+    "relatedTopics": ["Core Web Vitals", "CSS Box Model", "Reflow vs Repaint", "Script Loading Strategies"]
   },
   {
     "id": "fe-17",
@@ -360,7 +424,11 @@
       "Mention standard CORS headers: Access-Control-Allow-Origin, Allow-Headers, and Allow-Methods."
     ],
     "whatToAvoid": "Do not say CORS is a database block—it is strictly a browser-side restriction; the server might actually execute the code, but the browser blocks the frontend from reading the response.",
-    "ytQuery": "What is CORS and Preflight Request"
+    "ytQuery": "What is CORS and Preflight Request",
+    "quickAnswer": "CORS is a browser security policy that blocks frontend JavaScript from reading responses from different domains unless the server explicitly allows it via Access-Control-Allow-Origin headers. For non-simple requests (POST with JSON, custom headers), the browser sends a preflight OPTIONS request first to check permissions.",
+    "eli10": "Imagine you're at school and want to borrow a book from another classroom. You can't just walk in — you have to ask the teacher first (preflight). If the teacher says yes (CORS headers), you can borrow it. If not, you're blocked. The browser does the same thing when your website tries to talk to a different website.",
+    "realWorldExample": "Stripe's payment API documentation dedicates an entire section to CORS because frontend developers frequently hit CORS errors when integrating Stripe.js. Stripe intentionally restricts cross-origin requests to prevent malicious sites from making unauthorized charges using stolen API keys.",
+    "relatedTopics": ["HTTP Methods", "Browser Security", "Same-Origin Policy", "API Authentication"]
   },
   {
     "id": "fe-18",
@@ -382,7 +450,11 @@
       "React Testing Library philosophy: test behavior, not internal implementation (e.g., query by accessibility roles)."
     ],
     "whatToAvoid": "Do not test state variables directly; test the visual results that the user sees.",
-    "ytQuery": "React Testing Library and Frontend Testing Guide"
+    "ytQuery": "React Testing Library and Frontend Testing Guide",
+    "quickAnswer": "Unit tests verify individual functions or components in isolation. Integration tests verify how multiple components work together. React Testing Library encourages testing from the user's perspective — query by role, label, and text rather than implementation details like state variables or CSS classes.",
+    "eli10": "Unit testing is like checking if each LEGO piece is the right shape. Integration testing is like checking if the pieces fit together to make the spaceship. React Testing Library is like asking a friend to try using your spaceship — if they can press the buttons and it works, the test passes.",
+    "realWorldExample": "Kent C. Dodds (creator of React Testing Library) explained that at PayPal, their Enzyme tests broke constantly on refactors because tests checked component internals. After migrating to RTL and testing user behavior instead, test maintenance dropped by 70% while catching more real bugs.",
+    "relatedTopics": ["E2E Testing", "Jest", "Test-Driven Development", "Mocking & Stubbing"]
   },
   {
     "id": "fe-19",
@@ -402,7 +474,11 @@
       "Explain the placement of E2E tests at the top of the testing pyramid (expensive, slower, but high confidence)."
     ],
     "whatToAvoid": "Do not suggest testing every minor button state in E2E; keep E2E focused on critical user paths (like signup and payment checkout).",
-    "ytQuery": "Cypress vs Playwright E2E Testing"
+    "ytQuery": "Cypress vs Playwright E2E Testing",
+    "quickAnswer": "E2E testing simulates real user flows through the full application stack — from UI to database. Choose Playwright for speed, multi-browser support, and parallel execution. Choose Cypress for its excellent debugging UI and simpler setup. E2E tests should cover critical paths like login and checkout, not every button click.",
+    "eli10": "E2E testing is like being a mystery shopper. You walk into a store, try to buy something, and check if everything works — from finding the product to paying at the counter. If anything breaks along the way, you report it. The computer does this automatically for websites.",
+    "realWorldExample": "Microsoft migrated their VS Code web extension tests from Cypress to Playwright because they needed multi-tab testing for their extension marketplace and parallel execution across Chromium, Firefox, and WebKit. Playwright's native multi-browser support saved them from maintaining separate test suites.",
+    "relatedTopics": ["Unit & Integration Testing", "CI/CD Pipelines", "Test Automation", "Browser DevTools"]
   },
   {
     "id": "fe-20",
@@ -424,6 +500,10 @@
       "Detail type capability for unions, mapping, and primitives."
     ],
     "whatToAvoid": "Do not say interfaces are compiled while types are removed; both are completely erased from the output JavaScript file.",
-    "ytQuery": "TypeScript Types vs Interfaces Difference"
+    "ytQuery": "TypeScript Types vs Interfaces Difference",
+    "quickAnswer": "Interfaces support declaration merging and extends — ideal for public APIs and object contracts. Types are more flexible — they handle unions, intersections, tuples, and mapped types. Use interfaces for object shapes you want to be extensible, and types for everything else like union types and utility mappings.",
+    "eli10": "An interface is like a job description — you can keep adding new requirements to the same job. A type is like a finished recipe — once it's written, you can't add more ingredients. But recipes can combine different foods in creative ways that job descriptions can't.",
+    "realWorldExample": "The TypeScript team at Microsoft recommends using interfaces for public library APIs because declaration merging lets consumers extend them. The DefinitelyTyped repository (which has type definitions for 8,000+ npm packages) uses interfaces for this reason — libraries like Express let users extend the Request interface with custom properties.",
+    "relatedTopics": ["TypeScript Generics", "TypeScript Utility Types", "JavaScript ES6", "Type Guards"]
   }
 ]

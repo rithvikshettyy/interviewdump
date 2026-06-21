@@ -5,8 +5,17 @@
     "question": "What is the difference between WHERE and HAVING?",
     "summary": "Explains pre-aggregation vs post-aggregation filtering in SQL queries.",
     "difficulty": "Easy",
-    "companies": ["Amazon", "Google", "Zoho", "TCS Digital"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Zoho",
+      "TCS Digital"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "sql",
     "topic": "Filtering",
     "language": "SQL",
@@ -21,7 +30,65 @@
       "For performance, use WHERE to reduce rows before grouping — don't rely solely on HAVING."
     ],
     "whatToAvoid": "Do not use HAVING to filter non-aggregated columns — it works but is less efficient since it filters after grouping. Always use WHERE for raw column filters.",
-    "ytQuery": "SQL WHERE vs HAVING difference"
+    "ytQuery": "SQL WHERE vs HAVING difference",
+    "quickAnswer": "WHERE filters individual rows before GROUP BY and can't use aggregate functions. HAVING filters groups after GROUP BY and can use aggregates like COUNT() and SUM(). Use WHERE for raw column filters, HAVING for aggregate conditions.",
+    "eli10": "Imagine you're picking kids for a dodgeball team. WHERE is like saying 'only kids taller than 4 feet can play' — you check each kid before making teams. HAVING is like saying 'only teams with more than 5 players can compete' — you check after teams are formed.",
+    "realWorldExample": "At Spotify, the analytics team uses WHERE to filter only premium users before grouping listening data by genre, then HAVING to find genres with more than 10,000 streams — combining both in one query reduced dashboard load time by 60%.",
+    "relatedTopics": [
+      "GROUP BY",
+      "Aggregate Functions",
+      "Query Execution Order",
+      "Indexes"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "department",
+          "salary",
+          "active"
+        ],
+        "rows": [
+          [
+            "Engineering",
+            "80000",
+            "true"
+          ],
+          [
+            "Engineering",
+            "90000",
+            "true"
+          ],
+          [
+            "Sales",
+            "50000",
+            "true"
+          ],
+          [
+            "Sales",
+            "60000",
+            "false"
+          ],
+          [
+            "Marketing",
+            "55000",
+            "true"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "department",
+          "emp_count"
+        ],
+        "rows": [
+          [
+            "Engineering",
+            "2"
+          ]
+        ]
+      },
+      "description": "WHERE active=true filters rows first (removes Sales row with active=false), then GROUP BY department groups them, then HAVING COUNT(*)>1 keeps only departments with 2+ employees."
+    }
   },
   {
     "id": "sql-2",
@@ -29,8 +96,18 @@
     "question": "Explain the different types of JOINs in SQL.",
     "summary": "Covers INNER, LEFT, RIGHT, FULL OUTER, CROSS, and SELF JOINs with use cases.",
     "difficulty": "Easy",
-    "companies": ["Google", "Amazon", "Microsoft", "Flipkart", "Razorpay"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft",
+      "Flipkart",
+      "Razorpay"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "sql",
     "topic": "Joins",
     "language": "SQL",
@@ -45,7 +122,63 @@
       "CROSS JOIN is O(N×M) — dangerous on large tables without a WHERE filter."
     ],
     "whatToAvoid": "Do not confuse LEFT JOIN with INNER JOIN — LEFT JOIN preserves all left-table rows and fills NULLs, while INNER JOIN drops unmatched rows entirely.",
-    "ytQuery": "SQL JOIN types explained INNER LEFT RIGHT FULL"
+    "ytQuery": "SQL JOIN types explained INNER LEFT RIGHT FULL",
+    "quickAnswer": "INNER JOIN returns only matching rows from both tables. LEFT JOIN returns all rows from the left table plus matches from the right (NULLs where no match). FULL OUTER JOIN returns all rows from both. CROSS JOIN produces every combination (Cartesian product).",
+    "eli10": "Think of two friend lists. INNER JOIN is finding kids on BOTH lists. LEFT JOIN is keeping everyone on the first list and noting which ones are also on the second. CROSS JOIN is pairing every kid from list one with every kid from list two for a buddy system.",
+    "realWorldExample": "At Amazon, the orders team uses LEFT JOIN between users and orders to find users who haven't placed an order in 90 days for re-engagement campaigns — the NULL order rows reveal inactive customers worth targeting.",
+    "relatedTopics": [
+      "Self Join",
+      "Anti-Join Pattern",
+      "Subqueries",
+      "NULL Handling"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "users.name",
+          "orders.total"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "150"
+          ],
+          [
+            "Alice",
+            "200"
+          ],
+          [
+            "Bob",
+            "NULL"
+          ],
+          [
+            "Carol",
+            "75"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "name",
+          "total"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "150"
+          ],
+          [
+            "Alice",
+            "200"
+          ],
+          [
+            "Carol",
+            "75"
+          ]
+        ]
+      },
+      "description": "LEFT JOIN shows all users including Bob (no orders = NULL). INNER JOIN result (shown in 'after') drops Bob entirely since he has no matching order."
+    }
   },
   {
     "id": "sql-3",
@@ -53,8 +186,17 @@
     "question": "What is a subquery and what is the difference between correlated and non-correlated subqueries?",
     "summary": "Explains nested queries, their execution modes, and when to prefer JOINs over subqueries.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Google", "Zoho", "TCS Digital", "Infosys SP"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Zoho",
+      "TCS Digital",
+      "Infosys SP"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Subqueries",
     "language": "SQL",
@@ -69,7 +211,64 @@
       "Scalar subquery in SELECT must return exactly 0 or 1 row — returns NULL if 0 rows."
     ],
     "whatToAvoid": "Do not use correlated subqueries in SELECT clauses on large tables — each row triggers a separate query execution, causing N+1 query behavior.",
-    "ytQuery": "SQL correlated vs non-correlated subquery"
+    "ytQuery": "SQL correlated vs non-correlated subquery",
+    "quickAnswer": "A subquery is a SELECT nested inside another query. Non-correlated subqueries run once independently. Correlated subqueries reference the outer query and run once per outer row — much slower. Use EXISTS over IN for large datasets as it short-circuits on first match.",
+    "eli10": "Imagine you need to find the tallest kid in each class. A non-correlated subquery is like measuring ALL kids once and writing down the tallest. A correlated subquery is like going to each class one by one and measuring everyone in that class — you do the work over and over.",
+    "realWorldExample": "At Uber, engineers replaced a correlated subquery that checked each driver's average rating against their city's average with a JOIN-based approach, reducing the driver dashboard query from 12 seconds to 200ms on their 4M+ driver table.",
+    "relatedTopics": [
+      "CTEs",
+      "Joins",
+      "EXISTS vs IN",
+      "Query Optimization"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "name",
+          "department_id",
+          "salary"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "1",
+            "90000"
+          ],
+          [
+            "Bob",
+            "1",
+            "60000"
+          ],
+          [
+            "Carol",
+            "2",
+            "80000"
+          ],
+          [
+            "Dave",
+            "2",
+            "70000"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "name",
+          "salary"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "90000"
+          ],
+          [
+            "Carol",
+            "80000"
+          ]
+        ]
+      },
+      "description": "Correlated subquery finds employees earning above their department's average. Dept 1 avg=75000, Dept 2 avg=75000. Alice (90k) and Carol (80k) are above their dept averages."
+    }
   },
   {
     "id": "sql-4",
@@ -77,8 +276,18 @@
     "question": "What are Window Functions and how do ROW_NUMBER, RANK, and DENSE_RANK differ?",
     "summary": "Explains analytical functions that compute values across a set of rows related to the current row.",
     "difficulty": "Hard",
-    "companies": ["Google", "Amazon", "Microsoft", "Razorpay", "Flipkart"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft",
+      "Razorpay",
+      "Flipkart"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "sql",
     "topic": "Window Functions",
     "language": "SQL",
@@ -93,7 +302,87 @@
       "LAG/LEAD are powerful for time-series analysis (day-over-day changes, churn detection)."
     ],
     "whatToAvoid": "Do not use ROW_NUMBER when you want ties to share the same rank — use RANK or DENSE_RANK. ROW_NUMBER arbitrarily breaks ties based on execution order.",
-    "ytQuery": "SQL Window Functions ROW_NUMBER RANK DENSE_RANK"
+    "ytQuery": "SQL Window Functions ROW_NUMBER RANK DENSE_RANK",
+    "quickAnswer": "Window functions compute values across related rows without collapsing them like GROUP BY. ROW_NUMBER gives unique sequential numbers (1,2,3). RANK gives same number for ties then skips (1,1,3). DENSE_RANK gives same for ties but doesn't skip (1,1,2).",
+    "eli10": "Imagine a race where two kids tie for first place. ROW_NUMBER says 'you're 1st, you're 2nd' — picks randomly. RANK says 'you're both 1st, next kid is 3rd' — skips 2nd. DENSE_RANK says 'you're both 1st, next kid is 2nd' — no skipping.",
+    "realWorldExample": "At Netflix, DENSE_RANK is used to find the top 3 most-watched shows per country each week. Using DENSE_RANK ensures tied shows share a rank without pushing other shows out of the top 3.",
+    "relatedTopics": [
+      "Running Totals",
+      "LAG/LEAD",
+      "PARTITION BY",
+      "NTILE"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "name",
+          "dept",
+          "salary"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "Eng",
+            "90000"
+          ],
+          [
+            "Bob",
+            "Eng",
+            "90000"
+          ],
+          [
+            "Carol",
+            "Eng",
+            "80000"
+          ],
+          [
+            "Dave",
+            "Eng",
+            "70000"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "name",
+          "salary",
+          "ROW_NUMBER",
+          "RANK",
+          "DENSE_RANK"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "90000",
+            "1",
+            "1",
+            "1"
+          ],
+          [
+            "Bob",
+            "90000",
+            "2",
+            "1",
+            "1"
+          ],
+          [
+            "Carol",
+            "80000",
+            "3",
+            "3",
+            "2"
+          ],
+          [
+            "Dave",
+            "70000",
+            "4",
+            "4",
+            "3"
+          ]
+        ]
+      },
+      "description": "All three ranking functions applied to Eng department ordered by salary DESC. Alice and Bob tie — notice how each function handles the tie differently."
+    }
   },
   {
     "id": "sql-5",
@@ -101,8 +390,16 @@
     "question": "What is a CTE (Common Table Expression) and when should you use it?",
     "summary": "Explains WITH clauses, recursive CTEs, and how they improve query readability and reuse.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Atlassian", "Razorpay"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Atlassian",
+      "Razorpay"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "CTEs",
     "language": "SQL",
@@ -117,7 +414,72 @@
       "CTEs are not inherently faster than subqueries — check EXPLAIN to see if the planner inlines or materializes them."
     ],
     "whatToAvoid": "Do not assume CTEs are always materialized and cached — in PostgreSQL 12+, the optimizer may inline them. Use MATERIALIZED keyword explicitly if you need the guarantee.",
-    "ytQuery": "SQL CTE Common Table Expression WITH clause"
+    "ytQuery": "SQL CTE Common Table Expression WITH clause",
+    "quickAnswer": "A CTE is a temporary named result set defined with WITH, valid for one query. It improves readability by breaking complex queries into named steps. Recursive CTEs traverse hierarchical data like org charts by combining a base case with a self-referencing recursive step.",
+    "eli10": "Imagine writing a long math problem. Instead of one giant equation, you solve it in steps and give each step a name: 'Step A = ..., Step B = use Step A...'. CTEs do the same for database queries — breaking them into named, easy-to-read pieces.",
+    "realWorldExample": "At LinkedIn, recursive CTEs power the 'management chain' feature that shows the reporting hierarchy from any employee up to the CEO — traversing the org chart without application-side code or multiple database round trips.",
+    "relatedTopics": [
+      "Subqueries",
+      "Recursive Queries",
+      "Views",
+      "Query Readability"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "id",
+          "name",
+          "manager_id"
+        ],
+        "rows": [
+          [
+            "1",
+            "CEO",
+            "NULL"
+          ],
+          [
+            "2",
+            "VP Eng",
+            "1"
+          ],
+          [
+            "3",
+            "Tech Lead",
+            "2"
+          ],
+          [
+            "4",
+            "Dev",
+            "3"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "name",
+          "level"
+        ],
+        "rows": [
+          [
+            "CEO",
+            "1"
+          ],
+          [
+            "VP Eng",
+            "2"
+          ],
+          [
+            "Tech Lead",
+            "3"
+          ],
+          [
+            "Dev",
+            "4"
+          ]
+        ]
+      },
+      "description": "Recursive CTE walks the org chart starting from the CEO (manager_id IS NULL) and recursively finds each level of reports."
+    }
   },
   {
     "id": "sql-6",
@@ -125,8 +487,17 @@
     "question": "What is SQL indexing and when should you add or avoid indexes?",
     "summary": "Covers B-Tree vs Hash indexes, composite index column ordering, and write overhead trade-offs.",
     "difficulty": "Medium",
-    "companies": ["Google", "Amazon", "Flipkart", "Razorpay", "Atlassian"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Flipkart",
+      "Razorpay",
+      "Atlassian"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Indexes",
     "language": "SQL",
@@ -141,7 +512,57 @@
       "Too many indexes → slow writes. For OLTP aim for few, targeted indexes; for read-heavy OLAP, more is acceptable."
     ],
     "whatToAvoid": "Do not add an index on every column — each index adds overhead to every INSERT, UPDATE, and DELETE operation. Index columns that appear in actual query WHERE/JOIN/ORDER BY clauses.",
-    "ytQuery": "SQL database indexing B-Tree composite index"
+    "ytQuery": "SQL database indexing B-Tree composite index",
+    "quickAnswer": "An index is a B-Tree data structure enabling O(log N) lookups instead of O(N) full table scans. Add indexes on columns in WHERE, JOIN, ORDER BY clauses. Avoid on write-heavy tables or low-cardinality columns. Composite index order matters — the leading column must appear in your WHERE.",
+    "eli10": "Think of a textbook index at the back. Without it, you'd flip through every page to find 'photosynthesis.' With an index, you look up 'P', find the page number, and go straight there. Database indexes work the same way — they're shortcuts to find data fast.",
+    "realWorldExample": "At Shopify, adding a composite index on (shop_id, created_at) to the orders table reduced their most common merchant dashboard query from 3.2 seconds to 15ms — a 200x improvement that eliminated timeout errors during Black Friday traffic.",
+    "relatedTopics": [
+      "B-Tree",
+      "Query Optimization",
+      "EXPLAIN ANALYZE",
+      "Clustered vs Non-Clustered"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Query Plan",
+          "Cost",
+          "Time"
+        ],
+        "rows": [
+          [
+            "Seq Scan on orders",
+            "0.00..2840.00",
+            "342ms"
+          ],
+          [
+            "Filter: user_id = 42",
+            "",
+            ""
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Query Plan",
+          "Cost",
+          "Time"
+        ],
+        "rows": [
+          [
+            "Index Scan using idx_user_id",
+            "0.43..12.45",
+            "0.8ms"
+          ],
+          [
+            "Index Cond: user_id = 42",
+            "",
+            ""
+          ]
+        ]
+      },
+      "description": "Before: full table scan reads every row (342ms). After adding index on user_id: index scan jumps directly to matching rows (0.8ms)."
+    }
   },
   {
     "id": "sql-7",
@@ -149,8 +570,17 @@
     "question": "What are database transactions and isolation levels?",
     "summary": "Explains ACID transactions, read anomalies (dirty read, phantom read), and isolation trade-offs.",
     "difficulty": "Hard",
-    "companies": ["Amazon", "Razorpay", "Google", "Flipkart", "Paytm"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Razorpay",
+      "Google",
+      "Flipkart",
+      "Paytm"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Transactions",
     "language": "SQL",
@@ -165,7 +595,69 @@
       "PostgreSQL uses MVCC — read queries don't block write queries, eliminating most lock contention."
     ],
     "whatToAvoid": "Do not default to SERIALIZABLE for everything — it trades concurrency for safety. Profile your actual anomaly risk and use the weakest level that still guarantees correctness for your use case.",
-    "ytQuery": "SQL transaction isolation levels dirty read phantom read"
+    "ytQuery": "SQL transaction isolation levels dirty read phantom read",
+    "quickAnswer": "Transactions group SQL operations atomically (all succeed or all rollback). Isolation levels control visibility of concurrent changes: READ UNCOMMITTED (dirty reads), READ COMMITTED (no dirty reads), REPEATABLE READ (consistent snapshot), SERIALIZABLE (full isolation, slowest).",
+    "eli10": "Imagine two people editing the same shared Google Doc at once. Transactions make sure one person's changes are either fully saved or fully undone — no half-finished edits. Isolation levels control whether you can see the other person's unsaved changes or not.",
+    "realWorldExample": "At Razorpay, payment processing uses SERIALIZABLE isolation for fund transfers to prevent double-spending. After a bug where READ COMMITTED allowed two concurrent requests to both read a balance of $100 and each debit $80, they tightened isolation and added row-level locking.",
+    "relatedTopics": [
+      "ACID Properties",
+      "MVCC",
+      "Locking",
+      "Deadlocks"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Isolation Level",
+          "Dirty Read",
+          "Non-Repeatable",
+          "Phantom"
+        ],
+        "rows": [
+          [
+            "READ UNCOMMITTED",
+            "Yes",
+            "Yes",
+            "Yes"
+          ],
+          [
+            "READ COMMITTED",
+            "No",
+            "Yes",
+            "Yes"
+          ],
+          [
+            "REPEATABLE READ",
+            "No",
+            "No",
+            "Yes*"
+          ],
+          [
+            "SERIALIZABLE",
+            "No",
+            "No",
+            "No"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "account_id",
+          "balance"
+        ],
+        "rows": [
+          [
+            "101",
+            "1000"
+          ],
+          [
+            "202",
+            "500"
+          ]
+        ]
+      },
+      "description": "Isolation level comparison table. *MySQL InnoDB's REPEATABLE READ also prevents phantom reads via gap locks. The 'after' shows account state after a SERIALIZABLE transfer of 500 from account 101 to 202."
+    }
   },
   {
     "id": "sql-8",
@@ -173,8 +665,16 @@
     "question": "What is the difference between UNION and UNION ALL?",
     "summary": "Compares set union operators with and without duplicate elimination and their performance impact.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "Zoho", "Amazon"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Zoho",
+      "Amazon"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Set Operations",
     "language": "SQL",
@@ -189,7 +689,67 @@
       "EXCEPT (MINUS in Oracle) is an efficient alternative to LEFT JOIN + IS NULL for anti-join patterns."
     ],
     "whatToAvoid": "Do not reflexively use UNION instead of UNION ALL — the implicit DISTINCT adds a sort/hash step that can be significant on large result sets.",
-    "ytQuery": "SQL UNION vs UNION ALL difference"
+    "ytQuery": "SQL UNION vs UNION ALL difference",
+    "quickAnswer": "UNION combines two SELECT results and removes duplicates (adds sort/hash overhead). UNION ALL keeps all rows including duplicates — faster because no deduplication. Use UNION ALL when duplicates are acceptable or impossible, which is most cases.",
+    "eli10": "Imagine combining two jars of marbles. UNION dumps both jars together but picks out any marbles that look exactly the same — keeping only one copy. UNION ALL just dumps both jars together and keeps everything, even twins. UNION ALL is faster because nobody has to sort through marbles.",
+    "realWorldExample": "At Google Analytics, daily report queries use UNION ALL to combine web and mobile event streams because the event IDs are guaranteed unique across platforms — switching from UNION to UNION ALL cut report generation time by 40% on billion-row datasets.",
+    "relatedTopics": [
+      "Set Operations",
+      "INTERSECT",
+      "EXCEPT",
+      "DISTINCT"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "source",
+          "email"
+        ],
+        "rows": [
+          [
+            "customers",
+            "alice@x.com"
+          ],
+          [
+            "customers",
+            "bob@x.com"
+          ],
+          [
+            "newsletter",
+            "bob@x.com"
+          ],
+          [
+            "newsletter",
+            "carol@x.com"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "email (UNION)",
+          "email (UNION ALL)"
+        ],
+        "rows": [
+          [
+            "alice@x.com",
+            "alice@x.com"
+          ],
+          [
+            "bob@x.com",
+            "bob@x.com"
+          ],
+          [
+            "carol@x.com",
+            "bob@x.com"
+          ],
+          [
+            "",
+            "carol@x.com"
+          ]
+        ]
+      },
+      "description": "UNION returns 3 unique emails (bob appears once). UNION ALL returns 4 rows (bob appears twice). UNION ALL is faster — no dedup step."
+    }
   },
   {
     "id": "sql-9",
@@ -197,8 +757,17 @@
     "question": "How do you handle NULL values in SQL?",
     "summary": "Explains three-valued logic, NULL-safe comparisons, and common NULL-handling functions.",
     "difficulty": "Easy",
-    "companies": ["Google", "Amazon", "Zoho", "TCS Digital"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Zoho",
+      "TCS Digital"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "sql",
     "topic": "NULL Handling",
     "language": "SQL",
@@ -213,7 +782,63 @@
       "NULLIF is perfect for preventing division-by-zero: NULLIF(denominator, 0) returns NULL instead of an error."
     ],
     "whatToAvoid": "Do not assume NULL = NULL is true — it is UNKNOWN. Two NULL values are NOT considered equal by =, which breaks many intuitive comparisons.",
-    "ytQuery": "SQL NULL values IS NULL COALESCE"
+    "ytQuery": "SQL NULL values IS NULL COALESCE",
+    "quickAnswer": "NULL means unknown, not zero or empty string. Any comparison with NULL returns UNKNOWN (not TRUE). Use IS NULL/IS NOT NULL to check — never use = NULL. COALESCE returns the first non-NULL value. COUNT(*) includes NULLs but COUNT(column) skips them.",
+    "eli10": "NULL is like a mystery box — you don't know what's inside. If you ask 'is this mystery box equal to that mystery box?' the answer is 'I don't know' — not yes or no. That's why you can't use = to check for NULL. You have to ask 'IS this a mystery box?' instead.",
+    "realWorldExample": "At Twitter, a bug where user phone numbers were compared with = NULL instead of IS NULL caused the 'users without phone verification' report to return zero results for months. The fix was a one-character change but affected security compliance reporting for millions of accounts.",
+    "relatedTopics": [
+      "Three-Valued Logic",
+      "COALESCE",
+      "NULLIF",
+      "IS DISTINCT FROM"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "name",
+          "phone",
+          "email"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "555-0101",
+            "alice@x.com"
+          ],
+          [
+            "Bob",
+            "NULL",
+            "bob@x.com"
+          ],
+          [
+            "Carol",
+            "NULL",
+            "NULL"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "name",
+          "contact"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "555-0101"
+          ],
+          [
+            "Bob",
+            "bob@x.com"
+          ],
+          [
+            "Carol",
+            "no contact"
+          ]
+        ]
+      },
+      "description": "COALESCE(phone, email, 'no contact') returns the first non-NULL value for each row. Alice has a phone, Bob falls back to email, Carol falls through to the default string."
+    }
   },
   {
     "id": "sql-10",
@@ -221,8 +846,16 @@
     "question": "What is a View and what are Materialized Views?",
     "summary": "Explains virtual and cached query result sets, their benefits, and refresh strategies.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Google", "Atlassian", "Zoho"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Atlassian",
+      "Zoho"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Views",
     "language": "SQL",
@@ -237,7 +870,64 @@
       "Use materialized views for expensive aggregations hit frequently — e.g., daily/weekly reporting dashboards."
     ],
     "whatToAvoid": "Do not use regular views as a performance optimization — they are purely a convenience abstraction and do not cache results. For performance, use materialized views or proper indexing.",
-    "ytQuery": "SQL View vs Materialized View"
+    "ytQuery": "SQL View vs Materialized View",
+    "quickAnswer": "A View is a saved SELECT query that acts as a virtual table — recomputed on every access, always fresh. A Materialized View stores query results on disk — precomputed and fast but potentially stale. Use materialized views for expensive aggregations on dashboards.",
+    "eli10": "A regular view is like a recipe card — every time you want cake, you follow the recipe from scratch. A materialized view is like baking the cake ahead of time and putting it in the fridge. The fridge cake is faster to serve but might get stale if you don't refresh it.",
+    "realWorldExample": "At Atlassian, Jira's sprint velocity dashboard uses materialized views refreshed every 15 minutes. Before materialization, the dashboard query joined 5 tables with window functions and took 8 seconds — after, it loads in under 100ms.",
+    "relatedTopics": [
+      "CTEs",
+      "Query Optimization",
+      "Indexes",
+      "Caching"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "month",
+          "user_id",
+          "total"
+        ],
+        "rows": [
+          [
+            "Jan",
+            "1",
+            "150"
+          ],
+          [
+            "Jan",
+            "2",
+            "200"
+          ],
+          [
+            "Feb",
+            "1",
+            "100"
+          ],
+          [
+            "Feb",
+            "2",
+            "300"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "month",
+          "revenue"
+        ],
+        "rows": [
+          [
+            "Jan",
+            "350"
+          ],
+          [
+            "Feb",
+            "400"
+          ]
+        ]
+      },
+      "description": "A materialized view pre-aggregates order totals by month. Instead of re-computing the SUM on every dashboard load, the result is cached on disk and refreshed periodically."
+    }
   },
   {
     "id": "sql-11",
@@ -245,8 +935,16 @@
     "question": "What is a Stored Procedure and when should you use one?",
     "summary": "Explains server-side procedural SQL logic, its benefits for performance and encapsulation, and its trade-offs.",
     "difficulty": "Medium",
-    "companies": ["TCS Digital", "Infosys SP", "Wipro Elite", "Zoho"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Wipro Elite",
+      "Zoho"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Stored Procedures",
     "language": "SQL",
@@ -261,7 +959,51 @@
       "ORMs (Sequelize, Prisma, SQLAlchemy) make application-side transaction management easy, reducing the need for stored procedures."
     ],
     "whatToAvoid": "Do not put core business logic in stored procedures in modern applications — it makes testing, CI/CD, and horizontal scaling much harder. Reserve them for performance-critical DB operations.",
-    "ytQuery": "SQL stored procedure when to use"
+    "ytQuery": "SQL stored procedure when to use",
+    "quickAnswer": "A stored procedure is a precompiled set of SQL statements stored in the database. Benefits: reduced network round-trips, precompiled query plans, encapsulated logic. Drawbacks: hard to version control, test, and migrate. Modern best practice favors application-side logic.",
+    "eli10": "A stored procedure is like a recipe saved inside the kitchen (database) instead of written on a card you bring from home (application). The chef can follow it faster since it's right there, but if you want to change the recipe, you have to go into the kitchen to update it.",
+    "realWorldExample": "At PayPal, fund transfer logic was originally in stored procedures for atomicity. When they migrated to microservices, the hardest part was extracting business rules buried in 2000+ stored procedures that had no tests — a cautionary tale about putting business logic in the DB.",
+    "relatedTopics": [
+      "Functions (UDFs)",
+      "Transactions",
+      "Triggers",
+      "Application Architecture"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "account_id",
+          "balance"
+        ],
+        "rows": [
+          [
+            "101",
+            "1000.00"
+          ],
+          [
+            "202",
+            "500.00"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "account_id",
+          "balance"
+        ],
+        "rows": [
+          [
+            "101",
+            "500.00"
+          ],
+          [
+            "202",
+            "1000.00"
+          ]
+        ]
+      },
+      "description": "Stored procedure transfer_funds(101, 202, 500.00) atomically debits account 101 and credits account 202 in a single database call."
+    }
   },
   {
     "id": "sql-12",
@@ -269,8 +1011,17 @@
     "question": "How do you use EXPLAIN / EXPLAIN ANALYZE to optimize slow queries?",
     "summary": "Explains how to read query execution plans, identify bottlenecks, and apply targeted fixes.",
     "difficulty": "Hard",
-    "companies": ["Google", "Amazon", "Razorpay", "Atlassian", "Flipkart"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Razorpay",
+      "Atlassian",
+      "Flipkart"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Query Optimization",
     "language": "SQL",
@@ -285,7 +1036,57 @@
       "BUFFERS option shows cache hits vs disk reads — high block reads indicate I/O bottleneck, not just CPU."
     ],
     "whatToAvoid": "Do not run EXPLAIN ANALYZE on destructive queries (DELETE, UPDATE) in production without wrapping in a transaction you ROLLBACK — it actually executes the query!",
-    "ytQuery": "PostgreSQL EXPLAIN ANALYZE query optimization"
+    "ytQuery": "PostgreSQL EXPLAIN ANALYZE query optimization",
+    "quickAnswer": "EXPLAIN shows the planned query execution path. EXPLAIN ANALYZE actually runs it and shows real times. Look for Seq Scans on large tables (missing index), high row estimates vs actuals (stale stats), and expensive sorts. Fix with targeted indexes and ANALYZE.",
+    "eli10": "EXPLAIN is like asking Google Maps to show you the route before driving. EXPLAIN ANALYZE is like actually driving and recording how long each turn took. If a part of the route takes way too long, you find a shortcut (add an index).",
+    "realWorldExample": "At Stripe, a payment lookup query was taking 4 seconds. EXPLAIN ANALYZE revealed a Seq Scan on a 200M-row transactions table. Adding a partial index on (merchant_id) WHERE status='completed' dropped it to 3ms and saved ~$50K/month in database compute costs.",
+    "relatedTopics": [
+      "Indexes",
+      "Query Planner",
+      "Table Statistics",
+      "ANALYZE"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Operation",
+          "Rows",
+          "Time"
+        ],
+        "rows": [
+          [
+            "Seq Scan on orders",
+            "1,000,000",
+            "2840ms"
+          ],
+          [
+            "Filter: user_id = 42",
+            "15 matches",
+            ""
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Operation",
+          "Rows",
+          "Time"
+        ],
+        "rows": [
+          [
+            "Index Scan",
+            "15",
+            "0.8ms"
+          ],
+          [
+            "Index Cond: user_id = 42",
+            "",
+            ""
+          ]
+        ]
+      },
+      "description": "Before: sequential scan reads all 1M rows to find 15 matches (2.8s). After adding index: jumps directly to the 15 rows (0.8ms). 3500x faster."
+    }
   },
   {
     "id": "sql-13",
@@ -293,8 +1094,17 @@
     "question": "Write a query to find the second highest salary in a table.",
     "summary": "Classic interview problem testing subqueries, LIMIT/OFFSET, and window functions.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Google", "TCS Digital", "Infosys SP", "Wipro Elite"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "TCS Digital",
+      "Infosys SP",
+      "Wipro Elite"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Interview Problems",
     "language": "SQL",
@@ -309,7 +1119,53 @@
       "Generalize: can you extend to top N per department? Use DENSE_RANK() OVER (PARTITION BY dept ORDER BY salary DESC)."
     ],
     "whatToAvoid": "Do not use LIMIT 1 OFFSET 1 without DISTINCT — if two employees share the highest salary, OFFSET 1 returns the second row with the same salary, not the second distinct value.",
-    "ytQuery": "SQL second highest salary query"
+    "ytQuery": "SQL second highest salary query",
+    "quickAnswer": "Three approaches: (1) SELECT MAX(salary) WHERE salary < (SELECT MAX(salary)) — simple subquery. (2) DISTINCT + LIMIT 1 OFFSET 1 — clean but needs DISTINCT. (3) DENSE_RANK() OVER (ORDER BY salary DESC) WHERE rnk=2 — most flexible, extends to Nth highest. Always handle the NULL edge case.",
+    "eli10": "To find the second tallest kid in class: Line everyone up tallest to shortest. Skip the first kid. The next kid is the second tallest. If two kids are the same height, they both count as the same position — you still want the NEXT different height.",
+    "realWorldExample": "At Amazon, this pattern (Nth highest per group) is used in compensation analysis to find the second-highest paid employee per department — DENSE_RANK with PARTITION BY department handles ties correctly across their 1.5M+ employee dataset.",
+    "relatedTopics": [
+      "Window Functions",
+      "DENSE_RANK",
+      "LIMIT/OFFSET",
+      "Subqueries"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "name",
+          "salary"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "120000"
+          ],
+          [
+            "Bob",
+            "120000"
+          ],
+          [
+            "Carol",
+            "100000"
+          ],
+          [
+            "Dave",
+            "90000"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "second_highest"
+        ],
+        "rows": [
+          [
+            "100000"
+          ]
+        ]
+      },
+      "description": "Alice and Bob tie at 120K (both rank 1). Carol at 100K is DENSE_RANK 2 — the second highest. RANK would also give 2 here, but DENSE_RANK is more consistent."
+    }
   },
   {
     "id": "sql-14",
@@ -317,8 +1173,16 @@
     "question": "Find all employees who earn more than their manager.",
     "summary": "Classic self-join interview problem testing ability to join a table to itself.",
     "difficulty": "Easy",
-    "companies": ["Amazon", "Google", "Microsoft", "TCS Digital"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Microsoft",
+      "TCS Digital"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Interview Problems",
     "language": "SQL",
@@ -333,7 +1197,69 @@
       "This pattern applies to any hierarchical structure: categories, file systems, comment threads."
     ],
     "whatToAvoid": "Do not forget that the CEO (top-level employee) has manager_id = NULL — INNER JOIN will silently exclude them. Clarify requirements before assuming INNER JOIN is correct.",
-    "ytQuery": "SQL self join employee manager salary"
+    "ytQuery": "SQL self join employee manager salary",
+    "quickAnswer": "Use a self-join: JOIN employees e with employees m ON e.manager_id = m.id, then WHERE e.salary > m.salary. The self-join aliases the same table twice — 'e' for the employee row and 'm' for their manager's row.",
+    "eli10": "Imagine a school where every teacher also has a boss-teacher. You make two copies of the teacher list side by side. On the left, you write each teacher. On the right, you find their boss. Then you circle any teacher who earns more than their boss.",
+    "realWorldExample": "At Google, this self-join pattern is used in comp equity analysis to flag cases where direct reports out-earn their managers — a common signal for needed compensation band adjustments, especially after acquisitions where pay scales differ.",
+    "relatedTopics": [
+      "Self Join",
+      "Hierarchical Data",
+      "Recursive CTE",
+      "JOIN Types"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "id",
+          "name",
+          "salary",
+          "manager_id"
+        ],
+        "rows": [
+          [
+            "1",
+            "CEO",
+            "150000",
+            "NULL"
+          ],
+          [
+            "2",
+            "VP",
+            "120000",
+            "1"
+          ],
+          [
+            "3",
+            "Senior Dev",
+            "130000",
+            "2"
+          ],
+          [
+            "4",
+            "Junior Dev",
+            "50000",
+            "2"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "employee",
+          "emp_salary",
+          "manager",
+          "mgr_salary"
+        ],
+        "rows": [
+          [
+            "Senior Dev",
+            "130000",
+            "VP",
+            "120000"
+          ]
+        ]
+      },
+      "description": "Self-join matches each employee to their manager. Senior Dev (130K) earns more than VP (120K) — the only match where employee salary > manager salary."
+    }
   },
   {
     "id": "sql-15",
@@ -341,8 +1267,16 @@
     "question": "Write a query to find duplicate rows in a table.",
     "summary": "Tests GROUP BY + HAVING for identifying duplicate records and how to delete them.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "Amazon", "Zoho"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Amazon",
+      "Zoho"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Interview Problems",
     "language": "SQL",
@@ -357,7 +1291,69 @@
       "After deduplication, add a UNIQUE constraint to prevent future duplicates: ALTER TABLE users ADD CONSTRAINT uq_email UNIQUE (email)."
     ],
     "whatToAvoid": "Do not run DELETE without first testing the SELECT — always verify what you are about to delete. Wrap in a transaction and check row count before committing.",
-    "ytQuery": "SQL find delete duplicate rows"
+    "ytQuery": "SQL find delete duplicate rows",
+    "quickAnswer": "Find duplicates: GROUP BY the columns that define uniqueness, then HAVING COUNT(*) > 1. Delete duplicates keeping one: use ROW_NUMBER() OVER (PARTITION BY duplicate_key ORDER BY id) and DELETE WHERE rn > 1. Always test with SELECT before DELETE.",
+    "eli10": "Imagine your sticker collection has some doubles. To find them, sort all stickers by name and count — any name appearing more than once is a duplicate. To remove extras, keep the first one you got (lowest number) and remove the rest.",
+    "realWorldExample": "At Slack, a race condition in their user signup flow caused duplicate email entries. They used ROW_NUMBER partitioned by email, ordered by created_at ASC, to keep the earliest account and merge data from duplicates before deletion — affecting 0.3% of their user base.",
+    "relatedTopics": [
+      "GROUP BY",
+      "HAVING",
+      "ROW_NUMBER",
+      "UNIQUE Constraints"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "id",
+          "email",
+          "name"
+        ],
+        "rows": [
+          [
+            "1",
+            "alice@x.com",
+            "Alice"
+          ],
+          [
+            "2",
+            "bob@x.com",
+            "Bob"
+          ],
+          [
+            "3",
+            "alice@x.com",
+            "Alice S"
+          ],
+          [
+            "4",
+            "carol@x.com",
+            "Carol"
+          ],
+          [
+            "5",
+            "bob@x.com",
+            "Robert"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "email",
+          "duplicate_count"
+        ],
+        "rows": [
+          [
+            "alice@x.com",
+            "2"
+          ],
+          [
+            "bob@x.com",
+            "2"
+          ]
+        ]
+      },
+      "description": "GROUP BY email + HAVING COUNT(*)>1 reveals alice@x.com and bob@x.com each appear twice. ROW_NUMBER would then mark id=3 and id=5 for deletion (keeping the earlier entries)."
+    }
   },
   {
     "id": "sql-16",
@@ -365,8 +1361,17 @@
     "question": "What are the aggregate functions in SQL and how do they work with GROUP BY?",
     "summary": "Covers COUNT, SUM, AVG, MIN, MAX behavior with GROUP BY and NULL handling in aggregations.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "Wipro Elite", "Zoho"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Wipro Elite",
+      "Zoho"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "sql",
     "topic": "Aggregations",
     "language": "SQL",
@@ -381,7 +1386,72 @@
       "COUNT(DISTINCT col) counts unique non-NULL values — useful for cardinality estimation."
     ],
     "whatToAvoid": "Do not confuse COUNT(*) with COUNT(col) — they produce different results when the column has NULLs. This is a very common interview mistake.",
-    "ytQuery": "SQL aggregate functions GROUP BY COUNT SUM AVG"
+    "ytQuery": "SQL aggregate functions GROUP BY COUNT SUM AVG",
+    "quickAnswer": "COUNT(*) counts all rows including NULLs. COUNT(col) counts only non-NULL values. SUM/AVG/MIN/MAX all ignore NULLs. Every non-aggregated column in SELECT must be in GROUP BY. Use FILTER (PostgreSQL) or CASE for conditional aggregation.",
+    "eli10": "Aggregate functions are like a calculator for groups. COUNT is counting how many items. SUM is adding them up. AVG is finding the average. MIN/MAX find the smallest/biggest. GROUP BY is like sorting items into piles first — then you calculate for each pile separately.",
+    "realWorldExample": "At Airbnb, a dashboard bug showed incorrect average review scores because AVG was ignoring NULL ratings (unreviewed stays). The fix was using COUNT(*) vs COUNT(rating) to show '127 reviews out of 200 bookings' rather than an inflated average.",
+    "relatedTopics": [
+      "GROUP BY",
+      "HAVING",
+      "NULL Handling",
+      "Window Functions"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "dept",
+          "name",
+          "phone"
+        ],
+        "rows": [
+          [
+            "Eng",
+            "Alice",
+            "555-01"
+          ],
+          [
+            "Eng",
+            "Bob",
+            "NULL"
+          ],
+          [
+            "Sales",
+            "Carol",
+            "555-03"
+          ],
+          [
+            "Sales",
+            "Dave",
+            "555-04"
+          ],
+          [
+            "Sales",
+            "Eve",
+            "NULL"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "dept",
+          "COUNT(*)",
+          "COUNT(phone)"
+        ],
+        "rows": [
+          [
+            "Eng",
+            "2",
+            "1"
+          ],
+          [
+            "Sales",
+            "3",
+            "2"
+          ]
+        ]
+      },
+      "description": "COUNT(*) counts all rows per dept (including those with NULL phone). COUNT(phone) only counts rows where phone is NOT NULL. Engineering has 2 people but only 1 has a phone."
+    }
   },
   {
     "id": "sql-17",
@@ -389,8 +1459,16 @@
     "question": "Write a query to calculate a running total and moving average.",
     "summary": "Uses window functions with frame clauses to compute cumulative and rolling calculations.",
     "difficulty": "Hard",
-    "companies": ["Amazon", "Google", "Razorpay", "Flipkart"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Razorpay",
+      "Flipkart"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Window Functions",
     "language": "SQL",
@@ -405,7 +1483,77 @@
       "LAG(col, n, default) accesses the nth previous row value — perfect for day-over-day or period-over-period calculations."
     ],
     "whatToAvoid": "Do not confuse ROWS and RANGE frame modes — RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW can include 'future' rows with the same ORDER BY value, giving unexpected results on non-unique dates.",
-    "ytQuery": "SQL running total moving average window function"
+    "ytQuery": "SQL running total moving average window function",
+    "quickAnswer": "Running total: SUM(col) OVER (ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW). Moving average: AVG(col) OVER (ORDER BY date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) for 7-day average. Use LAG for day-over-day change calculations.",
+    "eli10": "Imagine keeping a piggy bank diary. Running total is writing how much money you have IN TOTAL after each day's deposit. Moving average is looking at the last 7 days and calculating the average deposit — it 'moves' forward as each new day is added.",
+    "realWorldExample": "At Robinhood, 7-day and 30-day moving averages on trading volume are computed with window functions in their analytics warehouse. The frame clause ROWS BETWEEN 29 PRECEDING AND CURRENT ROW calculates the 30-day moving average used in their market trend dashboards.",
+    "relatedTopics": [
+      "Window Functions",
+      "Frame Clauses",
+      "LAG/LEAD",
+      "Time Series"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "date",
+          "amount"
+        ],
+        "rows": [
+          [
+            "Jan 1",
+            "100"
+          ],
+          [
+            "Jan 2",
+            "200"
+          ],
+          [
+            "Jan 3",
+            "150"
+          ],
+          [
+            "Jan 4",
+            "300"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "date",
+          "amount",
+          "running_total",
+          "moving_avg_3d"
+        ],
+        "rows": [
+          [
+            "Jan 1",
+            "100",
+            "100",
+            "100"
+          ],
+          [
+            "Jan 2",
+            "200",
+            "300",
+            "150"
+          ],
+          [
+            "Jan 3",
+            "150",
+            "450",
+            "150"
+          ],
+          [
+            "Jan 4",
+            "300",
+            "750",
+            "217"
+          ]
+        ]
+      },
+      "description": "Running total accumulates all previous amounts. 3-day moving average looks at current + 2 preceding rows. Jan 4 avg: (200+150+300)/3 = 217."
+    }
   },
   {
     "id": "sql-18",
@@ -413,8 +1561,16 @@
     "question": "What is database sharding and when should you use it?",
     "summary": "Explains horizontal partitioning strategies, shard keys, and the operational complexity it introduces.",
     "difficulty": "Hard",
-    "companies": ["Amazon", "Google", "Flipkart", "Razorpay"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Flipkart",
+      "Razorpay"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Scalability",
     "language": "SQL",
@@ -429,7 +1585,65 @@
       "Consider alternatives first: read replicas (for read scale), table partitioning (for query pruning), caching (for hot reads)."
     ],
     "whatToAvoid": "Do not jump to sharding prematurely — it adds enormous operational complexity. Most apps can handle enormous scale with vertical scaling, read replicas, caching, and partitioning before needing sharding.",
-    "ytQuery": "Database sharding horizontal partitioning explained"
+    "ytQuery": "Database sharding horizontal partitioning explained",
+    "quickAnswer": "Sharding splits a table across multiple database servers. Each shard holds a subset of rows. Benefits: horizontal write scaling. Challenges: cross-shard JOINs, distributed transactions, rebalancing. Consider alternatives first: read replicas, caching, partitioning.",
+    "eli10": "Imagine a library so big that one building can't hold all the books. So you split them: building A has books A-M, building B has N-Z. Finding one book is fast, but if you need to compare books from both buildings, someone has to run back and forth.",
+    "realWorldExample": "At Instagram, user data is sharded by user_id. When they needed to show a user's feed (which requires data from many users across shards), they built a fan-out service that queries multiple shards in parallel and merges results — a common sharding trade-off.",
+    "relatedTopics": [
+      "Partitioning",
+      "Replication",
+      "Horizontal Scaling",
+      "Consistent Hashing"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "user_id",
+          "shard"
+        ],
+        "rows": [
+          [
+            "1",
+            "user_id % 4 = 1"
+          ],
+          [
+            "2",
+            "user_id % 4 = 2"
+          ],
+          [
+            "3",
+            "user_id % 4 = 3"
+          ],
+          [
+            "4",
+            "user_id % 4 = 0"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Shard 0",
+          "Shard 1",
+          "Shard 2",
+          "Shard 3"
+        ],
+        "rows": [
+          [
+            "user 4",
+            "user 1",
+            "user 2",
+            "user 3"
+          ],
+          [
+            "user 8",
+            "user 5",
+            "user 6",
+            "user 7"
+          ]
+        ]
+      },
+      "description": "Hash sharding with user_id % 4 distributes users across 4 shards. Each shard is a separate database server handling ~25% of traffic."
+    }
   },
   {
     "id": "sql-19",
@@ -437,8 +1651,16 @@
     "question": "Write a query to pivot rows into columns (PIVOT operation).",
     "summary": "Converts row-based category data into a column-per-category format using conditional aggregation.",
     "difficulty": "Hard",
-    "companies": ["Amazon", "Google", "TCS Digital", "Flipkart"],
-    "roles": ["Backend", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "TCS Digital",
+      "Flipkart"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Advanced Queries",
     "language": "SQL",
@@ -453,7 +1675,67 @@
       "Most reporting tools (Tableau, Metabase) handle pivoting in the presentation layer — do it in SQL only when needed in the data layer."
     ],
     "whatToAvoid": "Do not hardcode category values in a pivot query for production use without documenting that the query must be updated when new categories are added.",
-    "ytQuery": "SQL PIVOT conditional aggregation CASE WHEN"
+    "ytQuery": "SQL PIVOT conditional aggregation CASE WHEN",
+    "quickAnswer": "Pivoting converts row values into column headers. The universal approach is conditional aggregation: SUM(CASE WHEN category='X' THEN value END) AS X. SQL Server has native PIVOT syntax. For dynamic categories, build the query string at runtime with dynamic SQL.",
+    "eli10": "Imagine a gradebook where each row is: student, subject, grade. Pivoting turns it into a spreadsheet where each subject becomes its own column — so you can see all of Alice's grades in one row instead of three separate rows.",
+    "realWorldExample": "At Flipkart, the sales analytics team uses conditional aggregation to pivot daily revenue by product category into a crosstab report. They moved from a dynamic SQL approach to a fixed CASE WHEN after finding the top 10 categories cover 95% of revenue.",
+    "relatedTopics": [
+      "Conditional Aggregation",
+      "CASE WHEN",
+      "UNPIVOT",
+      "Dynamic SQL"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "month",
+          "product",
+          "revenue"
+        ],
+        "rows": [
+          [
+            "Jan",
+            "Phone",
+            "50000"
+          ],
+          [
+            "Jan",
+            "Laptop",
+            "80000"
+          ],
+          [
+            "Feb",
+            "Phone",
+            "55000"
+          ],
+          [
+            "Feb",
+            "Laptop",
+            "75000"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "month",
+          "Phone",
+          "Laptop"
+        ],
+        "rows": [
+          [
+            "Jan",
+            "50000",
+            "80000"
+          ],
+          [
+            "Feb",
+            "55000",
+            "75000"
+          ]
+        ]
+      },
+      "description": "Rows are pivoted: each product becomes a column. SUM(CASE WHEN product='Phone' THEN revenue END) AS Phone creates the Phone column."
+    }
   },
   {
     "id": "sql-20",
@@ -461,8 +1743,18 @@
     "question": "What is the N+1 query problem and how do you fix it in SQL?",
     "summary": "Explains the most common ORM-related performance trap and how JOINs and eager loading solve it.",
     "difficulty": "Medium",
-    "companies": ["Razorpay", "Flipkart", "Atlassian", "Zoho", "Amazon"],
-    "roles": ["Backend", "Software Engineer", "Full Stack"],
+    "companies": [
+      "Razorpay",
+      "Flipkart",
+      "Atlassian",
+      "Zoho",
+      "Amazon"
+    ],
+    "roles": [
+      "Backend",
+      "Software Engineer",
+      "Full Stack"
+    ],
     "type": "sql",
     "topic": "Query Optimization",
     "language": "SQL",
@@ -477,7 +1769,55 @@
       "Use query logging (Django DEBUG, Sequelize logging, query inspector) to detect N+1 in development."
     ],
     "whatToAvoid": "Do not dismiss N+1 as a minor issue — at scale, 100 users becoming 100 DB queries per request will collapse a server. It is one of the most common causes of slow APIs in production.",
-    "ytQuery": "N+1 query problem ORM solution"
+    "ytQuery": "N+1 query problem ORM solution",
+    "quickAnswer": "N+1 happens when code fetches N rows then issues 1 query per row for related data — 101 queries instead of 1 JOIN. Fix: use JOINs, batched WHERE IN queries, or ORM eager loading (include, select_related, prefetch_related). Always check query logs.",
+    "eli10": "Imagine asking your teacher about each student's grade one at a time: 'What did Alice get? What did Bob get? What did Carol get?' — 30 separate questions. N+1 is like that. The fix is asking 'What did EVERYONE get?' in one question.",
+    "realWorldExample": "At Shopify, a merchant dashboard endpoint was making 500+ database queries per page load due to N+1 in their Ruby on Rails ORM. Adding .includes(:orders, :products) reduced it to 3 queries, dropping response time from 8 seconds to 200ms.",
+    "relatedTopics": [
+      "ORM Optimization",
+      "Eager Loading",
+      "Query Batching",
+      "JOIN"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Query #",
+          "SQL"
+        ],
+        "rows": [
+          [
+            "1",
+            "SELECT * FROM users"
+          ],
+          [
+            "2",
+            "SELECT * FROM orders WHERE user_id=1"
+          ],
+          [
+            "3",
+            "SELECT * FROM orders WHERE user_id=2"
+          ],
+          [
+            "...",
+            "...N more queries"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Query #",
+          "SQL"
+        ],
+        "rows": [
+          [
+            "1",
+            "SELECT u.*, o.* FROM users u LEFT JOIN orders o ON u.id=o.user_id"
+          ]
+        ]
+      },
+      "description": "N+1 problem: 1 query for users + N queries for each user's orders = 101 total. Fix: single JOIN query retrieves everything in one round trip."
+    }
   },
   {
     "id": "sql-21",
@@ -485,8 +1825,17 @@
     "question": "What is Pattern Matching in SQL and how do LIKE wildcards work?",
     "summary": "Covers the LIKE operator with % and _ wildcards for flexible string pattern searches.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "Zoho", "General"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Zoho",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Pattern Matching",
     "language": "SQL",
@@ -501,7 +1850,61 @@
       "For complex patterns, use REGEXP (MySQL) or SIMILAR TO / ~ (PostgreSQL) instead of chaining multiple LIKE clauses."
     ],
     "whatToAvoid": "Do not use LIKE '%value%' on large unindexed columns without full-text search support — it scans every row. Use full-text indexes (FULLTEXT in MySQL, tsvector in PostgreSQL) for text search at scale.",
-    "ytQuery": "SQL LIKE wildcard pattern matching"
+    "ytQuery": "SQL LIKE wildcard pattern matching",
+    "quickAnswer": "LIKE uses % (matches any sequence of characters) and _ (matches exactly one character) for pattern matching. Leading wildcards like '%text' prevent index usage. Use ILIKE in PostgreSQL for case-insensitive search. Use REGEXP for complex patterns.",
+    "eli10": "LIKE is playing a guessing game. The % is a wild card that stands for anything — 'A%' means 'starts with A, anything after.' The _ stands for exactly one letter — '_ob' means 'any one letter followed by ob' like Bob or Rob.",
+    "realWorldExample": "At GitHub, repository search initially used LIKE '%keyword%' which caused full table scans on millions of repos. They migrated to PostgreSQL trigram indexes (pg_trgm) which support indexed LIKE '%pattern%' searches, reducing search latency from 2s to 50ms.",
+    "relatedTopics": [
+      "Full-Text Search",
+      "Regular Expressions",
+      "Indexes",
+      "Collation"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "name"
+        ],
+        "rows": [
+          [
+            "Alice"
+          ],
+          [
+            "Bob"
+          ],
+          [
+            "Albert"
+          ],
+          [
+            "Anna"
+          ],
+          [
+            "Charlie"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "pattern",
+          "matches"
+        ],
+        "rows": [
+          [
+            "LIKE 'A%'",
+            "Alice, Albert, Anna"
+          ],
+          [
+            "LIKE '_ob'",
+            "Bob"
+          ],
+          [
+            "LIKE '%li%'",
+            "Alice, Charlie"
+          ]
+        ]
+      },
+      "description": "% matches any sequence: 'A%' matches names starting with A. _ matches exactly one char: '_ob' matches 3-letter names ending in 'ob'. '%li%' matches names containing 'li' anywhere."
+    }
   },
   {
     "id": "sql-22",
@@ -509,8 +1912,16 @@
     "question": "How do you create an empty table with the same structure as an existing table?",
     "summary": "Explains the CREATE TABLE ... AS SELECT ... WHERE 1=0 pattern for cloning table structure.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "General"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "DDL",
     "language": "SQL",
@@ -525,7 +1936,67 @@
       "Useful for staging tables, audit copies, test fixtures, and batch processing buffers."
     ],
     "whatToAvoid": "Do not assume the cloned table has all the same constraints — always verify with DESCRIBE or \\d after creation and add missing constraints explicitly.",
-    "ytQuery": "SQL CREATE TABLE AS SELECT copy structure"
+    "ytQuery": "SQL CREATE TABLE AS SELECT copy structure",
+    "quickAnswer": "Use CREATE TABLE new_table AS SELECT * FROM old_table WHERE 1=0 to clone structure with no rows. This copies column names and types but NOT constraints or indexes. MySQL's CREATE TABLE ... LIKE and PostgreSQL's LIKE ... INCLUDING ALL also copy constraints.",
+    "eli10": "It's like photocopying a blank form — you get the same boxes and labels but nothing filled in. WHERE 1=0 is a trick that says 'give me zero rows' so you get the empty structure. But you need to add the rules (constraints) back yourself.",
+    "realWorldExample": "At Uber, data engineers use CREATE TABLE ... LIKE for staging tables during ETL pipelines. They clone the production schema, bulk-load transformed data into the staging table, validate it, then swap it with the live table — zero-downtime schema migrations.",
+    "relatedTopics": [
+      "DDL",
+      "Table Partitioning",
+      "Migrations",
+      "Staging Tables"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Column",
+          "Type",
+          "Constraint"
+        ],
+        "rows": [
+          [
+            "id",
+            "INT",
+            "PRIMARY KEY"
+          ],
+          [
+            "name",
+            "VARCHAR(100)",
+            "NOT NULL"
+          ],
+          [
+            "email",
+            "VARCHAR(255)",
+            "UNIQUE"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Column",
+          "Type",
+          "Constraint"
+        ],
+        "rows": [
+          [
+            "id",
+            "INT",
+            "(none)"
+          ],
+          [
+            "name",
+            "VARCHAR(100)",
+            "(none)"
+          ],
+          [
+            "email",
+            "VARCHAR(255)",
+            "(none)"
+          ]
+        ]
+      },
+      "description": "CREATE TABLE AS SELECT WHERE 1=0 copies column names and types but drops all constraints. You must re-add PRIMARY KEY, NOT NULL, UNIQUE manually."
+    }
   },
   {
     "id": "sql-23",
@@ -533,8 +2004,15 @@
     "question": "What is a Recursive Stored Procedure?",
     "summary": "Explains stored procedures that call themselves to process hierarchical or repetitive logic.",
     "difficulty": "Hard",
-    "companies": ["TCS Digital", "Infosys SP", "General"],
-    "roles": ["Backend Developer", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Stored Procedures",
     "language": "SQL",
@@ -549,7 +2027,57 @@
       "Prefer iterative approaches or recursive CTEs over recursive stored procedures for production hierarchy queries."
     ],
     "whatToAvoid": "Do not use recursive stored procedures for deep hierarchies in production — each recursive call adds a stack frame and risks hitting recursion depth limits. Use recursive CTEs instead.",
-    "ytQuery": "SQL recursive stored procedure example"
+    "ytQuery": "SQL recursive stored procedure example",
+    "quickAnswer": "A recursive stored procedure calls itself to process hierarchical or repetitive logic. It needs a base case to stop recursion and a recursive step that moves toward it. MySQL requires SET max_sp_recursion_depth. In practice, recursive CTEs are preferred for tree traversal.",
+    "eli10": "A recursive procedure is like a set of Russian nesting dolls — each doll opens to reveal a smaller one inside, until you reach the tiniest doll (the base case). The procedure keeps calling itself with a smaller problem until it hits the stopping point.",
+    "realWorldExample": "At SAP, recursive stored procedures were historically used to traverse bill-of-materials (BOM) hierarchies in manufacturing — finding all sub-components of a product. Modern implementations have migrated to recursive CTEs for better performance and readability.",
+    "relatedTopics": [
+      "Recursive CTEs",
+      "Stored Procedures",
+      "Hierarchical Data",
+      "Stack Depth"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "n",
+          "call"
+        ],
+        "rows": [
+          [
+            "5",
+            "factorial(5)"
+          ],
+          [
+            "4",
+            "factorial(4)"
+          ],
+          [
+            "3",
+            "factorial(3)"
+          ],
+          [
+            "2",
+            "factorial(2)"
+          ],
+          [
+            "1",
+            "base case"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "result"
+        ],
+        "rows": [
+          [
+            "120"
+          ]
+        ]
+      },
+      "description": "Recursive procedure computes 5! by calling itself: factorial(5) calls factorial(4)...down to factorial(1) which returns 1 (base case). Results multiply back up: 1×2×3×4×5=120."
+    }
   },
   {
     "id": "sql-24",
@@ -557,8 +2085,16 @@
     "question": "What is Collation in SQL and what are the types of Collation Sensitivity?",
     "summary": "Explains how collation controls string comparison, sorting, and the sensitivity rules that govern them.",
     "difficulty": "Medium",
-    "companies": ["TCS Digital", "Infosys SP", "General"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Collation",
     "language": "SQL",
@@ -573,7 +2109,63 @@
       "Use BINARY keyword in MySQL or COLLATE expressions for per-query case sensitivity overrides."
     ],
     "whatToAvoid": "Do not mix collations across joined columns — always ensure related columns (foreign keys, join conditions) share the same collation to avoid errors and poor performance.",
-    "ytQuery": "SQL collation case sensitive accent sensitive explained"
+    "ytQuery": "SQL collation case sensitive accent sensitive explained",
+    "quickAnswer": "Collation defines rules for string comparison and sorting. Case Sensitive (CS) treats 'A' and 'a' as different. Case Insensitive (CI) treats them as equal. Accent Sensitive (AS) distinguishes accented characters. Mismatched collations in JOINs cause errors and prevent index usage.",
+    "eli10": "Collation is like the rules for alphabetizing. Some rules say capital A and lowercase a are the same letter, others say they're different. Some rules say e and e-with-accent are the same, others say they're different. You have to pick which rules your database follows.",
+    "realWorldExample": "At Booking.com, a collation mismatch between their users table (utf8_general_ci) and a partner hotels table (utf8_bin) caused a JOIN to silently skip case-variant matches, resulting in 12% of hotel bookings not linking to the correct user profile.",
+    "relatedTopics": [
+      "Character Sets",
+      "UTF-8",
+      "Internationalization",
+      "String Comparison"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "value_a",
+          "value_b"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "alice"
+          ],
+          [
+            "café",
+            "cafe"
+          ],
+          [
+            "ABC",
+            "abc"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Comparison",
+          "CI Result",
+          "CS Result"
+        ],
+        "rows": [
+          [
+            "Alice = alice",
+            "TRUE",
+            "FALSE"
+          ],
+          [
+            "café = cafe",
+            "TRUE (AI)",
+            "FALSE (AS)"
+          ],
+          [
+            "ABC = abc",
+            "TRUE",
+            "FALSE"
+          ]
+        ]
+      },
+      "description": "CI (Case Insensitive) collation treats 'Alice'='alice' as equal. CS (Case Sensitive) does not. AI (Accent Insensitive) treats 'café'='cafe' as equal."
+    }
   },
   {
     "id": "sql-25",
@@ -581,8 +2173,17 @@
     "question": "What are the differences between OLTP and OLAP databases?",
     "summary": "Contrasts transactional systems optimized for writes with analytical systems optimized for reads.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Google", "Flipkart", "General"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Flipkart",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Database Design",
     "language": "SQL",
@@ -597,7 +2198,62 @@
       "Columnar storage (Parquet, BigQuery) compresses and scans specific columns far faster than row storage for aggregations."
     ],
     "whatToAvoid": "Do not run heavy analytical queries directly on your OLTP production database — they lock rows, compete for I/O, and degrade application response times. Offload analytics to a read replica or data warehouse.",
-    "ytQuery": "OLTP vs OLAP database differences explained"
+    "ytQuery": "OLTP vs OLAP database differences explained",
+    "quickAnswer": "OLTP databases handle high-frequency reads/writes for live applications (normalized, row-stored, millisecond response). OLAP databases handle complex analytics on historical data (denormalized star schema, columnar storage, seconds-to-minutes response). Most stacks use both with an ETL pipeline between them.",
+    "eli10": "OLTP is like a cash register — fast, handles one sale at a time, many small transactions all day. OLAP is like a year-end financial report — slower but analyzes ALL the sales data at once to find trends and totals. You wouldn't use a cash register to make an annual report.",
+    "realWorldExample": "At Netflix, their OLTP system (MySQL/PostgreSQL) handles real-time user signups and streaming sessions, while their OLAP warehouse (Apache Spark + Redshift) processes billions of viewing events to generate the recommendation engine's training data — two systems, two purposes.",
+    "relatedTopics": [
+      "Star Schema",
+      "Columnar Storage",
+      "ETL Pipelines",
+      "Data Warehousing"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Feature",
+          "OLTP",
+          "OLAP"
+        ],
+        "rows": [
+          [
+            "Query Type",
+            "Simple CRUD",
+            "Complex aggregations"
+          ],
+          [
+            "Response Time",
+            "Milliseconds",
+            "Seconds-Minutes"
+          ],
+          [
+            "Schema",
+            "Normalized (3NF)",
+            "Denormalized (Star)"
+          ],
+          [
+            "Storage",
+            "Row-oriented",
+            "Column-oriented"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Example",
+          "OLTP Query",
+          "OLAP Query"
+        ],
+        "rows": [
+          [
+            "Usage",
+            "SELECT * FROM orders WHERE id=123",
+            "SELECT region, SUM(revenue) GROUP BY region"
+          ]
+        ]
+      },
+      "description": "OLTP optimizes for single-row lookups (one order by ID). OLAP optimizes for scanning millions of rows to compute aggregates (total revenue by region)."
+    }
   },
   {
     "id": "sql-26",
@@ -605,8 +2261,15 @@
     "question": "What is a User-Defined Function (UDF) in SQL and what are its types?",
     "summary": "Explains scalar and table-valued functions, how they differ from stored procedures, and when to use each.",
     "difficulty": "Medium",
-    "companies": ["TCS Digital", "Infosys SP", "General"],
-    "roles": ["Backend Developer", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Functions",
     "language": "SQL",
@@ -621,7 +2284,59 @@
       "Scalar UDFs applied row-by-row on large tables can be slow — consider inlining the logic or using computed columns instead."
     ],
     "whatToAvoid": "Do not call scalar UDFs inside WHERE clauses on large tables without checking the execution plan — they may execute once per row and disable index usage, causing significant performance degradation.",
-    "ytQuery": "SQL user defined function scalar table valued UDF"
+    "ytQuery": "SQL user defined function scalar table valued UDF",
+    "quickAnswer": "A UDF is a reusable routine that accepts parameters and returns a value. Scalar UDFs return a single value and work in SELECT/WHERE. Table-valued functions return result sets usable in FROM. Unlike stored procedures, UDFs can't modify data and can be used inline in queries.",
+    "eli10": "A function is like a magic box with a slot. You put something in (like a birthday), and it spits out an answer (like your age). Scalar functions give you one answer. Table functions give you a whole list of answers, like asking 'who are all the kids in 5th grade?'",
+    "realWorldExample": "At Stripe, scalar UDFs for currency conversion are marked IMMUTABLE so PostgreSQL caches results. Converting millions of transactions from local currencies to USD uses the cached function result instead of recomputing for every row.",
+    "relatedTopics": [
+      "Stored Procedures",
+      "Scalar Functions",
+      "Table Functions",
+      "Performance"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "name",
+          "dob"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "1995-03-15"
+          ],
+          [
+            "Bob",
+            "1988-07-22"
+          ],
+          [
+            "Carol",
+            "2000-12-01"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "name",
+          "get_age_years(dob)"
+        ],
+        "rows": [
+          [
+            "Alice",
+            "31"
+          ],
+          [
+            "Bob",
+            "37"
+          ],
+          [
+            "Carol",
+            "25"
+          ]
+        ]
+      },
+      "description": "Scalar UDF get_age_years() takes a date and returns age in years. Used directly in SELECT like a built-in function."
+    }
   },
   {
     "id": "sql-27",
@@ -629,8 +2344,17 @@
     "question": "What is the difference between a UNIQUE constraint and a PRIMARY KEY?",
     "summary": "Contrasts the two main uniqueness constraints, NULL handling, and their indexing behavior.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "Zoho", "General"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Zoho",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Constraints",
     "language": "SQL",
@@ -645,7 +2369,72 @@
       "Composite UNIQUE constraints enforce uniqueness across a combination of columns, not each column individually."
     ],
     "whatToAvoid": "Do not confuse 'unique' as a concept with the PRIMARY KEY — a table can have multiple unique constraints. Also, do not assume UNIQUE columns are always NOT NULL — explicitly add NOT NULL if required.",
-    "ytQuery": "SQL PRIMARY KEY vs UNIQUE constraint difference"
+    "ytQuery": "SQL PRIMARY KEY vs UNIQUE constraint difference",
+    "quickAnswer": "PRIMARY KEY = UNIQUE + NOT NULL, one per table, main row identifier, target for foreign keys. UNIQUE allows NULLs (multiple NULLs allowed since NULL≠NULL), multiple per table, enforces business uniqueness on non-primary columns. Both create indexes automatically.",
+    "eli10": "PRIMARY KEY is like your student ID number — every student MUST have one, it can never be blank, and no two students can share it. UNIQUE is like an email address — it must be different for everyone, but it's okay if someone doesn't have one (NULL).",
+    "realWorldExample": "At GitHub, the users table has a PRIMARY KEY on internal id and UNIQUE constraints on both username and email. This allows fast lookups by ID (for joins) while preventing duplicate usernames or emails at the database level — the last line of defense after application validation.",
+    "relatedTopics": [
+      "Constraints",
+      "Indexes",
+      "Foreign Keys",
+      "Data Integrity"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Feature",
+          "PRIMARY KEY",
+          "UNIQUE"
+        ],
+        "rows": [
+          [
+            "NULLs allowed?",
+            "No",
+            "Yes (multiple)"
+          ],
+          [
+            "How many per table?",
+            "1",
+            "Many"
+          ],
+          [
+            "Auto-creates index?",
+            "Yes (clustered)",
+            "Yes (non-clustered)"
+          ],
+          [
+            "Foreign key target?",
+            "Yes (default)",
+            "Possible"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "id (PK)",
+          "email (UNIQUE)",
+          "phone (UNIQUE)"
+        ],
+        "rows": [
+          [
+            "1",
+            "alice@x.com",
+            "555-01"
+          ],
+          [
+            "2",
+            "bob@x.com",
+            "NULL"
+          ],
+          [
+            "3",
+            "carol@x.com",
+            "NULL"
+          ]
+        ]
+      },
+      "description": "id is PRIMARY KEY — never NULL, always unique. email and phone are UNIQUE — multiple NULLs allowed (Bob and Carol both have NULL phone)."
+    }
   },
   {
     "id": "sql-28",
@@ -653,8 +2442,16 @@
     "question": "What is Data Integrity in SQL and what are its types?",
     "summary": "Explains how databases enforce accuracy and consistency through entity, referential, and domain integrity.",
     "difficulty": "Medium",
-    "companies": ["TCS Digital", "Infosys SP", "General"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Data Integrity",
     "language": "SQL",
@@ -669,7 +2466,64 @@
       "ON DELETE CASCADE / SET NULL / RESTRICT controls what happens to child rows when a parent is deleted."
     ],
     "whatToAvoid": "Do not skip foreign key constraints to 'improve performance' without a strong reason — the short-term gain leads to orphaned records and data corruption that is expensive to fix later.",
-    "ytQuery": "SQL data integrity types entity referential domain"
+    "ytQuery": "SQL data integrity types entity referential domain",
+    "quickAnswer": "Data integrity ensures database accuracy and consistency. Entity integrity: PRIMARY KEY ensures unique, non-null rows. Referential integrity: FOREIGN KEY ensures relationships are valid. Domain integrity: data types, NOT NULL, CHECK constraints enforce valid values. User-defined: custom business rules via triggers.",
+    "eli10": "Data integrity is like rules that keep your toy collection organized. Entity integrity means every toy has a unique name tag. Referential integrity means if a toy says 'belongs to set X,' set X must actually exist. Domain integrity means a toy's price can't be negative.",
+    "realWorldExample": "At Shopify, removing foreign key constraints to improve write performance led to 2% orphaned order_items pointing to deleted products. They re-added FK constraints with ON DELETE SET NULL and built a background job to clean up existing orphans — costing weeks of engineering time.",
+    "relatedTopics": [
+      "Constraints",
+      "Foreign Keys",
+      "CHECK Constraints",
+      "Triggers"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Type",
+          "Enforced By",
+          "Example"
+        ],
+        "rows": [
+          [
+            "Entity",
+            "PRIMARY KEY",
+            "Each row has unique id"
+          ],
+          [
+            "Referential",
+            "FOREIGN KEY",
+            "order.customer_id must exist in customers"
+          ],
+          [
+            "Domain",
+            "CHECK, NOT NULL",
+            "price >= 0, name NOT NULL"
+          ],
+          [
+            "User-defined",
+            "Triggers",
+            "Custom business rules"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "action",
+          "result"
+        ],
+        "rows": [
+          [
+            "INSERT order with customer_id=999",
+            "ERROR: FK violation"
+          ],
+          [
+            "INSERT product with price=-5",
+            "ERROR: CHECK violation"
+          ]
+        ]
+      },
+      "description": "Referential integrity blocks inserting an order for non-existent customer. Domain integrity blocks negative prices. Both prevent data corruption at the database level."
+    }
   },
   {
     "id": "sql-29",
@@ -677,8 +2531,17 @@
     "question": "What is the difference between a Clustered and Non-Clustered Index?",
     "summary": "Contrasts how clustered indexes physically order table data vs non-clustered pointer-based indexes.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Google", "Microsoft", "TCS Digital", "General"],
-    "roles": ["Backend Developer", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Microsoft",
+      "TCS Digital",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Indexes",
     "language": "SQL",
@@ -693,7 +2556,60 @@
       "Range queries (BETWEEN, >, <) benefit greatly from clustered indexes on the range column since rows are physically adjacent."
     ],
     "whatToAvoid": "Do not create a clustered index on frequently updated columns — every update physically moves the row to maintain sort order, causing massive fragmentation and degraded write performance.",
-    "ytQuery": "SQL clustered vs non-clustered index difference"
+    "ytQuery": "SQL clustered vs non-clustered index difference",
+    "quickAnswer": "Clustered index defines physical row order on disk — one per table, leaf nodes ARE the data rows. Non-clustered index is a separate structure with pointers to rows — many per table. Range queries benefit from clustered indexes (adjacent rows). Covering indexes avoid heap lookups.",
+    "eli10": "A clustered index is like a phone book sorted by last name — the actual entries ARE in order. A non-clustered index is like a sticky note saying 'Johnson is on page 47' — a separate lookup list pointing to where the data actually sits.",
+    "realWorldExample": "At Microsoft Azure SQL, switching the clustered index on a 500M-row telemetry table from the auto-increment ID to (timestamp, device_id) improved time-range queries by 100x — because rows for the same time period were now stored physically next to each other on disk.",
+    "relatedTopics": [
+      "B-Tree",
+      "Covering Index",
+      "Index Scan vs Table Scan",
+      "Fragmentation"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Index Type",
+          "Storage",
+          "Leaf Nodes",
+          "Count per Table"
+        ],
+        "rows": [
+          [
+            "Clustered",
+            "IS the table",
+            "Actual row data",
+            "1"
+          ],
+          [
+            "Non-clustered",
+            "Separate structure",
+            "Column value + row pointer",
+            "Many"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Query",
+          "Clustered on id",
+          "Non-clustered on dept"
+        ],
+        "rows": [
+          [
+            "WHERE id=5",
+            "Index Scan (fast)",
+            "Must use clustered index"
+          ],
+          [
+            "WHERE dept='Eng'",
+            "Full table scan",
+            "Index Scan + lookup"
+          ]
+        ]
+      },
+      "description": "Clustered index on id makes WHERE id=5 fast (direct lookup). Non-clustered index on dept makes WHERE dept='Eng' fast but requires a second lookup to fetch full row data."
+    }
   },
   {
     "id": "sql-30",
@@ -701,8 +2617,16 @@
     "question": "What is a Cross Join and when would you use it?",
     "summary": "Explains the Cartesian product join that combines every row from one table with every row from another.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "General"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Joins",
     "language": "SQL",
@@ -717,7 +2641,83 @@
       "Pair with LEFT JOIN to fill missing date/category gaps in reports using a generated calendar or dimension table."
     ],
     "whatToAvoid": "Do not accidentally write a CROSS JOIN by omitting the ON clause in an INNER JOIN — always verify your query plan and row count estimate before running cross joins on large tables.",
-    "ytQuery": "SQL CROSS JOIN Cartesian product explained"
+    "ytQuery": "SQL CROSS JOIN Cartesian product explained",
+    "quickAnswer": "CROSS JOIN produces the Cartesian product — every row from table A paired with every row from table B (M×N results). No ON clause. Use for generating combinations (sizes × colors), calendar grids, or test data. Dangerous on large tables — 10K × 10K = 100M rows.",
+    "eli10": "CROSS JOIN is like making every possible pair of dance partners. If 3 boys and 3 girls need to practice, CROSS JOIN creates all 9 possible pairs: (Boy1,Girl1), (Boy1,Girl2), (Boy1,Girl3), (Boy2,Girl1)... and so on.",
+    "realWorldExample": "At Walmart, CROSS JOIN is used to generate a full product-store availability matrix. Every product is crossed with every store location to create a template for inventory tracking — 50K products × 4,700 stores = 235M slots, populated with actual stock levels via LEFT JOIN.",
+    "relatedTopics": [
+      "Cartesian Product",
+      "JOIN Types",
+      "Calendar Tables",
+      "Test Data"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "sizes.size",
+          "colors.color"
+        ],
+        "rows": [
+          [
+            "S",
+            "Red"
+          ],
+          [
+            "M",
+            "Blue"
+          ],
+          [
+            "L",
+            "Green"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "size",
+          "color"
+        ],
+        "rows": [
+          [
+            "S",
+            "Red"
+          ],
+          [
+            "S",
+            "Blue"
+          ],
+          [
+            "S",
+            "Green"
+          ],
+          [
+            "M",
+            "Red"
+          ],
+          [
+            "M",
+            "Blue"
+          ],
+          [
+            "M",
+            "Green"
+          ],
+          [
+            "L",
+            "Red"
+          ],
+          [
+            "L",
+            "Blue"
+          ],
+          [
+            "L",
+            "Green"
+          ]
+        ]
+      },
+      "description": "CROSS JOIN of 3 sizes × 3 colors = 9 combinations. Every size paired with every color. No join condition — pure Cartesian product."
+    }
   },
   {
     "id": "sql-31",
@@ -725,8 +2725,15 @@
     "question": "What is a Cursor in SQL and when should you avoid it?",
     "summary": "Explains row-by-row cursor iteration, its performance cost, and set-based alternatives.",
     "difficulty": "Medium",
-    "companies": ["TCS Digital", "Infosys SP", "General"],
-    "roles": ["Backend Developer", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Cursors",
     "language": "SQL",
@@ -741,7 +2748,62 @@
       "If you must use a cursor, use FAST_FORWARD / READ_ONLY options to minimize overhead."
     ],
     "whatToAvoid": "Do not use a cursor whenever a set-based SQL alternative exists — the SQL engine is optimized for set operations, not row-by-row iteration. Always try to express the logic as a single SQL statement first.",
-    "ytQuery": "SQL cursor avoid set based alternatives"
+    "ytQuery": "SQL cursor avoid set based alternatives",
+    "quickAnswer": "A cursor iterates through rows one at a time — like a for-loop in SQL. Lifecycle: DECLARE → OPEN → FETCH → process → CLOSE → DEALLOCATE. Cursors are 10-100x slower than set-based SQL. Replace with UPDATE...CASE, window functions, or bulk operations whenever possible.",
+    "eli10": "A cursor is like reading a guest list one name at a time and doing something for each person. It's slow because you handle one person, then the next, then the next. Set-based SQL is like announcing 'everyone in group A, go left!' — everyone moves at once.",
+    "realWorldExample": "At Oracle (the company), a legacy payroll system used cursors to process 50,000 employee salary updates one by one, taking 45 minutes. Rewriting as a single UPDATE with CASE expressions reduced it to 3 seconds — a 900x improvement.",
+    "relatedTopics": [
+      "Set-Based SQL",
+      "CASE WHEN",
+      "Window Functions",
+      "Stored Procedures"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "Approach",
+          "Queries",
+          "Time"
+        ],
+        "rows": [
+          [
+            "Cursor (row-by-row)",
+            "50,000 UPDATEs",
+            "45 minutes"
+          ],
+          [
+            "Set-based UPDATE",
+            "1 UPDATE",
+            "3 seconds"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "id",
+          "salary",
+          "bonus"
+        ],
+        "rows": [
+          [
+            "1",
+            "45000",
+            "6750"
+          ],
+          [
+            "2",
+            "60000",
+            "6000"
+          ],
+          [
+            "3",
+            "35000",
+            "5250"
+          ]
+        ]
+      },
+      "description": "Cursor processes each row individually. Set-based UPDATE with CASE applies the bonus rule (salary < 50K → 15%, else 10%) to all rows in one statement."
+    }
   },
   {
     "id": "sql-32",
@@ -749,8 +2811,17 @@
     "question": "What are the Normal Forms in database design (1NF through BCNF)?",
     "summary": "Covers the normalization rules from 1NF to BCNF that eliminate redundancy and update anomalies.",
     "difficulty": "Medium",
-    "companies": ["TCS Digital", "Infosys SP", "Google", "General"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Google",
+      "General"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Normalization",
     "language": "SQL",
@@ -765,7 +2836,67 @@
       "BCNF: every functional dependency must have a superkey on the left side — covers edge cases 3NF misses."
     ],
     "whatToAvoid": "Do not over-normalize to 4NF or 5NF for OLTP unless you have multi-valued dependency anomalies — excessive normalization leads to complex JOINs that hurt query performance.",
-    "ytQuery": "SQL database normalization 1NF 2NF 3NF BCNF explained"
+    "ytQuery": "SQL database normalization 1NF 2NF 3NF BCNF explained",
+    "quickAnswer": "Normalization eliminates redundancy and update anomalies. 1NF: atomic values, no repeating groups. 2NF: no partial dependencies on composite keys. 3NF: no transitive dependencies between non-key columns. BCNF: every functional dependency's left side is a superkey. Most schemas target 3NF.",
+    "eli10": "Normalization is like organizing your closet. 1NF: each shelf holds one type of item, not a mix. 2NF: if a label says 'winter red scarf,' the color info shouldn't repeat on every winter item. 3NF: the shelf label shouldn't depend on another shelf's label. Everything has ONE home.",
+    "realWorldExample": "At Amazon, their product catalog was initially denormalized with category_name repeated on every product row. When 'Electronics' was renamed to 'Electronics & Computers', they had to update 2M+ rows. After normalizing to 3NF with a categories table, the rename became a single-row update.",
+    "relatedTopics": [
+      "Schema Design",
+      "Denormalization",
+      "OLTP vs OLAP",
+      "Foreign Keys"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "student_id",
+          "course_id",
+          "student_name",
+          "course_title"
+        ],
+        "rows": [
+          [
+            "1",
+            "CS101",
+            "Alice",
+            "Intro to CS"
+          ],
+          [
+            "1",
+            "MA201",
+            "Alice",
+            "Linear Algebra"
+          ],
+          [
+            "2",
+            "CS101",
+            "Bob",
+            "Intro to CS"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "Table",
+          "Columns"
+        ],
+        "rows": [
+          [
+            "students",
+            "student_id (PK), student_name"
+          ],
+          [
+            "courses",
+            "course_id (PK), course_title"
+          ],
+          [
+            "enrollment",
+            "student_id (FK), course_id (FK), grade"
+          ]
+        ]
+      },
+      "description": "2NF violation: student_name depends only on student_id, not the full composite key (student_id, course_id). Fix: split into 3 tables so each fact is stored once."
+    }
   },
   {
     "id": "sql-33",
@@ -773,8 +2904,17 @@
     "question": "Write a query to find users who have been active for 4 or more consecutive days.",
     "summary": "Uses window functions and date arithmetic to detect consecutive-day streaks in activity data.",
     "difficulty": "Hard",
-    "companies": ["Amazon", "Google", "Flipkart", "Razorpay"],
-    "roles": ["Backend Developer", "Data Analyst", "Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Google",
+      "Flipkart",
+      "Razorpay"
+    ],
+    "roles": [
+      "Backend Developer",
+      "Data Analyst",
+      "Software Engineer"
+    ],
     "type": "sql",
     "topic": "Interview Problems",
     "language": "SQL",
@@ -789,6 +2929,83 @@
       "Use MIN/MAX(activity_date) on the streak group to show the start and end dates of each streak."
     ],
     "whatToAvoid": "Do not use LEAD/LAG alone for this problem — they check adjacent rows but cannot easily count streak lengths without additional windowing. The date-minus-rownumber trick is the cleanest approach.",
-    "ytQuery": "SQL consecutive days streak window function query"
+    "ytQuery": "SQL consecutive days streak window function query",
+    "quickAnswer": "The trick: date minus ROW_NUMBER produces the same constant for consecutive dates, enabling grouping. Steps: (1) DISTINCT dates per user, (2) ROW_NUMBER partitioned by user ordered by date, (3) date - rn groups consecutive days, (4) COUNT per group, (5) HAVING COUNT >= 4.",
+    "eli10": "Imagine numbering your active days: Day 1 is #1, Day 2 is #2, Day 3 is #3. If you subtract the number from the date, consecutive days all give the same answer! Day 1-1=0, Day 2-2=0, Day 3-3=0. That's how you find streaks — same answer means same streak.",
+    "realWorldExample": "At Duolingo, this exact pattern powers their famous streak counter. They compute consecutive active days per user using date-minus-ROW_NUMBER grouping, then display the streak badge. The query runs on millions of daily active users and is optimized with a partial index on (user_id, activity_date).",
+    "relatedTopics": [
+      "Window Functions",
+      "Date Arithmetic",
+      "ROW_NUMBER",
+      "User Retention"
+    ],
+    "tableVisualization": {
+      "before": {
+        "headers": [
+          "user_id",
+          "activity_date",
+          "rn",
+          "date - rn"
+        ],
+        "rows": [
+          [
+            "1",
+            "Jan 1",
+            "1",
+            "Dec 31"
+          ],
+          [
+            "1",
+            "Jan 2",
+            "2",
+            "Dec 31"
+          ],
+          [
+            "1",
+            "Jan 3",
+            "3",
+            "Dec 31"
+          ],
+          [
+            "1",
+            "Jan 5",
+            "4",
+            "Jan 1"
+          ],
+          [
+            "1",
+            "Jan 6",
+            "5",
+            "Jan 1"
+          ]
+        ]
+      },
+      "after": {
+        "headers": [
+          "user_id",
+          "streak_group",
+          "consecutive_days",
+          "start",
+          "end"
+        ],
+        "rows": [
+          [
+            "1",
+            "Dec 31",
+            "3",
+            "Jan 1",
+            "Jan 3"
+          ],
+          [
+            "1",
+            "Jan 1",
+            "2",
+            "Jan 5",
+            "Jan 6"
+          ]
+        ]
+      },
+      "description": "date - ROW_NUMBER gives same value (Dec 31) for Jan 1-3 streak and same value (Jan 1) for Jan 5-6 streak. GROUP BY this value counts streak length. User 1 has no 4+ day streak."
+    }
   }
 ]

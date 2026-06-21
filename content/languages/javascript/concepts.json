@@ -22,7 +22,12 @@
     "commonMistake": "Creating closures inside loops (like using var instead of let in a for-loop), which binds all callbacks to the final value of the loop variable.",
     "correctMentalModel": "Every function retains a hidden link to its outer environment. When resolving a variable name, JS walks up this chain until it finds a match.",
     "miniTask": "Write a function 'createSecureStore()' that returns an object with 'get(key)' and 'set(key, val)' methods, hiding a private data map inside a closure so it cannot be modified directly.",
-    "ytQuery": "JavaScript Closures Tutorial"
+    "ytQuery": "JavaScript Closures Tutorial",
+    "whenNotToUse": "Avoid closures when holding references to large objects or DOM nodes in long-lived callbacks — they prevent garbage collection and cause memory leaks. In hot loops or performance-critical paths, prefer passing values as parameters rather than closing over them. If you find yourself debugging 'stale closure' bugs in React (e.g., reading outdated state in a setInterval callback), consider using refs instead.",
+    "systemDesignConnection": "Closures are the foundation of the Module Pattern used to encapsulate state in frontend architectures. In system design, they appear in connection pooling (each pool instance closes over its config), rate limiters (closing over request counts), and middleware chains (Express/Koa handlers closing over shared context).",
+    "memoryTrick": "Closures = Functions with Backpacks. Every function packs its parent's variables in an invisible backpack and carries them wherever it goes.",
+    "prerequisites": ["js-scope"],
+    "eli10": "Imagine you leave your house but you take a photo of everything in your room. Even when you're far away, you can look at the photo and remember what was there. A closure is like a function that takes a photo of the variables around it, so it can use them later even after leaving."
   },
   {
     "id": "js-promises",
@@ -47,7 +52,12 @@
     "commonMistake": "Executing async calls sequentially instead of concurrently (using await on independent requests instead of Promise.all), which increases response latency.",
     "correctMentalModel": "Promises are wrappers for async timers/operations. Async/await does not block the single thread; it yields the thread until the timer completes.",
     "miniTask": "Write a function 'fetchAllData(urls)' that uses Promise.all to fetch data from multiple mocked API endpoints concurrently and handles individual catch blocks safely.",
-    "ytQuery": "JavaScript Promises Async Await"
+    "ytQuery": "JavaScript Promises Async Await",
+    "whenNotToUse": "Don't use Promises for synchronous operations — wrapping a sync calculation in new Promise() adds unnecessary overhead. Avoid using async/await when you need to fire multiple independent requests concurrently; sequential awaits waste time. Use Promise.all or Promise.allSettled instead. Don't use Promises for CPU-bound work — they don't create new threads.",
+    "systemDesignConnection": "Promises and async/await are critical in API gateway design, where multiple downstream services are called concurrently using Promise.all. In microservice architectures, circuit breakers and retry logic are built on Promise chains. Rate limiters and request queuing systems rely on controlled Promise resolution.",
+    "memoryTrick": "Promise = Restaurant Buzzer. Pending (waiting for table), Fulfilled (buzzer rings, food ready), Rejected (restaurant closed). You don't stand in line — you go do other things.",
+    "prerequisites": ["js-callbacks", "js-event-loop"],
+    "eli10": "When you order a toy online, you get a tracking number. You can keep playing while you wait. When the toy arrives, you open it (fulfilled). If it's lost, you get a refund (rejected). A Promise is like that tracking number — it tells you something will arrive later."
   },
   {
     "id": "js-event-loop",
@@ -72,7 +82,12 @@
     "commonMistake": "Assuming setTimeout(fn, 1000) guarantees the function will run in exactly 1000ms. It actually means it will run *at the earliest* after 1000ms, depending on call stack availability.",
     "correctMentalModel": "The call stack executes code. Async triggers are offloaded. When done, they sit in queues until the stack is completely empty.",
     "miniTask": "Create a script that logs output to verify the execution order of: synchronous code, process.nextTick, Promise.then, setImmediate, and setTimeout.",
-    "ytQuery": "JavaScript Event Loop Explained"
+    "ytQuery": "JavaScript Event Loop Explained",
+    "whenNotToUse": "You don't 'choose' to use the event loop — it's always running. But avoid blocking it with CPU-heavy synchronous code (heavy JSON parsing, image processing, crypto). Move CPU-bound work to Web Workers (browser) or worker threads (Node.js). Never use synchronous file I/O (fs.readFileSync) in production Node.js servers — it blocks the entire event loop for all users.",
+    "systemDesignConnection": "The event loop is the core of Node.js's ability to handle 10,000+ concurrent connections on a single thread — understanding it is essential for designing scalable backend services. In system design, it explains why Node.js excels at I/O-bound workloads (API gateways, chat servers) but struggles with CPU-bound tasks (video encoding).",
+    "memoryTrick": "The event loop is a bouncer at a nightclub. Nobody new gets in (callbacks) until the current dance floor (call stack) is empty. Microtasks are VIPs — they skip the regular line.",
+    "prerequisites": ["js-call-stack", "js-callbacks"],
+    "eli10": "Imagine you're a teacher answering questions. You finish explaining your lesson first (call stack). Then you answer the urgent hand-raises (microtasks like Promises). Then you check the suggestion box (macrotasks like setTimeout). You never answer a question while still talking."
   },
   {
     "id": "js-this",
@@ -97,7 +112,12 @@
     "commonMistake": "Passing object methods as callbacks (like in setTimeout) and losing the 'this' context, which defaults to the global window or undefined in strict mode.",
     "correctMentalModel": "Do not look at where a function is declared to find 'this'; look at the dot syntax left of the function invocation (e.g. object.method()).",
     "miniTask": "Write a custom Logger object that prints messages using a customized prefix stored on its properties, and bind it to a standard click event without losing context.",
-    "ytQuery": "JavaScript this keyword call apply bind"
+    "ytQuery": "JavaScript this keyword call apply bind",
+    "whenNotToUse": "Avoid relying on 'this' in arrow functions when you need dynamic binding (e.g., object methods that will be called on different objects). Don't use 'this' in standalone functions without strict mode — it defaults to the global object, which causes silent bugs. In modern React with hooks, you rarely need 'this' at all — prefer functional components over class components.",
+    "systemDesignConnection": "The 'this' keyword drives the middleware pattern in frameworks like Express (req, res, next). In plugin architectures, call/apply/bind let you inject context into third-party functions. Understanding 'this' is critical for designing event-driven systems where callbacks lose their original context.",
+    "memoryTrick": "\"this\" = Who Called Me? Don't look at where the function lives — look at the dot left of the call. obj.method() → this is obj. No dot? this is global (or undefined in strict mode).",
+    "prerequisites": ["js-scope"],
+    "eli10": "The word 'my' changes depending on who says it. When Mom says 'my phone', she means her phone. When Dad says 'my phone', he means his. 'this' in JavaScript is like 'my' — it changes depending on who's using the function."
   },
   {
     "id": "js-hoisting",
@@ -122,7 +142,12 @@
     "commonMistake": "Relying on hoisting for variable variables, which makes code hard to read and introduces bugs due to undefined state accesses.",
     "correctMentalModel": "JS compiles code first. It sets up memory space for all identifiers. It initializes var with undefined, functions with code, and locks let/const in the TDZ.",
     "miniTask": "Write a code block with variables of types var, let, and const that demonstrates the difference between accessing them before and after declaration inside a block scope.",
-    "ytQuery": "JavaScript Hoisting Temporal Dead Zone"
+    "ytQuery": "JavaScript Hoisting Temporal Dead Zone",
+    "whenNotToUse": "Never rely on hoisting intentionally — always declare variables and functions at the top of their scope before using them. Writing code that depends on hoisting makes it unreadable and fragile. Use let/const instead of var to get predictable TDZ behavior that catches use-before-declaration bugs at runtime.",
+    "systemDesignConnection": "Hoisting doesn't directly appear in system design, but understanding it explains why module bundlers wrap code in IIFEs and why script loading order matters. In micro-frontend architectures, hoisting can cause global namespace collisions if scripts are loaded without proper isolation.",
+    "memoryTrick": "Hoisting = JS reads your menu before cooking. It scans all declarations first (compilation phase), then runs your code (execution phase). var gets a placeholder (undefined), let/const get a 'do not touch' sign (TDZ).",
+    "prerequisites": [],
+    "eli10": "Before your teacher starts the class, she writes all the student names on the board. She knows who's in the class before calling roll. JavaScript does the same — it reads all variable names before running your code, so it knows they exist even before it gets to them."
   },
   {
     "id": "js-prototypes",
@@ -147,7 +172,12 @@
     "commonMistake": "Modifying the base Object.prototype directly, which pollutes all objects in the runtime and creates major compatibility bugs.",
     "correctMentalModel": "Inheritance is not a copy of methods; it is a live delegation link. Methods reside on the prototype and are shared dynamically.",
     "miniTask": "Create a prototype chain representing a hierarchy: 'Person' -> 'Employee' -> 'Manager', with methods shared at the highest possible prototype levels.",
-    "ytQuery": "JavaScript Prototypal Inheritance Chain"
+    "ytQuery": "JavaScript Prototypal Inheritance Chain",
+    "whenNotToUse": "Avoid deep prototype chains (more than 2-3 levels) — property lookups become slow and debugging becomes painful. Don't modify built-in prototypes (Array.prototype, Object.prototype) — it breaks third-party libraries and introduces hard-to-track bugs. Prefer composition (mixing objects together) over inheritance for most real-world code.",
+    "systemDesignConnection": "Prototypal inheritance is how JavaScript implements the Delegation pattern — a key concept in plugin systems and middleware architectures. Understanding prototype chains explains how framework APIs (like jQuery's chainable methods) work. In system design, this maps to the concept of prototype-based instantiation vs. class-based factories.",
+    "memoryTrick": "Prototypes = Family Heirlooms. If you don't own the necklace, check your mom. She doesn't have it? Check grandma. Each object checks its parent up the chain until someone has it or the chain ends.",
+    "prerequisites": ["js-scope", "js-this"],
+    "eli10": "Imagine you want a toy but don't have it. You ask your big brother. He doesn't have it either, so he asks your mom. She has it and shares it with both of you. In JavaScript, objects ask their 'parent' objects for things they don't have — that's the prototype chain."
   },
   {
     "id": "js-scope",
@@ -172,7 +202,12 @@
     "commonMistake": "Creating variables without var/let/const (e.g. x = 10), which accidentally attaches them to the global window object and pollutes scope.",
     "correctMentalModel": "Scopes are nested boxes. Inner boxes have access to variables in outer boxes, but outer boxes cannot reach inside.",
     "miniTask": "Write a script demonstrating shadow variables: define a variable in global scope, redeclare it inside a function, and redeclare it again inside an if-block, logging the value in each scope.",
-    "ytQuery": "JavaScript Scope Chain Lexical Environment"
+    "ytQuery": "JavaScript Scope Chain Lexical Environment",
+    "whenNotToUse": "Avoid global scope for any application data — it causes naming collisions and makes testing impossible. Don't nest functions excessively deep (4+ levels) just for scope isolation — use modules instead. Avoid relying on variable shadowing intentionally, as it makes code confusing and error-prone.",
+    "systemDesignConnection": "Scope is the foundation of module isolation in JavaScript architectures. In micro-frontend systems, each app must have its own scope to avoid polluting shared globals. Understanding scope explains why dependency injection works — services are scoped to specific modules rather than globally available.",
+    "memoryTrick": "Scope = One-Way Glass. Inner rooms can see out to the hallway (outer scope), but the hallway can't see into the rooms. Each curly brace {} is a new room with one-way glass.",
+    "prerequisites": ["js-hoisting"],
+    "eli10": "Imagine your house has rooms inside rooms. If you're in your bedroom, you can shout to the living room and the living room can hear. But the living room can't hear what you whisper inside your bedroom. Variables work the same way — inner rooms can use outer variables, but outer rooms can't reach in."
   },
   {
     "id": "js-hof",
@@ -197,7 +232,12 @@
     "commonMistake": "Forgetting to return a value inside the callback function of .map() or .filter(), resulting in arrays filled with undefined.",
     "correctMentalModel": "Functions are just values. You can pass a function to another function just like you pass a number. The receiver can call it whenever it wants.",
     "miniTask": "Create a custom filter function 'myFilter(arr, callback)' from scratch using a standard for-loop that behaves exactly like the native 'Array.prototype.filter' method.",
-    "ytQuery": "JavaScript Higher Order Functions Map Filter Reduce"
+    "ytQuery": "JavaScript Higher Order Functions Map Filter Reduce",
+    "whenNotToUse": "Avoid chaining map().filter().reduce() on very large arrays when a single for-loop would be more performant — each method creates a new intermediate array. Don't use HOFs when you need to break out of a loop early (forEach can't break — use for...of or .find() instead). Avoid over-abstracting simple logic into point-free style when it hurts readability.",
+    "systemDesignConnection": "Higher-order functions are the backbone of middleware architectures (Express, Redux). Each middleware is a function that takes the next handler as an argument. In event-driven systems, HOFs enable composable event pipelines where handlers are chained, filtered, and transformed.",
+    "memoryTrick": "HOF = Power Drill with Attachments. The drill (HOF) stays the same. Swap the bit (callback) to screw, drill, or sand. map = transform each, filter = keep matches, reduce = squash to one.",
+    "prerequisites": ["js-closures"],
+    "eli10": "Imagine a machine at a candy factory. You can plug in different instructions: 'paint each candy red' (map), 'remove small candies' (filter), or 'count all candies' (reduce). The machine stays the same — you just change what it does by giving it different instructions."
   },
   {
     "id": "js-debounce-throttle",
@@ -222,7 +262,12 @@
     "commonMistake": "Re-creating the debounced function inside a React component render function, which resets the timer on every re-render, rendering the debounce useless.",
     "correctMentalModel": "We return a wrapper function. The wrapper uses variables in its closure backpack to determine whether to cancel/skip execution or start a new timer.",
     "miniTask": "Implement a basic throttle function 'throttle(func, limit)' that executes at most once every 'limit' milliseconds, and test it using an active interval logger.",
-    "ytQuery": "JavaScript Debounce and Throttle Implementation"
+    "ytQuery": "JavaScript Debounce and Throttle Implementation",
+    "whenNotToUse": "Don't debounce actions that need immediate feedback (like a toggle button or form submit). Don't throttle events where every single event matters (like tracking precise mouse coordinates for drawing). Avoid using debounce on scroll-based infinite loading — throttle is better because you need periodic checks, not just a final check.",
+    "systemDesignConnection": "Debounce and throttle are core rate-limiting strategies in system design. API gateways throttle requests per client. Autocomplete search debounces API calls to reduce backend load. In distributed systems, these patterns appear as token bucket (throttle) and sliding window (debounce) rate limiters.",
+    "memoryTrick": "Debounce = Elevator Door (waits for silence, resets timer on new input). Throttle = Subway Train (leaves every 5 minutes no matter how many people arrive between trains).",
+    "prerequisites": ["js-closures", "js-hof"],
+    "eli10": "Debounce: Imagine you're in an elevator. The door only closes after nobody walks in for 3 seconds. Every new person resets the 3-second timer. Throttle: Imagine a bus that leaves every 10 minutes no matter what. Even if 100 people show up in 1 minute, the bus only leaves on schedule."
   },
   {
     "id": "js-es6",
@@ -247,7 +292,12 @@
     "commonMistake": "Using `||` for numeric inputs where 0 is a valid value, causing the system to overwrite it with the default value.",
     "correctMentalModel": "Optional chaining is a shortcut for nested null checks. Nullish coalescing is a safe fallback check that respects falsy values like 0 and empty strings.",
     "miniTask": "Write a config parser function that destructures incoming options objects, applies default values, and safely reads deep keys using optional chaining.",
-    "ytQuery": "ES6 Destructuring Optional Chaining Nullish Coalescing"
+    "ytQuery": "ES6 Destructuring Optional Chaining Nullish Coalescing",
+    "whenNotToUse": "Don't use destructuring on deeply nested objects with many optional levels — it becomes unreadable. Avoid spread operator for deep cloning objects that contain nested references (it's shallow only). Don't overuse optional chaining as a substitute for proper null validation — if a value should always exist, a crash is better than a silent undefined.",
+    "systemDesignConnection": "Spread and destructuring enable immutable state management, which is foundational to event sourcing and CQRS architectures. Optional chaining is essential in API response handling where response shapes can vary. Nullish coalescing appears in configuration merging — setting defaults without overriding valid falsy values like 0 or ''.",
+    "memoryTrick": "Spread (...) = Unpacking a suitcase onto the bed. Destructuring = Reaching into a box and pulling out exactly the items you need by name. ?. = Careful tiptoeing. ?? = Plan B (but only for null/undefined).",
+    "prerequisites": [],
+    "eli10": "Imagine you have a gift box with lots of toys inside. Destructuring is like saying 'I only want the car and the ball' instead of dumping everything out. The spread operator is like pouring ALL the toys onto the floor. Optional chaining is like carefully checking 'is there a box? is there a toy inside? is there a battery in the toy?' before turning it on."
   },
   {
     "id": "js-event-delegation",
@@ -272,7 +322,12 @@
     "commonMistake": "Forgetting to filter targets (using e.target without checking node type), which causes click handlers to trigger when clicking spacing margins or the parent container itself.",
     "correctMentalModel": "Events rise up the DOM tree like bubbles in water. By listening at the surface (parent), you catch bubbles rising from any depth below.",
     "miniTask": "Build a simple click-handler for a dynamic table row list where clicking any delete button inside a row logs that row's ID using event delegation.",
-    "ytQuery": "JavaScript Event Delegation Bubbling"
+    "ytQuery": "JavaScript Event Delegation Bubbling",
+    "whenNotToUse": "Don't use event delegation when events don't bubble (focus, blur, scroll, mouseenter). Don't use it when you need to stopPropagation on a specific child — delegated handlers run on the parent, so the event has already bubbled. Avoid delegation for complex interactive widgets (drag-and-drop, canvas) where precise per-element control is needed.",
+    "systemDesignConnection": "Event delegation is the DOM equivalent of the Publish-Subscribe pattern used in message queues (Kafka, RabbitMQ). A single subscriber (parent listener) receives all events from multiple publishers (child elements). This pattern scales to systems handling thousands of event sources with minimal overhead.",
+    "memoryTrick": "Event Delegation = One Receptionist for the Whole Building. Instead of a guard at every door (listener on every element), one receptionist at the lobby checks visitor badges (e.target) and routes them.",
+    "prerequisites": ["js-dom"],
+    "eli10": "Instead of giving every kid in class their own bell to ring when they need help, the teacher puts one bell at her desk. When a kid rings it, she looks up to see WHICH kid rang it. That's event delegation — one listener, many sources."
   },
   {
     "id": "js-modules",
@@ -297,7 +352,12 @@
     "commonMistake": "Attempting to use require() inside an ES Module file, or using import statements without setting type='module' in package.json or HTML script tags.",
     "correctMentalModel": "CommonJS loads code dynamically during execution. ES Modules are statically linked before execution begins, enabling optimizations.",
     "miniTask": "Write two config files representing equivalent module setups: export variables and default helper functions using both CommonJS exports and ES Module exports.",
-    "ytQuery": "CommonJS vs ES Modules Difference"
+    "ytQuery": "CommonJS vs ES Modules Difference",
+    "whenNotToUse": "Don't mix CommonJS require() and ES Module import in the same file — it causes confusing errors. Avoid dynamic imports (import()) for code that's needed on initial render — it creates unnecessary loading delays. Don't use barrel files (index.js re-exporting everything) in large projects — they defeat tree shaking and increase bundle size.",
+    "systemDesignConnection": "Module systems are the foundation of micro-frontend architecture, where independently deployable modules are loaded and composed at runtime. In monorepo systems, module boundaries define service contracts. Dynamic imports enable code-splitting strategies essential for optimizing Time-to-Interactive in large-scale web applications.",
+    "memoryTrick": "CommonJS = Heavy Toolbox (load everything upfront, synchronously). ES Modules = Amazon Delivery (order only what you need, arrives async, and unused items are never shipped — that's tree shaking).",
+    "prerequisites": ["js-scope", "js-closures"],
+    "eli10": "Imagine you have LEGO sets in separate boxes. A module system lets you take specific pieces from one box and use them in another box without dumping everything out. CommonJS is like carrying the whole box to your room. ES Modules is like ordering just the exact pieces you need from a catalog."
   },
   {
     "id": "js-type-coercion",
@@ -323,7 +383,12 @@
     "commonMistake": "Using == to compare values from user input or APIs where '0' (string) and 0 (number) must be treated differently — they are == equal but !== strict-equal.",
     "correctMentalModel": "Think of == as 'loosely the same after type guessing' and === as 'exactly the same type and value'. Default to === in all production code.",
     "miniTask": "Write a function 'safeEqual(a, b)' that returns true only when two values are strictly equal in both type and value, and test it against common coercion traps like (0, false), ('', false), and (null, undefined).",
-    "ytQuery": "JavaScript Type Coercion explained"
+    "ytQuery": "JavaScript Type Coercion explained",
+    "whenNotToUse": "Never use == for comparisons in production code unless you explicitly want type coercion and understand the abstract equality algorithm. Don't rely on implicit string-to-number coercion for parsing user input — use parseInt() or Number() explicitly. Avoid writing code that depends on truthy/falsy coercion for values where 0 or '' are valid inputs.",
+    "systemDesignConnection": "Type coercion bugs are a major source of production incidents in untyped JavaScript backends. In system design, this is why TypeScript adoption is critical for large codebases. API validation layers (Zod, Joi) exist specifically to catch type mismatches at system boundaries before coercion causes silent data corruption.",
+    "memoryTrick": "== is a Lazy Translator (guesses types). === is a Strict Librarian (exact match only). When in doubt, always use the librarian (===).",
+    "prerequisites": ["js-primitive-types"],
+    "eli10": "Imagine you ask your friend 'is 5 the same as five?' A lazy friend says 'yeah, close enough' (==). A strict friend says 'no — one is a number and one is a word' (===). JavaScript's == is the lazy friend who tries to convert things to match."
   },
   {
     "id": "js-primitive-types",
@@ -349,7 +414,12 @@
     "commonMistake": "Using typeof to check for null — typeof null returns 'object', so you must use value === null for a null check.",
     "correctMentalModel": "Primitives are plain values. When you assign one variable to another, you get a fresh independent copy. Change one and the other is unaffected.",
     "miniTask": "Write a function 'getType(val)' that correctly identifies all 7 primitive types AND null (returning 'null' instead of 'object'), plus 'array' for arrays, and 'object' for plain objects.",
-    "ytQuery": "JavaScript primitive types typeof explained"
+    "ytQuery": "JavaScript primitive types typeof explained",
+    "whenNotToUse": "Don't use typeof to check for null (it returns 'object'). Don't use typeof for arrays (it returns 'object') — use Array.isArray() instead. Avoid using Symbol as object keys when you need JSON serialization — Symbols are not included in JSON.stringify output.",
+    "systemDesignConnection": "Understanding value vs. reference types is critical in distributed caching and state management. Primitives are safe to cache because copies are independent. Reference types require deep cloning or immutable patterns (Immer, Object.freeze) to prevent shared-state bugs across service boundaries.",
+    "memoryTrick": "7 Primitives = SNBBU NS (String, Number, BigInt, Boolean, Undefined, Null, Symbol). Primitives are Coins (independent copies). Objects are Bank Accounts (shared references).",
+    "prerequisites": [],
+    "eli10": "In JavaScript, there are 7 simple building blocks — like LEGO pieces. Numbers (42), words ('hello'), true/false, and a few special ones. These are primitives — when you give one to a friend, they get their own copy. Objects are like shared Google Docs — everyone edits the same one."
   },
   {
     "id": "js-call-stack",
@@ -375,7 +445,12 @@
     "commonMistake": "Confusing the call stack with the task queue — the call stack is synchronous execution of code, while the task queue holds async callbacks waiting for the stack to clear.",
     "correctMentalModel": "The call stack is JavaScript's to-do list of function calls. It can only do one thing at a time, starting from the top.",
     "miniTask": "Write a recursive countdown(n) function with a proper base case, then intentionally remove the base case and observe the stack overflow error message and the stack trace it produces.",
-    "ytQuery": "JavaScript call stack explained stack overflow"
+    "ytQuery": "JavaScript call stack explained stack overflow",
+    "whenNotToUse": "Don't write deeply recursive functions without tail-call optimization or an iterative fallback — JavaScript engines have a fixed stack size (typically ~10,000-25,000 frames). Avoid synchronous recursive tree traversals on very deep structures; use an explicit stack (array-based iteration) instead to prevent stack overflow.",
+    "systemDesignConnection": "The call stack concept maps directly to distributed tracing in microservices. Tools like Jaeger and Zipkin build a 'distributed call stack' showing how a request flows through services. Understanding stack depth limits informs recursion limits in API designs and helps prevent cascading failures from infinite loops.",
+    "memoryTrick": "Call Stack = Stack of Plates. Each function call adds a plate on top. Each return removes the top plate. Too many plates without removing = CRASH (stack overflow). LIFO = Last In, First Out.",
+    "prerequisites": [],
+    "eli10": "Imagine stacking books on a table. Each time you start a new task, you put a book on top. When you finish that task, you take the book off. If you stack too many books without finishing any, the pile falls over — that's a stack overflow!"
   },
   {
     "id": "js-equality",
@@ -401,7 +476,12 @@
     "commonMistake": "Checking for NaN with value === NaN — this always returns false. Use Number.isNaN(value) instead (not the global isNaN(), which coerces its argument first).",
     "correctMentalModel": "Use === by default. Use Object.is when you need mathematically precise identity comparisons. Never use == unless you explicitly intend type coercion and know the rules.",
     "miniTask": "Write a function 'strictEqual(a, b)' that returns true only when values are identical using Object.is semantics — correctly handling NaN, +0, -0, and reference types — without using == or ===.",
-    "ytQuery": "JavaScript == vs === vs Object.is equality NaN"
+    "ytQuery": "JavaScript == vs === vs Object.is equality NaN",
+    "whenNotToUse": "Don't use == anywhere in production code — always use ===. Only reach for Object.is() when you specifically need to distinguish +0 from -0 or check NaN identity. Don't compare objects with === expecting content equality — use deep comparison libraries (lodash.isEqual) or JSON.stringify for simple cases.",
+    "systemDesignConnection": "Equality semantics matter in caching and memoization systems. React uses Object.is internally to decide re-renders — understanding this prevents unnecessary renders. In distributed systems, comparing serialized data across services requires understanding reference vs. value equality.",
+    "memoryTrick": "== = 'Close Enough' (type-guessing). === = 'Exactly Matching' (strict). Object.is = 'Mathematically Identical' (even catches NaN === NaN lie). Default to ===, upgrade to Object.is for edge cases.",
+    "prerequisites": ["js-type-coercion", "js-primitive-types"],
+    "eli10": "== is like asking 'do these look similar?' (a drawing of a cat and a photo of a cat — 'sure, both cats!'). === is like asking 'are these exactly the same thing?' (same photo, same frame). Object.is is the strictest — it can even tell that NaN is NaN, which === gets wrong."
   },
   {
     "id": "js-iife",
@@ -427,7 +507,12 @@
     "commonMistake": "Forgetting the outer parentheses — writing 'function(){}()' causes a SyntaxError because the parser expects a function name after the 'function' keyword in statement position.",
     "correctMentalModel": "An IIFE is just a function that immediately runs and throws itself away. Its closure keeps variables alive only as long as the returned object or callback references them.",
     "miniTask": "Rewrite a module that tracks page view counts using the IIFE module pattern: expose 'track()' and 'getCount()' methods while keeping the internal counter private.",
-    "ytQuery": "JavaScript IIFE immediately invoked function expression module pattern"
+    "ytQuery": "JavaScript IIFE immediately invoked function expression module pattern",
+    "whenNotToUse": "Don't use IIFEs in modern codebases that already use ES Modules — modules provide the same scope isolation natively. Avoid IIFEs for code organization — they're harder to test and debug than proper modules. Don't use IIFEs to create 'private' variables when ES6 block scoping with let/const inside {} achieves the same thing.",
+    "systemDesignConnection": "IIFEs are the precursor to module federation and micro-frontend isolation patterns. Webpack wraps each module in an IIFE in its output bundle. Understanding IIFEs explains how bundlers prevent global scope pollution — critical in systems where multiple JavaScript bundles from different teams coexist on a single page.",
+    "memoryTrick": "IIFE = Self-Destructing Spy Message. It runs immediately, does its job, and self-destructs — nothing leaks to the outside. (function(){...})() — the extra () at the end is the detonator.",
+    "prerequisites": ["js-scope", "js-closures"],
+    "eli10": "Imagine writing a secret note, reading it immediately, then throwing it away so nobody else can see it. An IIFE is a function that runs right away and keeps all its secrets hidden inside — nothing escapes to the outside world."
   },
   {
     "id": "js-dom",
@@ -453,7 +538,12 @@
     "commonMistake": "Reading layout properties (offsetHeight, getBoundingClientRect) inside a loop that also writes to the DOM — this forces synchronous reflow on every iteration, known as layout thrashing.",
     "correctMentalModel": "The DOM is a live tree. Every read of layout and every write to structure is a potential reflow. Group all reads together, then all writes together — never interleave them.",
     "miniTask": "Build a function 'renderList(items)' that takes an array of strings and efficiently renders them as <li> elements in a <ul> using DocumentFragment, without touching the real DOM more than once.",
-    "ytQuery": "JavaScript DOM manipulation querySelector createElement reflow repaint"
+    "ytQuery": "JavaScript DOM manipulation querySelector createElement reflow repaint",
+    "whenNotToUse": "Don't directly manipulate the DOM in React/Vue/Angular applications — use their virtual DOM and reactivity systems instead. Avoid innerHTML for user-provided content — it creates XSS vulnerabilities. Don't read layout properties (offsetHeight, getBoundingClientRect) inside loops that also write DOM changes — this causes layout thrashing.",
+    "systemDesignConnection": "DOM manipulation costs drive the architecture of modern frontend frameworks. React's Virtual DOM, Vue's reactivity system, and Svelte's compile-time approach all exist to minimize direct DOM operations. In system design, understanding reflow/repaint costs informs decisions about animation strategies, infinite scroll implementations, and virtualized list rendering.",
+    "memoryTrick": "DOM = Live Blueprint. Every change redraws the building (repaint). Moving walls triggers a full architecture review (reflow). Batch your changes — remodel once, not 100 times.",
+    "prerequisites": [],
+    "eli10": "Your webpage is like a LEGO house. The DOM is the instruction manual that tells you what every brick is and where it goes. JavaScript can reach into the manual and change things — add a window, paint a wall, remove a door — and the LEGO house instantly changes to match."
   },
   {
     "id": "js-fetch",
@@ -479,7 +569,12 @@
     "commonMistake": "Assuming a 404 or 500 response will be caught in the catch block — it will not. The Promise resolves successfully with a Response where ok is false.",
     "correctMentalModel": "fetch resolves when a response arrives from the server, regardless of status. The Promise rejects only if the network itself fails (timeout, DNS failure, CORS block). Always validate response.ok yourself.",
     "miniTask": "Write a reusable 'apiFetch(url, options)' wrapper that automatically checks response.ok, throws a descriptive error on failure, parses JSON on success, and accepts an optional AbortSignal.",
-    "ytQuery": "JavaScript Fetch API error handling AbortController"
+    "ytQuery": "JavaScript Fetch API error handling AbortController",
+    "whenNotToUse": "Don't use raw fetch for complex API interactions — use a wrapper library (axios, ky) or create your own wrapper that handles error checking, retries, and timeouts. Avoid fetch for server-sent events or WebSocket connections — use EventSource or the WebSocket API instead. Don't forget to cancel pending fetch requests on component unmount — it causes memory leaks and 'state update on unmounted component' warnings.",
+    "systemDesignConnection": "The Fetch API is the client-side implementation of HTTP request handling. In system design, it connects to API gateway patterns, request retry strategies with exponential backoff, and circuit breakers. AbortController maps to request timeout patterns in distributed systems. Understanding fetch's CORS behavior is essential for designing multi-origin architectures.",
+    "memoryTrick": "fetch() = Sending a Letter. The Promise resolves when a reply arrives — even if the reply says 'wrong address' (404). It only rejects if the post office burns down (network error). Always check response.ok!",
+    "prerequisites": ["js-promises"],
+    "eli10": "Imagine sending a letter to a friend asking for their favorite color. fetch() is like mailing that letter. You get a reply back — but you have to open and read it yourself to see if the answer makes sense. Even if your friend writes back 'I moved away' (404), the mail still arrives — you have to check the response."
   },
   {
     "id": "js-classes",
@@ -505,7 +600,12 @@
     "commonMistake": "Calling a class without the new keyword — unlike factory functions, omitting new on a class throws a TypeError: 'Cannot call a class as a function'.",
     "correctMentalModel": "Use classes for well-defined object hierarchies with shared methods (saves memory). Use factory functions for flexible, composable objects where you want to avoid 'this' complexity entirely.",
     "miniTask": "Implement an Animal base class with a speak() method, then create Dog and Cat subclasses that override speak() using ES6 extends and super — then rewrite the same hierarchy using factory functions with Object.assign.",
-    "ytQuery": "JavaScript ES6 classes private fields factory functions"
+    "ytQuery": "JavaScript ES6 classes private fields factory functions",
+    "whenNotToUse": "Don't use deep class hierarchies (more than 2 levels) — favor composition over inheritance. Avoid classes when a simple object literal or factory function would suffice — classes add unnecessary ceremony for small utilities. Don't use class inheritance for code reuse across unrelated domains — use mixins or composition instead.",
+    "systemDesignConnection": "Classes and factory functions represent the Factory and Builder design patterns used throughout system design. Repository patterns, service layers, and dependency injection containers all use class-based or factory-based instantiation. Understanding the trade-offs informs decisions about singleton services, connection pools, and plugin architectures.",
+    "memoryTrick": "Class = Cookie Cutter (one mold, many cookies, shared methods on prototype). Factory = Chef (hand-makes each item, more flexible, each copy is independent). Use cutter for structure, chef for flexibility.",
+    "prerequisites": ["js-prototypes", "js-this"],
+    "eli10": "A class is like a cookie cutter — you design the shape once, then stamp out as many cookies as you want, all the same shape. A factory function is like a chef who makes each cookie by hand — more work, but the chef can make each one slightly different."
   },
   {
     "id": "js-callbacks",
@@ -531,7 +631,12 @@
     "commonMistake": "Forgetting to return after calling a callback with an error — not returning allows execution to continue past the error handler, often calling the callback twice.",
     "correctMentalModel": "A callback is just a function reference you hand to someone else and say 'call this when you are done'. Async callbacks do not run immediately — they are scheduled and run when the main thread is free.",
     "miniTask": "Rewrite a callback-hell chain of three nested async operations (simulate with setTimeout) first using Promise chaining (.then), then using async/await, to demonstrate how each approach flattens the nesting.",
-    "ytQuery": "JavaScript callbacks callback hell explained"
+    "ytQuery": "JavaScript callbacks callback hell explained",
+    "whenNotToUse": "Don't use nested callbacks for sequential async operations — use Promises or async/await to flatten the chain. Avoid callback patterns in modern codebases where Promises are available — callbacks lack composability, standardized error handling, and cancellation. Don't use error-first callbacks in browser-side code — they're a Node.js convention.",
+    "systemDesignConnection": "Callbacks are the foundation of event-driven architectures. Node.js's entire I/O model is built on callbacks (now wrapped in Promises). In system design, callbacks appear as webhook patterns — a service registers a URL (callback) and another service calls it when an event occurs. Message queue consumers use callback-style handlers.",
+    "memoryTrick": "Callback = Leaving Your Phone Number. 'Call me back when you're ready.' Callback Hell = Leaving your number with someone, who leaves their number with someone else, who leaves THEIR number with someone else... Promises flatten this chain.",
+    "prerequisites": ["js-hof"],
+    "eli10": "Imagine asking your mom to call you when dinner is ready. You give her your phone number and go play. When dinner is ready, she calls you back. A callback is giving a function your 'phone number' (another function) so it can call you when it's done working."
   },
   {
     "id": "js-generators",
@@ -557,7 +662,12 @@
     "commonMistake": "Calling a generator function and expecting it to run immediately — myGen() returns a Generator object. You must call .next() or use for...of to start execution.",
     "correctMentalModel": "A generator is a pausable function. yield is a checkpoint — when you call next(), execution resumes from the last checkpoint. Think of it as a coroutine that voluntarily hands control back to the caller.",
     "miniTask": "Write a generator function 'fibonacci()' that yields Fibonacci numbers infinitely and write a helper 'take(gen, n)' that collects the first n values from any generator into an array.",
-    "ytQuery": "JavaScript generators iterators yield explained"
+    "ytQuery": "JavaScript generators iterators yield explained",
+    "whenNotToUse": "Don't use generators for simple array transformations where map/filter/reduce work fine — generators add complexity. Avoid generators in performance-critical tight loops — the pause/resume overhead is measurable. Don't use generators when async/await handles your use case — generators for async flow control is a legacy pattern (pre-async/await).",
+    "systemDesignConnection": "Generators implement the Iterator pattern from the Gang of Four — critical in streaming data processing. Async generators model paginated API consumption and real-time data feeds. In system design, generators relate to backpressure mechanisms in stream processing systems like Kafka consumers and Node.js readable streams.",
+    "memoryTrick": "Generator = Vending Machine. Each next() press dispenses one item. The machine remembers which slot it was on (paused state). yield = 'here's one item, I'll wait for the next button press.' It doesn't dump everything at once.",
+    "prerequisites": ["js-closures", "js-promises"],
+    "eli10": "Imagine a magic storybook that only shows you one page at a time. You say 'next page' and it shows the next one, then pauses. It remembers exactly where you stopped. A generator is like that book — it gives you one value at a time and waits for you to ask for the next one."
   },
   {
     "id": "js-pure-functions",
@@ -583,7 +693,12 @@
     "commonMistake": "Treating Array.push() and Array.sort() as pure — they mutate the original array in place. Use spread ([...arr, item]) or Array.from().sort() to create new arrays instead.",
     "correctMentalModel": "A pure function is a sealed black box: you put values in, values come out, and nothing outside the box is touched. If you can swap the function call for its return value without breaking anything, it's pure.",
     "miniTask": "Audit five functions in your codebase (or write five examples) and classify each as pure or impure. For each impure function, rewrite it as a pure equivalent that returns a new value instead of mutating external state.",
-    "ytQuery": "JavaScript pure functions immutability functional programming"
+    "ytQuery": "JavaScript pure functions immutability functional programming",
+    "whenNotToUse": "Don't force purity on functions that inherently need side effects — I/O operations (database writes, API calls, DOM updates) are impure by nature. Wrap them, don't avoid them. Don't create new arrays/objects on every call in hot paths where mutation would be significantly faster (e.g., game loops, animation frames). Avoid excessive deep cloning for immutability — use structural sharing libraries like Immer instead.",
+    "systemDesignConnection": "Pure functions are the basis of Redux reducers, event sourcing, and CQRS (Command Query Responsibility Segregation). In distributed systems, pure functions enable idempotent operations — safe to retry without side effects. MapReduce (Hadoop, Spark) depends on pure map and reduce functions to parallelize computation across nodes.",
+    "memoryTrick": "Pure Function = Math Formula. y = x * 2. Same x always gives same y. No phone calls, no writing on the whiteboard, no changing anything outside the formula. If you can swap the call for the answer without breaking anything, it's pure.",
+    "prerequisites": ["js-hof"],
+    "eli10": "A pure function is like a calculator. You type 2 + 3 and always get 5. It doesn't secretly call your friend or change your homework. It just takes numbers in and gives a number out — nothing else changes. Same input, same output, every single time."
   },
   {
     "id": "js-error-handling",
@@ -609,6 +724,11 @@
     "commonMistake": "Using try/catch around a Promise without await — the catch block will not catch the Promise rejection; it only catches synchronous errors from the Promise constructor or immediately thrown errors.",
     "correctMentalModel": "Error handling is a contract: try says 'attempt this', catch says 'if anything goes wrong, do this instead', finally says 'do this no matter what'. In async code, await is the bridge that connects Promise rejections to the synchronous catch mechanism.",
     "miniTask": "Create a ValidationError and a NetworkError class, then write an async function 'safeFetch(url, schema)' that throws a ValidationError if the response body does not match the expected schema, a NetworkError if the HTTP status is 4xx/5xx, and catches both with different recovery strategies.",
-    "ytQuery": "JavaScript error handling try catch finally custom error class async"
+    "ytQuery": "JavaScript error handling try catch finally custom error class async",
+    "whenNotToUse": "Don't wrap every single line in try/catch — catch at meaningful boundaries (API layer, event handlers, middleware). Avoid catching errors you can't handle — let them propagate to a global handler. Don't use try/catch for flow control (e.g., checking if a value exists) — use conditional checks instead. Never silently swallow errors with empty catch blocks.",
+    "systemDesignConnection": "Error handling patterns map directly to fault tolerance in distributed systems. Custom error classes implement the error classification needed by circuit breakers. Global unhandled rejection handlers are the application-level equivalent of dead-letter queues in message systems. Structured error responses (with codes and messages) are essential for API contract design.",
+    "memoryTrick": "try/catch/finally = Trapeze Act. try = the performance, catch = the safety net, finally = the cleanup crew who sweeps the stage no matter what. Custom errors = labels on different nets (NetworkNet, ValidationNet).",
+    "prerequisites": ["js-promises", "js-classes"],
+    "eli10": "Imagine you're trying to build a LEGO tower (try). If it falls over (error), you have a plan to catch the pieces (catch). No matter what — tower stands or falls — you always clean up the LEGO mess at the end (finally). Custom errors are like labels: 'fell because of wind' vs 'fell because wrong piece'."
   }
 ]

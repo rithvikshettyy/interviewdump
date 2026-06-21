@@ -5,8 +5,17 @@
     "question": "Two Sum",
     "summary": "Find two numbers in an array that add up to a specific target.",
     "difficulty": "Easy",
-    "companies": ["Google", "Amazon", "Paytm", "TCS Digital"],
-    "roles": ["Software Engineer", "Backend", "Frontend"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Paytm",
+      "TCS Digital"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "HashMaps",
     "language": "Language Agnostic",
@@ -20,7 +29,16 @@
       "Detail handling duplicate numbers in the input."
     ],
     "whatToAvoid": "Do not sort the array first, as sorting takes O(N log N) and breaks the original index order required.",
-    "ytQuery": "Two Sum LeetCode Python Javascript"
+    "ytQuery": "Two Sum LeetCode Python Javascript",
+    "quickAnswer": "Use a HashMap to store each number and its index as you scan. For each element, check if target minus current exists in the map. This gives O(N) time instead of brute-force O(N²).",
+    "eli10": "Imagine you have a box of numbered blocks and need to find two that add up to a magic number. Instead of trying every pair, you write down each block on a checklist. Before picking up a new block, check your list for the missing piece.",
+    "realWorldExample": "Google uses hash-based lookups in their ad auction system to quickly match bid amounts to advertiser budgets in real-time, processing millions of queries per second where O(N²) would be impossibly slow.",
+    "relatedTopics": [
+      "HashMaps",
+      "Sliding Window",
+      "Three Sum",
+      "Array Traversal"
+    ]
   },
   {
     "id": "dsa-2",
@@ -28,8 +46,15 @@
     "question": "Maximum Subarray (Kadane's Algorithm)",
     "summary": "Find the contiguous subarray with the largest sum.",
     "difficulty": "Medium",
-    "companies": ["Microsoft", "Flipkart", "Razorpay"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Microsoft",
+      "Flipkart",
+      "Razorpay"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Arrays",
     "language": "Language Agnostic",
@@ -43,7 +68,16 @@
       "State O(1) space complexity clearly."
     ],
     "whatToAvoid": "Avoid proposing nested loops O(N^2) which will time out on larger arrays.",
-    "ytQuery": "Maximum Subarray Kadane Leetcode"
+    "ytQuery": "Maximum Subarray Kadane Leetcode",
+    "quickAnswer": "Track current running sum and global maximum. At each element, decide whether to extend the current subarray or start fresh. If running sum drops below the current element, reset. O(N) time, O(1) space.",
+    "eli10": "Imagine walking along a path collecting coins and sometimes hitting mud puddles that take coins away. At each step, decide: keep walking with what you have, or start over from here. Remember the best score you ever had.",
+    "realWorldExample": "Netflix uses a Kadane's algorithm variant in their recommendation engine to find the most engaged viewing streaks in user watch history, helping identify binge-worthy content patterns.",
+    "relatedTopics": [
+      "Dynamic Programming",
+      "Greedy Algorithms",
+      "Prefix Sums",
+      "Divide and Conquer"
+    ]
   },
   {
     "id": "dsa-3",
@@ -51,8 +85,14 @@
     "question": "Container With Most Water",
     "summary": "Find two vertical lines that together with the x-axis forms a container containing the most water.",
     "difficulty": "Medium",
-    "companies": ["Google", "Swiggy", "Zomato"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Swiggy",
+      "Zomato"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Arrays",
     "language": "Language Agnostic",
@@ -66,7 +106,16 @@
       "Show how width is calculated as (right - left)."
     ],
     "whatToAvoid": "Avoid nested loops checking all pairs of lines.",
-    "ytQuery": "Container With Most Water LeetCode"
+    "ytQuery": "Container With Most Water LeetCode",
+    "quickAnswer": "Use two pointers at both ends. Calculate area as width times the shorter height. Move the pointer pointing to the shorter line inward, since only a taller line can improve the result. O(N) time.",
+    "eli10": "You have fence posts of different heights and want to hold the most water between two of them. Start with the widest gap. Then slide in from whichever side has the shorter post, hoping to find a taller one.",
+    "realWorldExample": "Amazon warehouse optimization algorithms use similar two-pointer approaches to maximize storage capacity in variable-height shelf configurations across fulfillment centers.",
+    "relatedTopics": [
+      "Two Pointers",
+      "Greedy Algorithms",
+      "Trapping Rain Water",
+      "Arrays"
+    ]
   },
   {
     "id": "dsa-4",
@@ -74,8 +123,15 @@
     "question": "Valid Palindrome",
     "summary": "Determine if a string is a palindrome, ignoring case and non-alphanumeric characters.",
     "difficulty": "Easy",
-    "companies": ["Infosys SP", "TCS Digital", "Zoho"],
-    "roles": ["Software Engineer", "Frontend"],
+    "companies": [
+      "Infosys SP",
+      "TCS Digital",
+      "Zoho"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "Strings",
     "language": "Language Agnostic",
@@ -89,7 +145,16 @@
       "Address case insensitivity logic."
     ],
     "whatToAvoid": "Do not duplicate the string or reverse it as it uses O(N) extra memory.",
-    "ytQuery": "Valid Palindrome LeetCode Solution"
+    "ytQuery": "Valid Palindrome LeetCode Solution",
+    "quickAnswer": "Use two pointers from both ends, skipping non-alphanumeric characters. Compare characters case-insensitively. If all match until pointers cross, it is a palindrome. O(N) time, O(1) space.",
+    "eli10": "A palindrome reads the same forwards and backwards, like \"racecar.\" Put one finger at the start and one at the end. Move them toward the middle, checking if the letters match. Skip spaces and punctuation.",
+    "realWorldExample": "Spotify uses palindrome-like pattern detection in their audio fingerprinting system to identify symmetrical waveform patterns for song matching and duplicate detection.",
+    "relatedTopics": [
+      "Two Pointers",
+      "String Manipulation",
+      "Longest Palindromic Substring",
+      "Regular Expressions"
+    ]
   },
   {
     "id": "dsa-5",
@@ -97,8 +162,15 @@
     "question": "Longest Substring Without Repeating Characters",
     "summary": "Find the length of the longest substring without repeating characters.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Zomato", "Zepto"],
-    "roles": ["Software Engineer", "Frontend"],
+    "companies": [
+      "Amazon",
+      "Zomato",
+      "Zepto"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "Strings",
     "language": "Language Agnostic",
@@ -112,7 +184,16 @@
       "Address complexity bounds (O(N) time, O(1) space since charset size is bounded)."
     ],
     "whatToAvoid": "Do not use nested loops scanning all substrings O(N^3).",
-    "ytQuery": "Longest Substring Without Repeating Characters LeetCode"
+    "ytQuery": "Longest Substring Without Repeating Characters LeetCode",
+    "quickAnswer": "Use a sliding window with a HashMap tracking character positions. Expand the right pointer, and when a duplicate appears inside the window, jump the left pointer past the previous occurrence. Track maximum window size.",
+    "eli10": "Imagine reading a book and trying to find the longest stretch where no letter repeats. Slide a window across the text. When you see a repeat, shrink the window from the left until the repeat is gone.",
+    "realWorldExample": "Twitter uses sliding window algorithms to detect unique hashtag sequences in trending analysis, identifying the longest stretch of distinct trending topics within time windows.",
+    "relatedTopics": [
+      "Sliding Window",
+      "HashMaps",
+      "Two Pointers",
+      "String Problems"
+    ]
   },
   {
     "id": "dsa-6",
@@ -120,8 +201,14 @@
     "question": "Minimum Window Substring",
     "summary": "Find the minimum window in a string which contains all characters of another string.",
     "difficulty": "Hard",
-    "companies": ["Google", "Meta", "Directi"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Meta",
+      "Directi"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Strings",
     "language": "Language Agnostic",
@@ -135,7 +222,16 @@
       "State time complexity as O(S + T) since each character is visited at most twice."
     ],
     "whatToAvoid": "Do not recalculate counts for the entire string on every loop step.",
-    "ytQuery": "Minimum Window Substring LeetCode System Design"
+    "ytQuery": "Minimum Window Substring LeetCode System Design",
+    "quickAnswer": "Expand the right pointer to include all characters from t, then contract the left to minimize the window. Use frequency maps and a formed counter to track when all required characters are present. O(S+T) time.",
+    "eli10": "Imagine searching a long sentence for the smallest chunk that contains all the letters in a secret word. Stretch a window to catch all the letters, then shrink it from the left to find the tightest fit.",
+    "realWorldExample": "Google Search uses minimum window techniques in snippet generation to find the smallest passage containing all query terms, producing the highlighted preview you see in search results.",
+    "relatedTopics": [
+      "Sliding Window",
+      "HashMaps",
+      "Two Pointers",
+      "Substring Problems"
+    ]
   },
   {
     "id": "dsa-7",
@@ -143,8 +239,15 @@
     "question": "Reverse Linked List",
     "summary": "Reverse a singly linked list in-place.",
     "difficulty": "Easy",
-    "companies": ["Wipro Elite", "TCS Digital", "Microsoft"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Wipro Elite",
+      "TCS Digital",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Linked Lists",
     "language": "Language Agnostic",
@@ -158,7 +261,16 @@
       "Address base cases like an empty list or a list with a single node."
     ],
     "whatToAvoid": "Do not copy the node values into an array; you must rearrange the actual nodes in-place.",
-    "ytQuery": "Reverse Linked List Iterative Recursive LeetCode"
+    "ytQuery": "Reverse Linked List Iterative Recursive LeetCode",
+    "quickAnswer": "Iterate with three pointers: prev, curr, and nextTemp. At each node, point curr.next back to prev, then advance both pointers. When done, prev is the new head. O(N) time, O(1) space.",
+    "eli10": "Imagine a line of kids each pointing to the kid behind them. To reverse the line, each kid turns around and points to the kid who was in front. Go one by one until everyone is turned around.",
+    "realWorldExample": "Git internally uses linked list reversal when displaying commit history in reverse chronological order, traversing the parent pointer chain and presenting it in the opposite direction.",
+    "relatedTopics": [
+      "Linked Lists",
+      "Pointers",
+      "Recursion",
+      "In-Place Algorithms"
+    ]
   },
   {
     "id": "dsa-8",
@@ -166,8 +278,14 @@
     "question": "Remove Nth Node From End of List",
     "summary": "Remove the nth node from the end of a singly linked list.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Zomato", "Meesho"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Amazon",
+      "Zomato",
+      "Meesho"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Linked Lists",
     "language": "Language Agnostic",
@@ -181,7 +299,16 @@
       "Highlight that this solves the problem in a single pass."
     ],
     "whatToAvoid": "Avoid traversing the entire list once to find the length, then traversing again to delete, if the interviewer asks for a single pass solution.",
-    "ytQuery": "Remove Nth Node From End of List LeetCode"
+    "ytQuery": "Remove Nth Node From End of List LeetCode",
+    "quickAnswer": "Use two pointers with an N-step gap. Move fast pointer N+1 steps ahead, then advance both until fast reaches the end. Slow pointer now sits right before the target node. Use a dummy node for edge cases.",
+    "eli10": "Imagine two runners on a track. The fast runner starts N steps ahead. When both run at the same speed and the fast runner reaches the finish line, the slow runner is exactly at the spot you need.",
+    "realWorldExample": "LinkedIn uses gap-pointer techniques in their feed ranking to efficiently remove the Nth least relevant post from paginated results without re-scanning the entire feed.",
+    "relatedTopics": [
+      "Linked Lists",
+      "Two Pointers",
+      "Fast and Slow Pointers",
+      "Dummy Node Pattern"
+    ]
   },
   {
     "id": "dsa-9",
@@ -189,8 +316,15 @@
     "question": "Maximum Depth of Binary Tree",
     "summary": "Find the maximum height/depth of a binary tree.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Infosys SP", "Microsoft"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "TCS Digital",
+      "Infosys SP",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Trees",
     "language": "Language Agnostic",
@@ -204,7 +338,16 @@
       "Mention that this can also be solved iteratively using BFS queue."
     ],
     "whatToAvoid": "Do not forget the base case check (`root === null`), as it will cause a stack overflow.",
-    "ytQuery": "Maximum Depth of Binary Tree LeetCode"
+    "ytQuery": "Maximum Depth of Binary Tree LeetCode",
+    "quickAnswer": "Recursively compute depth of left and right subtrees. Return 1 plus the maximum of both. Base case: null node returns 0. O(N) time visiting every node, O(H) space for the call stack.",
+    "eli10": "A tree has branches. To find how tall it is, check how tall the left side is and how tall the right side is. Pick the taller one and add 1 for the current level. Keep doing this until you reach the leaves.",
+    "realWorldExample": "MongoDB uses tree depth calculations in their B-tree index structures to determine when rebalancing is needed, ensuring query performance stays within O(log N) bounds.",
+    "relatedTopics": [
+      "Binary Trees",
+      "DFS",
+      "Recursion",
+      "BFS"
+    ]
   },
   {
     "id": "dsa-10",
@@ -212,8 +355,14 @@
     "question": "Invert Binary Tree",
     "summary": "Mirror a binary tree by swapping left and right subtrees.",
     "difficulty": "Easy",
-    "companies": ["Google", "Flipkart", "Razorpay"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Flipkart",
+      "Razorpay"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Trees",
     "language": "Language Agnostic",
@@ -227,7 +376,16 @@
       "Mention that this can also be solved iteratively using a queue (BFS style)."
     ],
     "whatToAvoid": "Do not get confused about the order of recursion—make sure you swap the nodes first (or after), but don't lose the references.",
-    "ytQuery": "Invert Binary Tree LeetCode Javascript"
+    "ytQuery": "Invert Binary Tree LeetCode Javascript",
+    "quickAnswer": "Recursively swap the left and right children of every node. Base case: null returns null. Visit every node once. O(N) time, O(H) space for recursion.",
+    "eli10": "Imagine a family tree drawn on paper. Hold it up to a mirror — everything flips left and right. To invert a tree, swap every parent's left and right kids, then do the same for all the grandkids.",
+    "realWorldExample": "This was famously a Google interview question that Homebrew creator Max Howell could not solve. Apple uses tree inversion in their UI layout engine when switching between LTR and RTL text directions.",
+    "relatedTopics": [
+      "Binary Trees",
+      "DFS",
+      "Recursion",
+      "Tree Traversal"
+    ]
   },
   {
     "id": "dsa-11",
@@ -235,8 +393,15 @@
     "question": "Binary Tree Level Order Traversal",
     "summary": "Perform a breadth-first search (BFS) traversal of a binary tree level by level.",
     "difficulty": "Medium",
-    "companies": ["PhonePe", "CRED", "Microsoft"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "PhonePe",
+      "CRED",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Trees",
     "language": "Language Agnostic",
@@ -250,7 +415,16 @@
       "State O(N) space complexity representing the leaf node level size."
     ],
     "whatToAvoid": "Do not attempt a standard depth-first recursion without passing level variables, as it does not naturally visit level-by-level.",
-    "ytQuery": "Binary Tree Level Order Traversal LeetCode"
+    "ytQuery": "Binary Tree Level Order Traversal LeetCode",
+    "quickAnswer": "Use a queue initialized with the root. At each level, process all nodes currently in the queue, collect their values, and add their children. This gives level-by-level ordering. O(N) time, O(N) space.",
+    "eli10": "Imagine a family tree. Read it row by row — first grandparents, then parents, then kids. A queue is like a waiting line: process everyone on the current floor before going to the next.",
+    "realWorldExample": "Facebook uses BFS-based level traversal in their social graph to compute degrees of separation, powering the \"People You May Know\" feature by exploring connections level by level.",
+    "relatedTopics": [
+      "BFS",
+      "Queues",
+      "Binary Trees",
+      "Zigzag Level Order"
+    ]
   },
   {
     "id": "dsa-12",
@@ -258,8 +432,15 @@
     "question": "Validate Binary Search Tree",
     "summary": "Check if a binary tree is a valid Binary Search Tree (BST).",
     "difficulty": "Medium",
-    "companies": ["Google", "Paytm", "Swiggy"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Google",
+      "Paytm",
+      "Swiggy"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Trees",
     "language": "Language Agnostic",
@@ -273,7 +454,16 @@
       "Mention alternative validation using an in-order traversal (which should yield a strictly increasing sorted sequence)."
     ],
     "whatToAvoid": "Do not only compare a parent to its direct children; compile the full boundary range recursively.",
-    "ytQuery": "Validate Binary Search Tree LeetCode"
+    "ytQuery": "Validate Binary Search Tree LeetCode",
+    "quickAnswer": "Pass min/max boundaries down recursively. For the left child, max becomes the parent value. For the right, min becomes the parent value. If any node violates its boundaries, it is not a valid BST.",
+    "eli10": "A BST is like a library where every book on the left shelf must have a smaller number and every book on the right must have a bigger number. Check every shelf by remembering the allowed range of numbers.",
+    "realWorldExample": "Redis validates its internal sorted set skip lists using BST-like validation to ensure ordering guarantees are maintained after concurrent modifications.",
+    "relatedTopics": [
+      "BST",
+      "DFS",
+      "In-Order Traversal",
+      "Recursion"
+    ]
   },
   {
     "id": "dsa-13",
@@ -281,8 +471,16 @@
     "question": "Number of Islands",
     "summary": "Given a grid of '1's (land) and '0's (water), count the number of islands.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Flipkart", "Zomato", "Juspay"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Amazon",
+      "Flipkart",
+      "Zomato",
+      "Juspay"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Graphs",
     "language": "Language Agnostic",
@@ -296,7 +494,16 @@
       "Identify the O(R * C) worst case space complexity of the call stack."
     ],
     "whatToAvoid": "Do not forget boundary checks in the recursive function, otherwise it will throw index out of bounds exceptions.",
-    "ytQuery": "Number of Islands LeetCode Graph DFS BFS"
+    "ytQuery": "Number of Islands LeetCode Graph DFS BFS",
+    "quickAnswer": "Scan the grid. When you find a \"1\", increment count and DFS/BFS to mark all connected land as visited. Each new DFS trigger is a new island. O(R*C) time.",
+    "eli10": "Imagine a map with green patches (land) and blue patches (water). When you find green, paint the whole connected green area red so you don't count it again. Count how many times you start painting.",
+    "realWorldExample": "Uber uses connected component algorithms similar to Number of Islands to identify clusters of ride requests in their surge pricing system, treating geographic zones as grid cells.",
+    "relatedTopics": [
+      "Graph Traversal",
+      "DFS",
+      "BFS",
+      "Connected Components"
+    ]
   },
   {
     "id": "dsa-14",
@@ -304,8 +511,14 @@
     "question": "Course Schedule",
     "summary": "Determine if you can finish all courses given prerequisite links (directed graph cycle detection).",
     "difficulty": "Medium",
-    "companies": ["Google", "Razorpay", "Juspay"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Razorpay",
+      "Juspay"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Graphs",
     "language": "Language Agnostic",
@@ -319,7 +532,16 @@
       "Mention that DFS with recursion-stack backtracking states (3 colors: unvisited, visiting, visited) is an alternative."
     ],
     "whatToAvoid": "Do not use a simple DFS without tracking 'currently visiting' states, as that will fail to identify cycles in undirected branches.",
-    "ytQuery": "Course Schedule Kahn's Algorithm LeetCode"
+    "ytQuery": "Course Schedule Kahn's Algorithm LeetCode",
+    "quickAnswer": "Model courses as a directed graph. Use Kahn's algorithm: compute indegrees, start with zero-indegree nodes, process them, and decrement neighbors' indegrees. If all courses are processed, no cycle exists.",
+    "eli10": "Imagine needing to take classes in order — math before physics. Draw arrows showing which class comes first. If the arrows make a circle, you're stuck forever and can't finish all the classes.",
+    "realWorldExample": "npm and yarn use topological sorting (the same algorithm) to resolve package dependency trees, ensuring packages are installed in the correct order without circular dependencies.",
+    "relatedTopics": [
+      "Topological Sort",
+      "Directed Graphs",
+      "Cycle Detection",
+      "BFS"
+    ]
   },
   {
     "id": "dsa-15",
@@ -327,8 +549,14 @@
     "question": "Word Ladder",
     "summary": "Find the length of the shortest transformation sequence from a begin word to an end word.",
     "difficulty": "Hard",
-    "companies": ["Google", "Amazon", "Directi"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Directi"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Graphs",
     "language": "Language Agnostic",
@@ -342,7 +570,16 @@
       "Discuss bidirectional BFS as a further optimization (shrinks search space)."
     ],
     "whatToAvoid": "Do not attempt DFS, as it will search all paths and result in Time Limit Exceeded (TLE) or Stack Overflow.",
-    "ytQuery": "Word Ladder LeetCode BFS Explanation"
+    "ytQuery": "Word Ladder LeetCode BFS Explanation",
+    "quickAnswer": "Use BFS for shortest path. Start from beginWord, try changing each character to a-z, check if the new word is in the dictionary. First time we reach endWord is the shortest path.",
+    "eli10": "Imagine changing one letter at a time to turn \"cat\" into \"dog.\" Try all possible one-letter changes and see which real words you can make. BFS ensures you find the shortest chain of words.",
+    "realWorldExample": "Grammarly uses word ladder-like algorithms in their spell correction engine to suggest the minimum number of character edits to transform a misspelled word into valid dictionary words.",
+    "relatedTopics": [
+      "BFS",
+      "Graph Shortest Path",
+      "String Manipulation",
+      "HashSet"
+    ]
   },
   {
     "id": "dsa-16",
@@ -350,8 +587,15 @@
     "question": "Climbing Stairs",
     "summary": "Find the number of distinct ways to climb a staircase of N steps if you can take 1 or 2 steps at a time.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Wipro Elite", "Adobe"],
-    "roles": ["Software Engineer", "Frontend"],
+    "companies": [
+      "TCS Digital",
+      "Wipro Elite",
+      "Adobe"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "Dynamic Programming",
     "language": "Language Agnostic",
@@ -365,7 +609,16 @@
       "Show how space is optimized from O(N) array to O(1) variables."
     ],
     "whatToAvoid": "Do not write raw recursive Fibonacci without memoization, as it will time out for N > 40.",
-    "ytQuery": "Climbing Stairs LeetCode Solution"
+    "ytQuery": "Climbing Stairs LeetCode Solution",
+    "quickAnswer": "This is the Fibonacci sequence. To reach step N, add the ways to reach N-1 and N-2. Use two variables for O(1) space. Base cases: 1 way for step 1, 2 ways for step 2.",
+    "eli10": "To get to a stair, you either came from one step below or two steps below. So the number of ways to reach any step is just adding the ways for the previous two steps — like magic addition!",
+    "realWorldExample": "Robinhood uses dynamic programming similar to Climbing Stairs in their options pricing models to calculate possible price movement paths in binomial tree valuation.",
+    "relatedTopics": [
+      "Dynamic Programming",
+      "Fibonacci",
+      "Memoization",
+      "Space Optimization"
+    ]
   },
   {
     "id": "dsa-17",
@@ -373,8 +626,15 @@
     "question": "Coin Change",
     "summary": "Find the fewest number of coins needed to make up a target amount.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Paytm", "Flipkart"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Amazon",
+      "Paytm",
+      "Flipkart"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Dynamic Programming",
     "language": "Language Agnostic",
@@ -388,7 +648,16 @@
       "Discuss initialization value (Infinity or amount + 1) used to track unreachable states."
     ],
     "whatToAvoid": "Do not suggest a greedy coin-selection approach, as it does not guarantee the minimum count.",
-    "ytQuery": "Coin Change Leetcode Dynamic Programming"
+    "ytQuery": "Coin Change Leetcode Dynamic Programming",
+    "quickAnswer": "Build a DP array where dp[i] is the minimum coins for amount i. For each amount, try every coin and take dp[i-coin]+1 if smaller. Greedy fails because the largest coin is not always optimal.",
+    "eli10": "You want to pay exactly $11 using the fewest coins. You can't just grab the biggest coins — sometimes using smaller ones gives fewer total coins. Try every combination smartly using a table.",
+    "realWorldExample": "Stripe uses coin change-like algorithms in their payment splitting system to determine the optimal denomination breakdown when converting between currencies.",
+    "relatedTopics": [
+      "Dynamic Programming",
+      "Bottom-Up DP",
+      "Knapsack Problem",
+      "Greedy vs DP"
+    ]
   },
   {
     "id": "dsa-18",
@@ -396,8 +665,14 @@
     "question": "Edit Distance",
     "summary": "Find the minimum edit operations (insert, delete, replace) to convert word1 to word2.",
     "difficulty": "Hard",
-    "companies": ["Google", "Meta", "Microsoft"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Meta",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Dynamic Programming",
     "language": "Language Agnostic",
@@ -411,7 +686,16 @@
       "Mention space optimization down to O(min(M, N)) using only two rows."
     ],
     "whatToAvoid": "Do not lose track of matrix boundaries during index initialization.",
-    "ytQuery": "Edit Distance LeetCode Dynamic Programming"
+    "ytQuery": "Edit Distance LeetCode Dynamic Programming",
+    "quickAnswer": "Build a 2D DP table where dp[i][j] is edit distance between word1[0..i-1] and word2[0..j-1]. If characters match, take the diagonal. Otherwise, take min of insert, delete, replace, plus 1.",
+    "eli10": "You want to change one word into another using the fewest moves — adding a letter, removing one, or swapping one. Build a grid showing the cost of changing each piece, and find the cheapest path.",
+    "realWorldExample": "Google Docs uses edit distance in their collaborative editing system to compute the minimum diff between document versions, minimizing the operations needed to sync changes.",
+    "relatedTopics": [
+      "Dynamic Programming",
+      "2D DP",
+      "String Matching",
+      "Longest Common Subsequence"
+    ]
   },
   {
     "id": "dsa-19",
@@ -419,8 +703,14 @@
     "question": "Fibonacci Number",
     "summary": "Calculate the Nth Fibonacci number.",
     "difficulty": "Easy",
-    "companies": ["Wipro Elite", "TCS Digital"],
-    "roles": ["Software Engineer", "Frontend"],
+    "companies": [
+      "Wipro Elite",
+      "TCS Digital"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "Recursion",
     "language": "Language Agnostic",
@@ -434,7 +724,16 @@
       "Discuss call stack space complexity constraints."
     ],
     "whatToAvoid": "Do not write recursive fibonacci without memoization or iterative options, as it represents poorly optimized code.",
-    "ytQuery": "Fibonacci Number Recursion Memoization"
+    "ytQuery": "Fibonacci Number Recursion Memoization",
+    "quickAnswer": "F(n) = F(n-1) + F(n-2) with base cases F(0)=0, F(1)=1. Naive recursion is O(2^N). Use memoization for O(N) time, or iterate with two variables for O(1) space.",
+    "eli10": "Each Fibonacci number is made by adding the two numbers before it: 0, 1, 1, 2, 3, 5, 8, 13... The trick is remembering numbers you already calculated so you don't redo the work.",
+    "realWorldExample": "The Fibonacci sequence appears in Agile estimation (story points follow Fibonacci: 1, 2, 3, 5, 8, 13). AWS uses memoization patterns inspired by Fibonacci caching in DynamoDB Accelerator.",
+    "relatedTopics": [
+      "Recursion",
+      "Memoization",
+      "Dynamic Programming",
+      "Space Optimization"
+    ]
   },
   {
     "id": "dsa-20",
@@ -442,8 +741,14 @@
     "question": "Generate Parentheses",
     "summary": "Generate all combinations of well-formed parentheses given N pairs.",
     "difficulty": "Medium",
-    "companies": ["Google", "Atlassian", "CRED"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Atlassian",
+      "CRED"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Recursion",
     "language": "Language Agnostic",
@@ -457,7 +762,16 @@
       "Specify that this avoids generating all 2^(2N) strings and filtering later."
     ],
     "whatToAvoid": "Do not generate all possible strings of size 2N and then check validity, as it takes O(2^(2N)) time, which is highly inefficient.",
-    "ytQuery": "Generate Parentheses Backtracking LeetCode"
+    "ytQuery": "Generate Parentheses Backtracking LeetCode",
+    "quickAnswer": "Use backtracking. Track open and close counts. Add \"(\" if open < N. Add \")\" only if close < open. When string reaches length 2N, it is a valid combination.",
+    "eli10": "Imagine building a sentence with matching parentheses. You can always open a new bracket if you have some left. You can only close a bracket if there's an open one waiting. Follow these rules to get every valid pattern.",
+    "realWorldExample": "Compiler parsers like Babel use similar recursive backtracking to validate and generate all possible valid AST structures when parsing nested expressions and block scopes.",
+    "relatedTopics": [
+      "Backtracking",
+      "Recursion",
+      "Catalan Numbers",
+      "String Building"
+    ]
   },
   {
     "id": "dsa-21",
@@ -465,8 +779,15 @@
     "question": "Merge Sorted Array",
     "summary": "Merge two sorted arrays in-place using the empty space at the end of the first array.",
     "difficulty": "Easy",
-    "companies": ["Infosys SP", "TCS Digital", "Microsoft"],
-    "roles": ["Software Engineer", "Frontend"],
+    "companies": [
+      "Infosys SP",
+      "TCS Digital",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "Sorting",
     "language": "Language Agnostic",
@@ -480,7 +801,16 @@
       "State O(1) space complexity clearly."
     ],
     "whatToAvoid": "Do not simply concatenate arrays and call `.sort()` as that takes O((M+N) log (M+N)) time.",
-    "ytQuery": "Merge Sorted Array LeetCode In Place"
+    "ytQuery": "Merge Sorted Array LeetCode In Place",
+    "quickAnswer": "Merge from right to left with three pointers: end of nums1 valid elements, end of nums2, and end of nums1 total space. Compare from the back and place the larger element at the write position.",
+    "eli10": "Two sorted decks of cards need to become one sorted deck. Start from the biggest cards in each deck and place them at the back of the big deck. Work backwards so you never overwrite cards you haven't looked at.",
+    "realWorldExample": "PostgreSQL merge join implementation uses this exact right-to-left merge technique when combining sorted intermediate results in query execution plans.",
+    "relatedTopics": [
+      "Sorting",
+      "Two Pointers",
+      "In-Place Algorithms",
+      "Merge Sort"
+    ]
   },
   {
     "id": "dsa-22",
@@ -488,8 +818,16 @@
     "question": "Merge Intervals",
     "summary": "Merge overlapping intervals.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Swiggy", "Zomato", "Juspay"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Amazon",
+      "Swiggy",
+      "Zomato",
+      "Juspay"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Sorting",
     "language": "Language Agnostic",
@@ -503,7 +841,16 @@
       "Discuss why sorting takes O(N log N) time, which dominates the algorithm."
     ],
     "whatToAvoid": "Do not assume intervals are sorted; you must explicitly sort them first.",
-    "ytQuery": "Merge Intervals LeetCode Array Sorting"
+    "ytQuery": "Merge Intervals LeetCode Array Sorting",
+    "quickAnswer": "Sort intervals by start time. Iterate and compare each interval with the last merged one. If they overlap (current start <= last end), extend the end. Otherwise, add as a new interval.",
+    "eli10": "Imagine a bunch of meetings on a calendar, some overlapping. Sort them by start time, then walk through. If the next meeting starts before the current one ends, combine them into one longer meeting.",
+    "realWorldExample": "Google Calendar uses interval merging to display consolidated busy blocks when overlaying multiple calendars, combining overlapping events into single \"busy\" time ranges.",
+    "relatedTopics": [
+      "Sorting",
+      "Intervals",
+      "Insert Interval",
+      "Meeting Rooms"
+    ]
   },
   {
     "id": "dsa-23",
@@ -511,8 +858,15 @@
     "question": "Binary Search",
     "summary": "Search for a target value in a sorted array.",
     "difficulty": "Easy",
-    "companies": ["TCS Digital", "Wipro Elite", "Zoho"],
-    "roles": ["Software Engineer", "Frontend"],
+    "companies": [
+      "TCS Digital",
+      "Wipro Elite",
+      "Zoho"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "Binary Search",
     "language": "Language Agnostic",
@@ -526,7 +880,16 @@
       "Mention that the input array must be sorted."
     ],
     "whatToAvoid": "Do not suggest linear scans, as the point is utilizing the sorted property for log(N) speed.",
-    "ytQuery": "Binary Search Algorithm Explanation"
+    "ytQuery": "Binary Search Algorithm Explanation",
+    "quickAnswer": "Set left and right boundaries. Check the middle. If it matches, return. If middle < target, search right half. If middle > target, search left half. Halves search space each step. O(log N).",
+    "eli10": "Looking for a word in a dictionary? Open to the middle. If your word comes after, look in the second half. If before, the first half. Keep halving until you find it. Way faster than reading every page!",
+    "realWorldExample": "Every database index lookup (MySQL, PostgreSQL) uses binary search on B-tree nodes to find the correct leaf page, turning billion-row table lookups into about 30 comparisons.",
+    "relatedTopics": [
+      "Binary Search",
+      "Divide and Conquer",
+      "Sorted Arrays",
+      "Search Algorithms"
+    ]
   },
   {
     "id": "dsa-24",
@@ -534,8 +897,15 @@
     "question": "Search in Rotated Sorted Array",
     "summary": "Search for a target in a sorted array that has been rotated at an unknown pivot.",
     "difficulty": "Medium",
-    "companies": ["Google", "Microsoft", "Paytm"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Google",
+      "Microsoft",
+      "Paytm"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Binary Search",
     "language": "Language Agnostic",
@@ -549,7 +919,16 @@
       "Detail boundary conditional signs (< vs <=)."
     ],
     "whatToAvoid": "Do not suggest finding the rotation pivot first, as it adds complexity; you can do it in a single binary search pass.",
-    "ytQuery": "Search in Rotated Sorted Array LeetCode"
+    "ytQuery": "Search in Rotated Sorted Array LeetCode",
+    "quickAnswer": "In a rotated sorted array, one half is always sorted. Find mid, determine which half is sorted, check if the target lies in that sorted range. If yes, search there; otherwise search the other half. O(log N).",
+    "eli10": "Imagine a sorted bookshelf where someone moved a chunk of books from one end to the other. The books are still in order within each chunk. Find which chunk is sorted and search there.",
+    "realWorldExample": "Elasticsearch uses modified binary search on sorted segment files that may have been partially merged (similar to rotated arrays) to efficiently locate documents during compaction.",
+    "relatedTopics": [
+      "Binary Search",
+      "Rotated Arrays",
+      "Find Minimum in Rotated Array",
+      "Modified Search"
+    ]
   },
   {
     "id": "dsa-25",
@@ -557,8 +936,14 @@
     "question": "Median of Two Sorted Arrays",
     "summary": "Find the median of two sorted arrays in O(log(m+n)) time.",
     "difficulty": "Hard",
-    "companies": ["Google", "Amazon", "Directi"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Directi"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Binary Search",
     "language": "Language Agnostic",
@@ -572,7 +957,16 @@
       "Show how to handle even vs odd total element counts."
     ],
     "whatToAvoid": "Do not suggest merging the arrays, as that takes O(M + N) time and violates the O(log(M+N)) constraint.",
-    "ytQuery": "Median of Two Sorted Arrays Binary Search Leetcode"
+    "ytQuery": "Median of Two Sorted Arrays Binary Search Leetcode",
+    "quickAnswer": "Binary search on the smaller array to find the correct partition. Both arrays split into left and right halves where all left elements <= all right elements. Median comes from boundary elements.",
+    "eli10": "Two sorted lines of kids by height need to find the middle height. Instead of merging into one line, find a split point in each line where everyone on the left is shorter than everyone on the right.",
+    "realWorldExample": "Apache Spark uses this partitioning approach in its distributed median computation for the approxQuantile function, splitting data across worker nodes and binary searching for partition points.",
+    "relatedTopics": [
+      "Binary Search",
+      "Array Partitioning",
+      "Divide and Conquer",
+      "Statistics"
+    ]
   },
   {
     "id": "dsa-26",
@@ -580,8 +974,15 @@
     "question": "Valid Parentheses",
     "summary": "Determine if brackets in a string are closed in the correct order.",
     "difficulty": "Easy",
-    "companies": ["Wipro Elite", "TCS Digital", "Zoho"],
-    "roles": ["Software Engineer", "Frontend"],
+    "companies": [
+      "Wipro Elite",
+      "TCS Digital",
+      "Zoho"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "Stacks & Queues",
     "language": "Language Agnostic",
@@ -595,7 +996,16 @@
       "Address empty stack edge cases."
     ],
     "whatToAvoid": "Do not use a simple counter variable to count brackets, as it cannot track nested order validation (e.g. '([)]' is invalid but counts match).",
-    "ytQuery": "Valid Parentheses Stack LeetCode"
+    "ytQuery": "Valid Parentheses Stack LeetCode",
+    "quickAnswer": "Use a stack. Push opening brackets. For closing brackets, pop and check if it matches. If mismatched or stack empty on close, return false. Stack must be empty at the end.",
+    "eli10": "Brackets are like Russian nesting dolls — the last one you open must be the first you close. Stack up opening brackets like plates. When you see a closing bracket, check if the top plate matches.",
+    "realWorldExample": "Every IDE and code editor (VS Code, IntelliJ) uses this exact stack-based algorithm for bracket matching, syntax highlighting, and showing mismatched bracket errors in real-time.",
+    "relatedTopics": [
+      "Stacks",
+      "String Parsing",
+      "Compiler Design",
+      "Bracket Matching"
+    ]
   },
   {
     "id": "dsa-27",
@@ -603,8 +1013,15 @@
     "question": "Min Stack",
     "summary": "Design a stack that supports retrieving the minimum element in O(1) time.",
     "difficulty": "Medium",
-    "companies": ["Microsoft", "Razorpay", "Flipkart"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Microsoft",
+      "Razorpay",
+      "Flipkart"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Stacks & Queues",
     "language": "Language Agnostic",
@@ -618,7 +1035,16 @@
       "Verify O(1) execution times."
     ],
     "whatToAvoid": "Do not traverse the stack to search for the minimum during `getMin()`, as that violates the O(1) requirement.",
-    "ytQuery": "Min Stack Leetcode O(1) Solution"
+    "ytQuery": "Min Stack Leetcode O(1) Solution",
+    "quickAnswer": "Store each element as a pair [value, currentMinimum]. When pushing, compute new min as Math.min(value, previous min). When popping, previous min is automatically restored. All operations O(1).",
+    "eli10": "Every time you add a book to a pile, write a note saying what the thinnest book in the pile is so far. When you remove the top book, the note on the next book still remembers the thinnest one remaining.",
+    "realWorldExample": "Redis implements a similar O(1) min-tracking pattern in its sorted set operations, maintaining auxiliary state alongside the primary data structure for constant-time minimum retrieval.",
+    "relatedTopics": [
+      "Stack Design",
+      "Data Structure Design",
+      "Auxiliary State",
+      "Monotonic Stack"
+    ]
   },
   {
     "id": "dsa-28",
@@ -626,8 +1052,15 @@
     "question": "Group Anagrams",
     "summary": "Group an array of strings such that anagrams are placed together.",
     "difficulty": "Medium",
-    "companies": ["Amazon", "Zomato", "CRED"],
-    "roles": ["Software Engineer", "Frontend"],
+    "companies": [
+      "Amazon",
+      "Zomato",
+      "CRED"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Frontend"
+    ],
     "type": "dsa",
     "topic": "HashMaps",
     "language": "Language Agnostic",
@@ -641,7 +1074,16 @@
       "Detail HashMap extraction to output arrays."
     ],
     "whatToAvoid": "Avoid comparing all pairs of strings using nested loops O(N^2) checks.",
-    "ytQuery": "Group Anagrams LeetCode HashMap Solution"
+    "ytQuery": "Group Anagrams LeetCode HashMap Solution",
+    "quickAnswer": "Sort each string alphabetically to create a key. Group strings by their sorted key in a HashMap. All anagrams produce the same sorted key. Alternative: use character frequency count as key for O(N*K).",
+    "eli10": "Anagrams are words made from the same letters rearranged. Sort the letters of each word alphabetically — \"eat\" and \"tea\" both become \"aet.\" Put words with the same sorted letters in the same group.",
+    "realWorldExample": "Scrabble apps and word games use character-frequency hashing (same principle as group anagrams) to instantly look up all valid words that can be formed from a player's tile rack.",
+    "relatedTopics": [
+      "HashMaps",
+      "String Sorting",
+      "Character Counting",
+      "Grouping Problems"
+    ]
   },
   {
     "id": "dsa-29",
@@ -649,8 +1091,15 @@
     "question": "Top K Frequent Elements",
     "summary": "Find the K most frequent elements in an array.",
     "difficulty": "Medium",
-    "companies": ["Google", "PhonePe", "Razorpay"],
-    "roles": ["Software Engineer", "Backend"],
+    "companies": [
+      "Google",
+      "PhonePe",
+      "Razorpay"
+    ],
+    "roles": [
+      "Software Engineer",
+      "Backend"
+    ],
     "type": "dsa",
     "topic": "Heaps",
     "language": "Language Agnostic",
@@ -664,7 +1113,16 @@
       "Compare space-time trade-offs between Heap and Bucket Sort."
     ],
     "whatToAvoid": "Do not sort the entire hashmap by frequency as that takes O(N log N) time.",
-    "ytQuery": "Top K Frequent Elements LeetCode Bucket Sort Heap"
+    "ytQuery": "Top K Frequent Elements LeetCode Bucket Sort Heap",
+    "quickAnswer": "Count frequencies with a HashMap. Then use bucket sort (index = frequency) or a min-heap of size K. Bucket sort gives O(N); heap gives O(N log K).",
+    "eli10": "Count how many times each number appears. Then line up buckets numbered by frequency and drop each number in. Read from the highest-numbered bucket to get the most frequent numbers.",
+    "realWorldExample": "Twitter uses frequency-based bucket sorting in their trending topics algorithm to find the K most-tweeted hashtags from billions of tweets within rolling time windows.",
+    "relatedTopics": [
+      "HashMaps",
+      "Heaps",
+      "Bucket Sort",
+      "Quick Select"
+    ]
   },
   {
     "id": "dsa-30",
@@ -672,8 +1130,14 @@
     "question": "Find Median from Data Stream",
     "summary": "Retrieve the median of a stream of numbers dynamically.",
     "difficulty": "Hard",
-    "companies": ["Google", "Amazon", "Microsoft"],
-    "roles": ["Software Engineer"],
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft"
+    ],
+    "roles": [
+      "Software Engineer"
+    ],
     "type": "dsa",
     "topic": "Heaps",
     "language": "Language Agnostic",
@@ -687,6 +1151,15 @@
       "Highlight the O(log N) time for insertion and O(1) for finding median."
     ],
     "whatToAvoid": "Do not sort the array from scratch every time a number is added, as that takes O(N log N) time per insertion.",
-    "ytQuery": "Find Median from Data Stream LeetCode Two Heaps"
+    "ytQuery": "Find Median from Data Stream LeetCode Two Heaps",
+    "quickAnswer": "Maintain two heaps: a max-heap for the smaller half and a min-heap for the larger half. Balance them so sizes differ by at most 1. Median is top of larger heap, or average of both tops.",
+    "eli10": "Split incoming numbers into two groups: small numbers and big numbers. Keep the biggest of the small numbers and the smallest of the big numbers easily accessible. The median is always between these two.",
+    "realWorldExample": "Datadog uses the two-heap median pattern in their real-time monitoring to compute rolling median latencies across millions of requests per second without sorting the entire dataset.",
+    "relatedTopics": [
+      "Heaps",
+      "Priority Queues",
+      "Streaming Algorithms",
+      "Running Statistics"
+    ]
   }
 ]

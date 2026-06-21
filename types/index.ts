@@ -24,6 +24,15 @@ export interface Question {
   strongAnswerPoints: string[]
   whatToAvoid: string
   ytQuery: string
+  quickAnswer?: string
+  realWorldExample?: string
+  relatedTopics?: string[]
+  eli10?: string
+  tableVisualization?: {
+    before?: { headers: string[]; rows: string[][] }
+    after?: { headers: string[]; rows: string[][] }
+    description?: string
+  }
 }
 
 export interface Company {
@@ -59,6 +68,11 @@ export interface Concept {
   miniTask: string
   ytQuery: string
   diagramDescription?: string
+  whenNotToUse?: string
+  systemDesignConnection?: string
+  memoryTrick?: string
+  prerequisites?: string[]
+  eli10?: string
 }
 
 export interface OOPSConcept {
