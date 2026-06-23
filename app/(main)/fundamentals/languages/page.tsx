@@ -96,7 +96,7 @@ export default function LanguagesPage() {
         onTabChange={setActiveTab}
       />
 
-      <div className="px-6 py-6 flex-1 bg-bg">
+      <div className="px-4 sm:px-6 py-6 flex-1 bg-bg">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-5xl">
           {languages.map((lang) => (
             <div

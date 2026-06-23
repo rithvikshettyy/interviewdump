@@ -23,9 +23,9 @@ export default function PageHeader({
   return (
     <div className="border-b border-border pb-0 bg-surface">
       {/* Top Section */}
-      <div className="px-6 pt-6 pb-4 flex flex-row items-start justify-between gap-4">
+      <div className="px-4 sm:px-6 pt-6 pb-4 flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
         <div className="min-w-0 flex-1">
-          <h1 className="text-2xl font-bold text-text font-sans truncate">{title}</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-text font-sans truncate">{title}</h1>
           <p className="text-sm text-text-muted mt-1 line-clamp-2">{subtitle}</p>
         </div>
 
@@ -66,7 +66,7 @@ export default function PageHeader({
         <div 
           role="tablist"
           aria-label="Page sub-sections"
-          className="flex gap-0 overflow-x-auto scrollbar-hide px-6 border-t border-border/40"
+          className="flex gap-0 overflow-x-auto scrollbar-hide px-4 sm:px-6 border-t border-border/40"
         >
           {tabs.map((tab) => {
             const isActive = activeTab === tab.value

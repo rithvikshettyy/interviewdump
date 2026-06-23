@@ -225,7 +225,7 @@ export default function AlgoPage({ params }: { params: Promise<{ algo: string }>
   return (
     <div className="flex flex-col min-h-screen bg-bg">
       {/* Header */}
-      <div className="border-b border-border bg-surface px-6 pt-5 pb-4">
+      <div className="border-b border-border bg-surface px-4 sm:px-6 pt-5 pb-4">
         <Link
           href="/fundamentals/visualizer"
           className="inline-flex items-center gap-1.5 text-xs font-mono text-text-muted hover:text-text transition-colors mb-3"
@@ -249,7 +249,7 @@ export default function AlgoPage({ params }: { params: Promise<{ algo: string }>
         )}
       </div>
 
-      <div className="px-6 py-6 max-w-3xl mx-auto w-full">
+      <div className="px-4 sm:px-6 py-6 max-w-3xl mx-auto w-full">
         <VisualizerShell
           currentStep={currentStep}
           totalSteps={steps.length}

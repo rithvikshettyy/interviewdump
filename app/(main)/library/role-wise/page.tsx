@@ -210,15 +210,15 @@ export default function RoleWisePage() {
     <div className="flex flex-col min-h-screen bg-bg">
       {/* Page Header */}
       <div className="border-b border-border bg-surface">
-        <div className="px-6 pt-6 pb-4">
-          <h1 className="text-2xl font-bold text-text font-sans">Role Wise Resources</h1>
+        <div className="px-4 sm:px-6 pt-6 pb-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-text font-sans">Role Wise Resources</h1>
           <p className="text-sm text-text-muted mt-1">
             Position-specific interview prep. Select your role and question type.
           </p>
         </div>
 
         {/* 1. Role Tabs */}
-        <div className="flex gap-0 overflow-x-auto scrollbar-hide px-6 border-t border-border/40">
+        <div className="flex gap-0 overflow-x-auto scrollbar-hide px-4 sm:px-6 border-t border-border/40">
           {roles.map((role) => {
             const isActive = selectedRole === role
             return (
@@ -239,7 +239,7 @@ export default function RoleWisePage() {
       </div>
 
       {/* 2. Sub-Tabs Section */}
-      <div className="px-6 pt-2 bg-bg border-b border-border flex overflow-x-auto scrollbar-hide gap-2">
+      <div className="px-4 sm:px-6 pt-2 bg-bg border-b border-border flex overflow-x-auto scrollbar-hide gap-2">
         {questionTypes.map((type) => {
           const isActive = activeQuestionType === type.value
           return (

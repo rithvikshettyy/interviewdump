@@ -204,10 +204,10 @@ export default function IntroductionPage() {
   return (
     <div className="flex min-h-screen bg-bg relative">
       {/* ── Main content ────────────────────────────────────────────────── */}
-      <div className="flex-1 min-w-0 px-6 md:px-10 lg:px-16 py-10 max-w-4xl">
+      <div className="flex-1 min-w-0 px-4 sm:px-6 md:px-10 lg:px-16 py-10 max-w-4xl">
 
         {/* ── 1. Hero / Welcome ─────────────────────────────────────────── */}
-        <section id="welcome" className="relative mb-20 scroll-mt-8">
+        <section id="welcome" className="relative mb-20 scroll-mt-8 overflow-hidden">
           {/* Parallax glow */}
           <div
             aria-hidden="true"

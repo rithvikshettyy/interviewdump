@@ -49,7 +49,7 @@ export default function FilterDropdown({
     dropdownOptions.find((option) => option.value === value)?.label ?? label
 
   return (
-    <div ref={containerRef} className={`relative min-w-[160px] ${className}`}>
+    <div ref={containerRef} className={`relative min-w-[120px] sm:min-w-[160px] ${className}`}>
       <button
         type="button"
         aria-label={label}

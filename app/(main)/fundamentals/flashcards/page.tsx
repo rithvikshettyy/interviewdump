@@ -187,14 +187,14 @@ export default function FlashcardsPage() {
   if (phase === 'selecting') {
     return (
       <div className="flex flex-col min-h-screen bg-bg">
-        <div className="border-b border-border bg-surface px-6 pt-6 pb-5">
+        <div className="border-b border-border bg-surface px-4 sm:px-6 pt-6 pb-5">
           <h1 className="text-2xl font-bold text-text">Flashcards</h1>
           <p className="text-sm text-text-muted mt-1">
             Active recall — test yourself without looking at the answer first.
           </p>
         </div>
 
-        <div className="px-6 py-8 flex-1 flex flex-col items-center">
+        <div className="px-4 sm:px-6 py-8 flex-1 flex flex-col items-center">
           <p className="text-xs font-mono text-text-dim uppercase tracking-widest mb-6">Choose a deck</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-2xl">
             {DECKS.map((d) => (
@@ -244,7 +244,7 @@ export default function FlashcardsPage() {
     return (
       <div className="flex flex-col min-h-screen bg-bg">
         {/* Header */}
-        <div className="border-b border-border bg-surface px-6 pt-5 pb-4 flex items-center justify-between">
+        <div className="border-b border-border bg-surface px-4 sm:px-6 pt-5 pb-4 flex items-center justify-between">
           <div>
             <p className="text-xs font-mono text-text-dim">
               {retryMode ? 'Retry: Missed Cards' : (DECKS.find((d) => d.id === activeDeckId)?.label ?? '')} Flashcards
@@ -269,7 +269,7 @@ export default function FlashcardsPage() {
           />
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-start px-6 py-8 max-w-2xl mx-auto w-full">
+        <div className="flex-1 flex flex-col items-center justify-start px-4 sm:px-6 py-8 max-w-2xl mx-auto w-full">
           {/* Flip Card */}
           <FlipCard card={card} isFlipped={isFlipped} onFlip={() => setIsFlipped((f) => !f)} />
 
@@ -326,7 +326,7 @@ export default function FlashcardsPage() {
   const score  = total > 0 ? Math.round((gotIt / total) * 100) : 0
 
   return (
-    <div className="flex flex-col min-h-screen bg-bg items-center justify-center px-6 py-12">
+    <div className="flex flex-col min-h-screen bg-bg items-center justify-center px-4 sm:px-6 py-12">
       <div className="bg-surface border border-border rounded-2xl p-8 max-w-md w-full text-center">
         <h2 className="text-xl font-bold text-text mb-1">Session Complete!</h2>
         <p className="text-sm text-text-muted mb-6">

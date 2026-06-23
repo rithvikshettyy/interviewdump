@@ -140,7 +140,7 @@ export default function OopsConceptsPage() {
       />
 
       {/* 2. Filter Row */}
-      <div className="px-6 py-4 border-b border-border flex items-center bg-bg">
+      <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center bg-bg">
         <div className="flex gap-2 items-center">
           <span className="text-xs text-text-muted mr-2 font-mono">Difficulty:</span>
           {(['All', 'Easy', 'Medium', 'Hard'] as const).map((diff) => (
@@ -160,7 +160,7 @@ export default function OopsConceptsPage() {
       </div>
 
       {/* 3. Concept Grid */}
-      <div className="px-6 py-6 flex-1 max-w-5xl">
+      <div className="px-4 sm:px-6 py-6 flex-1 max-w-5xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredConcepts.map((concept) => {
             const isDone = doneIds.includes(concept.id)

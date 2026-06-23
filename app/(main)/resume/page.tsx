@@ -325,7 +325,7 @@ export default function ResumePage() {
         subtitle="Write a resume that gets past ATS bots and impresses human reviewers."
       />
 
-      <div className="px-6 py-6 max-w-3xl mx-auto w-full flex flex-col gap-4">
+      <div className="px-4 sm:px-6 py-6 max-w-3xl mx-auto w-full flex flex-col gap-4">
         {/* Quick stats bar */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-2">
           {[

@@ -107,7 +107,7 @@ export default function LanguageConceptsPage({ params }: PageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-bg">
       {/* Breadcrumb & Header */}
-      <div className="border-b border-border bg-surface px-6 pt-6 pb-5">
+      <div className="border-b border-border bg-surface px-4 sm:px-6 pt-6 pb-5">
         <div className="text-xs text-text-muted font-mono mb-3">
           <Link href="/fundamentals/languages" className="hover:text-text transition-colors">
             Languages
@@ -130,7 +130,7 @@ export default function LanguageConceptsPage({ params }: PageProps) {
 
       {/* Progress Bar Container */}
       {totalCount > 0 && (
-        <div className="px-6 pt-6 pb-2 max-w-5xl">
+        <div className="px-4 sm:px-6 pt-6 pb-2 max-w-5xl">
           <div className="flex justify-between items-center text-xs text-text-muted mb-2 font-mono">
             <span>Your Progress</span>
             <span className="text-indigo-light">
@@ -147,7 +147,7 @@ export default function LanguageConceptsPage({ params }: PageProps) {
       )}
 
       {/* Concepts Grid */}
-      <div className="px-6 py-6 flex-1 bg-bg max-w-5xl">
+      <div className="px-4 sm:px-6 py-6 flex-1 bg-bg max-w-5xl">
         {concepts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {concepts.map((concept) => {

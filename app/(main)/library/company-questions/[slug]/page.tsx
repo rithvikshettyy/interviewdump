@@ -64,7 +64,7 @@ export default async function CompanyQuestionPage({ params }: PageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-bg">
       {/* Custom Company Header */}
-      <div className="border-b border-border bg-surface px-6 pt-6 pb-5">
+      <div className="border-b border-border bg-surface px-4 sm:px-6 pt-6 pb-5">
         <Link
           href="/library/company-questions"
           className="text-sm text-text-muted hover:text-text transition-colors flex items-center gap-1.5 mb-4 inline-flex font-medium"

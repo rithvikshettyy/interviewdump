@@ -183,7 +183,7 @@ export default function ConceptDetailPage({ params }: PageProps) {
 
   return (
     <div className="bg-bg min-h-screen text-text">
-      <div className="px-6 py-6 max-w-5xl mx-auto flex flex-col lg:flex-row gap-8">
+      <div className="px-4 sm:px-6 py-6 max-w-5xl mx-auto flex flex-col lg:flex-row gap-8">
         
         {/* LEFT COLUMN: Main Learning Content */}
         <article className="flex-1 max-w-2xl min-w-0">

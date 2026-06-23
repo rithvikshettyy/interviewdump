@@ -60,14 +60,14 @@ const ALGORITHMS = [
 export default function VisualizerIndexPage() {
   return (
     <div className="flex flex-col min-h-screen bg-bg">
-      <div className="border-b border-border bg-surface px-6 pt-6 pb-5">
+      <div className="border-b border-border bg-surface px-4 sm:px-6 pt-6 pb-5">
         <h1 className="text-2xl font-bold text-text">Algorithm Visualizer</h1>
         <p className="text-sm text-text-muted mt-1">
           See algorithms in action — step by step with controls. Click any card to start.
         </p>
       </div>
 
-      <div className="px-6 py-6 flex-1">
+      <div className="px-4 sm:px-6 py-6 flex-1">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
           {ALGORITHMS.map((algo) => (
             <Link

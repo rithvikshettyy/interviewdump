@@ -114,7 +114,7 @@ export default function BookmarksPage() {
         subtitle="Questions you've saved for review — across all categories."
       />
 
-      <div className="px-6 py-6 max-w-4xl flex flex-col gap-4">
+      <div className="px-4 sm:px-6 py-6 max-w-4xl flex flex-col gap-4">
         {loading ? (
           <div className="text-center text-text-dim text-sm py-16">Loading bookmarks...</div>
         ) : bookmarkedQuestions.length === 0 ? (

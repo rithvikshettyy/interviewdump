@@ -94,7 +94,7 @@ export default function DashboardPage() {
         subtitle="Track how much you've covered across every section."
       />
 
-      <div className="px-6 py-6 max-w-3xl mx-auto w-full flex flex-col gap-6">
+      <div className="px-4 sm:px-6 py-6 max-w-3xl mx-auto w-full flex flex-col gap-6">
         {/* Overall summary cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="bg-surface border border-border rounded-2xl p-5 flex flex-col gap-1">

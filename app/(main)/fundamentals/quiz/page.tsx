@@ -183,7 +183,7 @@ export default function QuizPage() {
 
       {/* Configuration Screen (If not currently playing) */}
       {!isQuizActive && !isFinished && (
-        <div className="px-6 py-6 max-w-2xl mx-auto w-full flex flex-col gap-6">
+        <div className="px-4 sm:px-6 py-6 max-w-2xl mx-auto w-full flex flex-col gap-6">
           {/* Topic selection tabs */}
           <div>
             <div className="text-xs font-mono text-text-muted mb-2.5 uppercase tracking-wider">
@@ -241,7 +241,7 @@ export default function QuizPage() {
 
       {/* QUIZ ENGINE ACTIVE SCREEN */}
       {isQuizActive && quizQuestions.length > 0 && (
-        <div className="px-6 py-6 flex-1 flex flex-col items-center justify-start w-full max-w-2xl mx-auto">
+        <div className="px-4 sm:px-6 py-6 flex-1 flex flex-col items-center justify-start w-full max-w-2xl mx-auto">
           {/* Top Bar info */}
           <div className="flex justify-between items-center w-full mb-4">
             <span className="font-mono text-sm text-text-muted font-medium">
@@ -379,7 +379,7 @@ export default function QuizPage() {
 
       {/* RESULTS SCREEN */}
       {isFinished && (
-        <div className="px-6 py-12 flex-1 flex items-center justify-center w-full">
+        <div className="px-4 sm:px-6 py-12 flex-1 flex items-center justify-center w-full">
           <div className="bg-surface border border-border rounded-2xl p-8 max-w-md w-full text-center shadow-xl">
             <ScoreIcon className="w-12 h-12 mx-auto mb-3 text-indigo-light" aria-hidden="true" />
             <h2 className="text-xl font-bold text-text mb-1">Quiz Completed!</h2>

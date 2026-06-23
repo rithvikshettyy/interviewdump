@@ -109,14 +109,14 @@ export default function MockTestPage() {
   if (phase === 'config') {
     return (
       <div className="flex flex-col min-h-screen bg-bg">
-        <div className="border-b border-border bg-surface px-6 pt-6 pb-5">
+        <div className="border-b border-border bg-surface px-4 sm:px-6 pt-6 pb-5">
           <h1 className="text-2xl font-bold text-text">Mock Interview</h1>
           <p className="text-sm text-text-muted mt-1">
             Simulate real interview conditions. Questions are timed — rate yourself honestly.
           </p>
         </div>
 
-        <div className="px-6 py-8 flex-1 max-w-2xl mx-auto w-full flex flex-col gap-6">
+        <div className="px-4 sm:px-6 py-8 flex-1 max-w-2xl mx-auto w-full flex flex-col gap-6">
           {/* Mode */}
           <div>
             <p className="text-xs font-mono text-text-dim uppercase tracking-widest mb-3">Mode</p>
@@ -206,7 +206,7 @@ export default function MockTestPage() {
     return (
       <div className="flex flex-col min-h-screen bg-bg">
         {/* Top bar */}
-        <div className="border-b border-border bg-surface px-6 py-3 flex items-center justify-between">
+        <div className="border-b border-border bg-surface px-4 sm:px-6 py-3 flex items-center justify-between">
           <span className="text-xs font-mono text-text-muted">
             Question {currentIndex + 1} / {questions.length}
           </span>
@@ -230,7 +230,7 @@ export default function MockTestPage() {
           />
         </div>
 
-        <div className="flex-1 flex flex-col px-6 py-6 max-w-2xl mx-auto w-full gap-5">
+        <div className="flex-1 flex flex-col px-4 sm:px-6 py-6 max-w-2xl mx-auto w-full gap-5">
           {/* Question card */}
           <div className="bg-surface border border-border rounded-2xl p-6 flex flex-col gap-4 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
@@ -300,14 +300,14 @@ export default function MockTestPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-bg">
-      <div className="border-b border-border bg-surface px-6 pt-6 pb-5">
+      <div className="border-b border-border bg-surface px-4 sm:px-6 pt-6 pb-5">
         <h1 className="text-2xl font-bold text-text">Results</h1>
         <p className="text-sm text-text-muted mt-1">
           {mode === 'company' ? COMPANIES.find((c) => c.slug === companySlug)?.name : 'Mixed'} · {duration} min session
         </p>
       </div>
 
-      <div className="px-6 py-6 max-w-2xl mx-auto w-full flex flex-col gap-5">
+      <div className="px-4 sm:px-6 py-6 max-w-2xl mx-auto w-full flex flex-col gap-5">
         {/* Score summary */}
         <div className="bg-surface border border-border rounded-2xl p-6 text-center">
           <div className="text-5xl font-mono font-bold text-indigo-light mb-1">{score}%</div>

@@ -148,7 +148,7 @@ export default function QuestionDrawer({
         {/* Scrollable Content */}
         <div className="flex-1">
           {/* Header */}
-          <div className="sticky top-0 bg-surface border-b border-border p-5 z-10">
+          <div className="sticky top-0 bg-surface border-b border-border p-4 sm:p-5 z-10">
             <div className="flex justify-between items-start gap-4">
               <div className="flex gap-2 flex-wrap items-center">
                 <Badge
@@ -179,7 +179,7 @@ export default function QuestionDrawer({
           </div>
 
           {/* Body */}
-          <div className="p-5 flex flex-col gap-6 pb-24">
+          <div className="p-4 sm:p-5 flex flex-col gap-5 sm:gap-6 pb-24">
             {/* 1. What they're testing */}
             <div>
               <div className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">

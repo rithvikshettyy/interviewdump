@@ -85,7 +85,7 @@ export default function PlanDetailPage({ params }: { params: Promise<{ planId: s
     <div className="flex flex-col min-h-screen bg-bg">
       {/* Header */}
       <div className="sticky top-0 bg-surface border-b border-border z-10">
-        <div className="px-6 py-4 flex items-center gap-4">
+        <div className="px-4 sm:px-6 py-4 flex items-center gap-4">
           <button
             onClick={() => router.push('/fundamentals/plans')}
             aria-label="Back to study plans"
@@ -115,7 +115,7 @@ export default function PlanDetailPage({ params }: { params: Promise<{ planId: s
       </div>
 
       {/* Steps */}
-      <div className="px-6 py-6 max-w-3xl flex flex-col gap-3">
+      <div className="px-4 sm:px-6 py-6 max-w-3xl flex flex-col gap-3">
         {loading ? (
           <div className="text-center text-text-dim text-sm py-16">Loading...</div>
         ) : (

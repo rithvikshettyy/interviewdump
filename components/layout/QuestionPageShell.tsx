@@ -203,8 +203,8 @@ export default function QuestionPageShell({
 
     return (
       <div className="flex flex-col min-h-screen bg-bg">
-        <div className="p-6">
-          <div className="bg-surface/30 border border-border/80 rounded-2xl p-6 shadow-xl flex flex-col gap-5 backdrop-blur-md">
+        <div className="p-4 sm:p-6">
+          <div className="bg-surface/30 border border-border/80 rounded-2xl p-4 sm:p-6 shadow-xl flex flex-col gap-5 backdrop-blur-md">
             {/* Header Area */}
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
               <div>
@@ -369,12 +369,12 @@ export default function QuestionPageShell({
       />
 
       {/* 2. Progress Cards */}
-      <div className={`px-6 ${title ? 'pt-6' : 'pt-2'}`}>
+      <div className={`px-4 sm:px-6 ${title ? 'pt-6' : 'pt-2'}`}>
         <ProgressCard {...progressData} />
       </div>
 
       {/* 3. Filters Row */}
-      <div className="px-6 py-4 border-b border-border flex items-center gap-3 flex-wrap bg-bg">
+      <div className="px-4 sm:px-6 py-4 border-b border-border flex items-center gap-3 flex-wrap bg-bg">
         <SearchBar
           placeholder="Search questions..."
           value={searchQuery}
@@ -433,46 +433,46 @@ export default function QuestionPageShell({
       </div>
 
       {/* 4. Secondary Filter Tabs */}
-      <div 
+      <div
         role="tablist"
         aria-label="Filter questions by progress"
-        className="flex gap-4 px-6 border-b border-border text-sm bg-bg"
+        className="flex gap-4 px-4 sm:px-6 border-b border-border text-sm bg-bg overflow-x-auto scrollbar-hide"
       >
         <button
           onClick={() => setSecondaryFilter('all')}
           role="tab"
           aria-selected={secondaryFilter === 'all'}
-          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer ${
+          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer whitespace-nowrap ${
             secondaryFilter === 'all'
               ? 'border-indigo text-indigo'
               : 'border-transparent text-text-muted hover:text-text'
           }`}
         >
-          All questions ({questions.length})
+          All ({questions.length})
         </button>
         <button
           onClick={() => setSecondaryFilter('solved')}
           role="tab"
           aria-selected={secondaryFilter === 'solved'}
-          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer ${
+          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer whitespace-nowrap ${
             secondaryFilter === 'solved'
               ? 'border-indigo text-indigo'
               : 'border-transparent text-text-muted hover:text-text'
           }`}
         >
-          Solved questions ({questions.filter((q) => solvedIds.includes(q.id)).length})
+          Solved ({questions.filter((q) => solvedIds.includes(q.id)).length})
         </button>
         <button
           onClick={() => setSecondaryFilter('revision')}
           role="tab"
           aria-selected={secondaryFilter === 'revision'}
-          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer ${
+          className={`py-3 font-medium border-b-2 transition-colors focus:outline-none cursor-pointer whitespace-nowrap ${
             secondaryFilter === 'revision'
               ? 'border-indigo text-indigo'
               : 'border-transparent text-text-muted hover:text-text'
           }`}
         >
-          Revision questions ({questions.filter((q) => revisionIds.includes(q.id)).length})
+          Revision ({questions.filter((q) => revisionIds.includes(q.id)).length})
         </button>
       </div>
 
