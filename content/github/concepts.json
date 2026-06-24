@@ -1,0 +1,651 @@
+[
+  {
+    "id": "git-1",
+    "emoji": "📦",
+    "title": "Git Init & Clone",
+    "difficulty": "Easy",
+    "teaser": "Starting a new repository or copying an existing one to your local machine.",
+    "readTime": "3 mins",
+    "explanation": "git init creates a brand new Git repository in your current directory by adding a hidden .git folder that tracks all changes. git clone copies an existing remote repository (from GitHub, GitLab, etc.) to your local machine, including the full commit history and branches.",
+    "realWorldAnalogy": "git init is like buying an empty notebook and writing your name on it. git clone is like photocopying someone else's entire notebook so you have your own copy to write in.",
+    "commands": [
+      {
+        "command": "git init",
+        "description": "Initialize a new Git repository in the current directory"
+      },
+      {
+        "command": "git clone <repo-url>",
+        "description": "Clone a remote repository to your local machine"
+      },
+      {
+        "command": "git clone <repo-url> <folder-name>",
+        "description": "Clone into a specific folder name"
+      }
+    ],
+    "interviewQuestion": "What is the difference between git init and git clone?",
+    "strongAnswerPoints": [
+      "git init creates a fresh empty repository locally with no remote connection.",
+      "git clone copies an existing repository including all history, branches, and sets up a remote called 'origin'.",
+      "After git init you typically add a remote manually with git remote add origin <url>."
+    ],
+    "commonMistake": "Running git init inside an already cloned repository, which can create nested .git directories and cause tracking issues.",
+    "miniTask": "Create a new folder, initialize a Git repo in it, then create a file and make your first commit.",
+    "ytQuery": "git init vs git clone explained"
+  },
+  {
+    "id": "git-2",
+    "emoji": "📝",
+    "title": "Staging & Committing",
+    "difficulty": "Easy",
+    "teaser": "The two-step process of saving changes — stage first, then commit.",
+    "readTime": "4 mins",
+    "explanation": "Git uses a staging area (index) as an intermediate step between your working directory and the repository. git add moves changes to the staging area, and git commit saves the staged snapshot permanently to the repository history. This two-step process lets you craft precise commits by selecting exactly which changes to include.",
+    "realWorldAnalogy": "Think of it like packing a suitcase for a trip. The staging area is laying clothes on the bed (selecting what to pack), and committing is zipping the suitcase shut (finalizing your selection). You can try different combinations before zipping.",
+    "commands": [
+      {
+        "command": "git add <file>",
+        "description": "Stage a specific file for the next commit"
+      },
+      {
+        "command": "git add .",
+        "description": "Stage all changed files in the current directory"
+      },
+      {
+        "command": "git commit -m \"message\"",
+        "description": "Commit staged changes with a message"
+      },
+      {
+        "command": "git status",
+        "description": "Show which files are staged, modified, or untracked"
+      },
+      {
+        "command": "git diff",
+        "description": "Show unstaged changes in your working directory"
+      },
+      {
+        "command": "git diff --staged",
+        "description": "Show changes that are staged for the next commit"
+      }
+    ],
+    "interviewQuestion": "Why does Git have a staging area instead of committing directly?",
+    "strongAnswerPoints": [
+      "The staging area allows you to selectively choose which changes go into each commit.",
+      "It enables crafting atomic, focused commits that each represent one logical change.",
+      "You can review staged changes with git diff --staged before committing.",
+      "It separates the act of selecting changes from the act of recording them."
+    ],
+    "commonMistake": "Using git add . blindly without checking git status first, accidentally staging files like .env, node_modules, or build artifacts.",
+    "miniTask": "Create two files, stage only one, commit it, then stage and commit the second separately. Use git log to verify both commits.",
+    "ytQuery": "git add commit staging area explained"
+  },
+  {
+    "id": "git-3",
+    "emoji": "🌿",
+    "title": "Branching",
+    "difficulty": "Easy",
+    "teaser": "Create parallel lines of development without affecting the main codebase.",
+    "readTime": "5 mins",
+    "explanation": "Branches in Git are lightweight pointers to commits. The default branch is usually 'main' or 'master'. Creating a new branch lets you work on a feature or fix independently. When done, you merge it back. Branches are one of Git's most powerful features because they're cheap to create and easy to merge.",
+    "realWorldAnalogy": "Imagine a highway with exit ramps. The main highway is your main branch. When you take an exit (create a branch), you can explore a side road without affecting highway traffic. When you're done, you merge back onto the highway.",
+    "commands": [
+      {
+        "command": "git branch",
+        "description": "List all local branches"
+      },
+      {
+        "command": "git branch <name>",
+        "description": "Create a new branch"
+      },
+      {
+        "command": "git checkout <branch>",
+        "description": "Switch to a branch"
+      },
+      {
+        "command": "git checkout -b <name>",
+        "description": "Create and switch to a new branch in one step"
+      },
+      {
+        "command": "git switch <branch>",
+        "description": "Modern way to switch branches (Git 2.23+)"
+      },
+      {
+        "command": "git branch -d <name>",
+        "description": "Delete a branch (safe — only if merged)"
+      }
+    ],
+    "interviewQuestion": "What is a Git branch and why are branches useful?",
+    "strongAnswerPoints": [
+      "A branch is a lightweight movable pointer to a commit, not a copy of the codebase.",
+      "Branches enable parallel development — multiple features can be developed simultaneously.",
+      "They isolate changes so incomplete work doesn't break the main branch.",
+      "Branches are cheap in Git because they're just 40-byte references, not full copies."
+    ],
+    "commonMistake": "Forgetting to switch to the new branch after creating it with git branch <name>. Use git checkout -b <name> to create and switch in one step.",
+    "miniTask": "Create a feature branch, make a commit on it, switch back to main, and verify the commit doesn't exist on main.",
+    "ytQuery": "git branching tutorial for beginners"
+  },
+  {
+    "id": "git-4",
+    "emoji": "🔀",
+    "title": "Merging & Rebasing",
+    "difficulty": "Medium",
+    "teaser": "Combining branches together — two strategies with different tradeoffs.",
+    "readTime": "6 mins",
+    "explanation": "Merging combines two branches by creating a merge commit that ties their histories together. Rebasing replays your branch's commits on top of another branch, creating a linear history. Merge preserves the true history of when things happened. Rebase creates a cleaner, linear log but rewrites commit hashes.",
+    "realWorldAnalogy": "Merging is like two rivers joining — you can still see where each river came from. Rebasing is like picking up your section of river and replanting it at the end of the other river, making it look like one continuous stream.",
+    "commands": [
+      {
+        "command": "git merge <branch>",
+        "description": "Merge a branch into the current branch"
+      },
+      {
+        "command": "git merge --no-ff <branch>",
+        "description": "Force a merge commit even for fast-forward merges"
+      },
+      {
+        "command": "git rebase <branch>",
+        "description": "Rebase current branch onto another branch"
+      },
+      {
+        "command": "git rebase --abort",
+        "description": "Cancel an in-progress rebase"
+      },
+      {
+        "command": "git merge --abort",
+        "description": "Cancel an in-progress merge"
+      }
+    ],
+    "interviewQuestion": "What is the difference between git merge and git rebase? When would you use each?",
+    "strongAnswerPoints": [
+      "Merge creates a merge commit preserving the branch topology and true history.",
+      "Rebase replays commits on top of another branch for a linear, cleaner history.",
+      "Use merge for shared/public branches to preserve history; use rebase for local/feature branches before merging.",
+      "Golden rule: never rebase commits that have been pushed to a shared remote branch."
+    ],
+    "commonMistake": "Rebasing commits that have already been pushed to a shared branch, causing history conflicts for other team members who have already pulled those commits.",
+    "miniTask": "Create two branches from main with different changes. Merge one into main, then rebase the other onto main. Compare git log for both.",
+    "ytQuery": "git merge vs rebase explained simply"
+  },
+  {
+    "id": "git-5",
+    "emoji": "⚔️",
+    "title": "Merge Conflicts",
+    "difficulty": "Medium",
+    "teaser": "When two branches change the same lines — and how to resolve them.",
+    "readTime": "5 mins",
+    "explanation": "Merge conflicts happen when Git cannot automatically combine changes because two branches modified the same lines in a file differently. Git marks the conflicting sections with <<<<<<, ======, and >>>>>> markers. You must manually edit the file to choose which changes to keep, then stage and commit the resolution.",
+    "realWorldAnalogy": "Imagine two people editing the same paragraph of a shared document at the same time. When they try to save, the system doesn't know whose version to keep — so it shows both versions and asks a human to decide.",
+    "commands": [
+      {
+        "command": "git merge <branch>",
+        "description": "Attempt merge — conflicts will be flagged"
+      },
+      {
+        "command": "git status",
+        "description": "See which files have conflicts (listed as 'both modified')"
+      },
+      {
+        "command": "git add <resolved-file>",
+        "description": "Mark a conflict as resolved after editing"
+      },
+      {
+        "command": "git commit",
+        "description": "Complete the merge after resolving all conflicts"
+      },
+      {
+        "command": "git merge --abort",
+        "description": "Abandon the merge and return to pre-merge state"
+      },
+      {
+        "command": "git diff",
+        "description": "See remaining conflict markers in files"
+      }
+    ],
+    "interviewQuestion": "How do you resolve a merge conflict in Git?",
+    "strongAnswerPoints": [
+      "Open the conflicted file and look for <<<<<<, ======, >>>>>> markers.",
+      "Decide which changes to keep (or combine both), remove the conflict markers.",
+      "Stage the resolved file with git add, then commit to complete the merge.",
+      "Use git status to track which files still have unresolved conflicts."
+    ],
+    "commonMistake": "Committing files that still contain conflict markers (<<<<<<) without actually resolving the conflicts, which breaks the code.",
+    "miniTask": "Intentionally create a merge conflict by editing the same line in two branches, then practice resolving it manually.",
+    "ytQuery": "how to resolve git merge conflicts"
+  },
+  {
+    "id": "git-6",
+    "emoji": "🌐",
+    "title": "Remote Repositories & GitHub",
+    "difficulty": "Easy",
+    "teaser": "Connecting your local repo to GitHub and syncing changes with the cloud.",
+    "readTime": "5 mins",
+    "explanation": "A remote repository is a version of your project hosted on the internet (like GitHub, GitLab, or Bitbucket). git remote manages connections to remote repos. git push uploads your local commits to the remote. git pull downloads remote changes to your local repo. git fetch downloads remote changes without merging them.",
+    "realWorldAnalogy": "Your local repo is your personal notebook. GitHub is a shared Google Doc. Push is uploading your notes to the shared doc. Pull is downloading everyone else's latest changes. Fetch is checking what others have written without copying it into your notebook yet.",
+    "commands": [
+      {
+        "command": "git remote add origin <url>",
+        "description": "Connect your local repo to a remote repository"
+      },
+      {
+        "command": "git remote -v",
+        "description": "Show all configured remote repositories"
+      },
+      {
+        "command": "git push origin <branch>",
+        "description": "Push local commits to the remote branch"
+      },
+      {
+        "command": "git push -u origin <branch>",
+        "description": "Push and set upstream tracking for the branch"
+      },
+      {
+        "command": "git pull origin <branch>",
+        "description": "Fetch and merge remote changes into your local branch"
+      },
+      {
+        "command": "git fetch",
+        "description": "Download remote changes without merging"
+      }
+    ],
+    "interviewQuestion": "What is the difference between git fetch and git pull?",
+    "strongAnswerPoints": [
+      "git fetch downloads remote changes to your local remote-tracking branches but does NOT merge them.",
+      "git pull is essentially git fetch + git merge — it fetches and immediately merges.",
+      "Fetch is safer because you can review changes before merging.",
+      "Use git pull --rebase to rebase instead of merge when pulling."
+    ],
+    "commonMistake": "Using git pull without understanding it merges automatically. This can lead to unexpected merge commits. Use git fetch + git merge for more control.",
+    "miniTask": "Create a GitHub repository, connect it as a remote to a local repo, push your commits, then make a change on GitHub and pull it locally.",
+    "ytQuery": "git push pull fetch remote explained"
+  },
+  {
+    "id": "git-7",
+    "emoji": "🔃",
+    "title": "Pull Requests",
+    "difficulty": "Medium",
+    "teaser": "The cornerstone of team collaboration — proposing, reviewing, and merging code changes.",
+    "readTime": "5 mins",
+    "explanation": "A Pull Request (PR) is a GitHub feature that lets you propose changes from one branch to another. It creates a discussion space where team members can review code, leave comments, suggest changes, and approve before merging. PRs are the standard workflow for code review in professional teams. They typically include a description of changes, linked issues, and CI/CD check results.",
+    "realWorldAnalogy": "A PR is like submitting an essay draft to your editor. They review it, suggest edits, and once they approve, the essay gets published. You don't just publish directly — someone else validates your work first.",
+    "commands": [
+      {
+        "command": "git checkout -b feature-branch",
+        "description": "Create a feature branch for your changes"
+      },
+      {
+        "command": "git push -u origin feature-branch",
+        "description": "Push the branch to GitHub to create a PR"
+      },
+      {
+        "command": "gh pr create --title \"title\" --body \"description\"",
+        "description": "Create a PR from the command line using GitHub CLI"
+      },
+      {
+        "command": "gh pr list",
+        "description": "List open pull requests"
+      },
+      {
+        "command": "gh pr merge <number>",
+        "description": "Merge a pull request from the command line"
+      }
+    ],
+    "interviewQuestion": "What is a Pull Request and why is it important in a team workflow?",
+    "strongAnswerPoints": [
+      "A PR is a request to merge changes from one branch into another, enabling code review.",
+      "It allows peers to review, comment, and request changes before code enters the main branch.",
+      "PRs integrate with CI/CD to run automated tests before merging.",
+      "They serve as documentation of what was changed and why."
+    ],
+    "commonMistake": "Creating massive PRs with hundreds of changed files. Keep PRs small and focused — each should represent one logical change for easier review.",
+    "miniTask": "Fork a public repo on GitHub, create a branch, make a small change, push it, and open a Pull Request back to the original repo.",
+    "ytQuery": "github pull request tutorial for beginners"
+  },
+  {
+    "id": "git-8",
+    "emoji": "⏪",
+    "title": "Undoing Changes",
+    "difficulty": "Medium",
+    "teaser": "Reverting commits, unstaging files, and recovering from mistakes safely.",
+    "readTime": "5 mins",
+    "explanation": "Git provides several ways to undo changes at different levels. git restore discards working directory changes. git restore --staged unstages files. git revert creates a new commit that undoes a previous commit (safe for shared branches). git reset moves the branch pointer backwards (use with caution). Understanding which undo command to use depends on whether changes are uncommitted, staged, or already pushed.",
+    "realWorldAnalogy": "git restore is like hitting Ctrl+Z in a word processor. git revert is like writing a correction notice in a newspaper — the original article still exists, but a new one clarifies the mistake. git reset is like tearing pages out of a book — destructive if others have already read those pages.",
+    "commands": [
+      {
+        "command": "git restore <file>",
+        "description": "Discard uncommitted changes in a file"
+      },
+      {
+        "command": "git restore --staged <file>",
+        "description": "Unstage a file (keep changes in working directory)"
+      },
+      {
+        "command": "git revert <commit-hash>",
+        "description": "Create a new commit that undoes a specific commit"
+      },
+      {
+        "command": "git reset --soft HEAD~1",
+        "description": "Undo last commit, keep changes staged"
+      },
+      {
+        "command": "git reset --mixed HEAD~1",
+        "description": "Undo last commit, keep changes unstaged"
+      },
+      {
+        "command": "git reset --hard HEAD~1",
+        "description": "Undo last commit and discard all changes (dangerous)"
+      }
+    ],
+    "interviewQuestion": "What is the difference between git reset, git revert, and git restore?",
+    "strongAnswerPoints": [
+      "git restore discards or unstages working directory changes — it doesn't affect commit history.",
+      "git revert creates a new commit that undoes a specific previous commit — safe for shared branches.",
+      "git reset moves the branch pointer backwards — use soft/mixed/hard modes depending on what to preserve.",
+      "Use revert for public history, reset for local-only history."
+    ],
+    "commonMistake": "Using git reset --hard on commits that have been pushed to a shared branch. This rewrites history and causes problems for everyone else. Use git revert instead.",
+    "miniTask": "Make 3 commits, then practice: revert the 2nd commit, soft-reset the last commit, and restore a modified file.",
+    "ytQuery": "git reset revert restore difference explained"
+  },
+  {
+    "id": "git-9",
+    "emoji": "📋",
+    "title": "Git Stash",
+    "difficulty": "Medium",
+    "teaser": "Temporarily shelve uncommitted work to switch context without losing progress.",
+    "readTime": "4 mins",
+    "explanation": "git stash temporarily saves uncommitted changes (both staged and unstaged) to a stack, giving you a clean working directory. You can then switch branches, pull updates, or do other work. When ready, apply the stash to restore your changes. Stashes are stored in a stack (LIFO), and you can have multiple stashes.",
+    "realWorldAnalogy": "Stashing is like putting your half-finished puzzle in a box and storing it on a shelf. Your table is now clean for a different task. When you're ready, you take the box off the shelf and continue where you left off.",
+    "commands": [
+      {
+        "command": "git stash",
+        "description": "Stash all uncommitted changes"
+      },
+      {
+        "command": "git stash push -m \"message\"",
+        "description": "Stash with a descriptive message"
+      },
+      {
+        "command": "git stash list",
+        "description": "List all stashes in the stack"
+      },
+      {
+        "command": "git stash pop",
+        "description": "Apply the most recent stash and remove it from the stack"
+      },
+      {
+        "command": "git stash apply",
+        "description": "Apply the most recent stash but keep it in the stack"
+      },
+      {
+        "command": "git stash drop",
+        "description": "Delete the most recent stash without applying it"
+      }
+    ],
+    "interviewQuestion": "What is git stash and when would you use it?",
+    "strongAnswerPoints": [
+      "Git stash temporarily saves uncommitted changes to a stack, giving a clean working directory.",
+      "Use it when you need to switch branches but have uncommitted work you're not ready to commit.",
+      "git stash pop applies and removes the stash; git stash apply keeps it for reuse.",
+      "Stashes are local-only — they aren't pushed to remote repositories."
+    ],
+    "commonMistake": "Forgetting about stashed changes. Use git stash list regularly to check for forgotten stashes that might contain important work.",
+    "miniTask": "Make changes to a file, stash them, switch to another branch, switch back, and pop the stash to verify your changes are restored.",
+    "ytQuery": "git stash tutorial how to use"
+  },
+  {
+    "id": "git-10",
+    "emoji": "📜",
+    "title": "Git Log & History",
+    "difficulty": "Easy",
+    "teaser": "Inspecting commit history to understand what changed, when, and by whom.",
+    "readTime": "4 mins",
+    "explanation": "git log shows the commit history of your repository. It displays commit hashes, authors, dates, and messages. Various flags let you customize the output — oneline for compact view, graph for branch visualization, and filtering by author, date, or file. git blame shows who last modified each line of a file.",
+    "realWorldAnalogy": "git log is like a ship's captain's logbook — a chronological record of every event and decision. git blame is like checking the handwriting in the logbook to see who wrote each entry.",
+    "commands": [
+      {
+        "command": "git log",
+        "description": "Show full commit history"
+      },
+      {
+        "command": "git log --oneline",
+        "description": "Compact one-line-per-commit view"
+      },
+      {
+        "command": "git log --graph --oneline --all",
+        "description": "Visual branch graph of all branches"
+      },
+      {
+        "command": "git log --author=\"name\"",
+        "description": "Filter commits by author"
+      },
+      {
+        "command": "git log -p <file>",
+        "description": "Show commit history with diffs for a specific file"
+      },
+      {
+        "command": "git blame <file>",
+        "description": "Show who last modified each line of a file"
+      }
+    ],
+    "interviewQuestion": "How do you inspect the history of a file or find who changed a specific line?",
+    "strongAnswerPoints": [
+      "git log -p <file> shows the commit history with actual diffs for a specific file.",
+      "git blame <file> annotates each line with the commit hash, author, and date of last change.",
+      "git log --graph --oneline --all visualizes the branch structure.",
+      "git show <commit-hash> displays the full details of a specific commit."
+    ],
+    "commonMistake": "Using git blame to assign 'blame' for bugs. It's a diagnostic tool — the person who last touched a line may have been fixing a bug, not causing one.",
+    "miniTask": "Make several commits across two branches, then use git log --graph --oneline --all to visualize the branch history.",
+    "ytQuery": "git log blame history commands tutorial"
+  },
+  {
+    "id": "git-11",
+    "emoji": "🏷️",
+    "title": "Tags & Releases",
+    "difficulty": "Medium",
+    "teaser": "Marking specific commits as release versions for deployment and reference.",
+    "readTime": "4 mins",
+    "explanation": "Tags are permanent bookmarks on specific commits, typically used to mark release versions (v1.0.0, v2.1.3). Lightweight tags are simple pointers, while annotated tags store extra metadata (tagger, date, message). GitHub Releases build on tags to provide downloadable assets and changelogs for each version.",
+    "realWorldAnalogy": "Tags are like bookmarks in a book. The book (history) keeps growing, but your bookmarks let you quickly flip back to important pages (releases). Annotated tags are like sticky notes with your comments on the bookmark.",
+    "commands": [
+      {
+        "command": "git tag v1.0.0",
+        "description": "Create a lightweight tag on the current commit"
+      },
+      {
+        "command": "git tag -a v1.0.0 -m \"Release 1.0\"",
+        "description": "Create an annotated tag with a message"
+      },
+      {
+        "command": "git tag",
+        "description": "List all tags"
+      },
+      {
+        "command": "git push origin v1.0.0",
+        "description": "Push a specific tag to the remote"
+      },
+      {
+        "command": "git push origin --tags",
+        "description": "Push all tags to the remote"
+      }
+    ],
+    "interviewQuestion": "What are Git tags and how do they differ from branches?",
+    "strongAnswerPoints": [
+      "Tags are permanent, immutable references to specific commits — they don't move.",
+      "Branches are movable pointers that advance with each new commit.",
+      "Use tags for versioned releases, branches for ongoing development.",
+      "Annotated tags store extra metadata and are recommended for releases."
+    ],
+    "commonMistake": "Forgetting to push tags — git push does not push tags by default. You must use git push --tags or git push origin <tag-name> separately.",
+    "miniTask": "Create an annotated tag on your latest commit, push it to GitHub, and create a GitHub Release from it.",
+    "ytQuery": "git tags releases version control tutorial"
+  },
+  {
+    "id": "git-12",
+    "emoji": "🛡️",
+    "title": ".gitignore & Best Practices",
+    "difficulty": "Easy",
+    "teaser": "Keeping secrets, build artifacts, and clutter out of your repository.",
+    "readTime": "4 mins",
+    "explanation": ".gitignore is a special file that tells Git which files or directories to exclude from version control. Common entries include node_modules, .env files, build outputs, and IDE configuration. Patterns support wildcards and directory matching. Files already tracked by Git must be explicitly removed from tracking even after adding them to .gitignore.",
+    "realWorldAnalogy": "A .gitignore file is like a bouncer at a club with a 'do not enter' list. Even though certain people (files) exist in the neighborhood (directory), they're not allowed inside the club (repository).",
+    "commands": [
+      {
+        "command": "echo 'node_modules/' >> .gitignore",
+        "description": "Add node_modules to the ignore list"
+      },
+      {
+        "command": "git rm --cached <file>",
+        "description": "Stop tracking a file that's already been committed"
+      },
+      {
+        "command": "git check-ignore <file>",
+        "description": "Check if a file is ignored and which rule matches"
+      },
+      {
+        "command": "git status --ignored",
+        "description": "Show ignored files in the status output"
+      }
+    ],
+    "interviewQuestion": "What is .gitignore and what files should you typically exclude?",
+    "strongAnswerPoints": [
+      "A .gitignore file specifies patterns for files Git should not track.",
+      "Common exclusions: node_modules, .env, build/, dist/, IDE configs, OS files (.DS_Store).",
+      "Already-tracked files need git rm --cached to stop tracking, even after adding to .gitignore.",
+      "Use templates from github.com/github/gitignore for language-specific ignore rules."
+    ],
+    "commonMistake": "Committing .env files or API keys to the repository. Even if deleted later, they remain in Git history. Use git-secrets or pre-commit hooks to prevent this.",
+    "miniTask": "Create a .gitignore file, add patterns for node_modules and .env, verify they're ignored with git status, then try to add a .env file and confirm Git ignores it.",
+    "ytQuery": "gitignore tutorial what files to ignore"
+  },
+  {
+    "id": "git-13",
+    "emoji": "🍒",
+    "title": "Cherry-pick & Advanced Operations",
+    "difficulty": "Hard",
+    "teaser": "Selectively applying commits and other advanced Git workflows.",
+    "readTime": "6 mins",
+    "explanation": "git cherry-pick copies a specific commit from one branch to another without merging the entire branch. git bisect uses binary search to find which commit introduced a bug. git reflog records every change to branch tips, acting as a safety net for recovering lost commits. These advanced operations give you surgical control over your repository.",
+    "realWorldAnalogy": "Cherry-pick is like picking one recipe from a cookbook and copying it into your own notebook — you don't take the whole cookbook. Bisect is like a detective narrowing down suspects by systematically eliminating half of them at each step.",
+    "commands": [
+      {
+        "command": "git cherry-pick <commit-hash>",
+        "description": "Apply a specific commit to the current branch"
+      },
+      {
+        "command": "git bisect start",
+        "description": "Start a binary search for a bug-introducing commit"
+      },
+      {
+        "command": "git bisect good <commit>",
+        "description": "Mark a commit as not having the bug"
+      },
+      {
+        "command": "git bisect bad <commit>",
+        "description": "Mark a commit as having the bug"
+      },
+      {
+        "command": "git reflog",
+        "description": "Show a log of all reference changes (recovery tool)"
+      },
+      {
+        "command": "git cherry-pick --abort",
+        "description": "Cancel an in-progress cherry-pick"
+      }
+    ],
+    "interviewQuestion": "When would you use git cherry-pick and what are its risks?",
+    "strongAnswerPoints": [
+      "Use cherry-pick to apply a specific commit (like a hotfix) to another branch without merging.",
+      "It creates a new commit with a different hash — the original commit remains on its branch.",
+      "Risk: it can create duplicate commits if the source branch is later merged.",
+      "Alternative: merge or rebase when you want to bring over all commits, not just one."
+    ],
+    "commonMistake": "Overusing cherry-pick instead of proper branching and merging strategies. It can lead to duplicate commits and messy history when the branches are eventually merged.",
+    "miniTask": "Create two branches, make unique commits on each, cherry-pick one commit from branch A onto branch B, and verify with git log.",
+    "ytQuery": "git cherry-pick bisect reflog advanced tutorial"
+  },
+  {
+    "id": "git-14",
+    "emoji": "🔄",
+    "title": "GitHub Actions & CI/CD Basics",
+    "difficulty": "Hard",
+    "teaser": "Automating tests, builds, and deployments with GitHub's built-in CI/CD.",
+    "readTime": "6 mins",
+    "explanation": "GitHub Actions lets you automate workflows directly in your repository. Workflows are defined in YAML files inside .github/workflows/. They can run on events like push, pull_request, or on a schedule. Common uses include running tests, building applications, deploying to servers, and enforcing code quality. Actions are composed of jobs and steps that run in virtual environments.",
+    "realWorldAnalogy": "GitHub Actions is like setting up dominoes — when one event triggers (a push), it automatically kicks off a chain of tasks (run tests → build → deploy). You set it up once and it runs automatically every time.",
+    "commands": [
+      {
+        "command": "mkdir -p .github/workflows",
+        "description": "Create the workflows directory"
+      },
+      {
+        "command": "gh run list",
+        "description": "List recent workflow runs"
+      },
+      {
+        "command": "gh run view <run-id>",
+        "description": "View details of a specific workflow run"
+      },
+      {
+        "command": "gh run watch <run-id>",
+        "description": "Watch a workflow run in real-time"
+      },
+      {
+        "command": "gh workflow list",
+        "description": "List all workflows in the repository"
+      }
+    ],
+    "interviewQuestion": "What are GitHub Actions and how do they fit into a CI/CD pipeline?",
+    "strongAnswerPoints": [
+      "GitHub Actions automate workflows triggered by repository events (push, PR, schedule).",
+      "Workflows are YAML files in .github/workflows/ composed of jobs and steps.",
+      "CI (Continuous Integration) runs tests and builds on every push/PR to catch bugs early.",
+      "CD (Continuous Deployment) automates deploying to production after tests pass."
+    ],
+    "commonMistake": "Storing secrets (API keys, tokens) directly in workflow files. Use GitHub's encrypted Secrets feature (Settings → Secrets) and reference them with ${{ secrets.SECRET_NAME }}.",
+    "miniTask": "Create a basic GitHub Actions workflow that runs on push to main and executes 'npm test' or 'echo Hello World'.",
+    "ytQuery": "github actions ci cd tutorial for beginners"
+  },
+  {
+    "id": "git-15",
+    "emoji": "🤝",
+    "title": "Forking & Open Source Workflow",
+    "difficulty": "Medium",
+    "teaser": "Contributing to open-source projects using the fork and pull request model.",
+    "readTime": "5 mins",
+    "explanation": "Forking creates your own copy of someone else's repository on GitHub. You make changes in your fork and submit a Pull Request to the original repo. This is the standard workflow for open-source contributions. You keep your fork synced with the original (upstream) repository to avoid conflicts. GitHub Issues and Discussions are used to coordinate with maintainers.",
+    "realWorldAnalogy": "Forking is like making a photocopy of a community cookbook. You write new recipes in your copy, then submit them to the community for review. If they like your recipe, they add it to the official cookbook.",
+    "commands": [
+      {
+        "command": "gh repo fork <owner/repo>",
+        "description": "Fork a repository to your GitHub account"
+      },
+      {
+        "command": "git remote add upstream <original-repo-url>",
+        "description": "Add the original repo as 'upstream' remote"
+      },
+      {
+        "command": "git fetch upstream",
+        "description": "Fetch changes from the original repository"
+      },
+      {
+        "command": "git merge upstream/main",
+        "description": "Sync your fork with the original repo's main branch"
+      },
+      {
+        "command": "gh pr create --repo <owner/repo>",
+        "description": "Create a PR to the original repo from your fork"
+      }
+    ],
+    "interviewQuestion": "Describe the fork and pull request workflow for open-source contributions.",
+    "strongAnswerPoints": [
+      "Fork the repository to create your own copy on GitHub.",
+      "Clone your fork locally, create a feature branch, make changes, push to your fork.",
+      "Open a Pull Request from your fork's branch to the original repo's main branch.",
+      "Keep your fork synced by adding the original as 'upstream' and regularly fetching/merging."
+    ],
+    "commonMistake": "Making changes directly on the main branch of your fork instead of creating a feature branch. This makes it harder to keep your fork synced and manage multiple contributions.",
+    "miniTask": "Fork a public repository, clone your fork, add the upstream remote, create a branch, make a change, and open a PR.",
+    "ytQuery": "github fork pull request open source contribution"
+  }
+]

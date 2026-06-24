@@ -30,6 +30,7 @@ import {
   Activity,
   ClipboardList,
   BrainCircuit,
+  GitBranch,
 } from 'lucide-react'
 
 // Import question databases statically for global client search
@@ -281,6 +282,7 @@ export default function Sidebar() {
       items: [
         { icon: BookOpen, label: 'Languages', href: '/fundamentals/languages' },
         { icon: Boxes, label: 'OOPs Concepts', href: '/fundamentals/oops' },
+        { icon: GitBranch, label: 'Git & GitHub', href: '/fundamentals/github' },
         { icon: BrainCircuit, label: 'Flashcards', href: '/fundamentals/flashcards' },
         { icon: Zap, label: 'Quiz', href: '/fundamentals/quiz' },
         { icon: Activity, label: 'Visualizer', href: '/fundamentals/visualizer' },
