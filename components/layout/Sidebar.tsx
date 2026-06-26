@@ -28,9 +28,15 @@ import {
   Menu,
   X,
   Activity,
+  Coffee,
   ClipboardList,
   BrainCircuit,
   GitBranch,
+  Rocket,
+  Cloud,
+  Brain,
+  Globe,
+  ShieldCheck,
 } from 'lucide-react'
 
 // Import question databases statically for global client search
@@ -42,6 +48,7 @@ import scenarioQuestions from '@/content/scenario/questions.json'
 import logicalQuestions from '@/content/aptitude/logical.json'
 import quantitativeQuestions from '@/content/aptitude/quantitative.json'
 import companies from '@/content/companies/index.json'
+import javaQuestions from '@/content/questions/java.json'
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -134,6 +141,16 @@ export default function Sidebar() {
         subtitle: `Aptitude (Quantitative) • ${q.category}`,
         type: 'question',
         href: `/library/aptitude?questionId=${q.id}`,
+      })
+    })
+
+    javaQuestions.forEach((q: any) => {
+      items.push({
+        id: q.id,
+        title: q.question,
+        subtitle: `Java • ${q.topic}`,
+        type: 'question',
+        href: `/library/java?questionId=${q.id}`,
       })
     })
 
@@ -259,6 +276,7 @@ export default function Sidebar() {
       label: 'Getting Started',
       items: [
         { icon: BookOpen, label: 'Introduction', href: '/introduction' },
+        { icon: Rocket, label: 'Beginner Basics', href: '/getting-started' },
       ],
     },
     {
@@ -274,6 +292,7 @@ export default function Sidebar() {
         { icon: Hash, label: 'Aptitude Questions', href: '/library/aptitude' },
         { icon: Monitor, label: 'Core CS Subjects', href: '/library/core-cs' },
         { icon: Database, label: 'SQL Questions', href: '/library/sql' },
+        { icon: Coffee, label: 'Java', href: '/library/java' },
         { icon: Bookmark, label: 'Revision List', href: '/library/bookmarks' },
       ],
     },
@@ -288,6 +307,15 @@ export default function Sidebar() {
         { icon: Activity, label: 'Visualizer', href: '/fundamentals/visualizer' },
         { icon: Map, label: 'Study Plans', href: '/fundamentals/plans' },
         { icon: FileText, label: 'Resume Guide', href: '/resume' },
+      ],
+    },
+    {
+      label: 'Beyond Code',
+      items: [
+        { icon: Cloud, label: 'Cloud & DevOps', href: '/beyond-code/cloud-devops' },
+        { icon: Brain, label: 'ML Basics', href: '/beyond-code/ml-basics' },
+        { icon: Globe, label: 'REST APIs', href: '/beyond-code/rest-apis' },
+        { icon: ShieldCheck, label: 'Deployment Checklist', href: '/beyond-code/deployment-checklist' },
       ],
     },
   ]

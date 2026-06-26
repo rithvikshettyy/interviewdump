@@ -1,9 +1,15 @@
 'use client'
 
-import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { X, Copy, Check, StickyNote, CheckCircle2, Bookmark, Zap, Building2, GitBranch, Baby } from 'lucide-react'
+import React, { useState, useEffect, useRef, useCallback, useId } from 'react'
+import { X, Copy, Check, StickyNote, CheckCircle2, Bookmark, Zap, Building2, GitBranch, Baby, ArrowLeftIcon } from 'lucide-react'
+import { motion } from 'motion/react'
 import { Question } from '@/types'
 import Badge from './Badge'
+import {
+  MorphingPopover,
+  MorphingPopoverTrigger,
+  MorphingPopoverContent,
+} from '@/components/core/morphing-popover'
 
 interface QuestionDrawerProps {
   question: Question | null
@@ -30,6 +36,8 @@ export default function QuestionDrawer({
   const [copiedYt, setCopiedYt] = useState(false)
   const [note, setNote] = useState('')
   const [noteSaved, setNoteSaved] = useState(false)
+  const [isNoteOpen, setIsNoteOpen] = useState(false)
+  const notePopoverId = useId()
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const drawerRef = useRef<HTMLElement>(null)
 
@@ -39,6 +47,7 @@ export default function QuestionDrawer({
     const stored = localStorage.getItem(`id_note_${question.id}`) ?? ''
     setNote(stored)
     setNoteSaved(false)
+    setIsNoteOpen(false)
   }, [question?.id])
 
   const handleNoteChange = useCallback((value: string) => {
@@ -466,14 +475,67 @@ export default function QuestionDrawer({
                 )}
               </div>
               <div className="border-b border-border mb-4" />
-              <textarea
-                value={note}
-                onChange={(e) => handleNoteChange(e.target.value)}
-                placeholder="Jot down your own notes, key insights, or things to remember..."
-                rows={4}
-                className="w-full bg-bg border border-border rounded-xl px-3 py-2.5 text-sm text-text placeholder-text-dim resize-none focus:border-indigo focus:outline-none transition-colors leading-relaxed"
-              />
-              <p className="text-[10px] font-mono text-text-dim mt-1">Saved locally on this device.</p>
+
+              {/* Saved note preview */}
+              {note && !isNoteOpen && (
+                <div className="bg-bg border border-border rounded-xl px-3 py-2.5 text-sm text-text leading-relaxed whitespace-pre-wrap mb-3">
+                  {note}
+                </div>
+              )}
+
+              <MorphingPopover
+                open={isNoteOpen}
+                onOpenChange={setIsNoteOpen}
+                transition={{ type: 'spring', bounce: 0.05, duration: 0.3 }}
+              >
+                <MorphingPopoverTrigger className="flex h-9 items-center rounded-lg border border-border bg-surface px-3 text-sm text-text-muted hover:border-border-hover hover:text-text transition-colors">
+                  <motion.span layoutId={`note-label-${notePopoverId}`} className="text-sm">
+                    {note ? 'Edit Note' : 'Add Note'}
+                  </motion.span>
+                </MorphingPopoverTrigger>
+
+                <MorphingPopoverContent placement="top" className="border border-border bg-surface shadow-[0_9px_9px_0px_rgba(0,0,0,0.08),_0_2px_5px_0px_rgba(0,0,0,0.12)]">
+                  <div className="h-[200px] w-full">
+                    <form className="flex h-full flex-col" onSubmit={(e) => e.preventDefault()}>
+                      <motion.span
+                        layoutId={`note-label-${notePopoverId}`}
+                        aria-hidden="true"
+                        style={{ opacity: note ? 0 : 1 }}
+                        className="absolute top-3 left-4 text-sm text-text-dim select-none pointer-events-none"
+                      >
+                        {note ? 'Edit Note' : 'Add Note'}
+                      </motion.span>
+                      <textarea
+                        value={note}
+                        className="h-full w-full resize-none rounded-xl bg-transparent px-4 py-3 text-sm text-text outline-none leading-relaxed"
+                        autoFocus
+                        onChange={(e) => handleNoteChange(e.target.value)}
+                        placeholder=""
+                      />
+                      <div className="flex justify-between py-3 pr-4 pl-2 border-t border-border">
+                        <button
+                          type="button"
+                          className="flex items-center rounded-lg px-2 py-1 text-sm text-text-muted hover:bg-surface-hover hover:text-text transition-colors focus:outline-none"
+                          onClick={() => setIsNoteOpen(false)}
+                          aria-label="Close note editor"
+                        >
+                          <ArrowLeftIcon size={16} />
+                        </button>
+                        <button
+                          type="submit"
+                          className="flex h-8 items-center justify-center rounded-lg border border-border px-3 text-sm text-text-muted hover:bg-surface-hover hover:text-text transition-colors focus:outline-none"
+                          onClick={() => setIsNoteOpen(false)}
+                          aria-label="Save note"
+                        >
+                          Done
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </MorphingPopoverContent>
+              </MorphingPopover>
+
+              <p className="text-[10px] font-mono text-text-dim mt-2">Saved locally on this device.</p>
             </div>
           </div>
         </div>
