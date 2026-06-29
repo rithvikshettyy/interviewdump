@@ -30,6 +30,7 @@ import {
   Flame,
   Heart,
 } from 'lucide-react'
+import ReadAloudButton from '@/components/shared/ReadAloudButton'
 
 type Difficulty = 'Beginner' | 'Intermediate' | 'Advanced'
 type Tab = 'Fundamentals' | 'Learning Types' | 'Algorithms' | 'Key Concepts' | 'Tools'
@@ -655,6 +656,9 @@ function MLCard({ card }: { card: Card }) {
 
       {open && (
         <div className="px-5 pb-5 border-t border-border pt-4 space-y-4">
+          <div className="flex justify-end">
+            <ReadAloudButton text={[card.title, card.explanation, card.analogy].filter(Boolean).join('. ')} />
+          </div>
           <div>
             <p className="text-xs font-mono text-text-dim uppercase tracking-widest mb-1">Explanation</p>
             <p className="text-sm text-text-muted leading-relaxed">{card.explanation}</p>

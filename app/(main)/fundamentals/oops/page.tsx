@@ -17,6 +17,7 @@ import {
   CheckCircle2,
   Bookmark,
 } from 'lucide-react'
+import ReadAloudButton from '@/components/shared/ReadAloudButton'
 import oopsConcepts from '@/content/oops/concepts.json'
 import { getProgressIds, toggleProgress } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
@@ -277,6 +278,9 @@ export default function OopsConceptsPage() {
 
               {/* Drawer Body */}
               <div className="p-5 flex flex-col gap-6 pb-24">
+                <div className="flex justify-end">
+                  <ReadAloudButton text={[selectedConcept.title, selectedConcept.explanation, selectedConcept.realWorldAnalogy].filter(Boolean).join('. ')} />
+                </div>
                 {/* 1. What is it + Analogy */}
                 <div>
                   <div className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback, useId } from 'react'
 import { X, Copy, Check, StickyNote, CheckCircle2, Bookmark, Zap, Building2, GitBranch, Baby, ArrowLeftIcon } from 'lucide-react'
+import ReadAloudButton from './ReadAloudButton'
 import { motion } from 'motion/react'
 import { Question } from '@/types'
 import Badge from './Badge'
@@ -189,6 +190,9 @@ export default function QuestionDrawer({
 
           {/* Body */}
           <div className="p-4 sm:p-5 flex flex-col gap-5 sm:gap-6 pb-24">
+            <div className="flex justify-end">
+              <ReadAloudButton text={[question.question, question.explanation].filter(Boolean).join('. ')} />
+            </div>
             {/* 1. What they're testing */}
             <div>
               <div className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">

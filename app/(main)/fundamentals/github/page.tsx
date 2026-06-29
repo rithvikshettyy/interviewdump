@@ -27,6 +27,7 @@ import {
   Bookmark,
   Terminal,
 } from 'lucide-react'
+import ReadAloudButton from '@/components/shared/ReadAloudButton'
 import githubConcepts from '@/content/github/concepts.json'
 import { getProgressIds, toggleProgress } from '@/lib/progress'
 import Badge from '@/components/shared/Badge'
@@ -269,6 +270,9 @@ export default function GitHubConceptsPage() {
               </div>
 
               <div className="p-5 flex flex-col gap-6 pb-24">
+                <div className="flex justify-end">
+                  <ReadAloudButton text={[selectedConcept.title, selectedConcept.explanation, selectedConcept.realWorldAnalogy].filter(Boolean).join('. ')} />
+                </div>
                 {/* What Is It */}
                 <div>
                   <div className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">

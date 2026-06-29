@@ -4,6 +4,7 @@ import React, { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Copy, Check, ArrowRight, ArrowLeft, CheckCircle2, Bookmark, Baby, Ban, Network, Lightbulb, GitBranch } from 'lucide-react'
+import ReadAloudButton from '@/components/shared/ReadAloudButton'
 import jsConcepts from '@/content/languages/javascript/concepts.json'
 import pythonConcepts from '@/content/languages/python/concepts.json'
 import javaConcepts from '@/content/languages/java/concepts.json'
@@ -242,6 +243,7 @@ export default function ConceptDetailPage({ params }: PageProps) {
               >
                 {isSaved ? <><Bookmark className="w-4 h-4" aria-hidden="true" /> Saved</> : 'Add to Revision'}
               </button>
+              <ReadAloudButton text={[concept.title, concept.whatIsIt, concept.analogy, concept.eli10].filter(Boolean).join('. ')} />
             </div>
           </header>
 
