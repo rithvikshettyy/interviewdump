@@ -13,6 +13,7 @@ interface TopicCard {
   code?: string
   codeLang?: string
   tags?: string[]
+  youtubeQueries?: string[]
 }
 
 interface Category {
@@ -65,6 +66,7 @@ const count = 0         // TS infers: number
 const name = 'Rithvik'  // TS infers: string`,
         codeLang: 'typescript',
         tags: ['TypeScript'],
+        youtubeQueries: ['TypeScript full course', 'TypeScript tutorial for beginners 2026'],
       },
       {
         id: 'ts-generics',
@@ -109,6 +111,7 @@ type UpdateUser  = Partial<Pick<User, 'name' | 'email'>>    // all optional
 type UserRecord  = Record<string, User>                     // { [key: string]: User }`,
         codeLang: 'typescript',
         tags: ['TypeScript'],
+        youtubeQueries: ['TypeScript generics explained'],
       },
       {
         id: 'ts-react',
@@ -161,6 +164,7 @@ function useApi<T>(url: string) {
 }`,
         codeLang: 'typescript',
         tags: ['TypeScript', 'React'],
+        youtubeQueries: ['TypeScript with React tutorial'],
       },
     ],
   },
@@ -208,6 +212,7 @@ btn?.classList.toggle('active')
 document.querySelector('.old-banner')?.remove()`,
         codeLang: 'javascript',
         tags: ['Browser', 'DOM'],
+        youtubeQueries: ['DOM manipulation JavaScript'],
       },
       {
         id: 'event-delegation',
@@ -249,6 +254,7 @@ newItem.innerHTML = '<span>New task</span><button class="delete-btn">×</button>
 list?.appendChild(newItem)`,
         codeLang: 'javascript',
         tags: ['Browser', 'Events'],
+        youtubeQueries: ['event delegation JavaScript'],
       },
       {
         id: 'browser-rendering',
@@ -288,6 +294,7 @@ el.style.transform = \`translateX(\${x}px)\`
 }`,
         codeLang: 'javascript',
         tags: ['Browser', 'Performance'],
+        youtubeQueries: ['browser rendering pipeline explained'],
       },
       {
         id: 'how-browser-works',
@@ -330,6 +337,7 @@ el.style.transform = \`translateX(\${x}px)\`
 <script type="module" src="/app.js"></script>`,
         codeLang: 'html',
         tags: ['Browser'],
+        youtubeQueries: ['how browser works step by step'],
       },
     ],
   },
@@ -384,6 +392,7 @@ Item properties: flex-grow controls how much extra space an item claims. flex-sh
 .main    { flex: 1; min-width: 0; }  /* min-width: 0 prevents overflow */`,
         codeLang: 'css',
         tags: ['CSS', 'Layout'],
+        youtubeQueries: ['CSS flexbox crash course'],
       },
       {
         id: 'grid',
@@ -434,6 +443,7 @@ grid-template-areas gives regions semantic names and lets you place items by nam
 .col-6 { grid-column: span 6; }`,
         codeLang: 'css',
         tags: ['CSS', 'Layout'],
+        youtubeQueries: ['CSS grid crash course'],
       },
       {
         id: 'responsive',
@@ -474,6 +484,7 @@ h1 { font-size: clamp(1.5rem, 4vw, 3rem); }
 img { max-width: 100%; height: auto; }`,
         codeLang: 'css',
         tags: ['CSS', 'Responsive'],
+        youtubeQueries: ['responsive web design tutorial'],
       },
       {
         id: 'specificity',
@@ -507,6 +518,7 @@ p          { color: black; }  /* (0,0,0,1) = 1 */
 /* source order in the generated stylesheet controls which wins */`,
         codeLang: 'css',
         tags: ['CSS'],
+        youtubeQueries: ['CSS specificity explained'],
       },
       {
         id: 'modern-css',
@@ -559,6 +571,7 @@ form:has(input:invalid) .submit-btn { opacity: 0.5; }
 }`,
         codeLang: 'css',
         tags: ['CSS'],
+        youtubeQueries: ['modern CSS 2026'],
       },
     ],
   },
@@ -616,6 +629,7 @@ const handleDelete = useCallback((id: string) => {
 }, [])  // no dependencies — function never recreated`,
         codeLang: 'typescript',
         tags: ['React'],
+        youtubeQueries: ['React hooks explained useState useEffect useMemo useCallback'],
       },
       {
         id: 'reconciliation',
@@ -669,6 +683,7 @@ function SearchPage() {
 }`,
         codeLang: 'typescript',
         tags: ['React', 'Performance'],
+        youtubeQueries: ['React reconciliation virtual DOM explained'],
       },
       {
         id: 'custom-hooks',
@@ -723,6 +738,7 @@ function useClickOutside(ref: React.RefObject<HTMLElement>, handler: () => void)
 }`,
         codeLang: 'typescript',
         tags: ['React'],
+        youtubeQueries: ['React custom hooks tutorial'],
       },
       {
         id: 'context',
@@ -775,6 +791,7 @@ function NavBar() {
 }`,
         codeLang: 'typescript',
         tags: ['React'],
+        youtubeQueries: ['React context API tutorial'],
       },
       {
         id: 'react-performance',
@@ -830,6 +847,7 @@ function Parent() {
 }`,
         codeLang: 'typescript',
         tags: ['React', 'Performance'],
+        youtubeQueries: ['React performance optimization'],
       },
       {
         id: 'server-components',
@@ -876,6 +894,7 @@ export function InteractiveChart({ initialData }: { initialData: Stats[] }) {
 }`,
         codeLang: 'typescript',
         tags: ['React', 'Next.js'],
+        youtubeQueries: ['React server components explained'],
       },
     ],
   },
@@ -930,6 +949,7 @@ export default function Error({ reset }: { reset: () => void }) {
 }`,
         codeLang: 'typescript',
         tags: ['Next.js'],
+        youtubeQueries: ['Next.js App Router tutorial', 'Next.js 15 full course'],
       },
       {
         id: 'server-actions',
@@ -984,6 +1004,7 @@ export default function NewPostPage() {
 }`,
         codeLang: 'typescript',
         tags: ['Next.js'],
+        youtubeQueries: ['Next.js server actions tutorial'],
       },
       {
         id: 'rendering-strategies',
@@ -1036,6 +1057,7 @@ async function updateProduct(id: string, data: Partial<Product>) {
 }`,
         codeLang: 'typescript',
         tags: ['Next.js'],
+        youtubeQueries: ['Next.js ISR SSR SSG explained'],
       },
     ],
   },
@@ -1096,6 +1118,7 @@ function CartCount() {
 }`,
         codeLang: 'typescript',
         tags: ['State Management'],
+        youtubeQueries: ['Zustand tutorial'],
       },
       {
         id: 'redux-toolkit',
@@ -1146,6 +1169,7 @@ function CartItem({ id }: { id: string }) {
 }`,
         codeLang: 'typescript',
         tags: ['State Management'],
+        youtubeQueries: ['Redux toolkit tutorial'],
       },
       {
         id: 'state-comparison',
@@ -1159,6 +1183,7 @@ Redux Toolkit: heavier, more structured, strict action patterns. Use when you ha
 
 TanStack Query or SWR: for server state — data fetched from an API. This is a completely separate concern from client state. Never put API responses in Zustand or Redux. Server state has different requirements: caching, background refetching, stale-while-revalidate, deduplication.`,
         tags: ['State Management'],
+        youtubeQueries: ['when to use Redux vs Context API'],
       },
     ],
   },
@@ -1217,6 +1242,7 @@ function Hero() {
 .skeleton { height: 200px; background: #eee; border-radius: 8px; }`,
         codeLang: 'typescript',
         tags: ['Performance', 'SEO'],
+        youtubeQueries: ['web vitals LCP CLS FID explained'],
       },
       {
         id: 'code-splitting',
@@ -1266,6 +1292,7 @@ import { debounce } from 'lodash-es'  // ✅ only imports debounce (~2KB)
 // import _ from 'lodash'             // ❌ entire 70KB library`,
         codeLang: 'typescript',
         tags: ['Performance'],
+        youtubeQueries: ['code splitting lazy loading React'],
       },
       {
         id: 'bundle-optimization',
@@ -1319,6 +1346,7 @@ export default function Layout({ children }) {
 }`,
         codeLang: 'typescript',
         tags: ['Performance'],
+        youtubeQueries: ['bundle size optimization JavaScript'],
       },
     ],
   },
@@ -1389,6 +1417,7 @@ function CreatePostForm() {
 }`,
         codeLang: 'typescript',
         tags: ['Data Fetching'],
+        youtubeQueries: ['React Query TanStack Query tutorial'],
       },
       {
         id: 'websockets',
@@ -1448,6 +1477,7 @@ function useSocket(roomId: string) {
 }`,
         codeLang: 'typescript',
         tags: ['APIs', 'Real-time'],
+        youtubeQueries: ['WebSockets crash course'],
       },
       {
         id: 'trpc',
@@ -1502,6 +1532,7 @@ function PostList() {
 }`,
         codeLang: 'typescript',
         tags: ['APIs', 'TypeScript'],
+        youtubeQueries: ['tRPC explained'],
       },
     ],
   },
@@ -1553,6 +1584,26 @@ function TopicCard({ topic }: { topic: TopicCard }) {
                 <pre className="bg-bg border border-border rounded-xl p-4 text-sm font-mono overflow-x-auto whitespace-pre-wrap text-text-muted">
                   <code>{topic.code}</code>
                 </pre>
+              </div>
+            )}
+
+            {topic.youtubeQueries && topic.youtubeQueries.length > 0 && (
+              <div>
+                <p className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">YouTube Resources</p>
+                <div className="flex flex-col gap-1.5">
+                  {topic.youtubeQueries.map(q => (
+                    <a
+                      key={q}
+                      href={`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs text-text-muted hover:text-red-400 transition-colors group"
+                    >
+                      <span className="text-red-500 flex-shrink-0 text-base leading-none">▶</span>
+                      <span className="group-hover:underline">{q}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
           </div>

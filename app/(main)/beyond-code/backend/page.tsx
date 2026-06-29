@@ -13,6 +13,7 @@ interface TopicCard {
   code?: string
   codeLang?: string
   tags?: string[]
+  youtubeQueries?: string[]
 }
 
 interface Category {
@@ -74,6 +75,7 @@ if (isMainThread) {
 }`,
         codeLang: 'javascript',
         tags: ['Node.js'],
+        youtubeQueries: ['Node.js event loop explained', 'Node.js full course'],
       },
       {
         id: 'express-basics',
@@ -129,6 +131,7 @@ app.delete('/api/users/:id', async (req, res) => {
 app.listen(3000, () => console.log('Server running on port 3000'))`,
         codeLang: 'typescript',
         tags: ['Express', 'Node.js'],
+        youtubeQueries: ['Express.js crash course'],
       },
       {
         id: 'middleware',
@@ -185,6 +188,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 })`,
         codeLang: 'typescript',
         tags: ['Express', 'Node.js'],
+        youtubeQueries: ['middleware Express explained'],
       },
       {
         id: 'project-structure',
@@ -254,6 +258,7 @@ export async function create(data: { name: string; email: string }) {
 }`,
         codeLang: 'typescript',
         tags: ['Express', 'Architecture'],
+        youtubeQueries: ['REST API Node Express full project'],
       },
     ],
   },
@@ -312,6 +317,7 @@ JOIN recent_orders r ON u.id = r.user_id
 WHERE r.total_spent > 1000;`,
         codeLang: 'sql',
         tags: ['SQL', 'Database'],
+        youtubeQueries: ['SQL full course'],
       },
       {
         id: 'db-indexing',
@@ -354,6 +360,7 @@ FROM pg_stat_user_indexes
 ORDER BY idx_scan ASC;  -- rarely-used indexes waste write performance`,
         codeLang: 'sql',
         tags: ['Database', 'Performance'],
+        youtubeQueries: ['database indexing explained'],
       },
       {
         id: 'sql-nosql',
@@ -367,6 +374,7 @@ CAP theorem: a distributed database can guarantee at most two of: Consistency (e
 
 The practical rule: start with PostgreSQL. It handles 90% of use cases, supports JSON/JSONB for flexibility, and has excellent tooling. Move to a specialised store when you hit a specific bottleneck.`,
         tags: ['Database', 'Architecture'],
+        youtubeQueries: ['SQL vs NoSQL when to use'],
       },
       {
         id: 'postgresql',
@@ -423,6 +431,7 @@ SELECT
 FROM orders;`,
         codeLang: 'sql',
         tags: ['Database', 'PostgreSQL'],
+        youtubeQueries: ['PostgreSQL tutorial'],
       },
       {
         id: 'mongodb',
@@ -471,6 +480,7 @@ const stats = await User.aggregate([
 ])`,
         codeLang: 'typescript',
         tags: ['Database', 'MongoDB'],
+        youtubeQueries: ['MongoDB crash course'],
       },
       {
         id: 'prisma',
@@ -539,6 +549,7 @@ await prisma.$transaction([
 ])`,
         codeLang: 'typescript',
         tags: ['Database', 'ORM'],
+        youtubeQueries: ['Prisma ORM tutorial'],
       },
     ],
   },
@@ -611,6 +622,7 @@ function requireAuth(req: Request, res: Response, next: NextFunction) {
 }`,
         codeLang: 'typescript',
         tags: ['Auth'],
+        youtubeQueries: ['JWT authentication Node.js'],
       },
       {
         id: 'bcrypt',
@@ -661,6 +673,7 @@ async function login(email: string, password: string) {
 }`,
         codeLang: 'typescript',
         tags: ['Auth', 'Security'],
+        youtubeQueries: ['bcrypt password hashing tutorial'],
       },
       {
         id: 'oauth',
@@ -721,6 +734,7 @@ function AuthButton() {
 }`,
         codeLang: 'typescript',
         tags: ['Auth'],
+        youtubeQueries: ['OAuth implementation Node.js'],
       },
       {
         id: 'refresh-tokens',
@@ -780,6 +794,7 @@ app.post('/api/auth/refresh', async (req, res) => {
 })`,
         codeLang: 'typescript',
         tags: ['Auth', 'Security'],
+        youtubeQueries: ['refresh token rotation explained'],
       },
     ],
   },
@@ -847,6 +862,7 @@ function validateBody<T extends z.ZodTypeAny>(schema: T) {
 app.post('/api/posts', validateBody(CreateUserSchema), createPostHandler)`,
         codeLang: 'typescript',
         tags: ['Security', 'Validation'],
+        youtubeQueries: ['Zod validation tutorial'],
       },
       {
         id: 'xss-csrf',
@@ -907,6 +923,7 @@ const user = await db.user.findUnique({ where: { email } })
 const user = await db.$queryRaw\`SELECT * FROM users WHERE email = \${email}\``,
         codeLang: 'typescript',
         tags: ['Security'],
+        youtubeQueries: ['XSS CSRF attacks explained'],
       },
       {
         id: 'api-security',
@@ -966,6 +983,7 @@ const requestLogger = (req: Request, _res: Response, next: NextFunction) => {
 }`,
         codeLang: 'typescript',
         tags: ['Security'],
+        youtubeQueries: ['API security best practices'],
       },
     ],
   },
@@ -994,6 +1012,7 @@ const requestLogger = (req: Request, _res: Response, next: NextFunction) => {
 
 7. Response: HTML is returned. Browser parses HTML → discovers linked CSS/JS/fonts → makes parallel requests → DOM + CSSOM built → render tree → layout → paint → composite.`,
         tags: ['System Design'],
+        youtubeQueries: ['what happens when you type a URL in browser'],
       },
       {
         id: 'load-balancers',
@@ -1036,6 +1055,7 @@ server {
 }`,
         codeLang: 'nginx',
         tags: ['System Design', 'Infrastructure'],
+        youtubeQueries: ['load balancer explained'],
       },
       {
         id: 'cdn',
@@ -1053,6 +1073,7 @@ Beyond static files: edge computing (Cloudflare Workers, Vercel Edge Functions) 
 
 Popular CDNs: Cloudflare (best free tier, DDoS protection), AWS CloudFront, Fastly, Vercel Edge Network.`,
         tags: ['System Design', 'Performance'],
+        youtubeQueries: ['CDN explained'],
       },
       {
         id: 'caching-redis',
@@ -1107,6 +1128,7 @@ async function acquireLock(resource: string, ttlMs = 5000) {
 }`,
         codeLang: 'typescript',
         tags: ['System Design', 'Redis', 'Performance'],
+        youtubeQueries: ['caching strategies explained Redis'],
       },
       {
         id: 'db-scaling',
@@ -1126,6 +1148,7 @@ Step 5: Vertical scaling. Upgrade to a bigger DB instance (more CPU, more RAM). 
 
 Step 6: Sharding (horizontal partitioning). Split the data across multiple database servers by a shard key (e.g., user_id % N). Each shard handles a subset of the data. Cross-shard queries become complex. Only do this when you truly need it — Postgres with read replicas handles millions of users.`,
         tags: ['System Design', 'Database'],
+        youtubeQueries: ['database scaling explained'],
       },
       {
         id: 'monolith-vs-microservices',
@@ -1142,6 +1165,7 @@ When to split a monolith: when different parts need vastly different scaling cha
 Start with a well-structured monolith with clear internal module boundaries. Extract services when you have a concrete scaling or organisational need.`,
         analogy: "A monolith is a single restaurant with all stations (kitchen, bar, desserts) under one roof — easy to coordinate. Microservices are a food court — each stall independent, but coordinating a complex order across multiple stalls is harder.",
         tags: ['System Design', 'Architecture'],
+        youtubeQueries: ['monolith vs microservices explained'],
       },
       {
         id: 'system-design-approach',
@@ -1161,6 +1185,7 @@ Step 5 — Address bottlenecks (5 min): proactively call out where the system wi
 
 Common patterns: read-heavy systems → read replicas + caching. Write-heavy → message queues, sharding, eventual consistency. Low latency → CDN, edge computing, in-memory cache.`,
         tags: ['System Design', 'Interviews'],
+        youtubeQueries: ['system design basics for developers'],
       },
     ],
   },
@@ -1212,6 +1237,26 @@ function TopicCard({ topic }: { topic: TopicCard }) {
                 <pre className="bg-bg border border-border rounded-xl p-4 text-sm font-mono overflow-x-auto whitespace-pre-wrap text-text-muted">
                   <code>{topic.code}</code>
                 </pre>
+              </div>
+            )}
+
+            {topic.youtubeQueries && topic.youtubeQueries.length > 0 && (
+              <div>
+                <p className="text-[11px] font-mono text-text-dim uppercase tracking-widest mb-2">YouTube Resources</p>
+                <div className="flex flex-col gap-1.5">
+                  {topic.youtubeQueries.map(q => (
+                    <a
+                      key={q}
+                      href={`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs text-text-muted hover:text-red-400 transition-colors group"
+                    >
+                      <span className="text-red-500 flex-shrink-0 text-base leading-none">▶</span>
+                      <span className="group-hover:underline">{q}</span>
+                    </a>
+                  ))}
+                </div>
               </div>
             )}
           </div>
