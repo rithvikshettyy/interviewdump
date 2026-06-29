@@ -37,6 +37,7 @@ import {
   Brain,
   Globe,
   ShieldCheck,
+  Server,
 } from 'lucide-react'
 
 // Import question databases statically for global client search
@@ -312,9 +313,11 @@ export default function Sidebar() {
     {
       label: 'Beyond Code',
       items: [
+        { icon: Monitor, label: 'Frontend', href: '/beyond-code/frontend' },
+        { icon: Server, label: 'Backend', href: '/beyond-code/backend' },
         { icon: Cloud, label: 'Cloud & DevOps', href: '/beyond-code/cloud-devops' },
-        { icon: Brain, label: 'ML Basics', href: '/beyond-code/ml-basics' },
         { icon: Globe, label: 'REST APIs', href: '/beyond-code/rest-apis' },
+        { icon: Brain, label: 'ML Basics', href: '/beyond-code/ml-basics' },
         { icon: ShieldCheck, label: 'Deployment Checklist', href: '/beyond-code/deployment-checklist' },
       ],
     },
