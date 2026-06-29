@@ -44,6 +44,7 @@ interface Concept {
   analogy: string
   snippet?: string
   snippetLang?: string
+  youtubeQueries?: string[]
 }
 
 const concepts: Concept[] = [
@@ -70,6 +71,7 @@ COPY . .
 EXPOSE 3000
 CMD ["node", "server.js"]`,
     snippetLang: 'dockerfile',
+    youtubeQueries: ['Docker full course beginners', 'Docker tutorial 2026'],
   },
   {
     id: 'docker-2',
@@ -99,6 +101,7 @@ docker exec -it myapp sh
 # Stop and remove
 docker stop myapp && docker rm myapp`,
     snippetLang: 'bash',
+    youtubeQueries: ['Docker commands cheat sheet tutorial'],
   },
   {
     id: 'docker-3',
@@ -135,6 +138,7 @@ services:
 volumes:
   pg_data:`,
     snippetLang: 'yaml',
+    youtubeQueries: ['Docker compose tutorial', 'Docker compose full stack app'],
   },
   // ── Kubernetes ────────────────────────────────────────────────────────────
   {
@@ -150,6 +154,7 @@ volumes:
       'Kubernetes (K8s) was open-sourced by Google in 2014. It abstracts away individual servers — you declare the desired state (I want 5 replicas of this container) and K8s makes it happen and keeps it that way. If a container crashes, K8s restarts it automatically.',
     analogy:
       'Docker is like hiring a single employee. Kubernetes is like having an operations manager who hires, fires, rebalances workload across a whole team, and replaces anyone who calls in sick — automatically.',
+    youtubeQueries: ['Kubernetes full course', 'why Kubernetes explained'],
   },
   {
     id: 'k8s-2',
@@ -197,6 +202,7 @@ spec:
       targetPort: 3000
   type: LoadBalancer`,
     snippetLang: 'yaml',
+    youtubeQueries: ['Kubernetes pods services deployments explained'],
   },
   {
     id: 'k8s-3',
@@ -229,6 +235,7 @@ kubectl scale deployment myapp --replicas=5
 # Roll back last deploy
 kubectl rollout undo deployment/myapp`,
     snippetLang: 'bash',
+    youtubeQueries: ['kubectl tutorial Kubernetes CLI'],
   },
   // ── AWS ───────────────────────────────────────────────────────────────────
   {
@@ -257,6 +264,7 @@ aws ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceId,Sta
 # Invoke Lambda
 aws lambda invoke --function-name myFunc output.json`,
     snippetLang: 'bash',
+    youtubeQueries: ['AWS for beginners full course', 'AWS core services explained'],
   },
   {
     id: 'aws-2',
@@ -282,6 +290,7 @@ aws cloudwatch put-metric-alarm \\
   --comparison-operator GreaterThanThreshold \\
   --alarm-actions arn:aws:sns:us-east-1:ACCOUNT_ID:MyTopic`,
     snippetLang: 'bash',
+    youtubeQueries: ['AWS free tier tutorial', 'AWS billing alarm setup'],
   },
   // ── Azure ─────────────────────────────────────────────────────────────────
   {
@@ -297,6 +306,7 @@ aws cloudwatch put-metric-alarm \\
       '**Azure VMs** = EC2. **Azure Blob Storage** = S3. **Azure SQL / Cosmos DB** = RDS / DynamoDB. **Azure Functions** = Lambda. **Azure CDN** = CloudFront. **Microsoft Entra ID** (formerly Azure AD) = IAM. **App Service** = Elastic Beanstalk — managed hosting for web apps without managing VMs.',
     analogy:
       'AWS and Azure sell the same categories of cloud resources. AWS dominates market share; Azure dominates enterprise because companies already pay Microsoft for Windows and Office.',
+    youtubeQueries: ['Azure core services tutorial for beginners'],
   },
   {
     id: 'azure-2',
@@ -311,6 +321,7 @@ aws cloudwatch put-metric-alarm \\
       'Choose **AWS** if: your team already knows it, you need the widest service variety, or you\'re building a consumer startup. Choose **Azure** if: you\'re in an enterprise that uses Microsoft 365/Teams/Active Directory, you\'re building .NET apps, or the client mandates it. Both are production-grade. The difference is ecosystem fit, not reliability.',
     analogy:
       'AWS is like Android — more open, more choices, more configurations. Azure is like working inside the Microsoft Office building — tighter integration, less friction if you\'re already using their products.',
+    youtubeQueries: ['AWS vs Azure comparison 2026'],
   },
   // ── CI/CD ─────────────────────────────────────────────────────────────────
   {
@@ -326,6 +337,7 @@ aws cloudwatch put-metric-alarm \\
       '**CI (Continuous Integration)**: Every push runs automated tests. If tests fail, the branch is blocked from merging. **CD (Continuous Deployment)**: After a merge to main, the pipeline builds the app, runs tests again, and deploys to production — all without human intervention. This means you can ship 50 times a day safely.',
     analogy:
       'CI/CD is like a factory assembly line with quality checks at every station. Bad parts are caught and rejected before the final product ships, instead of discovering defects after delivery.',
+    youtubeQueries: ['CI CD pipeline explained', 'continuous integration continuous deployment tutorial'],
   },
   {
     id: 'cicd-2',
@@ -375,6 +387,7 @@ jobs:
           chmod 600 key.pem
           rsync -avz -e "ssh -i key.pem" ./dist/ user@server:/app/`,
     snippetLang: 'yaml',
+    youtubeQueries: ['GitHub Actions tutorial', 'GitHub Actions CI CD pipeline'],
   },
   // ── Linux ─────────────────────────────────────────────────────────────────
   {
@@ -422,6 +435,7 @@ scp -i key.pem ./build user@host:/app  # copy files to server
 cat access.log | grep "POST /api" | wc -l    # count POST requests
 ps aux --sort=-%mem | head -10               # top 10 memory consumers`,
     snippetLang: 'bash',
+    youtubeQueries: ['Linux command line crash course', 'Linux for developers tutorial'],
   },
   {
     id: 'linux-2',
@@ -473,6 +487,7 @@ else
   exit 1
 fi`,
     snippetLang: 'bash',
+    youtubeQueries: ['bash scripting tutorial', 'shell scripting for beginners'],
   },
   // ── AWS (expanded) ────────────────────────────────────────────────────────
   {
@@ -514,6 +529,7 @@ ssh -i my-keypair.pem ubuntu@<public-ip>
 aws ec2 allocate-address --domain vpc
 aws ec2 associate-address --instance-id i-abc123 --allocation-id eipalloc-xyz`,
     snippetLang: 'bash',
+    youtubeQueries: ['AWS EC2 tutorial', 'AWS EC2 instance setup beginners'],
   },
   {
     id: 'aws-4',
@@ -560,6 +576,7 @@ aws s3 cp ./dist s3://my-bucket/ --recursive  # upload build
 aws s3 sync ./public s3://my-bucket/public/   # sync folder
 aws s3 rm s3://my-bucket/old-file.txt         # delete object`,
     snippetLang: 'typescript',
+    youtubeQueries: ['AWS S3 tutorial', 'AWS S3 presigned URLs tutorial'],
   },
   {
     id: 'aws-5',
@@ -609,6 +626,7 @@ aws iam attach-role-policy \\
   --role-name EC2AppRole \\
   --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess`,
     snippetLang: 'bash',
+    youtubeQueries: ['AWS IAM explained', 'AWS IAM users roles policies tutorial'],
   },
   {
     id: 'aws-6',
@@ -656,6 +674,7 @@ aws events put-rule \\
   --schedule-expression "rate(5 minutes)" \\
   --name cleanup-job`,
     snippetLang: 'typescript',
+    youtubeQueries: ['AWS Lambda tutorial', 'AWS Lambda Node.js tutorial'],
   },
   {
     id: 'aws-7',
@@ -695,6 +714,7 @@ aws cloudfront create-invalidation \\
 # Better: use fingerprinted filenames — no invalidation needed
 # app.js → app.3f8a9c1b.js (Next.js does this automatically)`,
     snippetLang: 'bash',
+    youtubeQueries: ['AWS CloudFront CDN tutorial', 'AWS CloudFront setup tutorial'],
   },
   {
     id: 'aws-8',
@@ -751,6 +771,7 @@ export default $config({
   },
 })`,
     snippetLang: 'bash',
+    youtubeQueries: ['AWS deploy Next.js app', 'AWS Amplify Next.js tutorial'],
   },
   // ── Terraform ─────────────────────────────────────────────────────────────
   {
@@ -810,6 +831,7 @@ resource "aws_s3_bucket_versioning" "uploads" {
 output "instance_ip" { value = aws_instance.web.public_ip }
 output "bucket_name" { value = aws_s3_bucket.uploads.bucket }`,
     snippetLang: 'hcl',
+    youtubeQueries: ['Terraform full course', 'Terraform AWS tutorial beginners'],
   },
   {
     id: 'tf-2',
@@ -864,6 +886,7 @@ module "database" {
 
 output "db_endpoint" { value = module.database.endpoint }`,
     snippetLang: 'hcl',
+    youtubeQueries: ['Terraform modules tutorial', 'Terraform best practices 2026'],
   },
   // ── Monitoring ────────────────────────────────────────────────────────────
   {
@@ -920,6 +943,7 @@ aws cloudwatch put-metric-alarm \\
 # | sort @timestamp desc
 # | limit 50`,
     snippetLang: 'typescript',
+    youtubeQueries: ['AWS CloudWatch tutorial', 'AWS CloudWatch monitoring setup'],
   },
   {
     id: 'monitoring-2',
@@ -987,6 +1011,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=secret`,
     snippetLang: 'typescript',
+    youtubeQueries: ['Prometheus Grafana tutorial', 'Prometheus Grafana monitoring setup'],
   },
 ]
 
@@ -1107,6 +1132,26 @@ export default function CloudDevOpsPage() {
                       <pre className="bg-bg border border-border rounded-xl p-4 text-sm font-mono overflow-x-auto text-text-muted leading-relaxed">
                         <code>{concept.snippet}</code>
                       </pre>
+                    </div>
+                  )}
+
+                  {concept.youtubeQueries && concept.youtubeQueries.length > 0 && (
+                    <div className="mt-4">
+                      <p className="text-[10px] font-mono text-text-dim uppercase tracking-widest mb-2">YouTube Resources</p>
+                      <div className="flex flex-col gap-1.5">
+                        {concept.youtubeQueries.map(q => (
+                          <a
+                            key={q}
+                            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-xs text-text-muted hover:text-red-400 transition-colors group"
+                          >
+                            <span className="text-red-500 flex-shrink-0 text-base leading-none">▶</span>
+                            <span className="group-hover:underline">{q}</span>
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
