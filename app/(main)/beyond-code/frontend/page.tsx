@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import PageHeader from '@/components/layout/PageHeader'
 import { ChevronDown, ChevronUp, Shield, Globe, Layout, Layers, Zap, Database, Activity, Wifi } from 'lucide-react'
+import ReadAloudButton from '@/components/shared/ReadAloudButton'
 
 interface TopicCard {
   id: string
@@ -1567,6 +1568,9 @@ function TopicCard({ topic }: { topic: TopicCard }) {
       {open && (
         <div className="px-5 pb-5 border-t border-border">
           <div className="pt-4 space-y-4">
+            <div className="flex justify-end">
+              <ReadAloudButton text={[topic.title, topic.explanation, topic.analogy].filter(Boolean).join('. ')} />
+            </div>
             <p className="text-sm text-text-muted leading-relaxed whitespace-pre-line">{topic.explanation}</p>
 
             {topic.analogy && (

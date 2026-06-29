@@ -27,6 +27,7 @@ import {
   Cpu,
   BarChart2,
 } from 'lucide-react'
+import ReadAloudButton from '@/components/shared/ReadAloudButton'
 
 type Difficulty = 'Easy' | 'Medium' | 'Hard'
 type Category = 'Docker' | 'Kubernetes' | 'AWS' | 'Azure' | 'CI/CD' | 'Linux' | 'Terraform' | 'Monitoring'
@@ -1100,6 +1101,9 @@ export default function CloudDevOpsPage() {
               {/* Expanded Detail */}
               {isOpen && (
                 <div className="px-5 pb-6 border-t border-border">
+                  <div className="flex justify-end pt-3 pb-1">
+                    <ReadAloudButton text={[concept.title, concept.what, concept.explanation, concept.analogy].filter(Boolean).join('. ')} />
+                  </div>
                   {/* Why / When */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 mb-4">
                     <div className="bg-bg rounded-xl border border-border p-3">
